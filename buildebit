@@ -1,0 +1,1 @@
+go build -tags "b_ebitengine" -o bin/ryee

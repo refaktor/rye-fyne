@@ -4,8 +4,6 @@
   - [Fyne - GUI](fyne-gui)
   - [Ebitengine - Game engine](Ebitengine-game-engine)
   - [Webview](Webview)
- 
-*visit **[ryelang.org](https://ryelang.org/)**, **[our blog](https://ryelang.org/blog/)** or join our **[reddit group](https://reddit.com/r/ryelang/)** for latest examples and development updates*
 
 ## What is Rye language
 
@@ -19,7 +17,7 @@ Go's libraries are quite easy to integrate, and Rye can be embedded into Go prog
 I believe that as language becomes higher level it starts touching the user interface boundary, besides being a language
 we have great emphasis on **interactive use** (Rye shell) where we will explore that.
 
-**[Rye language repository](https://github.com/refaktor/rye)**
+**[Rye language repository](https://github.com/refaktor/rye)** | **[Rye website](https://ryelang.org/)** | **[Reddit group](https://reddit.com/r/ryelang/)**
 
 ## What is Rye-Front
 
@@ -33,11 +31,18 @@ Rye-Front is an external extension of Rye language focused on frontend technolog
 
 ## Modules
 
-### Fyne
+### Fyne ⭐⭐
 
 Fyne is crossplatform GUI framework with it's own OpenGL renderer inspired by material design.
 
 ![Simple Fyne example](https://ryelang.org/rye-fyne-1.png)
+
+To run the example in rye-front directory run:
+
+```
+./buildfyne
+bin/ryef examples/fyne/button_ctx.rye
+```
 
 [Fyne website](https://fyne.io)
 

@@ -23,11 +23,11 @@ we have great emphasis on **interactive use** (Rye shell) where we will explore 
 
 Rye-Front is an external extension of Rye language focused on frontend technologies like: GUI, Game engine, Graphics, Browsers ...
 
-### Why a reparate repository
+### Why a separate repository
 
- * So Rye remains lighter on dependecies, easier to build, focused on backend and interactive shell
+ * So Rye remains lighter on dependencies, easier to build, focused on backend and interactive shell
  * So that "frontend" related development is separated from language development
- * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for **hot-code optimisation**
+ * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for hot-code optimization
 
 ## Modules
 

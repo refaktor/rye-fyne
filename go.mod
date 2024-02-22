@@ -5,11 +5,12 @@ go 1.21.5
 require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/refaktor/rye v0.0.14
+	github.com/refaktor/rye v0.0.15
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
 )
 
 require (
+	fyne.io/fyne v1.4.3 // indirect
 	fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e // indirect
 	github.com/RoaringBitmap/roaring v1.2.3 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.24.1 // indirect
@@ -21,7 +22,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.7.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.10.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.10 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ses v1.19.5 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ses v1.19.6 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.18.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.21.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.26.7 // indirect
@@ -80,18 +81,19 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-runewidth v0.0.3 // indirect
-	github.com/mattn/go-sqlite3 v1.14.19 // indirect
-	github.com/mhale/smtpd v0.8.1 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/go-sqlite3 v1.14.22 // indirect
+	github.com/mhale/smtpd v0.8.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/mrz1836/postmark v1.6.1 // indirect
+	github.com/mrz1836/postmark v1.6.3 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/refaktor/go-peg v0.0.0-20220116201714-31e3dfa8dc7d // indirect
 	github.com/refaktor/liner v1.2.6 // indirect
-	github.com/sashabaranov/go-openai v1.17.9 // indirect
+	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/sashabaranov/go-openai v1.19.2 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
@@ -112,7 +114,7 @@ require (
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
 	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect

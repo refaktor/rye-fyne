@@ -1,1 +1,1 @@
-go build -tags "b_webview" -o bin/ryew
+go build -tags "b_webview" -o bin/webview/ryew

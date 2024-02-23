@@ -7,7 +7,7 @@ rye .needs { fyne }
 do\in fyne { 
 	lab: label "I am a label."
 	btn: button "Click" { lab .set-text "Button was clicked!" }
-	box: container(2) lab btn
+	box: container(2) 'vbox lab btn
 	
 	with app .new-window "Button Demo" {
 		.set-content box ,

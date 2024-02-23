@@ -98,7 +98,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch val := arg0.(type) {
 			case env.Native:
-				return env.NewString(val.Value.(widget.Entry).Text)
+				return env.NewString(val.Value.(*widget.Entry).Text)
 			default:
 				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "gtk-window//set-title")
 			}
@@ -154,7 +154,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				case env.Block:
 					win := widget.NewButton(val.Value, func() {
 						ser := ps.Ser
-						ps.Ser = fn.Series
+						ps.Ser = fn.Seriesil
 						// fmt.Println("BEFORE")
 						r := evaldo.EvalBlockInj(ps, nil, false)
 						ps.Ser = ser

@@ -1,4 +1,5 @@
-fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container(2): ?fyne-container(2) }
+fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container: ?fyne-container multiline-entry: ?fyne-multiline-entry }
+
 
 
 rye .needs { fyne }
@@ -14,6 +15,41 @@ do\in fyne {
 		.show-and-run
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ; in rye shell you will be able to acess lab, win, create new widgets, set-content, set-text, ...
 ; see video here https://www.reddit.com/r/ryelang/comments/1axfrcw/live_fyne_gui_editing_from_rye_shell/

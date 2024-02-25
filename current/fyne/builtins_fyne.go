@@ -82,7 +82,13 @@ var Builtins_fyne = map[string]*env.Builtin{
 			case env.Native:
 				switch txt := arg1.(type) {
 				case env.String:
-					val.Value.(*widget.Label).SetText(txt.Value)
+					switch widg := val.Value.(type) {
+					case *widget.Entry:
+						widg.SetText(txt.Value)
+					case *widget.Label:
+						widg.SetText(txt.Value)
+					}
+
 					return arg0
 				default:
 					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
@@ -93,7 +99,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 	"fyne-widget//get-text": {
-		Argsn: 2,
+		Argsn: 1,
 		Doc:   "TODODOC",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch val := arg0.(type) {
@@ -104,6 +110,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 		},
 	},
+
 	"fyne-container(2)": {
 		Argsn: 3,
 		Doc:   "Create new gtk window.",
@@ -138,6 +145,43 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
+	"fyne-container": {
+		Argsn: 2,
+		Doc:   "Create container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch layout_ := arg0.(type) {
+			case env.Word:
+				layout_str := ps.Idx.GetWord(layout_.Index)
+				var layout_r fyne.Layout
+				switch layout_str {
+				case "vbox":
+					layout_r = layout.NewVBoxLayout()
+				case "hbox":
+					layout_r = layout.NewHBoxLayout()
+				default:
+					return evaldo.MakeError(ps, "Non-existend layout")
+				}
+				switch bloc := arg1.(type) {
+				case env.Block:
+					items := make([]fyne.CanvasObject, bloc.Series.Len())
+
+					for i, it := range bloc.Series.S {
+						switch nat := it.(type) {
+						case env.Native:
+							items[i] = nat.Value.(fyne.CanvasObject)
+						}
+					}
+					win := container.New(layout_r, items...)
+					return *env.NewNative(ps.Idx, win, "fyne-container")
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+			}
+		},
+	},
+
 	"fyne-button": {
 		Argsn: 2,
 		Doc:   "Create new gtk window.",
@@ -154,7 +198,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				case env.Block:
 					win := widget.NewButton(val.Value, func() {
 						ser := ps.Ser
-						ps.Ser = fn.Seriesil
+						ps.Ser = fn.Series
 						// fmt.Println("BEFORE")
 						r := evaldo.EvalBlockInj(ps, nil, false)
 						ps.Ser = ser

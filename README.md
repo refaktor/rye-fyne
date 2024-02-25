@@ -10,7 +10,7 @@
 
 https://www.youtube.com/watch?v=QtK8hUPjo5Y
 
-[![Live GUI over console demo](http://img.youtube.com/vi/QtK8hUPjo5Y/0.jpg)](http://www.youtube.com/watch?v=v=QtK8hUPjo5Y "Video Title")
+[![Live GUI over console demo](http://img.youtube.com/vi/QtK8hUPjo5Y/0.jpg)](http://www.youtube.com/watch?v=QtK8hUPjo5Y "Video Title")
 
 ## What is Rye language
 

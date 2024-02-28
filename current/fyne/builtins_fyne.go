@@ -21,7 +21,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 
 	"fyne-app": {
 		Argsn: 0,
-		Doc:   "TODODOC.",
+		Doc:   "Creates a Fyne app native",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			app1 := app.New()
 			return *env.NewNative(ps.Idx, app1, "fyne-app")
@@ -29,29 +29,29 @@ var Builtins_fyne = map[string]*env.Builtin{
 	},
 	"fyne-app//new-window": {
 		Argsn: 2,
-		Doc:   "TODODOC.",
+		Doc:   "Creates new window for and app",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch obj := arg0.(type) {
+			switch win := arg0.(type) {
 			case env.Native:
-				switch val := arg1.(type) {
+				switch title := arg1.(type) {
 				case env.String:
-					wind := obj.Value.(fyne.App).NewWindow(val.Value)
+					wind := win.Value.(fyne.App).NewWindow(title.Value)
 					return *env.NewNative(ps.Idx, wind, "fyne-window")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "fyne-app//new-window")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//new-window")
 			}
 		},
 	},
 	"fyne-label": {
 		Argsn: 1,
-		Doc:   "Create new gtk window.",
+		Doc:   "Creates a Fyne label widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch val := arg0.(type) {
+			switch text := arg0.(type) {
 			case env.String:
-				win := widget.NewLabel(val.Value)
+				win := widget.NewLabel(text.Value)
 				return *env.NewNative(ps.Idx, win, "fyne-widget")
 			default:
 				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
@@ -60,15 +60,15 @@ var Builtins_fyne = map[string]*env.Builtin{
 	},
 	"fyne-entry": {
 		Argsn: 0,
-		Doc:   "TODODOC",
+		Doc:   "Creates a Fyne entry widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			win := widget.NewEntry()
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
 	"fyne-multiline-entry": {
-		Argsn: 1,
-		Doc:   "TODODOC",
+		Argsn: 0,
+		Doc:   "Creates a Fyne multiline entry widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			win := widget.NewMultiLineEntry()
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
@@ -76,78 +76,43 @@ var Builtins_fyne = map[string]*env.Builtin{
 	},
 	"fyne-widget//set-text": {
 		Argsn: 2,
-		Doc:   "TODODOC",
+		Doc:   "Sets text to a widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch val := arg0.(type) {
+			switch widg_ := arg0.(type) {
 			case env.Native:
-				switch txt := arg1.(type) {
+				switch text := arg1.(type) {
 				case env.String:
-					switch widg := val.Value.(type) {
+					switch widg := widg_.Value.(type) {
 					case *widget.Entry:
-						widg.SetText(txt.Value)
+						widg.SetText(text.Value)
 					case *widget.Label:
-						widg.SetText(txt.Value)
+						widg.SetText(text.Value)
 					}
-
 					return arg0
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "fyne-widget//set-text")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//set-text")
 			}
 		},
 	},
 	"fyne-widget//get-text": {
 		Argsn: 1,
-		Doc:   "TODODOC",
+		Doc:   "Gets text from a widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch val := arg0.(type) {
+			switch widg := arg0.(type) {
 			case env.Native:
-				return env.NewString(val.Value.(*widget.Entry).Text)
+				return env.NewString(widg.Value.(*widget.Entry).Text)
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "gtk-window//set-title")
-			}
-		},
-	},
-
-	"fyne-container(2)": {
-		Argsn: 3,
-		Doc:   "Create new gtk window.",
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch layout_ := arg0.(type) {
-			case env.Word:
-				layout_str := ps.Idx.GetWord(layout_.Index)
-				var layout_r fyne.Layout
-				switch layout_str {
-				case "vbox":
-					layout_r = layout.NewVBoxLayout()
-				case "hbox":
-					layout_r = layout.NewHBoxLayout()
-				default:
-					return evaldo.MakeError(ps, "Non-existend layout")
-				}
-				switch val := arg1.(type) {
-				case env.Native:
-					switch val1 := arg2.(type) {
-					case env.Native:
-						win := container.New(layout_r, val.Value.(fyne.CanvasObject), val1.Value.(fyne.CanvasObject))
-						return *env.NewNative(ps.Idx, win, "fyne-container")
-					default:
-						return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
-					}
-				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
-				}
-			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//get-text")
 			}
 		},
 	},
 
 	"fyne-container": {
 		Argsn: 2,
-		Doc:   "Create container",
+		Doc:   "Creates Fyne container with widgets",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch layout_ := arg0.(type) {
 			case env.Word:
@@ -159,7 +124,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				case "hbox":
 					layout_r = layout.NewHBoxLayout()
 				default:
-					return evaldo.MakeError(ps, "Non-existend layout")
+					return evaldo.MakeError(ps, "Non-existent layout")
 				}
 				switch bloc := arg1.(type) {
 				case env.Block:
@@ -174,29 +139,29 @@ var Builtins_fyne = map[string]*env.Builtin{
 					win := container.New(layout_r, items...)
 					return *env.NewNative(ps.Idx, win, "fyne-container")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType}, "fyne-container")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
 			}
 		},
 	},
 
 	"fyne-button": {
 		Argsn: 2,
-		Doc:   "Create new gtk window.",
+		Doc:   "Create new Fyne button widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch val := arg0.(type) {
+			switch txt := arg0.(type) {
 			case env.String:
 				switch fn := arg1.(type) {
 				case env.Function:
-					win := widget.NewButton(val.Value, func() {
+					widg := widget.NewButton(txt.Value, func() {
 						evaldo.CallFunction(fn, ps, nil, false, ps.Ctx)
 						// return ps.Res
 					})
-					return *env.NewNative(ps.Idx, win, "fyne-widget")
+					return *env.NewNative(ps.Idx, widg, "fyne-widget")
 				case env.Block:
-					win := widget.NewButton(val.Value, func() {
+					widg := widget.NewButton(txt.Value, func() {
 						ser := ps.Ser
 						ps.Ser = fn.Series
 						// fmt.Println("BEFORE")
@@ -207,44 +172,45 @@ var Builtins_fyne = map[string]*env.Builtin{
 							fmt.Println(r.Res.(*env.Error).Message)
 						}
 					})
-					return *env.NewNative(ps.Idx, win, "fyne-widget")
+					return *env.NewNative(ps.Idx, widg, "fyne-widget")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.FunctionType}, "fyne-button")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-button")
 			}
 		},
 	},
 
 	"fyne-window//set-content": {
 		Argsn: 2,
-		Doc:   "Set title of gtk window.",
+		Doc:   "Set content of Fyne window",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch obj := arg0.(type) {
+			switch win := arg0.(type) {
 			case env.Native:
-				switch val := arg1.(type) {
+				switch widg := arg1.(type) {
 				case env.Native:
-					obj.Value.(fyne.Window).SetContent(val.Value.(fyne.CanvasObject))
-					return obj
+					win.Value.(fyne.Window).SetContent(widg.Value.(fyne.CanvasObject))
+					return win
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "gtk-window//set-title")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-window//set-content")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "gtk-window//set-title")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-content")
 			}
 		},
 	},
+
 	"fyne-window//show-and-run": {
 		Argsn: 1,
-		Doc:   "Show gtk window.",
+		Doc:   "Shows Fyne window and runs event loop",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch obj := arg0.(type) {
+			switch win := arg0.(type) {
 			case env.Native:
-				obj.Value.(fyne.Window).ShowAndRun()
-				return obj
+				win.Value.(fyne.Window).ShowAndRun()
+				return win
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "gtk-window//show")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//show-and-run")
 			}
 		},
 	},

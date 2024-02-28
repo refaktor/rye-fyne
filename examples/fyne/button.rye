@@ -1,4 +1,4 @@
-fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container(2): ?fyne-container(2) }
+fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container: ?fyne-container }
 
 ; If we create Fyne constructor function inside a fyne context
 
@@ -7,7 +7,7 @@ rye .needs { fyne }
 do\in fyne { 
 	lab: label "I am a label."
 	btn: button "Click" { lab .set-text "Button was clicked!" }
-	box: container(2) 'vbox lab btn
+	box: container 'vbox vals { lab btn }
 	
 	with app .new-window "Button Demo" {
 		.set-content box ,

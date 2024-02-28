@@ -1,9 +1,16 @@
+- [Quick demo](#quick-demo)
 - [What is Rye language 🌾](#what-is-rye-language-)
 - [What is Rye-Front](#what-is-rye-front)
 - [Modules](#modules)
   - [Fyne - GUI](fyne-gui)
   - [Ebitengine - Game engine](Ebitengine-game-engine)
   - [Webview](Webview)
+
+## Quick demo
+
+https://www.youtube.com/watch?v=QtK8hUPjo5Y
+
+[![Live GUI over console demo](http://img.youtube.com/vi/QtK8hUPjo5Y/0.jpg)](http://www.youtube.com/watch?v=QtK8hUPjo5Y "Video Title")
 
 ## What is Rye language
 

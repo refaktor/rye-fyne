@@ -1,8 +1,11 @@
 - [Quick demo](#quick-demo)
-- [What is Rye language 🌾](#what-is-rye-language-)
+- [What is Rye language 🌾](#what-is-rye-language)
 - [What is Rye-Front](#what-is-rye-front)
 - [Modules](#modules)
-  - [Fyne - GUI](fyne-gui)
+  - [Fyne - GUI](#fyne---gui-)
+    - [Build and test](#build-and-test)
+    - [Example](#example)
+    - [More about Fyne](#more-about-fyne)
   - [Ebitengine - Game engine](Ebitengine-game-engine)
   - [Webview](Webview)
 
@@ -42,12 +45,12 @@ Rye-front is in early development. We are focusing on Fyne GUI at first.
 
 ## Modules
 
-### Fyne ⭐⭐
+### Fyne - GUI ⭐⭐
 
 Fyne is crossplatform GUI framework with it's own OpenGL renderer inspired by material design.
 
 
-#### Build and test Rye with Fyne
+#### Build and test
 
 In **rye-front** directory run:
 

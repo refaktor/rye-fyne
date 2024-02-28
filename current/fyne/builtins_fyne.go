@@ -191,7 +191,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				switch widg := arg1.(type) {
 				case env.Native:
 					win.Value.(fyne.Window).SetContent(widg.Value.(fyne.CanvasObject))
-					return win
+					return arg0
 				default:
 					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-window//set-content")
 				}

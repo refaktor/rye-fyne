@@ -8,9 +8,9 @@
 
 ## Quick demo
 
-https://www.youtube.com/watch?v=QtK8hUPjo5Y
+https://www.youtube.com/watch?v=YmYQRPvkSpM
 
-[![Live GUI over console demo](http://img.youtube.com/vi/QtK8hUPjo5Y/0.jpg)](http://www.youtube.com/watch?v=QtK8hUPjo5Y "Video Title")
+[![Live GUI over console demo](http://img.youtube.com/vi/YmYQRPvkSpM/0.jpg)](http://www.youtube.com/watch?v=QtK8hUPjo5Y "Video Title")
 
 ## What is Rye language
 
@@ -36,20 +36,59 @@ Rye-Front is an external extension of Rye language focused on frontend technolog
  * So that "frontend" related development is separated from language development
  * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for hot-code optimization
 
+## Status
+
+Rye-front is in early development. We are focusing on Fyne GUI at first.
+
 ## Modules
 
 ### Fyne ⭐⭐
 
 Fyne is crossplatform GUI framework with it's own OpenGL renderer inspired by material design.
 
-![Simple Fyne example](https://ryelang.org/rye-fyne-1.png)
 
-To run the example in rye-front directory run:
+#### Build and test Rye with Fyne
+
+In **rye-front** directory run:
 
 ```
+# build rye with fyne in bin/fyne/rye
 ./buildfyne
-bin/ryef examples/fyne/button_ctx.rye
+
+# Try the hello example
+bin/fyne/rye examples/fyne/button.rye
+
+# Try the feedback example
+bin/fyne/rye examples/fyne/feedback.rye
+
+# Try the Live GUI demo
+bin/fyne/rye examples/fyne/live.rye
 ```
+
+#### Example
+
+![Fyne Feedback example](https://ryelang.org/rye-fyne-2.png)
+
+```
+rye .needs { fyne }
+
+do\in fyne {
+
+	cont: container 'vbox vals {
+		label "Send us feedback:"
+		multiline-entry :ent
+		button "Send" { ent .get-text |printv "Sending: {}" }
+	}
+	
+	app .new-window "Feedback"
+	|set-content cont
+	|show-and-run
+
+}
+```
+
+
+#### More about Fyne
 
 [Fyne website](https://fyne.io)
 

@@ -7,34 +7,9 @@ import (
 	"github.com/refaktor/rye-front/current/fyne"
 	"github.com/refaktor/rye-front/current/webview"
 	"github.com/refaktor/rye/env"
-	"github.com/refaktor/rye/evaldo"
 )
 
-var Builtins_current = map[string]*env.Builtin{
-
-	"current-one": {
-		Argsn: 1,
-		Fn: func(env1 *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			return env.Integer{1}
-		},
-	},
-
-	"current-do": {
-		Argsn: 1,
-		Doc:   "Takes a block of code and does (runs) it.",
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch bloc := arg0.(type) {
-			case env.Block:
-				ser := ps.Ser
-				ps.Ser = bloc.Series
-				evaldo.EvalBlock(ps)
-				ps.Ser = ser
-				return ps.Res
-			}
-			return nil
-		},
-	},
-}
+var Builtins_current = map[string]*env.Builtin{}
 
 func RegisterBuiltins(ps *env.ProgramState, builtinNames *map[string]int) {
 	RegisterBuiltins2(Builtins_current, ps, "current", builtinNames)

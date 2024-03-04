@@ -1,0 +1,22 @@
+fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container: ?fyne-container multiline-entry: ?fyne-multiline-entry }
+
+
+
+
+
+rye .needs { fyne }
+
+do\in fyne {
+
+	cont: container 'vbox vals {
+		label "Send us feedback:"
+		multiline-entry :ent
+		button "Send" { ent .get-text |printv "Sending: {}" }
+	}
+
+	app .new-window "Feedback"
+	|set-content cont
+	|show-and-run
+
+}
+

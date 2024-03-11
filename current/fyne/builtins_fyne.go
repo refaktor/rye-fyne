@@ -5,8 +5,8 @@ package fyne
 // import "C"
 
 import (
+	"errors"
 	"fmt"
-
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/evaldo"
 
@@ -63,6 +63,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Doc:   "Creates a Fyne entry widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			win := widget.NewEntry()
+			return *env.NewNative(ps.Idx, win, "fyne-widget")
+		},
+	},
+	"fyne-password-entry": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne entry password widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			win := widget.NewPasswordEntry()
+			win.Validator = func(s string) error {
+				if evaldo.CallFunction(arg0.(env.Function), ps, env.NewString(s), false, ps.Ctx).Res.(env.Integer).Value == 0 {
+					return errors.New("Password is not correct")
+				}
+				return nil
+			}
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
@@ -128,12 +142,11 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				switch bloc := arg1.(type) {
 				case env.Block:
-					items := make([]fyne.CanvasObject, bloc.Series.Len())
-
-					for i, it := range bloc.Series.S {
+					items := []fyne.CanvasObject{}
+					for _, it := range bloc.Series.S {
 						switch nat := it.(type) {
 						case env.Native:
-							items[i] = nat.Value.(fyne.CanvasObject)
+							items = append(items, nat.Value.(fyne.CanvasObject))
 						}
 					}
 					win := container.New(layout_r, items...)
@@ -164,10 +177,8 @@ var Builtins_fyne = map[string]*env.Builtin{
 					widg := widget.NewButton(txt.Value, func() {
 						ser := ps.Ser
 						ps.Ser = fn.Series
-						// fmt.Println("BEFORE")
 						r := evaldo.EvalBlockInj(ps, nil, false)
 						ps.Ser = ser
-						// fmt.Println("AFTER")
 						if r.Res != nil && r.Res.Type() == env.ErrorType {
 							fmt.Println(r.Res.(*env.Error).Message)
 						}

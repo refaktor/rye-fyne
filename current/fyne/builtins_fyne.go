@@ -5,10 +5,11 @@ package fyne
 // import "C"
 
 import (
+	"errors"
 	"fmt"
-
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/evaldo"
+	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -66,6 +67,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
+	"fyne-password-entry": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne entry password widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			win := widget.NewPasswordEntry()
+			win.Validator = func(s string) error {
+				if evaldo.CallFunction(arg0.(env.Function), ps, env.NewString(s), false, ps.Ctx).Res.(env.Integer).Value == 0 {
+					return errors.New("Text is not in correct form")
+				}
+				return nil
+			}
+			return *env.NewNative(ps.Idx, win, "fyne-widget")
+		},
+	},
 	"fyne-multiline-entry": {
 		Argsn: 0,
 		Doc:   "Creates a Fyne multiline entry widget",
@@ -103,13 +118,82 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch widg := arg0.(type) {
 			case env.Native:
-				return env.NewString(widg.Value.(*widget.Entry).Text)
+				switch widg.Value.(type) {
+				case *widget.Entry:
+					return env.NewString(widg.Value.(*widget.Entry).Text)
+				case *widget.Check:
+					return env.NewString(strconv.FormatBool(widg.Value.(*widget.Check).Checked))
+				case *widget.Select:
+					return env.NewString(widg.Value.(*widget.Select).Selected)
+				case *widget.RadioGroup:
+					return env.NewString(widg.Value.(*widget.RadioGroup).Selected)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//get-text")
+				}
 			default:
 				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//get-text")
 			}
 		},
 	},
-
+	"fyne-check": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne check widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var label string
+			switch arg0.(type) {
+			case env.String:
+				label = arg0.(env.String).Value
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-check")
+			}
+			win := widget.NewCheck(label, nil)
+			return *env.NewNative(ps.Idx, win, "fyne-widget")
+		},
+	},
+	"fyne-select": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne select widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var options []string
+			switch arg0.(type) {
+			case env.Block:
+				{
+					for _, v := range arg0.(env.Block).Series.S {
+						switch v.(type) {
+						case env.String:
+							options = append(options, fmt.Sprintf("%v", v.(env.String).Value))
+						}
+					}
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-check")
+			}
+			win := widget.NewSelect(options, nil)
+			return *env.NewNative(ps.Idx, win, "fyne-widget")
+		},
+	},
+	"fyne-radiogroup": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne radio group widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var options []string
+			switch arg0.(type) {
+			case env.Block:
+				{
+					for _, v := range arg0.(env.Block).Series.S {
+						switch v.(type) {
+						case env.String:
+							options = append(options, fmt.Sprintf("%v", v.(env.String).Value))
+						}
+					}
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-check")
+			}
+			win := widget.NewRadioGroup(options, nil)
+			return *env.NewNative(ps.Idx, win, "fyne-widget")
+		},
+	},
 	"fyne-container": {
 		Argsn: 2,
 		Doc:   "Creates Fyne container with widgets",
@@ -128,12 +212,11 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				switch bloc := arg1.(type) {
 				case env.Block:
-					items := make([]fyne.CanvasObject, bloc.Series.Len())
-
-					for i, it := range bloc.Series.S {
+					items := []fyne.CanvasObject{}
+					for _, it := range bloc.Series.S {
 						switch nat := it.(type) {
 						case env.Native:
-							items[i] = nat.Value.(fyne.CanvasObject)
+							items = append(items, nat.Value.(fyne.CanvasObject))
 						}
 					}
 					win := container.New(layout_r, items...)
@@ -164,10 +247,8 @@ var Builtins_fyne = map[string]*env.Builtin{
 					widg := widget.NewButton(txt.Value, func() {
 						ser := ps.Ser
 						ps.Ser = fn.Series
-						// fmt.Println("BEFORE")
 						r := evaldo.EvalBlockInj(ps, nil, false)
 						ps.Ser = ser
-						// fmt.Println("AFTER")
 						if r.Res != nil && r.Res.Type() == env.ErrorType {
 							fmt.Println(r.Res.(*env.Error).Message)
 						}

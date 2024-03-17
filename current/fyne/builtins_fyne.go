@@ -74,7 +74,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			win := widget.NewPasswordEntry()
 			win.Validator = func(s string) error {
 				if evaldo.CallFunction(arg0.(env.Function), ps, env.NewString(s), false, ps.Ctx).Res.(env.Integer).Value == 0 {
-					return errors.New("Password is not correct")
+					return errors.New("Text is not in correct form")
 				}
 				return nil
 			}

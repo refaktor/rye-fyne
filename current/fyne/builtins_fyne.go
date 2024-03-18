@@ -7,9 +7,10 @@ package fyne
 import (
 	"errors"
 	"fmt"
+	"strconv"
+
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/evaldo"
-	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"

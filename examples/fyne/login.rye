@@ -1,0 +1,17 @@
+fyne: context { app: ?fyne-app label: ?fyne-label entry: ?fyne-entry check: ?fyne-check  radiogroup: ?fyne-radiogroup  selectbox: ?fyne-select button: ?fyne-button container: ?fyne-container password-entry: ?fyne-password-entry }
+
+
+rye .needs { fyne }
+
+do\in fyne {
+	cont: container 'vbox vals {
+		label "Email:" entry
+		label "Password:"
+        password-entry fn1 { = "mypwd"  }
+		button "Login" { print "Can't work on Sunday!" } 
+	}
+
+	app .new-window "Login"
+	|set-content cont
+	|show-and-run
+}

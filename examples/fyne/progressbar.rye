@@ -1,0 +1,20 @@
+fyne: context { app: ?fyne-app label: ?fyne-label progress: ?fyne-progressbar button: ?fyne-button container: ?fyne-container }
+
+; If we create Fyne constructor function inside a fyne context
+
+rye .needs { fyne }
+
+do\in fyne {
+    app .new-window "Feedback" :window
+
+	cont: container 'vbox vals {
+	    progress :prog
+	    prog |set-value 0.3
+	    prog |set-value 0.5
+	    prog |set-value 0.2
+	}
+
+	window
+	|set-content cont
+	|show-and-run
+}

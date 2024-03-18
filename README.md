@@ -95,6 +95,20 @@ do\in fyne {
 
 [Fyne website](https://fyne.io)
 
+#### Implemented widgets
+
+
+* Window
+* Container
+* Label
+* Entry
+* Button
+* Password entry
+* Multiline entry
+* Select box
+* Radio group
+* Check box
+
 ### Ebitengine
 
 [Ebitengine website](https://ebitengine.org)

@@ -1,7 +1,7 @@
 rye .needs { fyne }
 
-with fyne-app .new-window "Hello Rye" {
-	lab: fyne-label "Hello from Rye!" ,
+with fyne/app .new-window "Hello Rye" {
+	lab: fyne/label "Hello from Rye!" ,
 	.set-content lab ,
 	.show-and-run
 }

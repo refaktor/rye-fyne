@@ -18,7 +18,6 @@ import (
 	"github.com/refaktor/rye/loader"
 
 	"github.com/refaktor/rye-front/current"
-
 )
 
 /* type TagType int
@@ -43,7 +42,7 @@ type node struct {
 
 func main() {
 	evaldo.ShowResults = true
-	
+
 	if len(os.Args) == 1 {
 		main_rye_repl(os.Stdin, os.Stdout, false, false)
 	} else if len(os.Args) == 2 {
@@ -80,8 +79,8 @@ func main_rye_file(file string, sig bool, subc bool) {
 	case env.Block:
 		es := env.NewProgramState(block.(env.Block).Series, genv)
 		evaldo.RegisterBuiltins(es)
-		contrib.RegisterBuiltins(es, &evaldo.BuiltinNames)
-		current.RegisterBuiltins(es, &evaldo.BuiltinNames)
+		contrib.RegisterBuiltins(es, &evaldo.BuiltinNames) // TODO -- remove this in next Rye release
+		current.RegisterBuiltins(es)
 
 		if subc {
 			ctx := es.Ctx
@@ -115,8 +114,8 @@ func main_rye_repl(_ io.Reader, _ io.Writer, subc bool, here bool) {
 	block, genv := loader.LoadString(input, false)
 	es := env.NewProgramState(block.(env.Block).Series, genv)
 	evaldo.RegisterBuiltins(es)
-	contrib.RegisterBuiltins(es, &evaldo.BuiltinNames)
-	current.RegisterBuiltins(es, &evaldo.BuiltinNames)
+	contrib.RegisterBuiltins(es, &evaldo.BuiltinNames) // TODO -- remove this in next Rye release
+	current.RegisterBuiltins(es)
 
 	evaldo.EvalBlock(es)
 

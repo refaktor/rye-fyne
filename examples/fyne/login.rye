@@ -1,0 +1,15 @@
+
+rye .needs { fyne }
+
+do\in fyne {
+	cont: container 'vbox [
+		label "Email:" entry
+		label "Password:"
+        password-entry fn1 { = "mypwd"  }
+		button "Login" { print "Can't work on Sunday!" } 
+	]
+
+	app .new-window "Login"
+	|set-content cont
+	|show-and-run
+}

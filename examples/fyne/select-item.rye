@@ -1,22 +1,19 @@
-fyne: context { app: ?fyne-app label: ?fyne-label entry: ?fyne-entry check: ?fyne-check  radiogroup: ?fyne-radiogroup  selectbox: ?fyne-select button: ?fyne-button container: ?fyne-container }
-
-; If we create Fyne constructor function inside a fyne context
 
 rye .needs { fyne }
 
 do\in fyne {
     app .new-window "Feedback" :window
 
-	cont: container 'vbox vals {
+	cont: container 'vbox [
 	    selectbox [ "First" "Second" "Third" ] :ent-select
         button "Check select" { ent-select .get-text |printv "Select: {}" }
 
         radiogroup [ "Radio 1" "Radio 2" "Radio 3" ] :ent-radiogrup
         button "Check radios" { ent-radiogrup .get-text |printv "Radio Group: {}" }
 
-        check "Checkbox label" :ent-check
+        checkbox "Checkbox 1" :ent-check
 		button "Check checkbox" { ent-check .get-text |printv "Checkbox: {}" }
-	}
+	]
 
 	window .set-content cont |show-and-run
 }

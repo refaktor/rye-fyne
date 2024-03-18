@@ -1,5 +1,3 @@
-fyne: context { app: ?fyne-app label: ?fyne-label button: ?fyne-button container: ?fyne-container multiline-entry: ?fyne-multiline-entry }
-
 
 rye .needs { fyne }
 

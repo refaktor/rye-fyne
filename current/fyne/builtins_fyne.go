@@ -21,7 +21,7 @@ import (
 
 var Builtins_fyne = map[string]*env.Builtin{
 
-	"fyne-app": {
+	"app": {
 		Argsn: 0,
 		Doc:   "Creates a Fyne app native",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -47,7 +47,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 		},
 	},
-	"fyne-label": {
+	"label": {
 		Argsn: 1,
 		Doc:   "Creates a Fyne label widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -60,7 +60,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 		},
 	},
-	"fyne-entry": {
+	"entry": {
 		Argsn: 0,
 		Doc:   "Creates a Fyne entry widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -68,7 +68,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-password-entry": {
+	"password-entry": {
 		Argsn: 1,
 		Doc:   "Creates a Fyne entry password widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -82,7 +82,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-multiline-entry": {
+	"multiline-entry": {
 		Argsn: 0,
 		Doc:   "Creates a Fyne multiline entry widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -136,7 +136,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 		},
 	},
-	"fyne-check": {
+	"checkbox": {
 		Argsn: 1,
 		Doc:   "Creates a Fyne check widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -151,7 +151,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-select": {
+	"selectbox": {
 		Argsn: 1,
 		Doc:   "Creates a Fyne select widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -173,7 +173,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-radiogroup": {
+	"radiogroup": {
 		Argsn: 1,
 		Doc:   "Creates a Fyne radio group widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -195,7 +195,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-container": {
+	"container": {
 		Argsn: 2,
 		Doc:   "Creates Fyne container with widgets",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -231,7 +231,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"fyne-button": {
+	"button": {
 		Argsn: 2,
 		Doc:   "Create new Fyne button widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {

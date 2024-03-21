@@ -74,7 +74,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			win := widget.NewPasswordEntry()
 			win.Validator = func(s string) error {
-				if evaldo.CallFunction(arg0.(env.Function), ps, env.NewString(s), false, ps.Ctx).Res.(env.Integer).Value == 0 {
+				if evaldo.CallFunction(arg0.(env.Function), ps, *env.NewString(s), false, ps.Ctx).Res.(env.Integer).Value == 0 {
 					return errors.New("Text is not in correct form")
 				}
 				return nil
@@ -121,13 +121,13 @@ var Builtins_fyne = map[string]*env.Builtin{
 			case env.Native:
 				switch widg.Value.(type) {
 				case *widget.Entry:
-					return env.NewString(widg.Value.(*widget.Entry).Text)
+					return *env.NewString(widg.Value.(*widget.Entry).Text)
 				case *widget.Check:
-					return env.NewString(strconv.FormatBool(widg.Value.(*widget.Check).Checked))
+					return *env.NewString(strconv.FormatBool(widg.Value.(*widget.Check).Checked))
 				case *widget.Select:
-					return env.NewString(widg.Value.(*widget.Select).Selected)
+					return *env.NewString(widg.Value.(*widget.Select).Selected)
 				case *widget.RadioGroup:
-					return env.NewString(widg.Value.(*widget.RadioGroup).Selected)
+					return *env.NewString(widg.Value.(*widget.RadioGroup).Selected)
 				default:
 					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//get-text")
 				}
@@ -248,11 +248,14 @@ var Builtins_fyne = map[string]*env.Builtin{
 					widg := widget.NewButton(txt.Value, func() {
 						ser := ps.Ser
 						ps.Ser = fn.Series
-						r := evaldo.EvalBlockInj(ps, nil, false)
-						ps.Ser = ser
-						if r.Res != nil && r.Res.Type() == env.ErrorType {
-							fmt.Println(r.Res.(*env.Error).Message)
+						fmt.Println("Before click")
+						evaldo.EvalBlockInj(ps, nil, false)
+						fmt.Println("After click")
+						fmt.Println(ps.Res)
+						if ps.Res != nil && ps.Res.Type() == env.ErrorType {
+							fmt.Println(ps.Res.(*env.Error).Message)
 						}
+						ps.Ser = ser
 					})
 					return *env.NewNative(ps.Idx, widg, "fyne-widget")
 				default:

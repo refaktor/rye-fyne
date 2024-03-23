@@ -90,9 +90,9 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"fyne-progressbar": {
+	"progressbar": {
 		Argsn: 0,
-		Doc:   "Creates a Fyne entry widget",
+		Doc:   "Creates a Fyne progressbar widget",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			win := widget.NewProgressBar()
 			return *env.NewNative(ps.Idx, win, "fyne-progressbar")
@@ -109,11 +109,19 @@ var Builtins_fyne = map[string]*env.Builtin{
 					arg0.(env.Native).Value.(*widget.ProgressBar).SetValue(arg1.(env.Decimal).Value)
 					return arg0
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//set-text")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-progressbar//set-text")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget//set-text")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-progressbar//set-text")
 			}
+		},
+	},
+	"infinite-progressbar": {
+		Argsn: 0,
+		Doc:   "Creates a Fyne infinite progressbar widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			win := widget.NewProgressBarInfinite()
+			return *env.NewNative(ps.Idx, win, "fyne-infinite-progressbar")
 		},
 	},
 	"fyne-widget//set-text": {

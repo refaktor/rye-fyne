@@ -5,7 +5,7 @@ do\in fyne {
 	app .new-window "Feedback" :window
 
 	progressbar :prog
-		cont: container 'vbox [
+	cont: container 'vbox [
 		prog
 		infinite-progressbar
 	]

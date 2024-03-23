@@ -2,12 +2,12 @@
 rye .needs { fyne }
 
 do\in fyne {
-    app .new-window "Feedback" :window
+	app .new-window "Feedback" :window
 
-    progressbar :prog
-	cont: container 'vbox [
-        prog
-        infinite-progressbar
+	progressbar :prog
+		cont: container 'vbox [
+		prog
+		infinite-progressbar
 	]
 
 	go does { for range 1 10 { * 0.1 |set-value* prog , sleep 500 } }

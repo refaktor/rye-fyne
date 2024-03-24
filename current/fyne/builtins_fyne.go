@@ -195,22 +195,87 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, win, "fyne-widget")
 		},
 	},
-	"container": {
-		Argsn: 2,
-		Doc:   "Creates Fyne container with widgets",
+
+	"spacer": {
+		Argsn: 0,
+		Doc:   "Creates Fyne layout spacer",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			switch layout_ := arg0.(type) {
-			case env.Word:
-				layout_str := ps.Idx.GetWord(layout_.Index)
-				var layout_r fyne.Layout
-				switch layout_str {
-				case "vbox":
-					layout_r = layout.NewVBoxLayout()
-				case "hbox":
-					layout_r = layout.NewHBoxLayout()
-				default:
-					return evaldo.MakeError(ps, "Non-existent layout")
+			win := layout.NewSpacer()
+			return *env.NewNative(ps.Idx, win, "fyne-layout-spacer")
+
+		},
+	},
+
+	"container": {
+		Argsn: 1,
+		Doc:   "Creates Fyne container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch bloc := arg0.(type) {
+			case env.Block:
+				items := []fyne.CanvasObject{}
+				for _, it := range bloc.Series.S {
+					switch nat := it.(type) {
+					case env.Native:
+						items = append(items, nat.Value.(fyne.CanvasObject))
+					}
 				}
+				win := container.NewWithoutLayout(items...)
+				return *env.NewNative(ps.Idx, win, "fyne-container")
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
+			}
+		},
+	},
+
+	"container-vbox": {
+		Argsn: 1,
+		Doc:   "Creates Fyne vbox container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+
+			switch bloc := arg0.(type) {
+			case env.Block:
+				items := []fyne.CanvasObject{}
+				for _, it := range bloc.Series.S {
+					switch nat := it.(type) {
+					case env.Native:
+						items = append(items, nat.Value.(fyne.CanvasObject))
+					}
+				}
+				win := container.NewVBox(items...)
+				return *env.NewNative(ps.Idx, win, "fyne-container-vbox")
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-vbox")
+			}
+		},
+	},
+
+	"container-hbox": {
+		Argsn: 1,
+		Doc:   "Creates Fyne hbox container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch bloc := arg0.(type) {
+			case env.Block:
+				items := []fyne.CanvasObject{}
+				for _, it := range bloc.Series.S {
+					switch nat := it.(type) {
+					case env.Native:
+						items = append(items, nat.Value.(fyne.CanvasObject))
+					}
+				}
+				win := container.NewHBox(items...)
+				return *env.NewNative(ps.Idx, win, "fyne-container-hbox")
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-hbox")
+			}
+		},
+	},
+
+	"container-grid-rows": {
+		Argsn: 2,
+		Doc:   "Creates Fyne grid with rows container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch rows := arg0.(type) {
+			case env.Integer:
 				switch bloc := arg1.(type) {
 				case env.Block:
 					items := []fyne.CanvasObject{}
@@ -220,13 +285,60 @@ var Builtins_fyne = map[string]*env.Builtin{
 							items = append(items, nat.Value.(fyne.CanvasObject))
 						}
 					}
-					win := container.New(layout_r, items...)
-					return *env.NewNative(ps.Idx, win, "fyne-container")
+					win := container.NewGridWithRows(int(rows.Value), items...)
+					return *env.NewNative(ps.Idx, win, "fyne-container-grid-rows")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType}, "fyne-container")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-grid-rows")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container-grid-rows")
+			}
+		},
+	},
+
+	"container-grid-cols": {
+		Argsn: 2,
+		Doc:   "Creates Fyne grid with cols container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch cols := arg0.(type) {
+			case env.Integer:
+				switch bloc := arg1.(type) {
+				case env.Block:
+					items := []fyne.CanvasObject{}
+					for _, it := range bloc.Series.S {
+						switch nat := it.(type) {
+						case env.Native:
+							items = append(items, nat.Value.(fyne.CanvasObject))
+						}
+					}
+					win := container.NewGridWithColumns(int(cols.Value), items...)
+					return *env.NewNative(ps.Idx, win, "fyne-container-grid-cols")
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-grid-cols")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container-grid-cols")
+			}
+		},
+	},
+
+	"container-center": {
+		Argsn: 1,
+		Doc:   "Creates Fyne center layout container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch bloc := arg0.(type) {
+			case env.Block:
+				items := []fyne.CanvasObject{}
+				for _, it := range bloc.Series.S {
+					switch nat := it.(type) {
+					case env.Native:
+						items = append(items, nat.Value.(fyne.CanvasObject))
+					}
+				}
+				win := container.NewCenter(items...)
+				return *env.NewNative(ps.Idx, win, "fyne-container-center")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.WordType}, "fyne-container-center")
 			}
 		},
 	},
@@ -282,6 +394,33 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 			default:
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-content")
+			}
+		},
+	},
+
+	"fyne-window//resize": {
+		Argsn: 3,
+		Doc:   "Resize Fyne window",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch win := arg0.(type) {
+			case env.Native:
+				var width, height float32
+				switch widthArg := arg1.(type) {
+				case env.Integer:
+					width = float32(widthArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-window//resize")
+				}
+				switch heightArg := arg2.(type) {
+				case env.Integer:
+					height = float32(heightArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.IntegerType}, "fyne-window//resize")
+				}
+				win.Value.(fyne.Window).Resize(fyne.NewSize(width, height))
+				return win
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//resize")
 			}
 		},
 	},

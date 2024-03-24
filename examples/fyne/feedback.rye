@@ -2,10 +2,10 @@
 rye .needs { fyne }
 
 do\in fyne { 
-	cont: container 'vbox [
+	cont: container-vbox [
 		label "Send us feedback:"
 		multiline-entry :ent
-		button "Send" { ent .get-text |printv "Sending: {}" } 
+		button "Send" { ent .get-text |printv "Sending: {}" }
 	]
 
 	app .new-window "Feedback"

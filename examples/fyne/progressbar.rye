@@ -1,0 +1,18 @@
+
+rye .needs { fyne }
+
+do\in fyne {
+	app .new-window "Feedback" :window
+
+	progressbar :prog
+	cont: container 'vbox [
+		prog
+		infinite-progressbar
+	]
+
+	go does { for range 1 10 { * 0.1 |set-value* prog , sleep 500 } }
+
+	window
+	|set-content cont
+	|show-and-run
+}

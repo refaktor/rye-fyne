@@ -1,0 +1,34 @@
+
+rye .needs { fyne }
+
+do\in fyne {
+
+    box: container-grid-cols 2 [
+        container-grid-rows 2 [
+            container-vbox [
+                label "top"
+                label "left"
+            ]
+            container-vbox [
+                label "bottom"
+                label "left"
+            ]
+        ]
+        container-grid-rows 2 [
+            container-hbox [
+                label "top"
+                label "right"
+            ]
+            container-hbox [
+                label "bottom"
+                label "right"
+            ]
+        ]
+    ]
+	
+	with app .new-window "Layouts demo" {
+		.set-content box ,
+		.show-and-run
+	}
+}
+

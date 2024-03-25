@@ -2,14 +2,23 @@
 rye .needs { fyne }
 
 do\in fyne {
-	cont: container 'vbox [
-		label "Email:" entry
-		label "Password:"
-        password-entry fn1 { = "mypwd"  }
-		button "Login" { print "Can't work on Sunday!" } 
+	cont: container-grid-rows 3 [
+	    spacer
+	    container-grid-cols 3 [
+            spacer
+            container-vbox [
+                label "Email:" entry
+                label "Password:"
+                password-entry fn1 { = "mypwd"  }
+                button "Login" { print "Can't work on Sunday!" }
+            ]
+            spacer
+        ]
+        spacer
 	]
 
 	app .new-window "Login"
 	|set-content cont
+	|resize 800 500
 	|show-and-run
 }

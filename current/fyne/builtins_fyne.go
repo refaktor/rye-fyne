@@ -408,7 +408,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 
 	"fyne-widget//horizontal-scroll": {
 		Argsn: 3,
-		Doc:   "Widget vertical scroll",
+		Doc:   "Widget horizontal scroll",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch win := arg0.(type) {
 			case env.Native:

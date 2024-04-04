@@ -5,7 +5,7 @@ go 1.21.5
 require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/refaktor/rye v0.0.17
+	github.com/refaktor/rye v0.0.18
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
 )
 
@@ -93,7 +93,7 @@ require (
 	github.com/refaktor/go-peg v0.0.0-20220116201714-31e3dfa8dc7d // indirect
 	github.com/refaktor/liner v1.2.6 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/sashabaranov/go-openai v1.20.2 // indirect
+	github.com/sashabaranov/go-openai v1.20.4 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
@@ -116,6 +116,7 @@ require (
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/term v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect

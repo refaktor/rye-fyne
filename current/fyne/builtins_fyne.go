@@ -276,9 +276,9 @@ var Builtins_fyne = map[string]*env.Builtin{
 					}
 				}
 				win := container.NewVBox(items...)
-				return *env.NewNative(ps.Idx, win, "fyne-container-vbox")
+				return *env.NewNative(ps.Idx, win, "fyne-container")
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-vbox")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
 			}
 		},
 	},
@@ -297,9 +297,9 @@ var Builtins_fyne = map[string]*env.Builtin{
 					}
 				}
 				win := container.NewHBox(items...)
-				return *env.NewNative(ps.Idx, win, "fyne-container-hbox")
+				return *env.NewNative(ps.Idx, win, "fyne-container")
 			default:
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-hbox")
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
 			}
 		},
 	},
@@ -320,12 +320,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 						}
 					}
 					win := container.NewGridWithRows(int(rows.Value), items...)
-					return *env.NewNative(ps.Idx, win, "fyne-container-grid-rows")
+					return *env.NewNative(ps.Idx, win, "fyne-container")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-grid-rows")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container-grid-rows")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container")
 			}
 		},
 	},
@@ -346,12 +346,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 						}
 					}
 					win := container.NewGridWithColumns(int(cols.Value), items...)
-					return *env.NewNative(ps.Idx, win, "fyne-container-grid-cols")
+					return *env.NewNative(ps.Idx, win, "fyne-container")
 				default:
-					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container-grid-cols")
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.WordType}, "fyne-container")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container-grid-cols")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container")
 			}
 		},
 	},
@@ -370,9 +370,125 @@ var Builtins_fyne = map[string]*env.Builtin{
 					}
 				}
 				win := container.NewCenter(items...)
-				return *env.NewNative(ps.Idx, win, "fyne-container-center")
+				return *env.NewNative(ps.Idx, win, "fyne-container")
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.WordType}, "fyne-container-center")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.WordType}, "fyne-container")
+			}
+		},
+	},
+
+	"fyne-widget//vertical-scroll": {
+		Argsn: 3,
+		Doc:   "Widget vertical scroll",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch win := arg0.(type) {
+			case env.Native:
+				var width, height float32
+				switch widthArg := arg1.(type) {
+				case env.Integer:
+					width = float32(widthArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-widget//vertical-scroll")
+				}
+				switch heightArg := arg2.(type) {
+				case env.Integer:
+					height = float32(heightArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.IntegerType}, "fyne-widget//vertical-scroll")
+				}
+				cont := win.Value.(fyne.CanvasObject)
+				scrollable := container.NewVScroll(cont)
+				scrollable.SetMinSize(fyne.NewSize(width, height))
+				return *env.NewNative(ps.Idx, scrollable, "fyne-widget-vertical-scroll")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget//vertical-scroll")
+			}
+		},
+	},
+
+	"fyne-widget//horizontal-scroll": {
+		Argsn: 3,
+		Doc:   "Widget horizontal scroll",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch win := arg0.(type) {
+			case env.Native:
+				var width, height float32
+				switch widthArg := arg1.(type) {
+				case env.Integer:
+					width = float32(widthArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-widget//horizontal-scroll")
+				}
+				switch heightArg := arg2.(type) {
+				case env.Integer:
+					height = float32(heightArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.IntegerType}, "fyne-widget//horizontal-scroll")
+				}
+				cont := win.Value.(fyne.CanvasObject)
+				scrollable := container.NewHScroll(cont)
+				scrollable.SetMinSize(fyne.NewSize(width, height))
+				return *env.NewNative(ps.Idx, scrollable, "fyne-widget-horizontal-scroll")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget//horizontal-scroll")
+			}
+		},
+	},
+
+	"fyne-container//vertical-scroll": {
+		Argsn: 3,
+		Doc:   "Container vertical scroll",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch win := arg0.(type) {
+			case env.Native:
+				var width, height float32
+				switch widthArg := arg1.(type) {
+				case env.Integer:
+					width = float32(widthArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-container//vertical-scroll")
+				}
+				switch heightArg := arg2.(type) {
+				case env.Integer:
+					height = float32(heightArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-container//vertical-scroll")
+				}
+				cont := win.Value.(fyne.CanvasObject)
+				scrollable := container.NewVScroll(cont)
+				scrollable.SetMinSize(fyne.NewSize(width, height))
+				return *env.NewNative(ps.Idx, scrollable, "fyne-container-vertical-scroll")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container//vertical-scroll")
+			}
+		},
+	},
+
+	"fyne-container//horizontal-scroll": {
+		Argsn: 3,
+		Doc:   "Container horizontal scroll",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch win := arg0.(type) {
+			case env.Native:
+				var width, height float32
+				switch widthArg := arg1.(type) {
+				case env.Integer:
+					width = float32(widthArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-container//horizontal-scroll")
+				}
+				switch heightArg := arg2.(type) {
+				case env.Integer:
+					height = float32(heightArg.Value)
+				default:
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.IntegerType}, "fyne-container//horizontal-scroll")
+				}
+				cont := win.Value.(fyne.CanvasObject)
+				scrollable := container.NewHScroll(cont)
+				scrollable.SetMinSize(fyne.NewSize(width, height))
+				return *env.NewNative(ps.Idx, scrollable, "fyne-container-horizontal-scroll")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container//horizontal-scroll")
 			}
 		},
 	},

@@ -17,7 +17,7 @@ do\in fyne {
     tab2: container-vbox [
         label "Tab 2"
         btn: button "Add progress bar" { tab2 .add-element prog , btn .disable }
-        go does { for range 1 10 { * 0.05 |set-value* prog , sleep 1000 } }
+        go does { for range 1 20 { * 0.05 |set-value* prog , sleep 1000 } }
     ]
 
     tab3: container-vbox [

@@ -596,6 +596,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				// TODO find a way to check if widget is disableable
 				switch widget := win.Value.(type) {
 				case *widget.Button:
+					widget.Enable()
 				case *widget.Select:
 					widget.Enable()
 				default:
@@ -617,6 +618,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 				// TODO find a way to check if widget is disableable
 				switch widget := win.Value.(type) {
 				case *widget.Button:
+					widget.Disable()
 				case *widget.Select:
 					widget.Disable()
 				default:

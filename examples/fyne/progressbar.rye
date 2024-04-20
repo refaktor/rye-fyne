@@ -2,10 +2,10 @@
 rye .needs { fyne }
 
 do\in fyne {
-	app .new-window "Feedback" :window
+	app .new-window "Progressbar" :window
 
 	progressbar :prog
-	cont: container 'vbox [
+	cont: container-vbox [
 		prog
 		infinite-progressbar
 	]
@@ -14,5 +14,6 @@ do\in fyne {
 
 	window
 	|set-content cont
+	|resize 300 100
 	|show-and-run
 }

@@ -261,11 +261,81 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
+	"fyne-container//add-element": {
+		Argsn: 2,
+		Doc:   "Adds element from Fyne container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch containerArg := arg0.(type) {
+			case env.Native:
+				cont := containerArg.Value.(*fyne.Container)
+				switch removeElement := arg1.(type) {
+				case env.Native:
+					widget := removeElement.Value.(fyne.CanvasObject)
+					if cont.Position() == fyne.NewPos(0, 0) {
+						return evaldo.MakeError(ps, "Before adding element to container, window must be instantiated.")
+					}
+					cont.Add(widget)
+					cont.Refresh()
+					return nil
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget")
+				}
+				return nil
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-container")
+			}
+		},
+	},
+
+	"fyne-container//remove-element": {
+		Argsn: 2,
+		Doc:   "Removes element from Fyne container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch containerArg := arg0.(type) {
+			case env.Native:
+				cont := containerArg.Value.(*fyne.Container)
+				switch removeElement := arg1.(type) {
+				case env.Native:
+					widget := removeElement.Value.(fyne.CanvasObject)
+					if cont.Position() == fyne.NewPos(0, 0) {
+						return evaldo.MakeError(ps, "Before removing element from container, window must be instantiated.")
+					}
+					cont.Remove(widget)
+					cont.Refresh()
+					return nil
+				default:
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-widget")
+				}
+				return nil
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-container")
+			}
+		},
+	},
+
+	"fyne-container//remove-all": {
+		Argsn: 1,
+		Doc:   "Removes all elements from Fyne container",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch containerArg := arg0.(type) {
+			case env.Native:
+				cont := containerArg.Value.(*fyne.Container)
+				if cont.Position() == fyne.NewPos(0, 0) {
+					return evaldo.MakeError(ps, "Before removing all elements from container, window must be instantiated.")
+				}
+				cont.RemoveAll()
+				cont.Refresh()
+				return nil
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-container")
+			}
+		},
+	},
+
 	"container-vbox": {
 		Argsn: 1,
 		Doc:   "Creates Fyne vbox container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-
 			switch bloc := arg0.(type) {
 			case env.Block:
 				items := []fyne.CanvasObject{}

@@ -1,0 +1,52 @@
+
+rye .needs { fyne }
+
+do\in fyne {
+    app .new-window "Tabs" :window
+
+    tab1: container-vbox [
+        label "Tab 1"
+        container-hbox [
+            label "Button status: "
+            button-status: label "Unclicked"
+        ]
+        button "Click me" { button-status .set-text "Clicked" }
+    ]
+
+    prog: progressbar
+    tab2: container-vbox [
+        label "Tab 2"
+        added: 0
+        button "Add progress bar" { if added = 0 { tab2 .add-element prog , added: 1 } }
+        go does { for range 1 10 { * 0.1 |set-value* prog , sleep 500 } }
+    ]
+
+    tab3: container-vbox [
+        label "Tab 3"
+        selectbox [ "First" "Second" "Third" ] :ent-select
+        container-hbox [
+            label "Select status: "
+            select-status: label "Unselected"
+        ]
+        button "Check select" { text: ent-select .get-text , select-status .set-text text }
+    ]
+
+    content: container-vbox [
+        label "Select a tab to view its content"
+    ]
+
+    button-row: container-hbox [
+        button "Tab 1" { content .remove-all , content .add-element tab1 }
+        button "Tab 2" { content .remove-all , content .add-element tab2 }
+        button "Tab 3" { content .remove-all , content .add-element tab3 }
+    ]
+
+    main: container-vbox [
+        button-row
+        content
+    ]
+
+    window
+    |set-content main
+    |show-and-run
+}

@@ -4,7 +4,7 @@
 rye .needs { fyne }
 
 do\in fyne {
-    app .new-window "RPN calculator" :window
+    app .window "RPN calculator" :win
 
 	append-a: fn { n } { value-a .get-text .concat n |set-text* value-a }
 	num-button: fn { n } { button n [ 'append-a n ] }
@@ -17,36 +17,36 @@ do\in fyne {
 			value-b .set-text ""
 		}
 	}
-	vbox: container-vbox _           ; this is experimental, might not stay in lang (currying variant)
-	hbox: container-hbox _
+	vbox: vbox _           ; this is experimental, might not stay in lang (currying variant)
+	hbox: hbox _
 
-	cont: container-grid-rows 5 [
+	cont: grid-rows 5 [
 
-        container-grid-cols 3 [
+        grid-cols 3 [
             spacer
-            container-grid-rows 2 [
-                container-grid-cols 2 [ label "B:"  entry :value-b ]
-                container-grid-cols 2 [ label "A:"  entry :value-a ]
+            grid-rows 2 [
+                grid-cols 2 [ label "B:"  entry :value-b ]
+                grid-cols 2 [ label "A:"  entry :value-a ]
             ]
             spacer
         ]
 
-		container-grid-cols 4 [
+		grid-cols 4 [
             num-button "1"  num-button "2"  num-button "3"
             calc-button "/" { / }
         ]
 
-        container-grid-cols 4 [
+        grid-cols 4 [
             num-button "4"  num-button "5"  num-button "6"
             calc-button "*" { * }
         ]
 
-        container-grid-cols 4 [
+        grid-cols 4 [
             num-button "7"  num-button "8"  num-button "9"
             calc-button "-" { - }
         ]
 
-        container-grid-cols 4 [
+        grid-cols 4 [
 			num-button "0"
             button "=" { value-a .get-text .set-text* value-b , value-a |set-text "" }
             button "~" { value-b .get-text .pass { value-a .get-text .set-text* value-b } |set-text* value-a  }
@@ -54,5 +54,5 @@ do\in fyne {
         ]
 	]
 
-	window |set-content cont |resize 400 300 |show-and-run
+	win |set-content cont |resize 400 300 |show-and-run
 }

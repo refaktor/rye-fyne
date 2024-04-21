@@ -3,7 +3,7 @@ rye .needs { fyne }
 
 do\in fyne { 
 	lab: label "Use the shell, Luke!"
-	win: app .new-window "Live GUI"
+	win: app .window "Live GUI"
 	
 	go fn { } { enter-console "Edit Fyne GUI" }
 	

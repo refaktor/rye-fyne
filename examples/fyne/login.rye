@@ -2,11 +2,11 @@
 rye .needs { fyne }
 
 do\in fyne {
-	cont: container-grid-rows 3 [
+	cont: grid-rows 3 [
 	    spacer
-	    container-grid-cols 3 [
+	    grid-cols 3 [
             spacer
-            container-vbox [
+            vbox [
                 label "Email:" entry
                 label "Password:"
                 password-entry fn1 { = "mypwd"  }
@@ -17,7 +17,7 @@ do\in fyne {
         spacer
 	]
 
-	app .new-window "Login"
+	app .window "Login"
 	|set-content cont
 	|resize 800 500
 	|show-and-run

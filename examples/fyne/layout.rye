@@ -3,30 +3,30 @@ rye .needs { fyne }
 
 do\in fyne {
 
-    box: container-grid-cols 2 [
-        container-grid-rows 2 [
-            container-vbox [
+    box: grid-cols 2 [
+        grid-rows 2 [
+            vbox [
                 label "top"
                 label "left"
             ]
-            container-vbox [
+            vbox [
                 label "bottom"
                 label "left"
             ]
         ]
-        container-grid-rows 2 [
-            container-hbox [
+        grid-rows 2 [
+            hbox [
                 label "top"
                 label "right"
             ]
-            container-hbox [
+            hbox [
                 label "bottom"
                 label "right"
             ]
         ]
     ]
 	
-	with app .new-window "Layouts demo" {
+	with app .window "Layouts demo" {
 		.set-content box ,
 		.show-and-run
 	}

@@ -29,7 +29,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return *env.NewNative(ps.Idx, app1, "fyne-app")
 		},
 	},
-	"fyne-app//new-window": {
+	"fyne-app//window": {
 		Argsn: 2,
 		Doc:   "Creates new window for and app",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -261,7 +261,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"fyne-container//add-element": {
+	"fyne-container//add": {
 		Argsn: 2,
 		Doc:   "Adds element from Fyne container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -284,7 +284,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"fyne-container//remove-element": {
+	"fyne-container//remove": {
 		Argsn: 2,
 		Doc:   "Removes element from Fyne container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -323,7 +323,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"container-vbox": {
+	"vbox": {
 		Argsn: 1,
 		Doc:   "Creates Fyne vbox container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -344,7 +344,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"container-hbox": {
+	"hbox": {
 		Argsn: 1,
 		Doc:   "Creates Fyne hbox container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -365,7 +365,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"container-grid-rows": {
+	"grid-rows": {
 		Argsn: 2,
 		Doc:   "Creates Fyne grid with rows container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -391,7 +391,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"container-grid-cols": {
+	"grid-cols": {
 		Argsn: 2,
 		Doc:   "Creates Fyne grid with cols container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -417,7 +417,7 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
-	"container-center": {
+	"center": {
 		Argsn: 1,
 		Doc:   "Creates Fyne center layout container",
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {

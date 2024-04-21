@@ -2,11 +2,12 @@
 rye .needs { fyne }
 
 do\in fyne {
-    app .new-window "Tabs" :window
 
-    tab1: container-vbox [
+	app .window "Tabs" :win
+	
+    tab1: vbox [
         label "Tab 1"
-        container-hbox [
+        hbox [
             label "Button status: "
             button-status: label "Unclicked"
         ]
@@ -14,38 +15,39 @@ do\in fyne {
     ]
 
     prog: progressbar
-    tab2: container-vbox [
+    tab2: vbox [
         label "Tab 2"
-        btn: button "Add progress bar" { tab2 .add-element prog , btn .disable }
-        go does { for range 1 20 { * 0.05 |set-value* prog , sleep 1000 } }
+        btn: button "Add progress bar" {
+			tab2 .add prog , btn .disable
+			go does { for range 1 20 { * 0.05 \set-value* prog , sleep 500 } }
+		}
     ]
 
-    tab3: container-vbox [
+    tab3: vbox [
         label "Tab 3"
         selectbox [ "First" "Second" "Third" ] :ent-select
-        container-hbox [
+        hbox [
             label "Select status: "
             select-status: label "Unselected"
         ]
         button "Check select" { text: ent-select .get-text , select-status .set-text text }
     ]
 
-    content: container-vbox [
+    content: vbox [
         label "Select a tab to view its content"
     ]
 
-    button-row: container-hbox [
-        button "Tab 1" { content .remove-all , content .add-element tab1 }
-        button "Tab 2" { content .remove-all , content .add-element tab2 }
-        button "Tab 3" { content .remove-all , content .add-element tab3 }
+    button-row: hbox [
+        button "Tab 1" { content .remove-all , content .add tab1 }
+        button "Tab 2" { content .remove-all , content .add tab2 }
+        button "Tab 3" { content .remove-all , content .add tab3 }
     ]
 
-    main: container-vbox [
+    main: vbox [
         button-row
         content
     ]
 
-    window
-    |set-content main
-    |show-and-run
+	win .set-content main \show-and-run
+
 }

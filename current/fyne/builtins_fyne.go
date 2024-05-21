@@ -438,6 +438,45 @@ var Builtins_fyne = map[string]*env.Builtin{
 		},
 	},
 
+	"form": {
+		Argsn: 1,
+		Doc:   "Creates a Fyne form widget",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			switch bloc := arg0.(type) {
+			case env.Block:
+				items := []*widget.FormItem{}
+				for _, it := range bloc.Series.S {
+					switch bloc := it.(type) {
+					case env.Block:
+						var text string
+						var widg fyne.CanvasObject
+						tpl := bloc.Series.S
+						if len(tpl) != 2 {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-container")
+						}
+						switch v := tpl[0].(type) {
+						case env.String:
+							text = v.Value
+						default:
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-container")
+						}
+						switch v := tpl[1].(type) {
+						case env.Native:
+							widg = v.Value.(fyne.CanvasObject)
+						default:
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-container")
+						}
+						items = append(items, widget.NewFormItem(text, widg))
+					}
+				}
+				win := widget.NewForm(items...)
+				return *env.NewNative(ps.Idx, win, "fyne-container")
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType}, "fyne-container")
+			}
+		},
+	},
+
 	"fyne-widget//vertical-scroll": {
 		Argsn: 3,
 		Doc:   "Widget vertical scroll",
@@ -593,18 +632,14 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch win := arg0.(type) {
 			case env.Native:
-				// TODO find a way to check if widget is disableable
-				switch widget := win.Value.(type) {
-				case *widget.Button:
-					widget.Enable()
-				case *widget.Select:
-					widget.Enable()
-				default:
+				if dw, ok := win.Value.(fyne.Disableable); ok {
+					dw.Enable()
+				} else {
 					return evaldo.MakeError(ps, "Widget is not disableable")
 				}
 				return nil
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-button")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget")
 			}
 		},
 	},
@@ -615,18 +650,14 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch win := arg0.(type) {
 			case env.Native:
-				// TODO find a way to check if widget is disableable
-				switch widget := win.Value.(type) {
-				case *widget.Button:
-					widget.Disable()
-				case *widget.Select:
-					widget.Disable()
-				default:
+				if dw, ok := win.Value.(fyne.Disableable); ok {
+					dw.Disable()
+				} else {
 					return evaldo.MakeError(ps, "Widget is not disableable")
 				}
-				return win
+				return nil
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-button")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget")
 			}
 		},
 	},

@@ -632,18 +632,14 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch win := arg0.(type) {
 			case env.Native:
-				// TODO find a way to check if widget is disableable
-				switch widget := win.Value.(type) {
-				case *widget.Button:
-					widget.Enable()
-				case *widget.Select:
-					widget.Enable()
-				default:
+				if dw, ok := win.Value.(fyne.Disableable); ok {
+					dw.Enable()
+				} else {
 					return evaldo.MakeError(ps, "Widget is not disableable")
 				}
 				return nil
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-button")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget")
 			}
 		},
 	},
@@ -654,18 +650,14 @@ var Builtins_fyne = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			switch win := arg0.(type) {
 			case env.Native:
-				// TODO find a way to check if widget is disableable
-				switch widget := win.Value.(type) {
-				case *widget.Button:
-					widget.Disable()
-				case *widget.Select:
-					widget.Disable()
-				default:
+				if dw, ok := win.Value.(fyne.Disableable); ok {
+					dw.Disable()
+				} else {
 					return evaldo.MakeError(ps, "Widget is not disableable")
 				}
-				return win
+				return nil
 			default:
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-button")
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget")
 			}
 		},
 	},

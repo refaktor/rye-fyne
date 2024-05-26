@@ -41,3 +41,6 @@ data.txt
 bin/
 dist/
 tests/*.html
+
+# Fynegen: source code for fyne
+fynegen/fyne-src

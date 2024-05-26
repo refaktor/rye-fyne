@@ -1,0 +1,14 @@
+; Requires -tags b_fynegen
+
+rye .needs { fyne }
+
+do\in fyne {
+    a: app .window "Hello"
+
+    lab1: widget-rich-text-from-markdown "## Hello, world!"
+    lab2: widget-rich-text-from-markdown "The fyne bindings for this were generated :)"
+
+	a
+    |set-content container-h-split lab1 lab2
+	|show-and-run
+}

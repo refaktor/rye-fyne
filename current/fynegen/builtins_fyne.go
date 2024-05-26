@@ -7,10 +7,10 @@ package fynegen
 import (
 	"errors"
 	"net/url"
-	
+
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/evaldo"
-	
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"

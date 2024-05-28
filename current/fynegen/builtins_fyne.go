@@ -5,12 +5,11 @@
 package fynegen
 
 import (
-	"errors"
 	"net/url"
-
+	
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/evaldo"
-
+	
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
@@ -18,10201 +17,14492 @@ import (
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/driver/mobile"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
+func boolToInt64(x bool) int64 {
+	var res int64
+	if x {
+		res = 1
+	}
+	return res
+}
+
 var Builtins_fynegen = map[string]*env.Builtin{
-	"fyne-vector-2//is-zero": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			res := arg0Val.IsZero()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-double-tappable//double-tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.DoubleTappable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg0Val.DoubleTapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-driver//create-window": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-window")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-window")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "create-window")
-			}
-			res := arg0Val.CreateWindow(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "fyne-window")
-		},
-	},
-	"fyne-driver//all-windows": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "all-windows")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "all-windows")
-			}
-			res := arg0Val.AllWindows()
-			return *env.NewNative(ps.Idx, res, "fyne-window-arr")
-		},
-	},
-	"fyne-driver//canvas-for-object": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "canvas-for-object")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "canvas-for-object")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "canvas-for-object")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "canvas-for-object")
-			}
-			res := arg0Val.CanvasForObject(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-canvas")
-		},
-	},
-	"fyne-driver//absolute-position-for-object": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "absolute-position-for-object")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "absolute-position-for-object")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "absolute-position-for-object")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "absolute-position-for-object")
-			}
-			res := arg0Val.AbsolutePositionForObject(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"fyne-driver//device": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "device")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "device")
-			}
-			res := arg0Val.Device()
-			return *env.NewNative(ps.Idx, res, "fyne-device")
-		},
-	},
-	"fyne-driver//run": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "run")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "run")
-			}
-			arg0Val.Run()
-			return arg0Nat
-		},
-	},
-	"fyne-driver//quit": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "quit")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "quit")
-			}
-			arg0Val.Quit()
-			return arg0Nat
-		},
-	},
-	"fyne-driver//start-animation": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "start-animation")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "start-animation")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "start-animation")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.Animation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "start-animation")
-			}
-			arg0Val.StartAnimation(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-driver//stop-animation": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "stop-animation")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Driver)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "stop-animation")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "stop-animation")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.Animation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "stop-animation")
-			}
-			arg0Val.StopAnimation(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-device//orientation": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "orientation")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Device)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "orientation")
-			}
-			res := arg0Val.Orientation()
-			return *env.NewNative(ps.Idx, res, "fyne-device-orientation")
-		},
-	},
-	"fyne-device//is-mobile": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-mobile")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Device)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-mobile")
-			}
-			res := arg0Val.IsMobile()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-device//is-browser": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-browser")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Device)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-browser")
-			}
-			res := arg0Val.IsBrowser()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-device//has-keyboard": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "has-keyboard")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Device)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "has-keyboard")
-			}
-			res := arg0Val.HasKeyboard()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-device//system-scale-for-window": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "system-scale-for-window")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Device)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "system-scale-for-window")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "system-scale-for-window")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "system-scale-for-window")
-			}
-			res := arg0Val.SystemScaleForWindow(arg1Val)
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"fyne-layout//layout": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "layout")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Layout)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "layout")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "layout")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "layout")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "layout")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "layout")
-			}
-			arg0Val.Layout(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"fyne-layout//min-size": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Layout)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "min-size")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-settings//theme": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme")
-			}
-			res := arg0Val.Theme()
-			return *env.NewNative(ps.Idx, res, "fyne-theme")
-		},
-	},
-	"fyne-settings//set-theme": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-theme")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-theme")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-theme")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Theme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-theme")
-			}
-			arg0Val.SetTheme(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-settings//theme-variant": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-variant")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-variant")
-			}
-			res := arg0Val.ThemeVariant()
-			return *env.NewNative(ps.Idx, res, "fyne-theme-variant")
-		},
-	},
-	"fyne-settings//scale": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scale")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scale")
-			}
-			res := arg0Val.Scale()
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"fyne-settings//primary-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-color")
-			}
-			res := arg0Val.PrimaryColor()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-settings//build-type": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "build-type")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "build-type")
-			}
-			res := arg0Val.BuildType()
-			return *env.NewNative(ps.Idx, res, "fyne-build-type")
-		},
-	},
-	"fyne-settings//show-animations": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-animations")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Settings)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-animations")
-			}
-			res := arg0Val.ShowAnimations()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-rich-text-segment//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-rich-text-segment//textual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-rich-text-segment//update": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-rich-text-segment//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-rich-text-segment//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-rich-text-segment//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-rich-text-segment//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"fyne-preferences//bool": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "bool")
-			}
-			res := arg0Val.Bool(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-preferences//bool-with-fallback": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool-with-fallback")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool-with-fallback")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "bool-with-fallback")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "bool-with-fallback")
-			}
-			res := arg0Val.BoolWithFallback(arg1Str.Value, arg2Int.Value != 0)
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-preferences//set-bool": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-bool")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-bool")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-bool")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "set-bool")
-			}
-			arg0Val.SetBool(arg1Str.Value, arg2Int.Value != 0)
-			return arg0Nat
-		},
-	},
-	"fyne-preferences//bool-list": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool-list")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bool-list")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "bool-list")
-			}
-			res := arg0Val.BoolList(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "bool-arr")
-		},
-	},
-	"fyne-preferences//float": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "float")
-			}
-			res := arg0Val.Float(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "float64")
-		},
-	},
-	"fyne-preferences//float-with-fallback": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float-with-fallback")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float-with-fallback")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "float-with-fallback")
-			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "float-with-fallback")
-			}
-			res := arg0Val.FloatWithFallback(arg1Str.Value, arg2Dec.Value)
-			return *env.NewNative(ps.Idx, res, "float64")
-		},
-	},
-	"fyne-preferences//set-float": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-float")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-float")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-float")
-			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "set-float")
-			}
-			arg0Val.SetFloat(arg1Str.Value, arg2Dec.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-preferences//float-list": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float-list")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "float-list")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "float-list")
-			}
-			res := arg0Val.FloatList(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "float64-arr")
-		},
-	},
-	"fyne-preferences//int": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "int")
-			}
-			res := arg0Val.Int(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-preferences//int-with-fallback": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int-with-fallback")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int-with-fallback")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "int-with-fallback")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "int-with-fallback")
-			}
-			res := arg0Val.IntWithFallback(arg1Str.Value, int(arg2Int.Value))
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-preferences//set-int": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-int")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-int")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-int")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "set-int")
-			}
-			arg0Val.SetInt(arg1Str.Value, int(arg2Int.Value))
-			return arg0Nat
-		},
-	},
-	"fyne-preferences//int-list": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int-list")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "int-list")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "int-list")
-			}
-			res := arg0Val.IntList(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "int-arr")
-		},
-	},
-	"fyne-preferences//string": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "string")
-			}
-			res := arg0Val.String(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-preferences//string-with-fallback": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string-with-fallback")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string-with-fallback")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "string-with-fallback")
-			}
-			arg2Str, ok := arg2.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "string-with-fallback")
-			}
-			res := arg0Val.StringWithFallback(arg1Str.Value, arg2Str.Value)
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-preferences//set-string": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-string")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-string")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-string")
-			}
-			arg2Str, ok := arg2.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "set-string")
-			}
-			arg0Val.SetString(arg1Str.Value, arg2Str.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-preferences//string-list": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string-list")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string-list")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "string-list")
-			}
-			res := arg0Val.StringList(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "string-arr")
-		},
-	},
-	"fyne-preferences//remove-value": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-value")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Preferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-value")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "remove-value")
-			}
-			arg0Val.RemoveValue(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-cloud-provider-preferences//cloud-preferences": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-preferences")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProviderPreferences)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-preferences")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cloud-preferences")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cloud-preferences")
-			}
-			res := arg0Val.CloudPreferences(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-preferences")
-		},
-	},
-	"fyne-draggable//dragged": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Draggable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.DragEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val.Dragged(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-draggable//drag-end": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Draggable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val.DragEnd()
-			return arg0Nat
-		},
-	},
-	"fyne-scrollable//scrolled": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scrolled")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Scrollable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scrolled")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "scrolled")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.ScrollEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "scrolled")
-			}
-			arg0Val.Scrolled(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-validatable//validate": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "validate")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Validatable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "validate")
-			}
-			res := arg0Val.Validate()
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"fyne-window//title": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "title")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "title")
-			}
-			res := arg0Val.Title()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-window//set-title": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-title")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-title")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-title")
-			}
-			arg0Val.SetTitle(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-window//full-screen": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "full-screen")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "full-screen")
-			}
-			res := arg0Val.FullScreen()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-window//set-full-screen": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-full-screen")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-full-screen")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-full-screen")
-			}
-			arg0Val.SetFullScreen(arg1Int.Value != 0)
-			return arg0Nat
-		},
-	},
-	"fyne-window//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-window//request-focus": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "request-focus")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "request-focus")
-			}
-			arg0Val.RequestFocus()
-			return arg0Nat
-		},
-	},
-	"fyne-window//fixed-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fixed-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fixed-size")
-			}
-			res := arg0Val.FixedSize()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-window//set-fixed-size": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-fixed-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-fixed-size")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-fixed-size")
-			}
-			arg0Val.SetFixedSize(arg1Int.Value != 0)
-			return arg0Nat
-		},
-	},
-	"fyne-window//center-on-screen": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "center-on-screen")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "center-on-screen")
-			}
-			arg0Val.CenterOnScreen()
-			return arg0Nat
-		},
-	},
-	"fyne-window//padded": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "padded")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "padded")
-			}
-			res := arg0Val.Padded()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-window//set-padded": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-padded")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-padded")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-padded")
-			}
-			arg0Val.SetPadded(arg1Int.Value != 0)
-			return arg0Nat
-		},
-	},
-	"fyne-window//icon": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			res := arg0Val.Icon()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-window//set-icon": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val.SetIcon(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-window//set-master": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-master")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-master")
-			}
-			arg0Val.SetMaster()
-			return arg0Nat
-		},
-	},
-	"fyne-window//main-menu": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "main-menu")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "main-menu")
-			}
-			res := arg0Val.MainMenu()
-			return *env.NewNative(ps.Idx, res, "fyne-main-menu-ptr")
-		},
-	},
-	"fyne-window//set-main-menu": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-main-menu")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-main-menu")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-main-menu")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.MainMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-main-menu")
-			}
-			arg0Val.SetMainMenu(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-window//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"fyne-window//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"fyne-window//close": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close")
-			}
-			arg0Val.Close()
-			return arg0Nat
-		},
-	},
-	"fyne-window//show-and-run": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-and-run")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-and-run")
-			}
-			arg0Val.ShowAndRun()
-			return arg0Nat
-		},
-	},
-	"fyne-window//content": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			res := arg0Val.Content()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"fyne-window//set-content": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val.SetContent(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-window//canvas": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "canvas")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "canvas")
-			}
-			res := arg0Val.Canvas()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas")
-		},
-	},
-	"fyne-window//clipboard": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "clipboard")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Window)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "clipboard")
-			}
-			res := arg0Val.Clipboard()
-			return *env.NewNative(ps.Idx, res, "fyne-clipboard")
-		},
-	},
-	"fyne-widget//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"fyne-canvas-object//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-canvas-object//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas-object//position": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
-			}
-			res := arg0Val.Position()
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"fyne-canvas-object//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas-object//size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			res := arg0Val.Size()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-canvas-object//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"fyne-canvas-object//visible": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			res := arg0Val.Visible()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-canvas-object//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"fyne-canvas-object//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"fyne-cloud-provider//provider-description": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-description")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-description")
-			}
-			res := arg0Val.ProviderDescription()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-cloud-provider//provider-icon": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-icon")
-			}
-			res := arg0Val.ProviderIcon()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-cloud-provider//provider-name": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-name")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "provider-name")
-			}
-			res := arg0Val.ProviderName()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-cloud-provider//cleanup": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cleanup")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cleanup")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cleanup")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cleanup")
-			}
-			arg0Val.Cleanup(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-cloud-provider//setup": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "setup")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "setup")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "setup")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "setup")
-			}
-			res := arg0Val.Setup(arg1Val)
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"fyne-resource//name": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "name")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "name")
-			}
-			res := arg0Val.Name()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-resource//content": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			res := arg0Val.Content()
-			return *env.NewNative(ps.Idx, res, "byte-arr")
-		},
-	},
-	"fyne-storage//root-uri": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "root-uri")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Storage)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "root-uri")
-			}
-			res := arg0Val.RootURI()
-			return *env.NewNative(ps.Idx, res, "fyne-uri")
-		},
-	},
-	"fyne-storage//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Storage)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "remove")
-			}
-			res := arg0Val.Remove(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"fyne-storage//list": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "list")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Storage)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "list")
-			}
-			res := arg0Val.List()
-			return *env.NewNative(ps.Idx, res, "string-arr")
-		},
-	},
-	"fyne-disableable//enable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Disableable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val.Enable()
-			return arg0Nat
-		},
-	},
-	"fyne-disableable//disable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Disableable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val.Disable()
-			return arg0Nat
-		},
-	},
-	"fyne-disableable//disabled": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Disableable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			res := arg0Val.Disabled()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-app//window": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "window")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "window")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "window")
-			}
-			res := arg0Val.NewWindow(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "fyne-window")
-		},
-	},
-	"fyne-app//open-url": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open-url")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open-url")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "open-url")
-			}
-			arg1Val, ok := arg1Nat.Value.(*url.URL)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "open-url")
-			}
-			res := arg0Val.OpenURL(arg1Val)
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"fyne-app//icon": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			res := arg0Val.Icon()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-app//set-icon": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val.SetIcon(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-app//run": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "run")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "run")
-			}
-			arg0Val.Run()
-			return arg0Nat
-		},
-	},
-	"fyne-app//quit": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "quit")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "quit")
-			}
-			arg0Val.Quit()
-			return arg0Nat
-		},
-	},
-	"fyne-app//driver": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "driver")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "driver")
-			}
-			res := arg0Val.Driver()
-			return *env.NewNative(ps.Idx, res, "fyne-driver")
-		},
-	},
-	"fyne-app//unique-id": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unique-id")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unique-id")
-			}
-			res := arg0Val.UniqueID()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-app//send-notification": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "send-notification")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "send-notification")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "send-notification")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.Notification)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "send-notification")
-			}
-			arg0Val.SendNotification(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-app//settings": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "settings")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "settings")
-			}
-			res := arg0Val.Settings()
-			return *env.NewNative(ps.Idx, res, "fyne-settings")
-		},
-	},
-	"fyne-app//preferences": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "preferences")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "preferences")
-			}
-			res := arg0Val.Preferences()
-			return *env.NewNative(ps.Idx, res, "fyne-preferences")
-		},
-	},
-	"fyne-app//storage": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "storage")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "storage")
-			}
-			res := arg0Val.Storage()
-			return *env.NewNative(ps.Idx, res, "fyne-storage")
-		},
-	},
-	"fyne-app//lifecycle": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "lifecycle")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "lifecycle")
-			}
-			res := arg0Val.Lifecycle()
-			return *env.NewNative(ps.Idx, res, "fyne-lifecycle")
-		},
-	},
-	"fyne-app//metadata": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "metadata")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "metadata")
-			}
-			res := arg0Val.Metadata()
-			return *env.NewNative(ps.Idx, res, "fyne-app-metadata")
-		},
-	},
-	"fyne-app//cloud-provider": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-provider")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-provider")
-			}
-			res := arg0Val.CloudProvider()
-			return *env.NewNative(ps.Idx, res, "fyne-cloud-provider")
-		},
-	},
-	"fyne-app//set-cloud-provider": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-cloud-provider")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-cloud-provider")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-cloud-provider")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CloudProvider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-cloud-provider")
-			}
-			arg0Val.SetCloudProvider(arg1Val)
-			return arg0Nat
-		},
-	},
 	"fyne-tabbable//accepts-tab": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "accepts-tab")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Tabbable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "accepts-tab")
+			var arg0Val fyne.Tabbable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Tabbable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-tabbable//accepts-tab")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-tabbable//accepts-tab")
 			}
 			res := arg0Val.AcceptsTab()
-			return *env.NewNative(ps.Idx, res, "bool")
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
 		},
 	},
 	"fyne-tappable//tapped": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
+			var arg0Val fyne.Tappable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Tappable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-tappable//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-tappable//tapped")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Tappable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-tappable//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-tappable//tapped")
 			}
 			arg0Val.Tapped(arg1Val)
-			return arg0Nat
+			return arg0
 		},
 	},
-	"fyne-legacy-theme//background-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			res := arg0Val.BackgroundColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//button-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "button-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "button-color")
-			}
-			res := arg0Val.ButtonColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//disabled-button-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-button-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-button-color")
-			}
-			res := arg0Val.DisabledButtonColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//text-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
-			}
-			res := arg0Val.TextColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//disabled-text-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-text-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-text-color")
-			}
-			res := arg0Val.DisabledTextColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//place-holder-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "place-holder-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "place-holder-color")
-			}
-			res := arg0Val.PlaceHolderColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//primary-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-color")
-			}
-			res := arg0Val.PrimaryColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//hover-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hover-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hover-color")
-			}
-			res := arg0Val.HoverColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//focus-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-color")
-			}
-			res := arg0Val.FocusColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//scroll-bar-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-color")
-			}
-			res := arg0Val.ScrollBarColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//shadow-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "shadow-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "shadow-color")
-			}
-			res := arg0Val.ShadowColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-legacy-theme//text-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-size")
-			}
-			res := arg0Val.TextSize()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-legacy-theme//text-font": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-font")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-font")
-			}
-			res := arg0Val.TextFont()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-legacy-theme//text-bold-font": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-bold-font")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-bold-font")
-			}
-			res := arg0Val.TextBoldFont()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-legacy-theme//text-italic-font": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-italic-font")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-italic-font")
-			}
-			res := arg0Val.TextItalicFont()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-legacy-theme//text-bold-italic-font": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-bold-italic-font")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-bold-italic-font")
-			}
-			res := arg0Val.TextBoldItalicFont()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-legacy-theme//text-monospace-font": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-monospace-font")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-monospace-font")
-			}
-			res := arg0Val.TextMonospaceFont()
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-legacy-theme//padding": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "padding")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "padding")
-			}
-			res := arg0Val.Padding()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-legacy-theme//icon-inline-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon-inline-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon-inline-size")
-			}
-			res := arg0Val.IconInlineSize()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-legacy-theme//scroll-bar-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-size")
-			}
-			res := arg0Val.ScrollBarSize()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-legacy-theme//scroll-bar-small-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-small-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.LegacyTheme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scroll-bar-small-size")
-			}
-			res := arg0Val.ScrollBarSmallSize()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-cloud-provider-storage//cloud-storage": {
+	"fyne-cloud-provider-preferences//cloud-preferences": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-storage")
+			var arg0Val fyne.CloudProviderPreferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProviderPreferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider-preferences//cloud-preferences")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider-preferences//cloud-preferences")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CloudProviderStorage)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cloud-storage")
+			var arg1Val fyne.App
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider-preferences//cloud-preferences")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider-preferences//cloud-preferences")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cloud-storage")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "cloud-storage")
-			}
-			res := arg0Val.CloudStorage(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-storage")
+			res := arg0Val.CloudPreferences(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-preferences")
+			return resObj
 		},
 	},
-	"fyne-overlay-stack//add": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.OverlayStack)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val.Add(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-overlay-stack//list": {
+	"fyne-vector-2//is-zero": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "list")
+			var arg0Val fyne.Vector2
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-vector-2//is-zero")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-vector-2//is-zero")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.OverlayStack)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "list")
-			}
-			res := arg0Val.List()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object-arr")
+			res := arg0Val.IsZero()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
 		},
 	},
-	"fyne-overlay-stack//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.OverlayStack)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val.Remove(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-overlay-stack//top": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "top")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.OverlayStack)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "top")
-			}
-			res := arg0Val.Top()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"fyne-canvas//content": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			res := arg0Val.Content()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"fyne-canvas//set-content": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val.SetContent(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//refresh": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "refresh")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//focus": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "focus")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Focusable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "focus")
-			}
-			arg0Val.Focus(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//focus-next": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-next")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-next")
-			}
-			arg0Val.FocusNext()
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//focus-previous": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-previous")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-previous")
-			}
-			arg0Val.FocusPrevious()
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//unfocus": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unfocus")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unfocus")
-			}
-			arg0Val.Unfocus()
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//focused": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focused")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focused")
-			}
-			res := arg0Val.Focused()
-			return *env.NewNative(ps.Idx, res, "fyne-focusable")
-		},
-	},
-	"fyne-canvas//size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			res := arg0Val.Size()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-canvas//scale": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scale")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "scale")
-			}
-			res := arg0Val.Scale()
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"fyne-canvas//overlays": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "overlays")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "overlays")
-			}
-			res := arg0Val.Overlays()
-			return *env.NewNative(ps.Idx, res, "fyne-overlay-stack")
-		},
-	},
-	"fyne-canvas//remove-shortcut": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-shortcut")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-shortcut")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove-shortcut")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Shortcut)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove-shortcut")
-			}
-			arg0Val.RemoveShortcut(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-canvas//capture": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "capture")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "capture")
-			}
-			res := arg0Val.Capture()
-			return *env.NewNative(ps.Idx, res, "image-image")
-		},
-	},
-	"fyne-focusable//focus-gained": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Focusable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val.FocusGained()
-			return arg0Nat
-		},
-	},
-	"fyne-focusable//focus-lost": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Focusable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val.FocusLost()
-			return arg0Nat
-		},
-	},
-	"fyne-focusable//typed-key": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Focusable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val.TypedKey(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-toolbar-item//toolbar-object": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "toolbar-object")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.ToolbarItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "toolbar-object")
-			}
-			res := arg0Val.ToolbarObject()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-text-grid-style//text-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.TextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
-			}
-			res := arg0Val.TextColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"widget-text-grid-style//background-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.TextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			res := arg0Val.BackgroundColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"fyne-shortcutable//typed-shortcut": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Shortcutable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Shortcut)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val.TypedShortcut(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-theme//color": {
+	"fyne-layout//layout": {
 		Argsn: 3,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "color")
+			var arg0Val fyne.Layout
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Layout)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-layout//layout")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-layout//layout")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Theme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "color")
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//layout")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//layout")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//layout")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//layout")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "color")
+			var arg2Val fyne.Size
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-layout//layout")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-layout//layout")
 			}
-			arg1Val, ok := arg1Nat.Value.(fyne.ThemeColorName)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "color")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "color")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.ThemeVariant)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "color")
-			}
-			res := arg0Val.Color(arg1Val, arg2Val)
-			return *env.NewNative(ps.Idx, res, "color-color")
+			arg0Val.Layout(arg1Val, arg2Val)
+			return arg0
 		},
 	},
-	"fyne-theme//font": {
+	"fyne-layout//min-size": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "font")
+			var arg0Val fyne.Layout
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Layout)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-layout//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-layout//min-size")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Theme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "font")
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//min-size")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//min-size")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//min-size")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-layout//min-size")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "font")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.TextStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "font")
-			}
-			res := arg0Val.Font(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-theme//icon": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Theme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "icon")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "icon")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.ThemeIconName)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "icon")
-			}
-			res := arg0Val.Icon(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-resource")
-		},
-	},
-	"fyne-theme//size": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Theme)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "size")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.ThemeSizeName)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "size")
-			}
-			res := arg0Val.Size(arg1Val)
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"fyne-secondary-tappable//tapped-secondary": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.SecondaryTappable)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val.TappedSecondary(arg1Val)
-			return arg0Nat
+			res := arg0Val.MinSize(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
 		},
 	},
 	"fyne-clipboard//content": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Clipboard)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
+			var arg0Val fyne.Clipboard
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Clipboard)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-clipboard//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-clipboard//content")
 			}
 			res := arg0Val.Content()
-			return *env.NewNative(ps.Idx, res, "string")
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
 	"fyne-clipboard//set-content": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
+			var arg0Val fyne.Clipboard
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Clipboard)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-clipboard//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-clipboard//set-content")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Clipboard)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-clipboard//set-content")
 			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-content")
-			}
-			arg0Val.SetContent(arg1Str.Value)
-			return arg0Nat
+			arg0Val.SetContent(arg1Val)
+			return arg0
 		},
 	},
-	"fyne-widget-renderer//destroy": {
+	"fyne-canvas-object//min-size": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "destroy")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.WidgetRenderer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "destroy")
-			}
-			arg0Val.Destroy()
-			return arg0Nat
-		},
-	},
-	"fyne-widget-renderer//layout": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "layout")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.WidgetRenderer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "layout")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "layout")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "layout")
-			}
-			arg0Val.Layout(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-widget-renderer//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.WidgetRenderer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//min-size")
 			}
 			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
 		},
 	},
-	"fyne-widget-renderer//objects": {
-		Argsn: 1,
+	"fyne-canvas-object//move": {
+		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "objects")
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//move")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.WidgetRenderer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "objects")
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas-object//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas-object//move")
 			}
-			res := arg0Val.Objects()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object-arr")
+			arg0Val.Move(arg1Val)
+			return arg0
 		},
 	},
-	"fyne-widget-renderer//refresh": {
+	"fyne-canvas-object//position": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//position")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.WidgetRenderer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
+			res := arg0Val.Position()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"fyne-canvas-object//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas-object//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas-object//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-canvas-object//size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//size")
+			}
+			res := arg0Val.Size()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"fyne-canvas-object//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"fyne-canvas-object//visible": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//visible")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//visible")
+			}
+			res := arg0Val.Visible()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-canvas-object//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"fyne-canvas-object//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas-object//refresh")
 			}
 			arg0Val.Refresh()
-			return arg0Nat
+			return arg0
+		},
+	},
+	"fyne-double-tappable//double-tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.DoubleTappable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.DoubleTappable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-double-tappable//double-tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-double-tappable//double-tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-double-tappable//double-tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-double-tappable//double-tapped")
+			}
+			arg0Val.DoubleTapped(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-scrollable//scrolled": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Scrollable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Scrollable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-scrollable//scrolled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-scrollable//scrolled")
+			}
+			var arg1Val *fyne.ScrollEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.ScrollEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-scrollable//scrolled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-scrollable//scrolled")
+			}
+			arg0Val.Scrolled(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-secondary-tappable//tapped-secondary": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.SecondaryTappable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.SecondaryTappable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-secondary-tappable//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-secondary-tappable//tapped-secondary")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-secondary-tappable//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-secondary-tappable//tapped-secondary")
+			}
+			arg0Val.TappedSecondary(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-cloud-provider//provider-description": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProvider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-description")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-description")
+			}
+			res := arg0Val.ProviderDescription()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-cloud-provider//provider-icon": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProvider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-icon")
+			}
+			res := arg0Val.ProviderIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-cloud-provider//provider-name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProvider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//provider-name")
+			}
+			res := arg0Val.ProviderName()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-cloud-provider//cleanup": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProvider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//cleanup")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//cleanup")
+			}
+			var arg1Val fyne.App
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider//cleanup")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider//cleanup")
+			}
+			arg0Val.Cleanup(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-cloud-provider//setup": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProvider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//setup")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider//setup")
+			}
+			var arg1Val fyne.App
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider//setup")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider//setup")
+			}
+			res := arg0Val.Setup(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
+		},
+	},
+	"fyne-cloud-provider-storage//cloud-storage": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CloudProviderStorage
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CloudProviderStorage)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider-storage//cloud-storage")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-cloud-provider-storage//cloud-storage")
+			}
+			var arg1Val fyne.App
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider-storage//cloud-storage")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-cloud-provider-storage//cloud-storage")
+			}
+			res := arg0Val.CloudStorage(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-storage")
+			return resObj
+		},
+	},
+	"fyne-driver//create-window": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//create-window")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//create-window")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-driver//create-window")
+			}
+			res := arg0Val.CreateWindow(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-window")
+			return resObj
+		},
+	},
+	"fyne-driver//all-windows": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//all-windows")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//all-windows")
+			}
+			res := arg0Val.AllWindows()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-window-arr")
+			return resObj
+		},
+	},
+	"fyne-driver//canvas-for-object": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//canvas-for-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//canvas-for-object")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//canvas-for-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//canvas-for-object")
+			}
+			res := arg0Val.CanvasForObject(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas")
+			return resObj
+		},
+	},
+	"fyne-driver//absolute-position-for-object": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//absolute-position-for-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//absolute-position-for-object")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//absolute-position-for-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//absolute-position-for-object")
+			}
+			res := arg0Val.AbsolutePositionForObject(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"fyne-driver//device": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//device")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//device")
+			}
+			res := arg0Val.Device()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-device")
+			return resObj
+		},
+	},
+	"fyne-driver//run": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//run")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//run")
+			}
+			arg0Val.Run()
+			return arg0
+		},
+	},
+	"fyne-driver//quit": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//quit")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//quit")
+			}
+			arg0Val.Quit()
+			return arg0
+		},
+	},
+	"fyne-driver//start-animation": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//start-animation")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//start-animation")
+			}
+			var arg1Val *fyne.Animation
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.Animation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//start-animation")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//start-animation")
+			}
+			arg0Val.StartAnimation(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-driver//stop-animation": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Driver
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Driver)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//stop-animation")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-driver//stop-animation")
+			}
+			var arg1Val *fyne.Animation
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.Animation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//stop-animation")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-driver//stop-animation")
+			}
+			arg0Val.StopAnimation(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-validatable//validate": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Validatable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Validatable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-validatable//validate")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-validatable//validate")
+			}
+			res := arg0Val.Validate()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
 		},
 	},
 	"widget-rich-text-block//segments": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
-			}
-			arg0Val, ok := arg0Nat.Value.(widget.RichTextBlock)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
+			var arg0Val widget.RichTextBlock
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextBlock)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-block//segments")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-block//segments")
 			}
 			res := arg0Val.Segments()
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
+			return resObj
 		},
 	},
-	"widget-label-ptr//set-text": {
+	"fyne-app//window": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//window")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//window")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-app//window")
 			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-text")
-			}
-			arg0Val.SetText(arg1Str.Value)
-			return arg0Nat
+			res := arg0Val.NewWindow(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-window")
+			return resObj
 		},
 	},
-	"widget-pop-up-ptr//show-at-relative-position": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg0Val.ShowAtRelativePosition(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//set-items": {
+	"fyne-app//open-url": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-items")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//open-url")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//open-url")
 			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-items")
+			var arg1Val *url.URL
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*url.URL)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//open-url")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//open-url")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-items")
-			}
-			arg1Val, ok := arg1Nat.Value.([]*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-items")
-			}
-			arg0Val.SetItems(arg1Val)
-			return arg0Nat
+			res := arg0Val.OpenURL(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
 		},
 	},
-	"widget-separator-segment-ptr//inline": {
+	"fyne-app//icon": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//icon")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
+			res := arg0Val.Icon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
 		},
 	},
-	"widget-text-grid-ptr//set-text": {
+	"fyne-app//set-icon": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//set-icon")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg1Val fyne.Resource
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//set-icon")
 			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-text")
-			}
-			arg0Val.SetText(arg1Str.Value)
-			return arg0Nat
+			arg0Val.SetIcon(arg1Val)
+			return arg0
 		},
 	},
-	"widget-base-widget-ptr//min-size": {
+	"fyne-app//run": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//run")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//run")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
+			arg0Val.Run()
+			return arg0
 		},
 	},
-	"widget-menu-ptr//refresh": {
+	"fyne-app//quit": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//quit")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//quit")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
+			arg0Val.Quit()
+			return arg0
 		},
 	},
-	"widget-file-icon-ptr//set-uri": {
+	"fyne-app//driver": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//driver")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//driver")
+			}
+			res := arg0Val.Driver()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-driver")
+			return resObj
+		},
+	},
+	"fyne-app//unique-id": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//unique-id")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//unique-id")
+			}
+			res := arg0Val.UniqueID()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-app//send-notification": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-uri")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//send-notification")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//send-notification")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.FileIcon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-uri")
+			var arg1Val *fyne.Notification
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.Notification)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//send-notification")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//send-notification")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-uri")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.URI)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-uri")
-			}
-			arg0Val.SetURI(arg1Val)
-			return arg0Nat
+			arg0Val.SendNotification(arg1Val)
+			return arg0
 		},
 	},
-	"container-app-tabs-ptr//select-tab": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-tab")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-tab")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select-tab")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select-tab")
-			}
-			arg0Val.SelectTab(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-form-ptr//refresh": {
+	"fyne-app//settings": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//settings")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//settings")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
+			res := arg0Val.Settings()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-settings")
+			return resObj
 		},
 	},
-	"widget-label-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-container-ptr//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val.Remove(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//hide": {
+	"fyne-app//preferences": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//preferences")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//preferences")
 			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
+			res := arg0Val.Preferences()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-preferences")
+			return resObj
 		},
 	},
-	"fyne-square-size": {
+	"fyne-app//storage": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-square-size")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//storage")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//storage")
 			}
-			res := fyne.NewSquareSize(float32(arg0Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-size")
+			res := arg0Val.Storage()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-storage")
+			return resObj
 		},
 	},
-	"widget-entry-ptr//focus-gained": {
+	"fyne-app//lifecycle": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//lifecycle")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//lifecycle")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val.FocusGained()
-			return arg0Nat
+			res := arg0Val.Lifecycle()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-lifecycle")
+			return resObj
 		},
 	},
-	"widget-paragraph-segment-ptr//update": {
+	"fyne-app//metadata": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//metadata")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//metadata")
+			}
+			res := arg0Val.Metadata()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-app-metadata")
+			return resObj
+		},
+	},
+	"fyne-app//cloud-provider": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//cloud-provider")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//cloud-provider")
+			}
+			res := arg0Val.CloudProvider()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-cloud-provider")
+			return resObj
+		},
+	},
+	"fyne-app//set-cloud-provider": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//set-cloud-provider")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app//set-cloud-provider")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
+			var arg1Val fyne.CloudProvider
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CloudProvider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//set-cloud-provider")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-app//set-cloud-provider")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
+			arg0Val.SetCloudProvider(arg1Val)
+			return arg0
 		},
 	},
-	"widget-entry-ptr//disabled": {
+	"fyne-resource//name": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			res := arg0Val.Disabled()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-progress-bar-ptr//set-value": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-value")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBar)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-value")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "set-value")
-			}
-			arg0Val.SetValue(arg1Dec.Value)
-			return arg0Nat
-		},
-	},
-	"widget-progress-bar-ptr//unbind": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBar)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val.Unbind()
-			return arg0Nat
-		},
-	},
-	"widget-list-segment-ptr//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-entry": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewEntry()
-			return *env.NewNative(ps.Idx, res, "widget-entry-ptr")
-		},
-	},
-	"container": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Layout)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container")
-			}
-			res := container.New(arg0Val, arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"container-doc-tabs-ptr//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val.Remove(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-accordion-ptr//append": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg1Val, ok := arg1Nat.Value.(*widget.AccordionItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val.Append(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-static-resource-ptr//name": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "name")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.StaticResource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "name")
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-resource//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-resource//name")
 			}
 			res := arg0Val.Name()
-			return *env.NewNative(ps.Idx, res, "string")
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
-	"widget-paragraph-segment-ptr//selected-text": {
+	"fyne-resource//content": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-resource//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-resource//content")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
 		},
 	},
-	"widget-menu-ptr//deactivate-last-submenu": {
+	"fyne-window//title": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "deactivate-last-submenu")
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//title")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//title")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "deactivate-last-submenu")
-			}
-			res := arg0Val.DeactivateLastSubmenu()
-			return *env.NewNative(ps.Idx, res, "bool")
+			res := arg0Val.Title()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
-	"widget-hyperlink-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"fyne-position//add-xy": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-xy")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-xy")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "add-xy")
-			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "add-xy")
-			}
-			res := arg0Val.AddXY(float32(arg1Dec.Value), float32(arg2Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-select-entry-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-size//is-zero": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			res := arg0Val.IsZero()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-entry-ptr//append": {
+	"fyne-window//set-title": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-title")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-title")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-window//set-title")
 			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "append")
+			arg0Val.SetTitle(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//full-screen": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//full-screen")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//full-screen")
 			}
-			arg0Val.Append(arg1Str.Value)
-			return arg0Nat
+			res := arg0Val.FullScreen()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-window//set-full-screen": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-full-screen")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-full-screen")
+			}
+			var arg1Val bool
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-window//set-full-screen")
+			}
+			arg0Val.SetFullScreen(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//request-focus": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//request-focus")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//request-focus")
+			}
+			arg0Val.RequestFocus()
+			return arg0
+		},
+	},
+	"fyne-window//fixed-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//fixed-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//fixed-size")
+			}
+			res := arg0Val.FixedSize()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-window//set-fixed-size": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-fixed-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-fixed-size")
+			}
+			var arg1Val bool
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-window//set-fixed-size")
+			}
+			arg0Val.SetFixedSize(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//center-on-screen": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//center-on-screen")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//center-on-screen")
+			}
+			arg0Val.CenterOnScreen()
+			return arg0
+		},
+	},
+	"fyne-window//padded": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//padded")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//padded")
+			}
+			res := arg0Val.Padded()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-window//set-padded": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-padded")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-padded")
+			}
+			var arg1Val bool
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "fyne-window//set-padded")
+			}
+			arg0Val.SetPadded(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//icon": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//icon")
+			}
+			res := arg0Val.Icon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-window//set-icon": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-icon")
+			}
+			var arg1Val fyne.Resource
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-icon")
+			}
+			arg0Val.SetIcon(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//set-master": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-master")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-master")
+			}
+			arg0Val.SetMaster()
+			return arg0
+		},
+	},
+	"fyne-window//main-menu": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//main-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//main-menu")
+			}
+			res := arg0Val.MainMenu()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-main-menu-ptr")
+			return resObj
+		},
+	},
+	"fyne-window//set-main-menu": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-main-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-main-menu")
+			}
+			var arg1Val *fyne.MainMenu
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.MainMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-main-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-main-menu")
+			}
+			arg0Val.SetMainMenu(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"fyne-window//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"fyne-window//close": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//close")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//close")
+			}
+			arg0Val.Close()
+			return arg0
+		},
+	},
+	"fyne-window//show-and-run": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//show-and-run")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//show-and-run")
+			}
+			arg0Val.ShowAndRun()
+			return arg0
+		},
+	},
+	"fyne-window//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"fyne-window//set-content": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//set-content")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-window//set-content")
+			}
+			arg0Val.SetContent(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-window//canvas": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//canvas")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//canvas")
+			}
+			res := arg0Val.Canvas()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas")
+			return resObj
+		},
+	},
+	"fyne-window//clipboard": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Window
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//clipboard")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-window//clipboard")
+			}
+			res := arg0Val.Clipboard()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-clipboard")
+			return resObj
+		},
+	},
+	"fyne-draggable//dragged": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Draggable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Draggable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-draggable//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-draggable//dragged")
+			}
+			var arg1Val *fyne.DragEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.DragEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-draggable//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-draggable//dragged")
+			}
+			arg0Val.Dragged(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-draggable//drag-end": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Draggable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Draggable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-draggable//drag-end")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-draggable//drag-end")
+			}
+			arg0Val.DragEnd()
+			return arg0
+		},
+	},
+	"fyne-focusable//focus-gained": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Focusable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Focusable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//focus-gained")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//focus-gained")
+			}
+			arg0Val.FocusGained()
+			return arg0
+		},
+	},
+	"fyne-focusable//focus-lost": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Focusable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Focusable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//focus-lost")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//focus-lost")
+			}
+			arg0Val.FocusLost()
+			return arg0
+		},
+	},
+	"fyne-focusable//typed-rune": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Focusable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Focusable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//typed-rune")
+			}
+			var arg1Val rune
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-focusable//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-focusable//typed-rune")
+			}
+			arg0Val.TypedRune(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-focusable//typed-key": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Focusable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Focusable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-focusable//typed-key")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-focusable//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-focusable//typed-key")
+			}
+			arg0Val.TypedKey(arg1Val)
+			return arg0
+		},
+	},
+	"widget-text-grid-style//text-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.TextGridStyle
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.TextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-style//text-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-style//text-color")
+			}
+			res := arg0Val.TextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-text-grid-style//background-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.TextGridStyle
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.TextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-style//background-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-style//background-color")
+			}
+			res := arg0Val.BackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-settings//theme": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//theme")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//theme")
+			}
+			res := arg0Val.Theme()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme")
+			return resObj
+		},
+	},
+	"fyne-settings//set-theme": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//set-theme")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//set-theme")
+			}
+			var arg1Val fyne.Theme
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Theme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-settings//set-theme")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-settings//set-theme")
+			}
+			arg0Val.SetTheme(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-settings//theme-variant": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//theme-variant")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//theme-variant")
+			}
+			res := arg0Val.ThemeVariant()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme-variant")
+			return resObj
+		},
+	},
+	"fyne-settings//scale": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//scale")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//scale")
+			}
+			res := arg0Val.Scale()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-settings//primary-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//primary-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//primary-color")
+			}
+			res := arg0Val.PrimaryColor()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-settings//build-type": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//build-type")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//build-type")
+			}
+			res := arg0Val.BuildType()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-build-type")
+			return resObj
+		},
+	},
+	"fyne-settings//show-animations": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Settings
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Settings)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//show-animations")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-settings//show-animations")
+			}
+			res := arg0Val.ShowAnimations()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-overlay-stack//add": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.OverlayStack
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.OverlayStack)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//add")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-overlay-stack//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-overlay-stack//add")
+			}
+			arg0Val.Add(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-overlay-stack//list": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.OverlayStack
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.OverlayStack)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//list")
+			}
+			res := arg0Val.List()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object-arr")
+			return resObj
+		},
+	},
+	"fyne-overlay-stack//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.OverlayStack
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.OverlayStack)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//remove")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-overlay-stack//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-overlay-stack//remove")
+			}
+			arg0Val.Remove(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-overlay-stack//top": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.OverlayStack
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.OverlayStack)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//top")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-overlay-stack//top")
+			}
+			res := arg0Val.Top()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//background-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//background-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//background-color")
+			}
+			res := arg0Val.BackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//button-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//button-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//button-color")
+			}
+			res := arg0Val.ButtonColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//disabled-button-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//disabled-button-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//disabled-button-color")
+			}
+			res := arg0Val.DisabledButtonColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-color")
+			}
+			res := arg0Val.TextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//disabled-text-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//disabled-text-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//disabled-text-color")
+			}
+			res := arg0Val.DisabledTextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//place-holder-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//place-holder-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//place-holder-color")
+			}
+			res := arg0Val.PlaceHolderColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//primary-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//primary-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//primary-color")
+			}
+			res := arg0Val.PrimaryColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//hover-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//hover-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//hover-color")
+			}
+			res := arg0Val.HoverColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//focus-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//focus-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//focus-color")
+			}
+			res := arg0Val.FocusColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//scroll-bar-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-color")
+			}
+			res := arg0Val.ScrollBarColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//shadow-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//shadow-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//shadow-color")
+			}
+			res := arg0Val.ShadowColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-size")
+			}
+			res := arg0Val.TextSize()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-font": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-font")
+			}
+			res := arg0Val.TextFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-bold-font": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-bold-font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-bold-font")
+			}
+			res := arg0Val.TextBoldFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-italic-font": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-italic-font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-italic-font")
+			}
+			res := arg0Val.TextItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-bold-italic-font": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-bold-italic-font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-bold-italic-font")
+			}
+			res := arg0Val.TextBoldItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//text-monospace-font": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-monospace-font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//text-monospace-font")
+			}
+			res := arg0Val.TextMonospaceFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//padding": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//padding")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//padding")
+			}
+			res := arg0Val.Padding()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//icon-inline-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//icon-inline-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//icon-inline-size")
+			}
+			res := arg0Val.IconInlineSize()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//scroll-bar-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-size")
+			}
+			res := arg0Val.ScrollBarSize()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-legacy-theme//scroll-bar-small-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-small-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-legacy-theme//scroll-bar-small-size")
+			}
+			res := arg0Val.ScrollBarSmallSize()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-theme//color": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Theme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Theme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//color")
+			}
+			var arg1Val fyne.ThemeColorName
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.ThemeColorName)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//color")
+			}
+			var arg2Val fyne.ThemeVariant
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.ThemeVariant)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-theme//color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-theme//color")
+			}
+			res := arg0Val.Color(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"fyne-theme//font": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Theme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Theme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//font")
+			}
+			var arg1Val fyne.TextStyle
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.TextStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//font")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//font")
+			}
+			res := arg0Val.Font(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-theme//icon": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Theme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Theme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//icon")
+			}
+			var arg1Val fyne.ThemeIconName
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.ThemeIconName)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//icon")
+			}
+			res := arg0Val.Icon(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-theme//size": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Theme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Theme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-theme//size")
+			}
+			var arg1Val fyne.ThemeSizeName
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.ThemeSizeName)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-theme//size")
+			}
+			res := arg0Val.Size(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-shortcutable//typed-shortcut": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Shortcutable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Shortcutable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcutable//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcutable//typed-shortcut")
+			}
+			var arg1Val fyne.Shortcut
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Shortcut)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-shortcutable//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-shortcutable//typed-shortcut")
+			}
+			arg0Val.TypedShortcut(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-device//orientation": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Device
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Device)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//orientation")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//orientation")
+			}
+			res := arg0Val.Orientation()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-device-orientation")
+			return resObj
+		},
+	},
+	"fyne-device//is-mobile": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Device
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Device)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//is-mobile")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//is-mobile")
+			}
+			res := arg0Val.IsMobile()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-device//is-browser": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Device
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Device)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//is-browser")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//is-browser")
+			}
+			res := arg0Val.IsBrowser()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-device//has-keyboard": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Device
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Device)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//has-keyboard")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//has-keyboard")
+			}
+			res := arg0Val.HasKeyboard()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-device//system-scale-for-window": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Device
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Device)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//system-scale-for-window")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-device//system-scale-for-window")
+			}
+			var arg1Val fyne.Window
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Window)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-device//system-scale-for-window")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-device//system-scale-for-window")
+			}
+			res := arg0Val.SystemScaleForWindow(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-widget//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Widget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"fyne-storage//root-uri": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Storage
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Storage)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//root-uri")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//root-uri")
+			}
+			res := arg0Val.RootURI()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-uri")
+			return resObj
+		},
+	},
+	"fyne-storage//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Storage
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Storage)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//remove")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-storage//remove")
+			}
+			res := arg0Val.Remove(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
+		},
+	},
+	"fyne-storage//list": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Storage
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Storage)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-storage//list")
+			}
+			res := arg0Val.List()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "string-arr")
+			return resObj
+		},
+	},
+	"fyne-canvas//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"fyne-canvas//set-content": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//set-content")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//set-content")
+			}
+			arg0Val.SetContent(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-canvas//refresh": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//refresh")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//refresh")
+			}
+			arg0Val.Refresh(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-canvas//focus": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus")
+			}
+			var arg1Val fyne.Focusable
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Focusable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//focus")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//focus")
+			}
+			arg0Val.Focus(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-canvas//focus-next": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus-next")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus-next")
+			}
+			arg0Val.FocusNext()
+			return arg0
+		},
+	},
+	"fyne-canvas//focus-previous": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus-previous")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focus-previous")
+			}
+			arg0Val.FocusPrevious()
+			return arg0
+		},
+	},
+	"fyne-canvas//unfocus": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//unfocus")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//unfocus")
+			}
+			arg0Val.Unfocus()
+			return arg0
+		},
+	},
+	"fyne-canvas//focused": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focused")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//focused")
+			}
+			res := arg0Val.Focused()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-focusable")
+			return resObj
+		},
+	},
+	"fyne-canvas//size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//size")
+			}
+			res := arg0Val.Size()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"fyne-canvas//scale": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//scale")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//scale")
+			}
+			res := arg0Val.Scale()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-canvas//overlays": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//overlays")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//overlays")
+			}
+			res := arg0Val.Overlays()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-overlay-stack")
+			return resObj
+		},
+	},
+	"fyne-canvas//remove-shortcut": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//remove-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//remove-shortcut")
+			}
+			var arg1Val fyne.Shortcut
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Shortcut)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//remove-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-canvas//remove-shortcut")
+			}
+			arg0Val.RemoveShortcut(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-canvas//capture": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Canvas
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//capture")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-canvas//capture")
+			}
+			res := arg0Val.Capture()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "image-image")
+			return resObj
+		},
+	},
+	"fyne-disableable//enable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Disableable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Disableable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//enable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//enable")
+			}
+			arg0Val.Enable()
+			return arg0
+		},
+	},
+	"fyne-disableable//disable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Disableable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Disableable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//disable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//disable")
+			}
+			arg0Val.Disable()
+			return arg0
+		},
+	},
+	"fyne-disableable//disabled": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Disableable
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Disableable)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//disabled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-disableable//disabled")
+			}
+			res := arg0Val.Disabled()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-widget-renderer//destroy": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.WidgetRenderer
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.WidgetRenderer)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//destroy")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//destroy")
+			}
+			arg0Val.Destroy()
+			return arg0
+		},
+	},
+	"fyne-widget-renderer//layout": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.WidgetRenderer
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.WidgetRenderer)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//layout")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//layout")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget-renderer//layout")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-widget-renderer//layout")
+			}
+			arg0Val.Layout(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-widget-renderer//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.WidgetRenderer
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.WidgetRenderer)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"fyne-widget-renderer//objects": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.WidgetRenderer
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.WidgetRenderer)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//objects")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//objects")
+			}
+			res := arg0Val.Objects()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object-arr")
+			return resObj
+		},
+	},
+	"fyne-widget-renderer//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.WidgetRenderer
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.WidgetRenderer)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-widget-renderer//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"fyne-preferences//bool": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//bool")
+			}
+			res := arg0Val.Bool(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//bool-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//bool-with-fallback")
+			}
+			var arg2Val bool
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-preferences//bool-with-fallback")
+			}
+			res := arg0Val.BoolWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//set-bool": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-bool")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-bool")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-bool")
+			}
+			var arg2Val bool
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-preferences//set-bool")
+			}
+			arg0Val.SetBool(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//bool-list": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//bool-list")
+			}
+			res := arg0Val.BoolList(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "bool-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//bool-list-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-list-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//bool-list-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//bool-list-with-fallback")
+			}
+			var arg2Val []bool
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]bool, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Integer); ok {
+						arg2Val[i] = v.Value != 0
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//bool-list-with-fallback")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]bool)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//bool-list-with-fallback")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//bool-list-with-fallback")
+			}
+			res := arg0Val.BoolListWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "bool-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//set-bool-list": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-bool-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-bool-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-bool-list")
+			}
+			var arg2Val []bool
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]bool, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Integer); ok {
+						arg2Val[i] = v.Value != 0
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-bool-list")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]bool)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-bool-list")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-bool-list")
+			}
+			arg0Val.SetBoolList(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//float": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//float")
+			}
+			res := arg0Val.Float(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//float-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//float-with-fallback")
+			}
+			var arg2Val float64
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-preferences//float-with-fallback")
+			}
+			res := arg0Val.FloatWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//set-float": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-float")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-float")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-float")
+			}
+			var arg2Val float64
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-preferences//set-float")
+			}
+			arg0Val.SetFloat(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//float-list": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//float-list")
+			}
+			res := arg0Val.FloatList(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "float64-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//float-list-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-list-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//float-list-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//float-list-with-fallback")
+			}
+			var arg2Val []float64
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]float64, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Decimal); ok {
+						arg2Val[i] = float64(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//float-list-with-fallback")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]float64)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//float-list-with-fallback")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//float-list-with-fallback")
+			}
+			res := arg0Val.FloatListWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "float64-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//set-float-list": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-float-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-float-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-float-list")
+			}
+			var arg2Val []float64
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]float64, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Decimal); ok {
+						arg2Val[i] = float64(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-float-list")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]float64)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-float-list")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-float-list")
+			}
+			arg0Val.SetFloatList(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//int": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//int")
+			}
+			res := arg0Val.Int(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//int-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//int-with-fallback")
+			}
+			var arg2Val int
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-preferences//int-with-fallback")
+			}
+			res := arg0Val.IntWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//set-int": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-int")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-int")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-int")
+			}
+			var arg2Val int
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "fyne-preferences//set-int")
+			}
+			arg0Val.SetInt(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//int-list": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//int-list")
+			}
+			res := arg0Val.IntList(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "int-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//int-list-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-list-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//int-list-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//int-list-with-fallback")
+			}
+			var arg2Val []int
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]int, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Integer); ok {
+						arg2Val[i] = int(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//int-list-with-fallback")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]int)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//int-list-with-fallback")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//int-list-with-fallback")
+			}
+			res := arg0Val.IntListWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "int-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//set-int-list": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-int-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-int-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-int-list")
+			}
+			var arg2Val []int
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]int, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Integer); ok {
+						arg2Val[i] = int(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-int-list")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]int)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-int-list")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-int-list")
+			}
+			arg0Val.SetIntList(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//string": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//string")
+			}
+			res := arg0Val.String(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//string-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//string-with-fallback")
+			}
+			var arg2Val string
+			if v, ok := arg2.(env.String); ok {
+				arg2Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "fyne-preferences//string-with-fallback")
+			}
+			res := arg0Val.StringWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-preferences//set-string": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-string")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-string")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-string")
+			}
+			var arg2Val string
+			if v, ok := arg2.(env.String); ok {
+				arg2Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.StringType}, "fyne-preferences//set-string")
+			}
+			arg0Val.SetString(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//string-list": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//string-list")
+			}
+			res := arg0Val.StringList(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "string-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//string-list-with-fallback": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-list-with-fallback")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//string-list-with-fallback")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//string-list-with-fallback")
+			}
+			var arg2Val []string
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]string, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.String); ok {
+						arg2Val[i] = string(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//string-list-with-fallback")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]string)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//string-list-with-fallback")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//string-list-with-fallback")
+			}
+			res := arg0Val.StringListWithFallback(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "string-arr")
+			return resObj
+		},
+	},
+	"fyne-preferences//set-string-list": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-string-list")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//set-string-list")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//set-string-list")
+			}
+			var arg2Val []string
+			switch v := arg2.(type) {
+			case env.Block:
+				arg2Val = make([]string, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.String); ok {
+						arg2Val[i] = string(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-string-list")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg2Val, ok = v.Value.([]string)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-string-list")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.BlockType, env.NativeType}, "fyne-preferences//set-string-list")
+			}
+			arg0Val.SetStringList(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"fyne-preferences//remove-value": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Preferences
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Preferences)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//remove-value")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-preferences//remove-value")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-preferences//remove-value")
+			}
+			arg0Val.RemoveValue(arg1Val)
+			return arg0
+		},
+	},
+	"widget-toolbar-item//toolbar-object": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.ToolbarItem
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.ToolbarItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-item//toolbar-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-item//toolbar-object")
+			}
+			res := arg0Val.ToolbarObject()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"widget-rich-text-segment//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-rich-text-segment//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-rich-text-segment//update": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//update")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-segment//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-segment//update")
+			}
+			arg0Val.Update(arg1Val)
+			return arg0
+		},
+	},
+	"widget-rich-text-segment//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//visual")
+			}
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"widget-rich-text-segment//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-rich-text-segment//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-rich-text-segment//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-rich-text-segment//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val widget.RichTextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-segment//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"theme-primary-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource")
+			}
+			res := theme.NewPrimaryThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-primary-themed-resource-ptr")
+			return resObj
 		},
 	},
 	"widget-text-grid-ptr//set-row": {
 		Argsn: 3,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-row")
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-row")
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-row")
 			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-row")
+			var arg2Val widget.TextGridRow
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(widget.TextGridRow)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row")
 			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "set-row")
-			}
-			arg2Val, ok := arg2Nat.Value.(widget.TextGridRow)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "set-row")
-			}
-			arg0Val.SetRow(int(arg1Int.Value), arg2Val)
-			return arg0Nat
+			arg0Val.SetRow(arg1Val, arg2Val)
+			return arg0
 		},
 	},
-	"widget-disableable-widget-ptr//disable": {
+	"widget-separator-segment-ptr//visual": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//visual")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.DisableableWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val.Disable()
-			return arg0Nat
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
 		},
 	},
-	"fyne-is-horizontal": {
+	"widget-accordion-ptr//open-all": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-horizontal")
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//open-all")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//open-all")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.DeviceOrientation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-horizontal")
-			}
-			res := fyne.IsHorizontal(arg0Val)
-			return *env.NewNative(ps.Idx, res, "bool")
+			arg0Val.OpenAll()
+			return arg0
 		},
 	},
-	"widget-hyperlink-ptr//cursor": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cursor")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cursor")
-			}
-			res := arg0Val.Cursor()
-			return *env.NewNative(ps.Idx, res, "desktop-cursor")
-		},
-	},
-	"fyne-delta": {
+	"widget-select-entry-ptr//resize": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-delta")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-delta")
-			}
-			res := fyne.NewDelta(float32(arg0Dec.Value), float32(arg1Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-delta")
-		},
-	},
-	"fyne-container-ptr//add": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val.Add(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-list-segment-ptr//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//keyboard": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "keyboard")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "keyboard")
-			}
-			res := arg0Val.Keyboard()
-			return *env.NewNative(ps.Idx, res, "mobile-keyboard-type")
-		},
-	},
-	"widget-label": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-label")
-			}
-			res := widget.NewLabel(arg0Str.Value)
-			return *env.NewNative(ps.Idx, res, "widget-label-ptr")
-		},
-	},
-	"container-doc-tabs-ptr//disable-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "disable-index")
-			}
-			arg0Val.DisableIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-border": {
-		Argsn: 5,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-border")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-border")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-border")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-border")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-border")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-border")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "container-border")
-			}
-			arg3Val, ok := arg3Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "container-border")
-			}
-			arg4Nat, ok := arg4.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 4, []env.Type{env.NativeType}, "container-border")
-			}
-			arg4Val, ok := arg4Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 4, []env.Type{env.NativeType}, "container-border")
-			}
-			res := container.NewBorder(arg0Val, arg1Val, arg2Val, arg3Val, arg4Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-entry-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-entry-ptr//tapped-secondary": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val.TappedSecondary(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-menu-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-separator-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Separator)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-hyperlink-ptr//set-url-from-string": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-url-from-string")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-url-from-string")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-url-from-string")
-			}
-			res := arg0Val.SetURLFromString(arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"widget-progress-bar-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBar)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-accordion-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-toolbar-action-ptr//toolbar-object": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "toolbar-object")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ToolbarAction)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "toolbar-object")
-			}
-			res := arg0Val.ToolbarObject()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-text-grid-ptr//row": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "row")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "row")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "row")
-			}
-			res := arg0Val.Row(int(arg1Int.Value))
-			return *env.NewNative(ps.Idx, res, "widget-text-grid-row")
-		},
-	},
-	"fyne-size//subtract": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "subtract")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "subtract")
-			}
-			res := arg0Val.Subtract(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-text-grid-ptr//set-cell": {
-		Argsn: 4,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-cell")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-cell")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-cell")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "set-cell")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "set-cell")
-			}
-			arg3Val, ok := arg3Nat.Value.(widget.TextGridCell)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "set-cell")
-			}
-			arg0Val.SetCell(int(arg1Int.Value), int(arg2Int.Value), arg3Val)
-			return arg0Nat
-		},
-	},
-	"widget-base-widget-ptr//extend-base-widget": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val.ExtendBaseWidget(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"container-scroll": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-scroll")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-scroll")
-			}
-			res := container.NewScroll(arg0Val)
-			return *env.NewNative(ps.Idx, res, "container-scroll-ptr")
-		},
-	},
-	"widget-separator-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-show-pop-up-menu-at-relative-position": {
-		Argsn: 4,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			arg3Val, ok := arg3Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
-			}
-			widget.ShowPopUpMenuAtRelativePosition(arg0Val, arg1Val, arg2Val, arg3Val)
-			return nil
-		},
-	},
-	"widget-select-entry-ptr//enable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val.Enable()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//select-tab-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-tab-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-tab-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "select-tab-index")
-			}
-			arg0Val.SelectTabIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//append": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val.Append(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-menu-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-select-entry-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-select-entry-ptr//resize")
 			}
 			arg0Val.Resize(arg1Val)
-			return arg0Nat
+			return arg0
 		},
 	},
-	"widget-rich-text-with-text": {
+	"theme-place-holder-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.PlaceHolderColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-zoom-out-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ZoomOutIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//show": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-rich-text-with-text")
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//show")
 			}
-			res := widget.NewRichTextWithText(arg0Str.Value)
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
+			arg0Val.Show()
+			return arg0
 		},
 	},
-	"widget-separator-segment-ptr//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//set-text": {
+	"widget-pop-up-ptr//resize": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//resize")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//resize")
 			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-text")
-			}
-			arg0Val.SetText(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-container-with-layout": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-with-layout")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Layout)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-with-layout")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-with-layout")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-with-layout")
-			}
-			res := fyne.NewContainerWithLayout(arg0Val, arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-accordion-ptr//close-all": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close-all")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close-all")
-			}
-			arg0Val.CloseAll()
-			return arg0Nat
-		},
-	},
-	"container-grid-wrap": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-grid-wrap")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-grid-wrap")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-wrap")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-wrap")
-			}
-			res := container.NewGridWrap(arg0Val, arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-entry-ptr//bind": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Val, ok := arg1Nat.Value.(binding.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val.Bind(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-paragraph-segment-ptr//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-text-grid-ptr//set-row-style": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-row-style")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-row-style")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-row-style")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "set-row-style")
-			}
-			arg2Val, ok := arg2Nat.Value.(widget.TextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "set-row-style")
-			}
-			arg0Val.SetRowStyle(int(arg1Int.Value), arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-pop-up-menu-ptr//show-at-position": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg0Val.ShowAtPosition(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-hyperlink")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink")
-			}
-			arg1Val, ok := arg1Nat.Value.(*url.URL)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink")
-			}
-			res := widget.NewHyperlink(arg0Str.Value, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-hyperlink-ptr")
+			arg0Val.Resize(arg1Val)
+			return arg0
 		},
 	},
 	"widget-show-modal-pop-up": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
+				}
+			} else {
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
+				}
+			} else {
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-modal-pop-up")
 			}
 			widget.ShowModalPopUp(arg0Val, arg1Val)
 			return nil
 		},
 	},
-	"widget-hyperlink-ptr//tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val.Tapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val.Remove(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-h-split": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-split")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-split")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-h-split")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-h-split")
-			}
-			res := container.NewHSplit(arg0Val, arg1Val)
-			return *env.NewNative(ps.Idx, res, "container-split-ptr")
-		},
-	},
-	"widget-custom-text-grid-style-ptr//text-color": {
+	"widget-progress-bar-with-data": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
+			var arg0Val binding.Float
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(binding.Float)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-with-data")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-with-data")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.CustomTextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text-color")
-			}
-			res := arg0Val.TextColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
+			res := widget.NewProgressBarWithData(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-progress-bar-ptr")
+			return resObj
 		},
 	},
-	"widget-show-pop-up-menu-at-position": {
-		Argsn: 3,
+	"theme-volume-down-icon": {
+		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
-			}
-			widget.ShowPopUpMenuAtPosition(arg0Val, arg1Val, arg2Val)
-			return nil
-		},
-	},
-	"fyne-notification": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-notification")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-notification")
-			}
-			res := fyne.NewNotification(arg0Str.Value, arg1Str.Value)
-			return *env.NewNative(ps.Idx, res, "fyne-notification-ptr")
-		},
-	},
-	"widget-accordion-ptr//open": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "open")
-			}
-			arg0Val.Open(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//enable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val.Enable()
-			return arg0Nat
-		},
-	},
-	"fyne-set-current-app": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-set-current-app")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.App)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-set-current-app")
-			}
-			fyne.SetCurrentApp(arg0Val)
-			return nil
-		},
-	},
-	"widget-slider-ptr//unbind": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val.Unbind()
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//set-text": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-text")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-text")
-			}
-			arg0Val.SetText(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"widget-file-icon-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.FileIcon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			res := theme.VolumeDownIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
 		},
 	},
 	"container-tab-item-with-icon": {
 		Argsn: 3,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "container-tab-item-with-icon")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
+			var arg1Val fyne.Resource
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item-with-icon")
+				}
+			} else {
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item-with-icon")
 			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item-with-icon")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-tab-item-with-icon")
+				}
+			} else {
 				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-tab-item-with-icon")
 			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-tab-item-with-icon")
-			}
-			res := container.NewTabItemWithIcon(arg0Str.Value, arg1Val, arg2Val)
-			return *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			res := container.NewTabItemWithIcon(arg0Val, arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			return resObj
 		},
 	},
-	"widget-menu-ptr//activate-last-submenu": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-last-submenu")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-last-submenu")
-			}
-			res := arg0Val.ActivateLastSubmenu()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"container-center": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-center")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-center")
-			}
-			res := container.NewCenter(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"fyne-container-ptr//add-object": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-object")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-object")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add-object")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add-object")
-			}
-			arg0Val.AddObject(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"container-app-tabs": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs")
-			}
-			arg0Val, ok := arg0Nat.Value.([]*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs")
-			}
-			res := container.NewAppTabs(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "container-app-tabs-ptr")
-		},
-	},
-	"fyne-max": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-max")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-max")
-			}
-			res := fyne.Max(float32(arg0Dec.Value), float32(arg1Dec.Value))
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"widget-card-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-progress-bar-ptr//bind": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBar)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Val, ok := arg1Nat.Value.(binding.Float)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val.Bind(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-accordion": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion")
-			}
-			arg0Val, ok := arg0Nat.Value.([]*widget.AccordionItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion")
-			}
-			res := widget.NewAccordion(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "widget-accordion-ptr")
-		},
-	},
-	"widget-form-ptr//append-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append-item")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(*widget.FormItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append-item")
-			}
-			arg0Val.AppendItem(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//mouse-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-up")
-			}
-			arg0Val.MouseUp(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-accordion-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-text-segment-ptr//select": {
+	"widget-pop-up-ptr//show-at-relative-position": {
 		Argsn: 3,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-base-widget-ptr//size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			res := arg0Val.Size()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-base-widget-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"widget-menu-ptr//dismiss": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dismiss")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dismiss")
-			}
-			arg0Val.Dismiss()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//selected-index": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-index")
-			}
-			res := arg0Val.SelectedIndex()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"container-split-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.Split)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"fyne-position//subtract": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "subtract")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "subtract")
-			}
-			res := arg0Val.Subtract(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-paragraph-segment-ptr//segments": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
-			}
-			res := arg0Val.Segments()
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
-		},
-	},
-	"widget-accordion-ptr//close": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "close")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "close")
-			}
-			arg0Val.Close(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"widget-base-widget-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-label-ptr//extend-base-widget": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val.ExtendBaseWidget(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-simple-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-simple-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-simple-renderer")
-			}
-			res := widget.NewSimpleRenderer(arg0Val)
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"container-v-scroll": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-scroll")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-scroll")
-			}
-			res := container.NewVScroll(arg0Val)
-			return *env.NewNative(ps.Idx, res, "container-scroll-ptr")
-		},
-	},
-	"fyne-container": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container")
-			}
-			res := fyne.NewContainer(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-separator-segment-ptr//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-progress-bar-infinite-ptr//stop": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "stop")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "stop")
-			}
-			arg0Val.Stop()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//disable-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "disable-index")
-			}
-			arg0Val.DisableIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-h-scroll": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-scroll")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-scroll")
-			}
-			res := container.NewHScroll(arg0Val)
-			return *env.NewNative(ps.Idx, res, "container-scroll-ptr")
-		},
-	},
-	"widget-hyperlink-ptr//typed-key": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val.TypedKey(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-image-segment-ptr//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//typed-shortcut": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Shortcut)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val.TypedShortcut(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-tab-item-ptr//disabled": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			res := arg0Val.Disabled()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-entry-ptr//unbind": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val.Unbind()
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//focus-lost": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val.FocusLost()
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//set-url": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-url")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-url")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-url")
-			}
-			arg1Val, ok := arg1Nat.Value.(*url.URL)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-url")
-			}
-			arg0Val.SetURL(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-v-split": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-split")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-split")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-v-split")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-v-split")
-			}
-			res := container.NewVSplit(arg0Val, arg1Val)
-			return *env.NewNative(ps.Idx, res, "container-split-ptr")
-		},
-	},
-	"widget-accordion-ptr//open-all": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open-all")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "open-all")
-			}
-			arg0Val.OpenAll()
-			return arg0Nat
-		},
-	},
-	"widget-toolbar-action-ptr//set-icon": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ToolbarAction)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-icon")
-			}
-			arg0Val.SetIcon(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//selected": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected")
-			}
-			res := arg0Val.Selected()
-			return *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
-		},
-	},
-	"widget-entry-ptr//tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val.Tapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-split-ptr//extend-base-widget": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.Split)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val.ExtendBaseWidget(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-rich-text-ptr//string": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "string")
-			}
-			res := arg0Val.String()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-disableable-widget-ptr//disabled": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.DisableableWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			res := arg0Val.Disabled()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"container-app-tabs-ptr//append": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val.Append(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//selected-index": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-index")
-			}
-			res := arg0Val.SelectedIndex()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"container-grid-with-columns": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Int, ok := arg0.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-grid-with-columns")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-with-columns")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-with-columns")
-			}
-			res := container.NewGridWithColumns(int(arg0Int.Value), arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-hyperlink-segment-ptr//textual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-entry-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"widget-accordion-ptr//remove": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg1Val, ok := arg1Nat.Value.(*widget.AccordionItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "remove")
-			}
-			arg0Val.Remove(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-label-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs")
-			}
-			arg0Val, ok := arg0Nat.Value.([]*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs")
-			}
-			res := container.NewDocTabs(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "container-doc-tabs-ptr")
-		},
-	},
-	"widget-label-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-progress-bar-infinite-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"widget-show-pop-up-at-relative-position": {
-		Argsn: 4,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			arg3Val, ok := arg3Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
-			}
-			widget.ShowPopUpAtRelativePosition(arg0Val, arg1Val, arg2Val, arg3Val)
-			return nil
-		},
-	},
-	"container-app-tabs-ptr//select": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-container-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-card-ptr//set-content": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-content")
-			}
-			arg0Val.SetContent(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-progress-bar-infinite-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-pop-up-menu-ptr//show-at-relative-position": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "show-at-relative-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "show-at-relative-position")
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
+			}
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-relative-position")
 			}
 			arg0Val.ShowAtRelativePosition(arg1Val, arg2Val)
-			return arg0Nat
+			return arg0
 		},
 	},
-	"container-doc-tabs-ptr//set-tab-location": {
+	"widget-select-entry-ptr//set-options": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg1Val, ok := arg1Nat.Value.(container.TabLocation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg0Val.SetTabLocation(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-size": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-size")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-size")
-			}
-			res := fyne.NewSize(float32(arg0Dec.Value), float32(arg1Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-card-ptr//set-title": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-title")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-title")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-title")
-			}
-			arg0Val.SetTitle(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//set-place-holder": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-place-holder")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-place-holder")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-place-holder")
-			}
-			arg0Val.SetPlaceHolder(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"fyne-current-app": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := fyne.CurrentApp()
-			return *env.NewNative(ps.Idx, res, "fyne-app")
-		},
-	},
-	"widget-list-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-slider-ptr//focus-gained": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val.FocusGained()
-			return arg0Nat
-		},
-	},
-	"widget-slider-ptr//mouse-moved": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg0Val.MouseMoved(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-slider-ptr//mouse-out": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-out")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-out")
-			}
-			arg0Val.MouseOut()
-			return arg0Nat
-		},
-	},
-	"widget-select-entry-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-hyperlink-segment-ptr//update": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-image-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-menu-ptr//activate-previous": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-previous")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-previous")
-			}
-			arg0Val.ActivatePrevious()
-			return arg0Nat
-		},
-	},
-	"widget-text-grid-ptr//set-style": {
-		Argsn: 4,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-style")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-style")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-style")
-			}
-			arg2Int, ok := arg2.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "set-style")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "set-style")
-			}
-			arg3Val, ok := arg3Nat.Value.(widget.TextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "set-style")
-			}
-			arg0Val.SetStyle(int(arg1Int.Value), int(arg2Int.Value), arg3Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//typed-key": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val.TypedKey(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-text-grid-ptr//text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "text")
-			}
-			res := arg0Val.Text()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-file-icon": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.URI)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon")
-			}
-			res := widget.NewFileIcon(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-file-icon-ptr")
-		},
-	},
-	"widget-text-segment-ptr//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-progress-bar-infinite": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewProgressBarInfinite()
-			return *env.NewNative(ps.Idx, res, "widget-progress-bar-infinite-ptr")
-		},
-	},
-	"widget-menu-ptr//trigger-last": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "trigger-last")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "trigger-last")
-			}
-			arg0Val.TriggerLast()
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//disable-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg0Val.DisableItem(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-stack": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-stack")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-stack")
-			}
-			res := container.NewStack(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-form-ptr//disable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val.Disable()
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//extend-base-widget": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val.ExtendBaseWidget(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-menu-ptr//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-menu-ptr//typed-key": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val.TypedKey(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-is-vertical": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-vertical")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.DeviceOrientation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-vertical")
-			}
-			res := fyne.IsVertical(arg0Val)
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-image-segment-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-slider-ptr//typed-key": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-key")
-			}
-			arg0Val.TypedKey(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//accepts-tab": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "accepts-tab")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "accepts-tab")
-			}
-			res := arg0Val.AcceptsTab()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-rich-text-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-pop-up-menu-ptr//focus-lost": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val.FocusLost()
-			return arg0Nat
-		},
-	},
-	"widget-select-entry-ptr//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-rich-text-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"widget-progress-bar-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBar)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"container-app-tabs-ptr//remove-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "remove-index")
-			}
-			arg0Val.RemoveIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//enable-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "enable-index")
-			}
-			arg0Val.EnableIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-tab-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "container-tab-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item")
-			}
-			res := container.NewTabItem(arg0Str.Value, arg1Val)
-			return *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
-		},
-	},
-	"app-with-id": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "app-with-id")
-			}
-			res := app.NewWithID(arg0Str.Value)
-			return *env.NewNative(ps.Idx, res, "fyne-app")
-		},
-	},
-	"fyne-square-offset-pos": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-square-offset-pos")
-			}
-			res := fyne.NewSquareOffsetPos(float32(arg0Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-form-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-form-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-item")
-			}
-			res := widget.NewFormItem(arg0Str.Value, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-form-item-ptr")
-		},
-	},
-	"widget-base-widget-ptr//visible": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			res := arg0Val.Visible()
-			return *env.NewNative(ps.Idx, res, "bool")
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//set-options")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//set-options")
+			}
+			var arg1Val []string
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]string, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.String); ok {
+						arg1Val[i] = string(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry-ptr//set-options")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]string)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry-ptr//set-options")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry-ptr//set-options")
+			}
+			arg0Val.SetOptions(arg1Val)
+			return arg0
 		},
 	},
 	"widget-label-ptr//unbind": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unbind")
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//unbind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//unbind")
 			}
 			arg0Val.Unbind()
-			return arg0Nat
+			return arg0
 		},
 	},
-	"widget-progress-bar-infinite-ptr//running": {
+	"fyne-delta//is-zero": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "running")
+			var arg0Val fyne.Delta
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Delta)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-delta//is-zero")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-delta//is-zero")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "running")
-			}
-			res := arg0Val.Running()
-			return *env.NewNative(ps.Idx, res, "bool")
+			res := arg0Val.IsZero()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
 		},
 	},
-	"widget-label-ptr//bind": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Val, ok := arg1Nat.Value.(binding.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val.Bind(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-progress-bar-with-data": {
+	"theme-disabled-resource-ptr//name": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-with-data")
+			var arg0Val *theme.DisabledResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.DisabledResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource-ptr//name")
 			}
-			arg0Val, ok := arg0Nat.Value.(binding.Float)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-with-data")
-			}
-			res := widget.NewProgressBarWithData(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-progress-bar-ptr")
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
-	"container-app-tabs-ptr//select-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "select-index")
-			}
-			arg0Val.SelectIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"fyne-container-ptr//position": {
+	"container-tab-item-ptr//disabled": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
+			var arg0Val *container.TabItem
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-tab-item-ptr//disabled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-tab-item-ptr//disabled")
 			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
-			}
-			res := arg0Val.Position()
-			return *env.NewNative(ps.Idx, res, "fyne-position")
+			res := arg0Val.Disabled()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
 		},
 	},
-	"widget-paragraph-segment-ptr//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-separator-segment-ptr//textual": {
+	"widget-hyperlink-ptr//refresh": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-hyperlink-ptr//mouse-moved": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-moved")
-			}
-			arg0Val.MouseMoved(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-static-resource-ptr//content": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.StaticResource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "content")
-			}
-			res := arg0Val.Content()
-			return *env.NewNative(ps.Idx, res, "byte-arr")
-		},
-	},
-	"fyne-container-ptr//size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "size")
-			}
-			res := arg0Val.Size()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-slider-ptr//dragged": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.DragEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val.Dragged(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-padded": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-padded")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-padded")
-			}
-			res := container.NewPadded(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"fyne-container-without-layout": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-without-layout")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-without-layout")
-			}
-			res := fyne.NewContainerWithoutLayout(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-select-entry-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-hyperlink-ptr//mouse-in": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg0Val.MouseIn(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-icon-ptr//set-resource": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-resource")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Icon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-resource")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-resource")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-resource")
-			}
-			arg0Val.SetResource(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-label-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Label)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"container-doc-tabs-ptr//select": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-text-grid": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewTextGrid()
-			return *env.NewNative(ps.Idx, res, "widget-text-grid-ptr")
-		},
-	},
-	"widget-show-pop-up-at-position": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
-			}
-			widget.ShowPopUpAtPosition(arg0Val, arg1Val, arg2Val)
-			return nil
-		},
-	},
-	"widget-form-ptr//append": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "append")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "append")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "append")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "append")
-			}
-			arg0Val.Append(arg1Str.Value, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-menu-ptr//tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val.Tapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-shortcut-handler-ptr//typed-shortcut": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.ShortcutHandler)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Shortcut)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "typed-shortcut")
-			}
-			arg0Val.TypedShortcut(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-min": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-min")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-min")
-			}
-			res := fyne.Min(float32(arg0Dec.Value), float32(arg1Dec.Value))
-			return *env.NewNative(ps.Idx, res, "float32")
-		},
-	},
-	"widget-progress-bar-infinite-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-progress-bar-infinite-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-entry-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//refresh")
 			}
 			arg0Val.Refresh()
-			return arg0Nat
+			return arg0
 		},
 	},
-	"widget-entry-ptr//dragged": {
+	"widget-hyperlink-ptr//set-url": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.DragEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "dragged")
-			}
-			arg0Val.Dragged(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//key-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "key-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "key-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "key-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "key-up")
-			}
-			arg0Val.KeyUp(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//extend-base-widget": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Widget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "extend-base-widget")
-			}
-			arg0Val.ExtendBaseWidget(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-slider-ptr//tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val.Tapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-custom-text-grid-style-ptr//background-color": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.CustomTextGridStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "background-color")
-			}
-			res := arg0Val.BackgroundColor()
-			return *env.NewNative(ps.Idx, res, "color-color")
-		},
-	},
-	"widget-slider": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "widget-slider")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-slider")
-			}
-			res := widget.NewSlider(arg0Dec.Value, arg1Dec.Value)
-			return *env.NewNative(ps.Idx, res, "widget-slider-ptr")
-		},
-	},
-	"widget-hyperlink-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//enable-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg0Val.EnableItem(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-menu-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"widget-image-segment-ptr//textual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-pop-up-menu-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"widget-text-grid-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-select-entry-ptr//disable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SelectEntry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val.Disable()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//selected": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected")
-			}
-			res := arg0Val.Selected()
-			return *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
-		},
-	},
-	"widget-hyperlink-segment-ptr//select": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "select")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "select")
-			}
-			arg0Val.Select(arg1Val, arg2Val)
-			return arg0Nat
-		},
-	},
-	"widget-separator-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Separator)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-progress-bar": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewProgressBar()
-			return *env.NewNative(ps.Idx, res, "widget-progress-bar-ptr")
-		},
-	},
-	"container-app-tabs-ptr//current-tab-index": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "current-tab-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "current-tab-index")
-			}
-			res := arg0Val.CurrentTabIndex()
-			return *env.NewNative(ps.Idx, res, "int")
-		},
-	},
-	"fyne-size//min": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "min")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "min")
-			}
-			res := arg0Val.Min(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-rich-text-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-base-widget-ptr//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-h-box": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-box")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-box")
-			}
-			res := container.NewHBox(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-image-segment-ptr//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-hyperlink-ptr//focus-gained": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val.FocusGained()
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-segment-ptr//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-image-segment-ptr//inline": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inline")
-			}
-			res := arg0Val.Inline()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-slider-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-base-widget-ptr//position": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "position")
-			}
-			res := arg0Val.Position()
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-entry-ptr//touch-down": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-down")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-down")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-down")
-			}
-			arg1Val, ok := arg1Nat.Value.(*mobile.TouchEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-down")
-			}
-			arg0Val.TouchDown(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-label-with-data": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-with-data")
-			}
-			arg0Val, ok := arg0Nat.Value.(binding.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-with-data")
-			}
-			res := widget.NewLabelWithData(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-label-ptr")
-		},
-	},
-	"fyne-container-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-text-grid-ptr//row-text": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "row-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "row-text")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "row-text")
-			}
-			res := arg0Val.RowText(int(arg1Int.Value))
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-slider-ptr//focus-lost": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val.FocusLost()
-			return arg0Nat
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url")
+			}
+			var arg1Val *url.URL
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*url.URL)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url")
+			}
+			arg0Val.SetURL(arg1Val)
+			return arg0
 		},
 	},
 	"app-set-metadata": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "app-set-metadata")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.AppMetadata)
-			if !ok {
+			var arg0Val fyne.AppMetadata
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.AppMetadata)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "app-set-metadata")
+				}
+			} else {
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "app-set-metadata")
 			}
 			app.SetMetadata(arg0Val)
 			return nil
 		},
 	},
-	"widget-hyperlink-segment-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"container-doc-tabs-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"container-grid-with-rows": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Int, ok := arg0.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-grid-with-rows")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-with-rows")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-grid-with-rows")
-			}
-			res := container.NewGridWithRows(int(arg0Int.Value), arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-hyperlink-with-style": {
-		Argsn: 4,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-hyperlink-with-style")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			arg1Val, ok := arg1Nat.Value.(*url.URL)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.TextAlign)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			arg3Nat, ok := arg3.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			arg3Val, ok := arg3Nat.Value.(fyne.TextStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
-			}
-			res := widget.NewHyperlinkWithStyle(arg0Str.Value, arg1Val, arg2Val, arg3Val)
-			return *env.NewNative(ps.Idx, res, "widget-hyperlink-ptr")
-		},
-	},
-	"container-max": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-max")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-max")
-			}
-			res := container.NewMax(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"widget-list-segment-ptr//update": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-file-icon-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.FileIcon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-rich-text-ptr//parse-markdown": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "parse-markdown")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "parse-markdown")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "parse-markdown")
-			}
-			arg0Val.ParseMarkdown(arg1Str.Value)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//mouse-out": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-out")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-out")
-			}
-			arg0Val.MouseOut()
-			return arg0Nat
-		},
-	},
-	"widget-slider-with-data": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "widget-slider-with-data")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-slider-with-data")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-slider-with-data")
-			}
-			arg2Val, ok := arg2Nat.Value.(binding.Float)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-slider-with-data")
-			}
-			res := widget.NewSliderWithData(arg0Dec.Value, arg1Dec.Value, arg2Val)
-			return *env.NewNative(ps.Idx, res, "widget-slider-ptr")
-		},
-	},
-	"fyne-size//max": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "max")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "max")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "max")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "max")
-			}
-			res := arg0Val.Max(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-separator-segment-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-pop-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up")
-			}
-			res := widget.NewPopUp(arg0Val, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-pop-up-ptr")
-		},
-	},
-	"fyne-static-resource-ptr//go-string": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "go-string")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.StaticResource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "go-string")
-			}
-			res := arg0Val.GoString()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-menu-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"container-doc-tabs-ptr//select-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "select-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "select-index")
-			}
-			arg0Val.SelectIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"widget-card-ptr//set-image": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-image")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-image")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-image")
-			}
-			arg1Val, ok := arg1Nat.Value.(*canvas.Image)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-image")
-			}
-			arg0Val.SetImage(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-icon": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Resource)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon")
-			}
-			res := widget.NewIcon(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-icon-ptr")
-		},
-	},
-	"fyne-position//is-zero": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			res := arg0Val.IsZero()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-container-ptr//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//mouse-down": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-down")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-down")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-down")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-down")
-			}
-			arg0Val.MouseDown(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-ptr//show-at-position": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "show-at-position")
-			}
-			arg0Val.ShowAtPosition(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-segment-ptr//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-entry-ptr//double-tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "double-tapped")
-			}
-			arg0Val.DoubleTapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-base-widget-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//set-tab-location": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg1Val, ok := arg1Nat.Value.(container.TabLocation)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-tab-location")
-			}
-			arg0Val.SetTabLocation(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-container-ptr//refresh": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "refresh")
-			}
-			arg0Val.Refresh()
-			return arg0Nat
-		},
-	},
-	"widget-card-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-list-segment-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"fyne-menu": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-menu")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-menu")
-			}
-			arg1Val, ok := arg1Nat.Value.([]*fyne.MenuItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-menu")
-			}
-			res := fyne.NewMenu(arg0Str.Value, arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-menu-ptr")
-		},
-	},
-	"widget-entry-ptr//key-down": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "key-down")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "key-down")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "key-down")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.KeyEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "key-down")
-			}
-			arg0Val.KeyDown(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-card": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-card")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-card")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-card")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-card")
-			}
-			res := widget.NewCard(arg0Str.Value, arg1Str.Value, arg2Val)
-			return *env.NewNative(ps.Idx, res, "widget-card-ptr")
-		},
-	},
-	"widget-label-with-style": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-label-with-style")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-with-style")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.TextAlign)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-with-style")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-label-with-style")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.TextStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-label-with-style")
-			}
-			res := widget.NewLabelWithStyle(arg0Str.Value, arg1Val, arg2Val)
-			return *env.NewNative(ps.Idx, res, "widget-label-ptr")
-		},
-	},
-	"widget-menu-ptr//activate-next": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-next")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "activate-next")
-			}
-			arg0Val.ActivateNext()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//disable-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "disable-item")
-			}
-			arg0Val.DisableItem(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-pos": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Dec, ok := arg0.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-pos")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-pos")
-			}
-			res := fyne.NewPos(float32(arg0Dec.Value), float32(arg1Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-rich-text-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.RichText)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//drag-end": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val.DragEnd()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-menu": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu")
-			}
-			res := widget.NewMenu(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-menu-ptr")
-		},
-	},
-	"widget-pop-up-ptr//resize": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg0Val.Resize(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-entry-with-data": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-with-data")
-			}
-			arg0Val, ok := arg0Nat.Value.(binding.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-with-data")
-			}
-			res := widget.NewEntryWithData(arg0Val)
-			return *env.NewNative(ps.Idx, res, "widget-entry-ptr")
-		},
-	},
-	"widget-entry-ptr//focus-lost": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-lost")
-			}
-			arg0Val.FocusLost()
-			return arg0Nat
-		},
-	},
-	"container-without-layout": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-without-layout")
-			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-without-layout")
-			}
-			res := container.NewWithoutLayout(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
-		},
-	},
-	"fyne-container-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"widget-paragraph-segment-ptr//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-slider-ptr//drag-end": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "drag-end")
-			}
-			arg0Val.DragEnd()
-			return arg0Nat
-		},
-	},
-	"app": {
+	"theme-media-music-icon": {
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := app.New()
-			return *env.NewNative(ps.Idx, res, "fyne-app")
+			res := theme.MediaMusicIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
 		},
 	},
-	"widget-list-segment-ptr//segments": {
+	"widget-menu-ptr//min-size": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "segments")
-			}
-			res := arg0Val.Segments()
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
-		},
-	},
-	"widget-paragraph-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-menu-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-ptr//tapped": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped")
-			}
-			arg0Val.Tapped(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//enable-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "enable-index")
-			}
-			arg0Val.EnableIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//remove-index": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "remove-index")
-			}
-			arg0Val.RemoveIndex(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-split-ptr//set-offset": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-offset")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.Split)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-offset")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "set-offset")
-			}
-			arg0Val.SetOffset(arg1Dec.Value)
-			return arg0Nat
-		},
-	},
-	"widget-accordion-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-accordion-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-item")
-			}
-			res := widget.NewAccordionItem(arg0Str.Value, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-accordion-item-ptr")
-		},
-	},
-	"widget-pop-up-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//min-size")
 			}
 			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-position//add": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			res := arg0Val.Add(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-position")
-		},
-	},
-	"widget-pop-up-menu-ptr//focus-gained": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUpMenu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "focus-gained")
-			}
-			arg0Val.FocusGained()
-			return arg0Nat
-		},
-	},
-	"widget-file-icon-ptr//set-selected": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-selected")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.FileIcon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-selected")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-selected")
-			}
-			arg0Val.SetSelected(arg1Int.Value != 0)
-			return arg0Nat
-		},
-	},
-	"widget-text-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-menu-ptr//deactivate-child": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "deactivate-child")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "deactivate-child")
-			}
-			arg0Val.DeactivateChild()
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-ptr//move": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "move")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "move")
-			}
-			arg0Val.Move(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-modal-pop-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-modal-pop-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-modal-pop-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-modal-pop-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-modal-pop-up")
-			}
-			res := widget.NewModalPopUp(arg0Val, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-pop-up-ptr")
-		},
-	},
-	"container-app-tabs-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-hyperlink-segment-ptr//unselect": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.HyperlinkSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "unselect")
-			}
-			arg0Val.Unselect()
-			return arg0Nat
-		},
-	},
-	"widget-separator-segment-ptr//update": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.SeparatorSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-text-segment-ptr//textual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-entry-ptr//validate": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "validate")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "validate")
-			}
-			res := arg0Val.Validate()
-			return *env.NewNative(ps.Idx, res, "error")
-		},
-	},
-	"widget-entry-ptr//touch-cancel": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-cancel")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-cancel")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-cancel")
-			}
-			arg1Val, ok := arg1Nat.Value.(*mobile.TouchEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-cancel")
-			}
-			arg0Val.TouchCancel(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-hyperlink-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Hyperlink)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-delta//is-zero": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Delta)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "is-zero")
-			}
-			res := arg0Val.IsZero()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"fyne-size//subtract-width-height": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract-width-height")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract-width-height")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "subtract-width-height")
-			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "subtract-width-height")
-			}
-			res := arg0Val.SubtractWidthHeight(float32(arg1Dec.Value), float32(arg2Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-disableable-widget-ptr//enable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.DisableableWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val.Enable()
-			return arg0Nat
-		},
-	},
-	"widget-password-entry": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewPasswordEntry()
-			return *env.NewNative(ps.Idx, res, "widget-entry-ptr")
-		},
-	},
-	"fyne-log-error": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-log-error")
-			}
-			arg1Err, ok := arg1.(env.Error)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.ErrorType}, "fyne-log-error")
-			}
-			fyne.LogError(arg0Str.Value, errors.New(arg1Err.Print(*ps.Idx)))
-			return nil
-		},
-	},
-	"widget-rich-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text")
-			}
-			arg0Val, ok := arg0Nat.Value.([]widget.RichTextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text")
-			}
-			res := widget.NewRichText(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
-		},
-	},
-	"widget-paragraph-segment-ptr//textual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ParagraphSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-pop-up-ptr//tapped-secondary": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg1Val, ok := arg1Nat.Value.(*fyne.PointEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "tapped-secondary")
-			}
-			arg0Val.TappedSecondary(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-text-grid-from-string": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-text-grid-from-string")
-			}
-			res := widget.NewTextGridFromString(arg0Str.Value)
-			return *env.NewNative(ps.Idx, res, "widget-text-grid-ptr")
-		},
-	},
-	"widget-entry-ptr//set-min-rows-visible": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-min-rows-visible")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-min-rows-visible")
-			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "set-min-rows-visible")
-			}
-			arg0Val.SetMinRowsVisible(int(arg1Int.Value))
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//set-items": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-items")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-items")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-items")
-			}
-			arg1Val, ok := arg1Nat.Value.([]*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "set-items")
-			}
-			arg0Val.SetItems(arg1Val)
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//enable-item": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg1Val, ok := arg1Nat.Value.(*container.TabItem)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "enable-item")
-			}
-			arg0Val.EnableItem(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-separator": {
-		Argsn: 0,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewSeparator()
-			return *env.NewNative(ps.Idx, res, "widget-separator-ptr")
-		},
-	},
-	"widget-show-pop-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up")
-			}
-			widget.ShowPopUp(arg0Val, arg1Val)
-			return nil
-		},
-	},
-	"widget-slider-ptr//bind": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg1Val, ok := arg1Nat.Value.(binding.Float)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "bind")
-			}
-			arg0Val.Bind(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-form-ptr//enable": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "enable")
-			}
-			arg0Val.Enable()
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//touch-up": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-up")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "touch-up")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-up")
-			}
-			arg1Val, ok := arg1Nat.Value.(*mobile.TouchEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "touch-up")
-			}
-			arg0Val.TouchUp(arg1Val)
-			return arg0Nat
-		},
-	},
-	"fyne-measure-text": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-measure-text")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-measure-text")
-			}
-			arg2Nat, ok := arg2.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-measure-text")
-			}
-			arg2Val, ok := arg2Nat.Value.(fyne.TextStyle)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-measure-text")
-			}
-			res := fyne.MeasureText(arg0Str.Value, float32(arg1Dec.Value), arg2Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-size//add-width-height": {
-		Argsn: 3,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-width-height")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add-width-height")
-			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "add-width-height")
-			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "add-width-height")
-			}
-			res := arg0Val.AddWidthHeight(float32(arg1Dec.Value), float32(arg2Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"fyne-size//add": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "add")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Vector2)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "add")
-			}
-			res := arg0Val.Add(arg1Val)
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-slider-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-text-grid-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
-		},
-	},
-	"widget-base-widget-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.BaseWidget)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"container-app-tabs-ptr//current-tab": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "current-tab")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "current-tab")
-			}
-			res := arg0Val.CurrentTab()
-			return *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
-		},
-	},
-	"widget-icon-ptr//create-renderer": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Icon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
-			}
-			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
-		},
-	},
-	"widget-progress-bar-infinite-ptr//start": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "start")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ProgressBarInfinite)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "start")
-			}
-			arg0Val.Start()
-			return arg0Nat
-		},
-	},
-	"widget-entry-ptr//cursor": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cursor")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "cursor")
-			}
-			res := arg0Val.Cursor()
-			return *env.NewNative(ps.Idx, res, "desktop-cursor")
-		},
-	},
-	"widget-slider-ptr//mouse-in": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg1Val, ok := arg1Nat.Value.(*desktop.MouseEvent)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "mouse-in")
-			}
-			arg0Val.MouseIn(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-pop-up-ptr//hide": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "hide")
-			}
-			arg0Val.Hide()
-			return arg0Nat
-		},
-	},
-	"container-doc-tabs-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*container.DocTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-text-segment-ptr//selected-text": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "selected-text")
-			}
-			res := arg0Val.SelectedText()
-			return *env.NewNative(ps.Idx, res, "string")
-		},
-	},
-	"widget-pop-up-ptr//show": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.PopUp)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "show")
-			}
-			arg0Val.Show()
-			return arg0Nat
-		},
-	},
-	"widget-rich-text-from-markdown": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Str, ok := arg0.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-rich-text-from-markdown")
-			}
-			res := widget.NewRichTextFromMarkdown(arg0Str.Value)
-			return *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
-		},
-	},
-	"widget-image-segment-ptr//update": {
-		Argsn: 2,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ImageSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg0Val.Update(arg1Val)
-			return arg0Nat
-		},
-	},
-	"widget-form-ptr//min-size": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
 		},
 	},
 	"widget-text-segment-ptr//update": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//update")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "update")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "update")
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-segment-ptr//update")
 			}
 			arg0Val.Update(arg1Val)
-			return arg0Nat
+			return arg0
 		},
 	},
-	"container-app-tabs-ptr//create-renderer": {
+	"theme-settings-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SettingsIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-media-skip-next-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaSkipNextIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove")
+			}
+			arg0Val.Remove(arg1Val)
+			return arg0
+		},
+	},
+	"widget-custom-text-grid-style-ptr//text-color": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
+			var arg0Val *widget.CustomTextGridStyle
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.CustomTextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-custom-text-grid-style-ptr//text-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-custom-text-grid-style-ptr//text-color")
 			}
-			arg0Val, ok := arg0Nat.Value.(*container.AppTabs)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
+			res := arg0Val.TextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//tapped-secondary": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped-secondary")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped-secondary")
+			}
+			arg0Val.TappedSecondary(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-ptr//set-text": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-text")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-hyperlink-ptr//set-text")
+			}
+			arg0Val.SetText(arg1Val)
+			return arg0
+		},
+	},
+	"widget-paragraph-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-toolbar-action-ptr//set-icon": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ToolbarAction
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ToolbarAction)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//set-icon")
+			}
+			var arg1Val fyne.Resource
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//set-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//set-icon")
+			}
+			arg0Val.SetIcon(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-container-ptr//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//remove")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//remove")
+			}
+			arg0Val.Remove(arg1Val)
+			return arg0
+		},
+	},
+	"theme-primary-color-names": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.PrimaryColorNames()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "string-arr")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove")
+			}
+			arg0Val.Remove(arg1Val)
+			return arg0
+		},
+	},
+	"container-doc-tabs-ptr//append": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//append")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//append")
+			}
+			arg0Val.Append(arg1Val)
+			return arg0
+		},
+	},
+	"container-doc-tabs-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-menu-ptr//activate-last-submenu": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-last-submenu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-last-submenu")
+			}
+			res := arg0Val.ActivateLastSubmenu()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-square-offset-pos": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-square-offset-pos")
+			}
+			res := fyne.NewSquareOffsetPos(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"theme-scroll-bar-small-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ScrollBarSmallSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-media-record-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaRecordIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//enable-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-item")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-item")
+			}
+			arg0Val.EnableItem(arg1Val)
+			return arg0
+		},
+	},
+	"container-app-tabs-ptr//selected": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//selected")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//selected")
+			}
+			res := arg0Val.Selected()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			return resObj
+		},
+	},
+	"theme-colored-resource": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-colored-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-colored-resource")
+			}
+			var arg1Val fyne.ThemeColorName
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.ThemeColorName)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "theme-colored-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "theme-colored-resource")
+			}
+			res := theme.NewColoredResource(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"widget-card-ptr//set-content": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-content")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-card-ptr//set-content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-card-ptr//set-content")
+			}
+			arg0Val.SetContent(arg1Val)
+			return arg0
+		},
+	},
+	"widget-icon-ptr//set-resource": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Icon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Icon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//set-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//set-resource")
+			}
+			var arg1Val fyne.Resource
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-icon-ptr//set-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-icon-ptr//set-resource")
+			}
+			arg0Val.SetResource(arg1Val)
+			return arg0
+		},
+	},
+	"widget-base-widget-ptr//extend-base-widget": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//extend-base-widget")
+			}
+			var arg1Val fyne.Widget
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//extend-base-widget")
+			}
+			arg0Val.ExtendBaseWidget(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-min": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-min")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-min")
+			}
+			res := fyne.Min(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"container-without-layout": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-without-layout")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-without-layout")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-without-layout")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-without-layout")
+			}
+			res := container.NewWithoutLayout(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-show-pop-up-menu-at-relative-position": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+			}
+			var arg3Val fyne.CanvasObject
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-relative-position")
+			}
+			widget.ShowPopUpMenuAtRelativePosition(arg0Val, arg1Val, arg2Val, arg3Val)
+			return nil
+		},
+	},
+	"widget-form-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-default-emoji-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultEmojiFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-grid-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.GridIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-tab-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "container-tab-item")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-tab-item")
+			}
+			res := container.NewTabItem(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			return resObj
+		},
+	},
+	"container-stack": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-stack")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-stack")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-stack")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-stack")
+			}
+			res := container.NewStack(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"fyne-size//is-zero": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//is-zero")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//is-zero")
+			}
+			res := arg0Val.IsZero()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-line-spacing": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.LineSpacing()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//selected-index": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//selected-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//selected-index")
+			}
+			res := arg0Val.SelectedIndex()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"theme-inverted-themed-resource-ptr//name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.InvertedThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.InvertedThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//name")
+			}
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-content-cut-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentCutIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-separator-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-entry-ptr//double-tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//double-tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//double-tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//double-tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//double-tapped")
+			}
+			arg0Val.DoubleTapped(arg1Val)
+			return arg0
+		},
+	},
+	"widget-menu-ptr//deactivate-last-submenu": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//deactivate-last-submenu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//deactivate-last-submenu")
+			}
+			res := arg0Val.DeactivateLastSubmenu()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-entry-ptr//extend-base-widget": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//extend-base-widget")
+			}
+			var arg1Val fyne.Widget
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//extend-base-widget")
+			}
+			arg0Val.ExtendBaseWidget(arg1Val)
+			return arg0
+		},
+	},
+	"theme-pressed-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.PressedColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-themed-resource-ptr//name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//name")
+			}
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-inverted-themed-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.InvertedThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.InvertedThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//set-items": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-items")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-items")
+			}
+			var arg1Val []*container.TabItem
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]*container.TabItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(*container.TabItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs-ptr//set-items")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs-ptr//set-items")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs-ptr//set-items")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs-ptr//set-items")
+			}
+			arg0Val.SetItems(arg1Val)
+			return arg0
+		},
+	},
+	"widget-menu-ptr//deactivate-child": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//deactivate-child")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//deactivate-child")
+			}
+			arg0Val.DeactivateChild()
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//remove-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//remove-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//remove-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-accordion-ptr//remove-index")
+			}
+			arg0Val.RemoveIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-ptr//bind": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBar
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBar)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//bind")
+			}
+			var arg1Val binding.Float
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(binding.Float)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-progress-bar-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-progress-bar-ptr//bind")
+			}
+			arg0Val.Bind(arg1Val)
+			return arg0
+		},
+	},
+	"widget-form-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-form-item")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-item")
+			}
+			res := widget.NewFormItem(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-form-item-ptr")
+			return resObj
+		},
+	},
+	"fyne-measure-text": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-measure-text")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-measure-text")
+			}
+			var arg2Val fyne.TextStyle
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.TextStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-measure-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "fyne-measure-text")
+			}
+			res := fyne.MeasureText(arg0Val, arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-primary-themed-resource-ptr//original": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.PrimaryThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.PrimaryThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//original")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//original")
+			}
+			res := arg0Val.Original()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-visibility-off-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.VisibilityOffIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-center": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-center")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-center")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-center")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-center")
+			}
+			res := container.NewCenter(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-label": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-label")
+			}
+			res := widget.NewLabel(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-label-ptr")
+			return resObj
+		},
+	},
+	"widget-progress-bar-ptr//unbind": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBar
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBar)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//unbind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//unbind")
+			}
+			arg0Val.Unbind()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//touch-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-up")
+			}
+			var arg1Val *mobile.TouchEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*mobile.TouchEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-up")
+			}
+			arg0Val.TouchUp(arg1Val)
+			return arg0
+		},
+	},
+	"container-scroll": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-scroll")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-scroll")
+			}
+			res := container.NewScroll(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-scroll-ptr")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//create-renderer")
 			}
 			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
 		},
 	},
-	"fyne-container-ptr//remove-all": {
+	"widget-paragraph-segment-ptr//segments": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-all")
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//segments")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//segments")
 			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-all")
+			res := arg0Val.Segments()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
+			return resObj
+		},
+	},
+	"widget-progress-bar-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBar
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBar)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//min-size")
 			}
-			arg0Val.RemoveAll()
-			return arg0Nat
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-file-icon-ptr//set-selected": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.FileIcon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.FileIcon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-selected")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-selected")
+			}
+			var arg1Val bool
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = v.Value != 0
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-file-icon-ptr//set-selected")
+			}
+			arg0Val.SetSelected(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBar
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBar)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//tapped")
+			}
+			arg0Val.Tapped(arg1Val)
+			return arg0
+		},
+	},
+	"theme-text-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-mail-send-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailSendIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-progress-bar-infinite-ptr//start": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//start")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//start")
+			}
+			arg0Val.Start()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//touch-down": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-down")
+			}
+			var arg1Val *mobile.TouchEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*mobile.TouchEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-down")
+			}
+			arg0Val.TouchDown(arg1Val)
+			return arg0
+		},
+	},
+	"theme-disabled-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource")
+			}
+			res := theme.NewDisabledResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-disabled-resource-ptr")
+			return resObj
+		},
+	},
+	"theme-radio-button-checked-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.RadioButtonCheckedIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-card-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-entry-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//typed-shortcut": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-shortcut")
+			}
+			var arg1Val fyne.Shortcut
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Shortcut)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-shortcut")
+			}
+			arg0Val.TypedShortcut(arg1Val)
+			return arg0
+		},
+	},
+	"theme-inverted-themed-resource-ptr//original": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.InvertedThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.InvertedThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//original")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource-ptr//original")
+			}
+			res := arg0Val.Original()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-document-print-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DocumentPrintIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-label-with-data": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val binding.String
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(binding.String)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-with-data")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-with-data")
+			}
+			res := widget.NewLabelWithData(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-label-ptr")
+			return resObj
+		},
+	},
+	"widget-entry": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewEntry()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-entry-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-with-data": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val binding.String
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(binding.String)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-with-data")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-with-data")
+			}
+			res := widget.NewEntryWithData(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-entry-ptr")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//unbind": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//unbind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//unbind")
+			}
+			arg0Val.Unbind()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//cursor": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//cursor")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//cursor")
+			}
+			res := arg0Val.Cursor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "desktop-cursor")
+			return resObj
+		},
+	},
+	"fyne-notification": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-notification")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "fyne-notification")
+			}
+			res := fyne.NewNotification(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-notification-ptr")
+			return resObj
+		},
+	},
+	"fyne-size//add-width-height": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//add-width-height")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//add-width-height")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-size//add-width-height")
+			}
+			var arg2Val float32
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-size//add-width-height")
+			}
+			res := arg0Val.AddWidthHeight(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-media-replay-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaReplayIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//open": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//open")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//open")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-accordion-ptr//open")
+			}
+			arg0Val.Open(arg1Val)
+			return arg0
+		},
+	},
+	"app-with-id": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "app-with-id")
+			}
+			res := app.NewWithID(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-app")
+			return resObj
+		},
+	},
+	"theme-disabled-button-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DisabledButtonColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-menu-ptr//trigger-last": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//trigger-last")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//trigger-last")
+			}
+			arg0Val.TriggerLast()
+			return arg0
+		},
+	},
+	"widget-card-ptr//set-image": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-image")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-image")
+			}
+			var arg1Val *canvas.Image
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*canvas.Image)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-card-ptr//set-image")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-card-ptr//set-image")
+			}
+			arg0Val.SetImage(arg1Val)
+			return arg0
+		},
+	},
+	"widget-simple-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-simple-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-simple-renderer")
+			}
+			res := widget.NewSimpleRenderer(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"theme-text-sub-heading-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextSubHeadingSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//append": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//append")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//append")
+			}
+			arg0Val.Append(arg1Val)
+			return arg0
+		},
+	},
+	"container-app-tabs-ptr//set-tab-location": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-tab-location")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-tab-location")
+			}
+			var arg1Val container.TabLocation
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(container.TabLocation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-tab-location")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-tab-location")
+			}
+			arg0Val.SetTabLocation(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//dragged": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//dragged")
+			}
+			var arg1Val *fyne.DragEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.DragEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//dragged")
+			}
+			arg0Val.Dragged(arg1Val)
+			return arg0
+		},
+	},
+	"theme-dark-theme": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DarkTheme()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme")
+			return resObj
+		},
+	},
+	"container": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Layout
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Layout)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container")
+			}
+			res := container.New(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-menu-ptr//activate-next": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-next")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-next")
+			}
+			arg0Val.ActivateNext()
+			return arg0
+		},
+	},
+	"widget-form-ptr//append-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//append-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//append-item")
+			}
+			var arg1Val *widget.FormItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*widget.FormItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-ptr//append-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-form-ptr//append-item")
+			}
+			arg0Val.AppendItem(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-container-with-layout": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Layout
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Layout)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-with-layout")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-with-layout")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-container-with-layout")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-container-with-layout")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-container-with-layout")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-container-with-layout")
+			}
+			res := fyne.NewContainerWithLayout(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"theme-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource")
+			}
+			res := theme.NewThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//focus-lost": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//focus-lost")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//focus-lost")
+			}
+			arg0Val.FocusLost()
+			return arg0
+		},
+	},
+	"widget-progress-bar-ptr//set-value": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBar
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBar)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//set-value")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-ptr//set-value")
+			}
+			var arg1Val float64
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-progress-bar-ptr//set-value")
+			}
+			arg0Val.SetValue(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-current-app": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := fyne.CurrentApp()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-app")
+			return resObj
+		},
+	},
+	"theme-content-redo-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentRedoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-more-vertical-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MoreVerticalIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//disabled": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//disabled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//disabled")
+			}
+			res := arg0Val.Disabled()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"app-settings-schema-ptr//storage-path": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *app.SettingsSchema
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*app.SettingsSchema)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "app-settings-schema-ptr//storage-path")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "app-settings-schema-ptr//storage-path")
+			}
+			res := arg0Val.StoragePath()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-select-entry-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-image-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-inner-padding": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InnerPadding()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-menu-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MenuIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-upload-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.UploadIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//text")
+			}
+			res := arg0Val.Text()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-grid-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-grid-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"widget-label-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//set-text": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-text")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-entry-ptr//set-text")
+			}
+			arg0Val.SetText(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-is-horizontal": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.DeviceOrientation
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.DeviceOrientation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-horizontal")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-horizontal")
+			}
+			res := fyne.IsHorizontal(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-search-replace-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SearchReplaceIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-error-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ErrorIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
 		},
 	},
 	"widget-list-segment-ptr//textual": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "textual")
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//textual")
 			}
 			res := arg0Val.Textual()
-			return *env.NewNative(ps.Idx, res, "string")
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
-	"widget-icon-ptr//min-size": {
+	"widget-toolbar-action-ptr//toolbar-object": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
+			var arg0Val *widget.ToolbarAction
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ToolbarAction)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//toolbar-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-action-ptr//toolbar-object")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Icon)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "min-size")
-			}
-			res := arg0Val.MinSize()
-			return *env.NewNative(ps.Idx, res, "fyne-size")
+			res := arg0Val.ToolbarObject()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
 		},
 	},
-	"widget-text-segment-ptr//visual": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
-			}
-			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
-		},
-	},
-	"widget-form-ptr//disabled": {
-		Argsn: 1,
-		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Form)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled")
-			}
-			res := arg0Val.Disabled()
-			return *env.NewNative(ps.Idx, res, "bool")
-		},
-	},
-	"widget-multi-line-entry": {
+	"theme-selection-radius-size": {
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			res := widget.NewMultiLineEntry()
-			return *env.NewNative(ps.Idx, res, "widget-entry-ptr")
+			res := theme.SelectionRadiusSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
 		},
 	},
-	"widget-entry-ptr//disable": {
-		Argsn: 1,
+	"theme-document-icon": {
+		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Entry)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disable")
-			}
-			arg0Val.Disable()
-			return arg0Nat
+			res := theme.DocumentIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
 		},
 	},
-	"widget-pop-up-menu": {
+	"container-app-tabs-ptr//extend-base-widget": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//extend-base-widget")
 			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Menu)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			var arg1Val fyne.Widget
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//extend-base-widget")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			arg0Val.ExtendBaseWidget(arg1Val)
+			return arg0
+		},
+	},
+	"widget-pop-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up")
 			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Canvas)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up")
 			}
-			res := widget.NewPopUpMenu(arg0Val, arg1Val)
-			return *env.NewNative(ps.Idx, res, "widget-pop-up-menu-ptr")
+			res := widget.NewPopUp(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-pop-up-ptr")
+			return resObj
+		},
+	},
+	"widget-card-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//remove-all": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//remove-all")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//remove-all")
+			}
+			arg0Val.RemoveAll()
+			return arg0
+		},
+	},
+	"theme-media-fast-rewind-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaFastRewindIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-disableable-widget-ptr//disable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.DisableableWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.DisableableWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//disable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//disable")
+			}
+			arg0Val.Disable()
+			return arg0
+		},
+	},
+	"theme-symbol-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SymbolFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-cancel-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.CancelIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-separator-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"widget-pop-up-menu-ptr//move": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//move")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//move")
+			}
+			arg0Val.Move(arg1Val)
+			return arg0
+		},
+	},
+	"widget-separator-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Separator
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Separator)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
 		},
 	},
 	"fyne-container-ptr//resize": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//resize")
 			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
-			}
-			arg1Val, ok := arg1Nat.Value.(fyne.Size)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "resize")
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//resize")
 			}
 			arg0Val.Resize(arg1Val)
-			return arg0Nat
+			return arg0
 		},
 	},
-	"fyne-container-ptr//visible": {
-		Argsn: 1,
+	"theme-button-color": {
+		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			arg0Val, ok := arg0Nat.Value.(*fyne.Container)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visible")
-			}
-			res := arg0Val.Visible()
-			return *env.NewNative(ps.Idx, res, "bool")
+			res := theme.ButtonColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
 		},
 	},
-	"widget-list-segment-ptr//visual": {
+	"widget-accordion-ptr//min-size": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//min-size")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.ListSegment)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "visual")
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-volume-up-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.VolumeUpIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//set-rune": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-rune")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-rune")
+			}
+			var arg2Val int
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-rune")
+			}
+			var arg3Val rune
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-rune")
+			}
+			arg0Val.SetRune(arg1Val, arg2Val, arg3Val)
+			return arg0
+		},
+	},
+	"widget-text-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-slider-ptr//drag-end": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//drag-end")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//drag-end")
+			}
+			arg0Val.DragEnd()
+			return arg0
+		},
+	},
+	"fyne-set-current-app": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.App
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.App)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-set-current-app")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-set-current-app")
+			}
+			fyne.SetCurrentApp(arg0Val)
+			return nil
+		},
+	},
+	"theme-themed-resource-ptr//error": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//error")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//error")
+			}
+			res := arg0Val.Error()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-error-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//focus-gained": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//focus-gained")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//focus-gained")
+			}
+			arg0Val.FocusGained()
+			return arg0
+		},
+	},
+	"widget-base-widget-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//touch-cancel": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-cancel")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//touch-cancel")
+			}
+			var arg1Val *mobile.TouchEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*mobile.TouchEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-cancel")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//touch-cancel")
+			}
+			arg0Val.TouchCancel(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//typed-key": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-key")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-key")
+			}
+			arg0Val.TypedKey(arg1Val)
+			return arg0
+		},
+	},
+	"widget-form-ptr//append": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//append")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-form-ptr//append")
+			}
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-form-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-form-ptr//append")
+			}
+			arg0Val.Append(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-form-ptr//enable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//enable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//enable")
+			}
+			arg0Val.Enable()
+			return arg0
+		},
+	},
+	"theme-home-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HomeIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-segment-ptr//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//visual")
 			}
 			res := arg0Val.Visual()
-			return *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
 		},
 	},
-	"widget-slider-ptr//set-value": {
+	"widget-list-segment-ptr//update": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-value")
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//update")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Slider)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-value")
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-list-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-list-segment-ptr//update")
 			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "set-value")
-			}
-			arg0Val.SetValue(arg1Dec.Value)
-			return arg0Nat
+			arg0Val.Update(arg1Val)
+			return arg0
 		},
 	},
-	"container-adaptive-grid": {
-		Argsn: 2,
+	"widget-select-entry-ptr//enable": {
+		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Int, ok := arg0.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-adaptive-grid")
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//enable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//enable")
 			}
-			arg1Nat, ok := arg1.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-adaptive-grid")
-			}
-			arg1Val, ok := arg1Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-adaptive-grid")
-			}
-			res := container.NewAdaptiveGrid(int(arg0Int.Value), arg1Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			arg0Val.Enable()
+			return arg0
 		},
 	},
-	"widget-card-ptr//set-sub-title": {
-		Argsn: 2,
+	"widget-entry-ptr//hide": {
+		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-sub-title")
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//hide")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Card)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "set-sub-title")
-			}
-			arg1Str, ok := arg1.(env.String)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "set-sub-title")
-			}
-			arg0Val.SetSubTitle(arg1Str.Value)
-			return arg0Nat
+			arg0Val.Hide()
+			return arg0
 		},
 	},
 	"fyne-current-device": {
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res := fyne.CurrentDevice()
-			return *env.NewNative(ps.Idx, res, "fyne-device")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-device")
+			return resObj
 		},
 	},
-	"app-settings-schema-ptr//storage-path": {
-		Argsn: 1,
+	"container-doc-tabs-ptr//select": {
+		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "storage-path")
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select")
 			}
-			arg0Val, ok := arg0Nat.Value.(*app.SettingsSchema)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "storage-path")
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select")
 			}
-			res := arg0Val.StoragePath()
-			return *env.NewNative(ps.Idx, res, "string")
+			arg0Val.Select(arg1Val)
+			return arg0
 		},
 	},
-	"container-v-box": {
+	"widget-hyperlink-ptr//mouse-moved": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-moved")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-moved")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-moved")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-moved")
+			}
+			arg0Val.MouseMoved(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-infinite-ptr//min-size": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-box")
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//min-size")
 			}
-			arg0Val, ok := arg0Nat.Value.([]fyne.CanvasObject)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-box")
-			}
-			res := container.NewVBox(arg0Val...)
-			return *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
 		},
 	},
 	"fyne-position//subtract-xy": {
 		Argsn: 3,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract-xy")
+			var arg0Val fyne.Position
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//subtract-xy")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//subtract-xy")
 			}
-			arg0Val, ok := arg0Nat.Value.(fyne.Position)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "subtract-xy")
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-position//subtract-xy")
 			}
-			arg1Dec, ok := arg1.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "subtract-xy")
+			var arg2Val float32
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-position//subtract-xy")
 			}
-			arg2Dec, ok := arg2.(env.Decimal)
-			if !ok {
-				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "subtract-xy")
-			}
-			res := arg0Val.SubtractXY(float32(arg1Dec.Value), float32(arg2Dec.Value))
-			return *env.NewNative(ps.Idx, res, "fyne-position")
+			res := arg0Val.SubtractXY(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
 		},
 	},
-	"widget-accordion-ptr//remove-index": {
+	"theme-text-italic-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-disabled-text-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DisabledTextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-scroll-bar-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ScrollBarColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//select-index": {
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-index")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.Accordion)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "remove-index")
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-app-tabs-ptr//select-index")
 			}
-			arg1Int, ok := arg1.(env.Integer)
-			if !ok {
-				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "remove-index")
-			}
-			arg0Val.RemoveIndex(int(arg1Int.Value))
-			return arg0Nat
+			arg0Val.SelectIndex(arg1Val)
+			return arg0
 		},
 	},
-	"widget-text-grid-ptr//create-renderer": {
+	"theme-content-copy-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentCopyIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//current-tab-index": {
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
-			arg0Nat, ok := arg0.(env.Native)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//current-tab-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//current-tab-index")
 			}
-			arg0Val, ok := arg0Nat.Value.(*widget.TextGrid)
-			if !ok {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "create-renderer")
+			res := arg0Val.CurrentTabIndex()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"widget-modal-pop-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-modal-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-modal-pop-up")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-modal-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-modal-pop-up")
+			}
+			res := widget.NewModalPopUp(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-pop-up-ptr")
+			return resObj
+		},
+	},
+	"widget-label-ptr//set-text": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//set-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//set-text")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-label-ptr//set-text")
+			}
+			arg0Val.SetText(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-container-ptr//visible": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//visible")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//visible")
+			}
+			res := arg0Val.Visible()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-max": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-max")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-max")
+			}
+			res := fyne.Max(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"container-grid-with-rows": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val int
+			if v, ok := arg0.(env.Integer); ok {
+				arg0Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-grid-with-rows")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-rows")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-rows")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-rows")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-rows")
+			}
+			res := container.NewGridWithRows(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"container-v-split": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-split")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-split")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-v-split")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-v-split")
+			}
+			res := container.NewVSplit(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-split-ptr")
+			return resObj
+		},
+	},
+	"theme-padding": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.Padding()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-header-background-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HeaderBackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-error-themed-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ErrorThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ErrorThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//move": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//move")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//move")
+			}
+			arg0Val.Move(arg1Val)
+			return arg0
+		},
+	},
+	"theme-disabled-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DisabledColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-focus-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FocusColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-file-image-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileImageIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//select-tab": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab")
+			}
+			arg0Val.SelectTab(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//enable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//enable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//enable")
+			}
+			arg0Val.Enable()
+			return arg0
+		},
+	},
+	"fyne-is-vertical": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.DeviceOrientation
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.DeviceOrientation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-vertical")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-is-vertical")
+			}
+			res := fyne.IsVertical(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-media-pause-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaPauseIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-login-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.LoginIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu")
+			}
+			res := widget.NewPopUpMenu(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-pop-up-menu-ptr")
+			return resObj
+		},
+	},
+	"widget-slider": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float64
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "widget-slider")
+			}
+			var arg1Val float64
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-slider")
+			}
+			res := widget.NewSlider(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-slider-ptr")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//move": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//move")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//move")
+			}
+			arg0Val.Move(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-size//subtract": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//subtract")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//subtract")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//subtract")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//subtract")
+			}
+			res := arg0Val.Subtract(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-foreground-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ForegroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-disableable-widget-ptr//disabled": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.DisableableWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.DisableableWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//disabled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//disabled")
+			}
+			res := arg0Val.Disabled()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-entry-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//create-renderer")
 			}
 			res := arg0Val.CreateRenderer()
-			return *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"theme-text-bold-italic-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextBoldItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//tapped")
+			}
+			arg0Val.Tapped(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//focus-gained": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//focus-gained")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//focus-gained")
+			}
+			arg0Val.FocusGained()
+			return arg0
+		},
+	},
+	"theme-default-text-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTextFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-content-clear-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentClearIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-warning-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.WarningIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-file-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"fyne-static-resource": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-static-resource")
+			}
+			var arg1Val []byte
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]byte, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(byte)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-static-resource")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-static-resource")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]byte)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-static-resource")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-static-resource")
+			}
+			res := fyne.NewStaticResource(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-static-resource-ptr")
+			return resObj
+		},
+	},
+	"theme-history-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HistoryIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"widget-pop-up-menu-ptr//show-at-relative-position": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+			}
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-relative-position")
+			}
+			arg0Val.ShowAtRelativePosition(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-ptr//cursor": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//cursor")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//cursor")
+			}
+			res := arg0Val.Cursor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "desktop-cursor")
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//tapped")
+			}
+			arg0Val.Tapped(arg1Val)
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//close": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//close")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//close")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-accordion-ptr//close")
+			}
+			arg0Val.Close(arg1Val)
+			return arg0
+		},
+	},
+	"theme-content-remove-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentRemoveIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-file-video-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileVideoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-media-skip-previous-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaSkipPreviousIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-computer-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ComputerIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-grid-with-columns": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val int
+			if v, ok := arg0.(env.Integer); ok {
+				arg0Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-grid-with-columns")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-columns")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-columns")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-columns")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-with-columns")
+			}
+			res := container.NewGridWithColumns(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-accordion-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-accordion-item")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-item")
+			}
+			res := widget.NewAccordionItem(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-accordion-item-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//keyboard": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//keyboard")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//keyboard")
+			}
+			res := arg0Val.Keyboard()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "mobile-keyboard-type")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//append": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//append")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-entry-ptr//append")
+			}
+			arg0Val.Append(arg1Val)
+			return arg0
+		},
+	},
+	"container-doc-tabs-ptr//select-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//select-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-doc-tabs-ptr//select-index")
+			}
+			arg0Val.SelectIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//key-down": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//key-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//key-down")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//key-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//key-down")
+			}
+			arg0Val.KeyDown(arg1Val)
+			return arg0
+		},
+	},
+	"theme-default-text-bold-italic-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTextBoldItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-check-button-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.CheckButtonIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-check-button-checked-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.CheckButtonCheckedIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-media-video-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaVideoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-list-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ListIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-form-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"fyne-position//subtract": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Position
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//subtract")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//subtract")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-position//subtract")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-position//subtract")
+			}
+			res := arg0Val.Subtract(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"widget-icon-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Icon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Icon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-label-ptr//extend-base-widget": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//extend-base-widget")
+			}
+			var arg1Val fyne.Widget
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//extend-base-widget")
+			}
+			arg0Val.ExtendBaseWidget(arg1Val)
+			return arg0
+		},
+	},
+	"widget-slider-ptr//tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//tapped")
+			}
+			arg0Val.Tapped(arg1Val)
+			return arg0
+		},
+	},
+	"widget-rich-text-ptr//parse-markdown": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//parse-markdown")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//parse-markdown")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-rich-text-ptr//parse-markdown")
+			}
+			arg0Val.ParseMarkdown(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-ptr//mouse-in": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-in")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-in")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-in")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-in")
+			}
+			arg0Val.MouseIn(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-static-resource-ptr//name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.StaticResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.StaticResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//name")
+			}
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-mail-forward-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailForwardIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-move-down-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MoveDownIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-file-icon-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.FileIcon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.FileIcon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"theme-warning-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.WarningColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-mail-attachment-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailAttachmentIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-paragraph-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-show-pop-up-menu-at-position": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-menu-at-position")
+			}
+			widget.ShowPopUpMenuAtPosition(arg0Val, arg1Val, arg2Val)
+			return nil
+		},
+	},
+	"widget-entry-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-document-save-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DocumentSaveIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-download-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DownloadIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-card": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-card")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-card")
+			}
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-card")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-card")
+			}
+			res := widget.NewCard(arg0Val, arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-card-ptr")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//mouse-out": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-out")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-out")
+			}
+			arg0Val.MouseOut()
+			return arg0
+		},
+	},
+	"theme-separator-thickness-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SeparatorThicknessSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-error-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ErrorColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-success-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SuccessColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-error-themed-resource-ptr//original": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ErrorThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ErrorThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//original")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//original")
+			}
+			res := arg0Val.Original()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//set-url-from-string": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url-from-string")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//set-url-from-string")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-hyperlink-ptr//set-url-from-string")
+			}
+			res := arg0Val.SetURLFromString(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
+		},
+	},
+	"fyne-size": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-size")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-size")
+			}
+			res := fyne.NewSize(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//accepts-tab": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//accepts-tab")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//accepts-tab")
+			}
+			res := arg0Val.AcceptsTab()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-separator-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SeparatorColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-list-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//position": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//position")
+			}
+			res := arg0Val.Position()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"theme-text-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-overlay-background-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.OverlayBackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-move-up-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MoveUpIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//set-tab-location": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-tab-location")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-tab-location")
+			}
+			var arg1Val container.TabLocation
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(container.TabLocation)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-tab-location")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//set-tab-location")
+			}
+			arg0Val.SetTabLocation(arg1Val)
+			return arg0
+		},
+	},
+	"theme-color-palette-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ColorPaletteIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-info-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InfoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-menu-ptr//dismiss": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//dismiss")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//dismiss")
+			}
+			arg0Val.Dismiss()
+			return arg0
+		},
+	},
+	"widget-progress-bar-infinite": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewProgressBarInfinite()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-progress-bar-infinite-ptr")
+			return resObj
+		},
+	},
+	"fyne-menu-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-menu-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-menu-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"theme-scroll-bar-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ScrollBarSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-broken-image-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.BrokenImageIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-folder-new-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FolderNewIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-folder-open-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FolderOpenIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//disable-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-doc-tabs-ptr//disable-index")
+			}
+			arg0Val.DisableIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-list-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-list-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-separator-segment-ptr//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-separator-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-entry-ptr//key-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//key-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//key-up")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//key-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//key-up")
+			}
+			arg0Val.KeyUp(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-infinite-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-separator-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Separator
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Separator)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"container-split-ptr//extend-base-widget": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.Split
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.Split)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//extend-base-widget")
+			}
+			var arg1Val fyne.Widget
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Widget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-split-ptr//extend-base-widget")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-split-ptr//extend-base-widget")
+			}
+			arg0Val.ExtendBaseWidget(arg1Val)
+			return arg0
+		},
+	},
+	"widget-text-grid": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewTextGrid()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-text-grid-ptr")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//mouse-out": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-out")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//mouse-out")
+			}
+			arg0Val.MouseOut()
+			return arg0
+		},
+	},
+	"widget-show-pop-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up")
+			}
+			widget.ShowPopUp(arg0Val, arg1Val)
+			return nil
+		},
+	},
+	"theme-storage-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.StorageIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//disable-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-app-tabs-ptr//disable-index")
+			}
+			arg0Val.DisableIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-pop-up-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-label-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//typed-rune": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//typed-rune")
+			}
+			var arg1Val rune
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//typed-rune")
+			}
+			arg0Val.TypedRune(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"theme-primary-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.PrimaryColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//move": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//move")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//move")
+			}
+			arg0Val.Move(arg1Val)
+			return arg0
+		},
+	},
+	"container-doc-tabs": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []*container.TabItem
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]*container.TabItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(*container.TabItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-doc-tabs")
+			}
+			res := container.NewDocTabs(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-doc-tabs-ptr")
+			return resObj
+		},
+	},
+	"widget-rich-text-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-rich-text-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"theme-logout-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.LogoutIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-border": {
+		Argsn: 5,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-border")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-border")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-border")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-border")
+			}
+			var arg2Val fyne.CanvasObject
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-border")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "container-border")
+			}
+			var arg3Val fyne.CanvasObject
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "container-border")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "container-border")
+			}
+			var arg4Val []fyne.CanvasObject
+			switch v := arg4.(type) {
+			case env.Block:
+				arg4Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg4Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 4, []env.Type{env.BlockType, env.NativeType}, "container-border")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 4, []env.Type{env.BlockType, env.NativeType}, "container-border")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg4Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 4, []env.Type{env.BlockType, env.NativeType}, "container-border")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 4, []env.Type{env.BlockType, env.NativeType}, "container-border")
+			}
+			res := container.NewBorder(arg0Val, arg1Val, arg2Val, arg3Val, arg4Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"theme-text-monospace-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextMonospaceFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-content-add-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentAddIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-visibility-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.VisibilityIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-image-segment-ptr//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//visual")
+			}
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"widget-form-ptr//disabled": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//disabled")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//disabled")
+			}
+			res := arg0Val.Disabled()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"fyne-static-resource-ptr//go-string": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.StaticResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.StaticResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//go-string")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//go-string")
+			}
+			res := arg0Val.GoString()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-success-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-success-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-success-themed-resource")
+			}
+			res := theme.NewSuccessThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"theme-search-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SearchIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-document-create-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DocumentCreateIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-menu-drop-down-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MenuDropDownIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-list-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-slider-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"theme-warning-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-warning-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-warning-themed-resource")
+			}
+			res := theme.NewWarningThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//enable-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-doc-tabs-ptr//enable-index")
+			}
+			arg0Val.EnableIndex(arg1Val)
+			return arg0
+		},
+	},
+	"container-h-box": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-h-box")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-h-box")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-h-box")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-h-box")
+			}
+			res := container.NewHBox(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//typed-rune": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-rune")
+			}
+			var arg1Val rune
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-rune")
+			}
+			arg0Val.TypedRune(arg1Val)
+			return arg0
+		},
+	},
+	"widget-rich-text-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-menu-drop-up-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MenuDropUpIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-icon": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon")
+			}
+			res := widget.NewIcon(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-icon-ptr")
+			return resObj
+		},
+	},
+	"widget-progress-bar-infinite-ptr//running": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//running")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//running")
+			}
+			res := arg0Val.Running()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-light-theme": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.LightTheme()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme")
+			return resObj
+		},
+	},
+	"theme-default-text-monospace-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTextMonospaceFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-text-heading-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextHeadingSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-folder-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FolderIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-mail-reply-all-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailReplyAllIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//add-object": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//add-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//add-object")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//add-object")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//add-object")
+			}
+			arg0Val.AddObject(arg1Val)
+			return arg0
+		},
+	},
+	"widget-rich-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []widget.RichTextSegment
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]widget.RichTextSegment, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(widget.RichTextSegment)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-rich-text")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-rich-text")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]widget.RichTextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-rich-text")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-rich-text")
+			}
+			res := widget.NewRichText(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//unbind": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//unbind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//unbind")
+			}
+			arg0Val.Unbind()
+			return arg0
+		},
+	},
+	"fyne-size//max": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//max")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//max")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//max")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//max")
+			}
+			res := arg0Val.Max(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//typed-rune": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//typed-rune")
+			}
+			var arg1Val rune
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//typed-rune")
+			}
+			arg0Val.TypedRune(arg1Val)
+			return arg0
+		},
+	},
+	"theme-shadow-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ShadowColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-menu-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"widget-image-segment-ptr//inline": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//inline")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//inline")
+			}
+			res := arg0Val.Inline()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-inverted-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource")
+			}
+			res := theme.NewInvertedThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-inverted-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"theme-primary-themed-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.PrimaryThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.PrimaryThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"theme-media-stop-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaStopIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//show-at-position": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-position")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//show-at-position")
+			}
+			arg0Val.ShowAtPosition(arg1Val)
+			return arg0
+		},
+	},
+	"widget-separator-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-separator-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"theme-background-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.BackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-menu-expand-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MenuExpandIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-menu-ptr//activate-previous": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-previous")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//activate-previous")
+			}
+			arg0Val.ActivatePrevious()
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//close-all": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//close-all")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//close-all")
+			}
+			arg0Val.CloseAll()
+			return arg0
+		},
+	},
+	"fyne-menu": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-menu")
+			}
+			var arg1Val []*fyne.MenuItem
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]*fyne.MenuItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(*fyne.MenuItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-menu")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-menu")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]*fyne.MenuItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-menu")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "fyne-menu")
+			}
+			res := fyne.NewMenu(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-menu-ptr")
+			return resObj
+		},
+	},
+	"theme-radio-button-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.RadioButtonIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"container-grid-wrap": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-grid-wrap")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-grid-wrap")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-wrap")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-wrap")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-wrap")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-grid-wrap")
+			}
+			res := container.NewGridWrap(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"container-v-box": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-v-box")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-v-box")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-v-box")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-v-box")
+			}
+			res := container.NewVBox(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"fyne-pos": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-pos")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-pos")
+			}
+			res := fyne.NewPos(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//selected": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//selected")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//selected")
+			}
+			res := arg0Val.Selected()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//visible": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//visible")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//visible")
+			}
+			res := arg0Val.Visible()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"container-h-split": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-split")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-split")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-h-split")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-h-split")
+			}
+			res := container.NewHSplit(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-split-ptr")
+			return resObj
+		},
+	},
+	"widget-select-entry-ptr//move": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//move")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-select-entry-ptr//move")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-select-entry-ptr//move")
+			}
+			arg0Val.Move(arg1Val)
+			return arg0
+		},
+	},
+	"widget-paragraph-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"widget-card-ptr//set-sub-title": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-sub-title")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-sub-title")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-card-ptr//set-sub-title")
+			}
+			arg0Val.SetSubTitle(arg1Val)
+			return arg0
+		},
+	},
+	"widget-slider-ptr//mouse-moved": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-moved")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-moved")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-moved")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-moved")
+			}
+			arg0Val.MouseMoved(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//set-place-holder": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-place-holder")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-place-holder")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-entry-ptr//set-place-holder")
+			}
+			arg0Val.SetPlaceHolder(arg1Val)
+			return arg0
+		},
+	},
+	"container-app-tabs-ptr//enable-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//enable-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-app-tabs-ptr//enable-index")
+			}
+			arg0Val.EnableIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-label-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"container-h-scroll": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-scroll")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-h-scroll")
+			}
+			res := container.NewHScroll(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-scroll-ptr")
+			return resObj
+		},
+	},
+	"theme-delete-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DeleteIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-navigate-back-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.NavigateBackIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//row": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//row")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//row")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//row")
+			}
+			res := arg0Val.Row(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-text-grid-row")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//focus-gained": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//focus-gained")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//focus-gained")
+			}
+			arg0Val.FocusGained()
+			return arg0
+		},
+	},
+	"fyne-container-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"fyne-size//min": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//min")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//min")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//min")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//min")
+			}
+			res := arg0Val.Min(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-hover-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HoverColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-error-themed-resource-ptr//name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ErrorThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ErrorThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource-ptr//name")
+			}
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-media-play-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaPlayIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"fyne-static-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.StaticResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.StaticResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-static-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"fyne-delta": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-delta")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-delta")
+			}
+			res := fyne.NewDelta(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-delta")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//select-tab-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select-tab-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-app-tabs-ptr//select-tab-index")
+			}
+			arg0Val.SelectTabIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-paragraph-segment-ptr//update": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//update")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//update")
+			}
+			arg0Val.Update(arg1Val)
+			return arg0
+		},
+	},
+	"container-app-tabs-ptr//select": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//select")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//select")
+			}
+			arg0Val.Select(arg1Val)
+			return arg0
+		},
+	},
+	"widget-paragraph-segment-ptr//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-container-without-layout": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container-without-layout")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container-without-layout")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container-without-layout")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container-without-layout")
+			}
+			res := fyne.NewContainerWithoutLayout(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"fyne-log-error": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "fyne-log-error")
+			}
+			var arg1Val error
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(error)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-log-error")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-log-error")
+			}
+			fyne.LogError(arg0Val, arg1Val)
+			return nil
+		},
+	},
+	"theme-default-text-bold-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTextBoldFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-account-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.AccountIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []*container.TabItem
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]*container.TabItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(*container.TabItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs")
+			}
+			res := container.NewAppTabs(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-app-tabs-ptr")
+			return resObj
+		},
+	},
+	"theme-content-undo-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentUndoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-label-ptr//bind": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//bind")
+			}
+			var arg1Val binding.String
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(binding.String)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//bind")
+			}
+			arg0Val.Bind(arg1Val)
+			return arg0
+		},
+	},
+	"widget-rich-text-from-markdown": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-rich-text-from-markdown")
+			}
+			res := widget.NewRichTextFromMarkdown(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-file-audio-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileAudioIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//focus-gained": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//focus-gained")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//focus-gained")
+			}
+			arg0Val.FocusGained()
+			return arg0
+		},
+	},
+	"widget-accordion": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []*widget.AccordionItem
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]*widget.AccordionItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(*widget.AccordionItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-accordion")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-accordion")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]*widget.AccordionItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-accordion")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-accordion")
+			}
+			res := widget.NewAccordion(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-accordion-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//drag-end": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//drag-end")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//drag-end")
+			}
+			arg0Val.DragEnd()
+			return arg0
+		},
+	},
+	"container-app-tabs-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//disable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//disable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//disable")
+			}
+			arg0Val.Disable()
+			return arg0
+		},
+	},
+	"theme-fyne-logo": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FyneLogo()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-menu": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu")
+			}
+			res := widget.NewMenu(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-menu-ptr")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-question-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.QuestionIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//row-text": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//row-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//row-text")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//row-text")
+			}
+			res := arg0Val.RowText(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-separator-segment-ptr//update": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SeparatorSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SeparatorSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-separator-segment-ptr//update")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-separator-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-separator-segment-ptr//update")
+			}
+			arg0Val.Update(arg1Val)
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//append": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//append")
+			}
+			var arg1Val *widget.AccordionItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*widget.AccordionItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-ptr//append")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-ptr//append")
+			}
+			arg0Val.Append(arg1Val)
+			return arg0
+		},
+	},
+	"widget-label-with-style": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-label-with-style")
+			}
+			var arg1Val fyne.TextAlign
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.TextAlign)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-with-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-with-style")
+			}
+			var arg2Val fyne.TextStyle
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.TextStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-label-with-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-label-with-style")
+			}
+			res := widget.NewLabelWithStyle(arg0Val, arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-label-ptr")
+			return resObj
+		},
+	},
+	"theme-selection-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.SelectionColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"container-split-ptr//set-offset": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.Split
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.Split)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//set-offset")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//set-offset")
+			}
+			var arg1Val float64
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "container-split-ptr//set-offset")
+			}
+			arg0Val.SetOffset(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-segment-ptr//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-paragraph-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-slider-ptr//set-value": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//set-value")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//set-value")
+			}
+			var arg1Val float64
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-slider-ptr//set-value")
+			}
+			arg0Val.SetValue(arg1Val)
+			return arg0
+		},
+	},
+	"theme-media-photo-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaPhotoIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//typed-key": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-key")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-ptr//typed-key")
+			}
+			arg0Val.TypedKey(arg1Val)
+			return arg0
+		},
+	},
+	"widget-show-pop-up-at-position": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-position")
+			}
+			widget.ShowPopUpAtPosition(arg0Val, arg1Val, arg2Val)
+			return nil
+		},
+	},
+	"widget-entry-ptr//validate": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//validate")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//validate")
+			}
+			res := arg0Val.Validate()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "error")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//focus-lost": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//focus-lost")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//focus-lost")
+			}
+			arg0Val.FocusLost()
+			return arg0
+		},
+	},
+	"theme-hyperlink-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HyperlinkColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-color-achromatic-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ColorAchromaticIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-card-ptr//set-title": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Card
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Card)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-title")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card-ptr//set-title")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-card-ptr//set-title")
+			}
+			arg0Val.SetTitle(arg1Val)
+			return arg0
+		},
+	},
+	"widget-disableable-widget-ptr//enable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.DisableableWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.DisableableWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//enable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-disableable-widget-ptr//enable")
+			}
+			arg0Val.Enable()
+			return arg0
+		},
+	},
+	"widget-menu-ptr//tapped": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//tapped")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-menu-ptr//tapped")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-menu-ptr//tapped")
+			}
+			arg0Val.Tapped(arg1Val)
+			return arg0
+		},
+	},
+	"widget-select-entry-ptr//disable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//disable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//disable")
+			}
+			arg0Val.Disable()
+			return arg0
+		},
+	},
+	"widget-slider-ptr//mouse-in": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-in")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-in")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-in")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//mouse-in")
+			}
+			arg0Val.MouseIn(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-position//add-xy": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Position
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//add-xy")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//add-xy")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-position//add-xy")
+			}
+			var arg2Val float32
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-position//add-xy")
+			}
+			res := arg0Val.AddXY(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"theme-default-symbol-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultSymbolFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-media-fast-forward-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MediaFastForwardIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-navigate-next-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.NavigateNextIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-custom-text-grid-style-ptr//background-color": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.CustomTextGridStyle
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.CustomTextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-custom-text-grid-style-ptr//background-color")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-custom-text-grid-style-ptr//background-color")
+			}
+			res := arg0Val.BackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"widget-menu-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Menu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Menu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-menu-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-text-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"fyne-size//add": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//add")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-size//add")
+			}
+			res := arg0Val.Add(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-icon-inline-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.IconInlineSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-color-chromatic-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ColorChromaticIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-mail-reply-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailReplyIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-v-scroll": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-scroll")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-v-scroll")
+			}
+			res := container.NewVScroll(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-scroll-ptr")
+			return resObj
+		},
+	},
+	"container-adaptive-grid": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val int
+			if v, ok := arg0.(env.Integer); ok {
+				arg0Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.IntegerType}, "container-adaptive-grid")
+			}
+			var arg1Val []fyne.CanvasObject
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-adaptive-grid")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-adaptive-grid")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-adaptive-grid")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-adaptive-grid")
+			}
+			res := container.NewAdaptiveGrid(arg0Val, arg1Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"theme-text-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//enable-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-item")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//enable-item")
+			}
+			arg0Val.EnableItem(arg1Val)
+			return arg0
+		},
+	},
+	"widget-entry-ptr//focus-lost": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//focus-lost")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//focus-lost")
+			}
+			arg0Val.FocusLost()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//tapped-secondary": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//tapped-secondary")
+			}
+			var arg1Val *fyne.PointEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.PointEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//tapped-secondary")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//tapped-secondary")
+			}
+			arg0Val.TappedSecondary(arg1Val)
+			return arg0
+		},
+	},
+	"widget-base-widget-ptr//position": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//position")
+			}
+			res := arg0Val.Position()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"theme-default-text-italic-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTextItalicFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-input-border-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InputBorderColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-mail-compose-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MailComposeIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-view-refresh-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ViewRefreshIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//typed-rune": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-rune")
+			}
+			var arg1Val rune
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(rune)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-rune")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-rune")
+			}
+			arg0Val.TypedRune(arg1Val)
+			return arg0
+		},
+	},
+	"widget-text-grid-ptr//set-style": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-style")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-style")
+			}
+			var arg2Val int
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-style")
+			}
+			var arg3Val widget.TextGridStyle
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(widget.TextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-style")
+			}
+			arg0Val.SetStyle(arg1Val, arg2Val, arg3Val)
+			return arg0
+		},
+	},
+	"theme-caption-text-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.CaptionTextSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"theme-primary-color-named": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "theme-primary-color-named")
+			}
+			res := theme.PrimaryColorNamed(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-more-horizontal-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MoreHorizontalIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-view-restore-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ViewRestoreIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//set-items": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-items")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//set-items")
+			}
+			var arg1Val []*container.TabItem
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]*container.TabItem, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg1Val[i], ok = v.Value.(*container.TabItem)
+						if !ok {
+							return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs-ptr//set-items")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs-ptr//set-items")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs-ptr//set-items")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "container-app-tabs-ptr//set-items")
+			}
+			arg0Val.SetItems(arg1Val)
+			return arg0
+		},
+	},
+	"container-padded": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-padded")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-padded")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-padded")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-padded")
+			}
+			res := container.NewPadded(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-rich-text-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-list-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"widget-pop-up-menu-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-separator": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewSeparator()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-separator-ptr")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//current-tab": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//current-tab")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//current-tab")
+			}
+			res := arg0Val.CurrentTab()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "container-tab-item-ptr")
+			return resObj
+		},
+	},
+	"widget-text-segment-ptr//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"fyne-container-ptr//size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//size")
+			}
+			res := arg0Val.Size()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-disabled-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.DisabledResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.DisabledResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//remove-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//remove-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-doc-tabs-ptr//remove-index")
+			}
+			arg0Val.RemoveIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-image-segment-ptr//update": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//update")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-image-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-image-segment-ptr//update")
+			}
+			arg0Val.Update(arg1Val)
+			return arg0
+		},
+	},
+	"widget-image-segment-ptr//unselect": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//unselect")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//unselect")
+			}
+			arg0Val.Unselect()
+			return arg0
+		},
+	},
+	"fyne-container": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "fyne-container")
+			}
+			res := fyne.NewContainer(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//disable-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-item")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-doc-tabs-ptr//disable-item")
+			}
+			arg0Val.DisableItem(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-infinite-ptr//hide": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//hide")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//hide")
+			}
+			arg0Val.Hide()
+			return arg0
+		},
+	},
+	"widget-multi-line-entry": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewMultiLineEntry()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-entry-ptr")
+			return resObj
+		},
+	},
+	"fyne-container-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"theme-input-radius-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InputRadiusSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"widget-pop-up-ptr//show-at-position": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUp
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUp)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-position")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-ptr//show-at-position")
+			}
+			arg0Val.ShowAtPosition(arg1Val)
+			return arg0
+		},
+	},
+	"widget-slider-ptr//bind": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//bind")
+			}
+			var arg1Val binding.Float
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(binding.Float)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//bind")
+			}
+			arg0Val.Bind(arg1Val)
+			return arg0
+		},
+	},
+	"widget-base-widget-ptr//size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//size")
+			}
+			res := arg0Val.Size()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-text-grid-from-string": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-text-grid-from-string")
+			}
+			res := widget.NewTextGridFromString(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-text-grid-ptr")
+			return resObj
+		},
+	},
+	"widget-image-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-image-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-pop-up-menu-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-square-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float32
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "fyne-square-size")
+			}
+			res := fyne.NewSquareSize(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"theme-text-bold-font": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.TextBoldFont()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-from-legacy": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.LegacyTheme
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.LegacyTheme)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-legacy")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-legacy")
+			}
+			res := theme.FromLegacy(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme")
+			return resObj
+		},
+	},
+	"theme-help-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.HelpIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//remove-index": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//remove-index")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "container-app-tabs-ptr//remove-index")
+			}
+			arg0Val.RemoveIndex(arg1Val)
+			return arg0
+		},
+	},
+	"widget-slider-with-data": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val float64
+			if v, ok := arg0.(env.Decimal); ok {
+				arg0Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.DecimalType}, "widget-slider-with-data")
+			}
+			var arg1Val float64
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float64(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "widget-slider-with-data")
+			}
+			var arg2Val binding.Float
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(binding.Float)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-slider-with-data")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-slider-with-data")
+			}
+			res := widget.NewSliderWithData(arg0Val, arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-slider-ptr")
+			return resObj
+		},
+	},
+	"widget-form-ptr//disable": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Form
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Form)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//disable")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-ptr//disable")
+			}
+			arg0Val.Disable()
+			return arg0
+		},
+	},
+	"widget-hyperlink-with-style": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-hyperlink-with-style")
+			}
+			var arg1Val *url.URL
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*url.URL)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+			}
+			var arg2Val fyne.TextAlign
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.TextAlign)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+			}
+			var arg3Val fyne.TextStyle
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(fyne.TextStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-hyperlink-with-style")
+			}
+			res := widget.NewHyperlinkWithStyle(arg0Val, arg1Val, arg2Val, arg3Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-hyperlink-ptr")
+			return resObj
+		},
+	},
+	"widget-list-segment-ptr//segments": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//segments")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//segments")
+			}
+			res := arg0Val.Segments()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-segment-arr")
+			return resObj
+		},
+	},
+	"widget-pop-up-menu-ptr//typed-key": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.PopUpMenu
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.PopUpMenu)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-key")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-pop-up-menu-ptr//typed-key")
+			}
+			arg0Val.TypedKey(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-position//is-zero": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Position
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//is-zero")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//is-zero")
+			}
+			res := arg0Val.IsZero()
+			var resObj env.Object
+			resObj = *env.NewInteger(boolToInt64(res))
+			return resObj
+		},
+	},
+	"theme-menu-background-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.MenuBackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-error-themed-resource": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Resource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Resource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource")
+			}
+			res := theme.NewErrorThemedResource(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "theme-error-themed-resource-ptr")
+			return resObj
+		},
+	},
+	"theme-confirm-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ConfirmIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-file-icon-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.FileIcon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.FileIcon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-password-entry": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewPasswordEntry()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-entry-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//mouse-up": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-up")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-up")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-up")
+			}
+			arg0Val.MouseUp(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-progress-bar": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := widget.NewProgressBar()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-progress-bar-ptr")
+			return resObj
+		},
+	},
+	"widget-progress-bar-infinite-ptr//stop": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//stop")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//stop")
+			}
+			arg0Val.Stop()
+			return arg0
+		},
+	},
+	"theme-input-background-color": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InputBackgroundColor()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "color-color")
+			return resObj
+		},
+	},
+	"theme-primary-themed-resource-ptr//name": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.PrimaryThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.PrimaryThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//name")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource-ptr//name")
+			}
+			res := arg0Val.Name()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"theme-content-paste-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ContentPasteIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-file-icon": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon")
+			}
+			res := widget.NewFileIcon(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-file-icon-ptr")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//dragged": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//dragged")
+			}
+			var arg1Val *fyne.DragEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.DragEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//dragged")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//dragged")
+			}
+			arg0Val.Dragged(arg1Val)
+			return arg0
+		},
+	},
+	"theme-volume-mute-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.VolumeMuteIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-app-tabs-ptr//disable-item": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.AppTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.AppTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-item")
+			}
+			var arg1Val *container.TabItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*container.TabItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-item")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "container-app-tabs-ptr//disable-item")
+			}
+			arg0Val.DisableItem(arg1Val)
+			return arg0
+		},
+	},
+	"widget-select-entry": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []string
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]string, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.String); ok {
+						arg0Val[i] = string(v.Value)
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]string)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "widget-select-entry")
+			}
+			res := widget.NewSelectEntry(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-select-entry-ptr")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//mouse-down": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-down")
+			}
+			var arg1Val *desktop.MouseEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*desktop.MouseEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-down")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//mouse-down")
+			}
+			arg0Val.MouseDown(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-position//add": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Position
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-position//add")
+			}
+			var arg1Val fyne.Vector2
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Vector2)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-position//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-position//add")
+			}
+			res := arg0Val.Add(arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-position")
+			return resObj
+		},
+	},
+	"theme-default-theme": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.DefaultTheme()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-theme")
+			return resObj
+		},
+	},
+	"widget-paragraph-segment-ptr//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ParagraphSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ParagraphSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-paragraph-segment-ptr//visual")
+			}
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"container-split-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.Split
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.Split)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-rich-text-ptr//refresh": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//refresh")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//refresh")
+			}
+			arg0Val.Refresh()
+			return arg0
+		},
+	},
+	"widget-image-segment-ptr//textual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ImageSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ImageSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//textual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-image-segment-ptr//textual")
+			}
+			res := arg0Val.Textual()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-list-segment-ptr//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ListSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ListSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-list-segment-ptr//visual")
+			}
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"widget-icon-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Icon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Icon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-entry-ptr//set-min-rows-visible": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-min-rows-visible")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//set-min-rows-visible")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-entry-ptr//set-min-rows-visible")
+			}
+			arg0Val.SetMinRowsVisible(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-shortcut-handler-ptr//typed-shortcut": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.ShortcutHandler
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.ShortcutHandler)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcut-handler-ptr//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcut-handler-ptr//typed-shortcut")
+			}
+			var arg1Val fyne.Shortcut
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Shortcut)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-shortcut-handler-ptr//typed-shortcut")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-shortcut-handler-ptr//typed-shortcut")
+			}
+			arg0Val.TypedShortcut(arg1Val)
+			return arg0
+		},
+	},
+	"app": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := app.New()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-app")
+			return resObj
+		},
+	},
+	"theme-file-application-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileApplicationIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-input-border-size": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.InputBorderSize()
+			var resObj env.Object
+			resObj = *env.NewDecimal(float64(res))
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-rich-text-with-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-rich-text-with-text")
+			}
+			res := widget.NewRichTextWithText(arg0Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-rich-text-ptr")
+			return resObj
+		},
+	},
+	"widget-text-segment-ptr//select": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+			}
+			var arg1Val fyne.Position
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-segment-ptr//select")
+			}
+			arg0Val.Select(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-accordion-ptr//remove": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Accordion
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Accordion)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-ptr//remove")
+			}
+			var arg1Val *widget.AccordionItem
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*widget.AccordionItem)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-ptr//remove")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-accordion-ptr//remove")
+			}
+			arg0Val.Remove(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-size//subtract-width-height": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.Size
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//subtract-width-height")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-size//subtract-width-height")
+			}
+			var arg1Val float32
+			if v, ok := arg1.(env.Decimal); ok {
+				arg1Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.DecimalType}, "fyne-size//subtract-width-height")
+			}
+			var arg2Val float32
+			if v, ok := arg2.(env.Decimal); ok {
+				arg2Val = float32(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.DecimalType}, "fyne-size//subtract-width-height")
+			}
+			res := arg0Val.SubtractWidthHeight(arg1Val, arg2Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//selected-index": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//selected-index")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//selected-index")
+			}
+			res := arg0Val.SelectedIndex()
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(res))
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//set-text": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-text")
+			}
+			var arg1Val string
+			if v, ok := arg1.(env.String); ok {
+				arg1Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.StringType}, "widget-text-grid-ptr//set-text")
+			}
+			arg0Val.SetText(arg1Val)
+			return arg0
+		},
+	},
+	"widget-text-segment-ptr//visual": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//visual")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//visual")
+			}
+			res := arg0Val.Visual()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-canvas-object")
+			return resObj
+		},
+	},
+	"widget-base-widget-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.BaseWidget
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.BaseWidget)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-base-widget-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-base-widget-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"theme-themed-resource-ptr//content": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *theme.ThemedResource
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*theme.ThemedResource)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//content")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource-ptr//content")
+			}
+			res := arg0Val.Content()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "byte-arr")
+			return resObj
+		},
+	},
+	"widget-file-icon-ptr//set-uri": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.FileIcon
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.FileIcon)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-uri")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-uri")
+			}
+			var arg1Val fyne.URI
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-uri")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-file-icon-ptr//set-uri")
+			}
+			arg0Val.SetURI(arg1Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink-segment-ptr//update": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.HyperlinkSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.HyperlinkSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//update")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//update")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink-segment-ptr//update")
+			}
+			arg0Val.Update(arg1Val)
+			return arg0
+		},
+	},
+	"theme-view-full-screen-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ViewFullScreenIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"theme-zoom-in-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ZoomInIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-doc-tabs-ptr//min-size": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *container.DocTabs
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*container.DocTabs)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//min-size")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-doc-tabs-ptr//min-size")
+			}
+			res := arg0Val.MinSize()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-size")
+			return resObj
+		},
+	},
+	"widget-slider-ptr//typed-key": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Slider
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Slider)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-slider-ptr//typed-key")
+			}
+			var arg1Val *fyne.KeyEvent
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//typed-key")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-slider-ptr//typed-key")
+			}
+			arg0Val.TypedKey(arg1Val)
+			return arg0
+		},
+	},
+	"theme-zoom-fit-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.ZoomFitIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"container-max": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val []fyne.CanvasObject
+			switch v := arg0.(type) {
+			case env.Block:
+				arg0Val = make([]fyne.CanvasObject, len(v.Series.S))
+				for i, it := range v.Series.S {
+					if v, ok := it.(env.Native); ok {
+						arg0Val[i], ok = v.Value.(fyne.CanvasObject)
+						if !ok {
+							return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-max")
+						}
+					} else {
+						return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-max")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.([]fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-max")
+				}
+			default:
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "container-max")
+			}
+			res := container.NewMax(arg0Val...)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-container-ptr")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//set-row-style": {
+		Argsn: 3,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row-style")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-row-style")
+			}
+			var arg2Val widget.TextGridStyle
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(widget.TextGridStyle)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row-style")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-row-style")
+			}
+			arg0Val.SetRowStyle(arg1Val, arg2Val)
+			return arg0
+		},
+	},
+	"widget-show-pop-up-at-relative-position": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.CanvasObject
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+			}
+			var arg1Val fyne.Canvas
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Canvas)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+			}
+			var arg2Val fyne.Position
+			if v, ok := arg2.(env.Native); ok {
+				arg2Val, ok = v.Value.(fyne.Position)
+				if !ok {
+					return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+			}
+			var arg3Val fyne.CanvasObject
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-show-pop-up-at-relative-position")
+			}
+			widget.ShowPopUpAtRelativePosition(arg0Val, arg1Val, arg2Val, arg3Val)
+			return nil
+		},
+	},
+	"widget-select-entry-ptr//create-renderer": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.SelectEntry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.SelectEntry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//create-renderer")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry-ptr//create-renderer")
+			}
+			res := arg0Val.CreateRenderer()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-widget-renderer")
+			return resObj
+		},
+	},
+	"widget-hyperlink-ptr//focus-lost": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Hyperlink
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Hyperlink)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//focus-lost")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-hyperlink-ptr//focus-lost")
+			}
+			arg0Val.FocusLost()
+			return arg0
+		},
+	},
+	"widget-rich-text-ptr//string": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.RichText
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.RichText)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//string")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-rich-text-ptr//string")
+			}
+			res := arg0Val.String()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
+		},
+	},
+	"widget-label-ptr//resize": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Label
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Label)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-label-ptr//resize")
+			}
+			var arg1Val fyne.Size
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.Size)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//resize")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-label-ptr//resize")
+			}
+			arg0Val.Resize(arg1Val)
+			return arg0
+		},
+	},
+	"widget-progress-bar-infinite-ptr//show": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.ProgressBarInfinite
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.ProgressBarInfinite)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//show")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-progress-bar-infinite-ptr//show")
+			}
+			arg0Val.Show()
+			return arg0
+		},
+	},
+	"widget-entry-ptr//bind": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.Entry
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.Entry)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry-ptr//bind")
+			}
+			var arg1Val binding.String
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(binding.String)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//bind")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-entry-ptr//bind")
+			}
+			arg0Val.Bind(arg1Val)
+			return arg0
+		},
+	},
+	"fyne-container-ptr//add": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *fyne.Container
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*fyne.Container)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container-ptr//add")
+			}
+			var arg1Val fyne.CanvasObject
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(fyne.CanvasObject)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//add")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "fyne-container-ptr//add")
+			}
+			arg0Val.Add(arg1Val)
+			return arg0
+		},
+	},
+	"theme-file-text-icon": {
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			res := theme.FileTextIcon()
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "fyne-resource")
+			return resObj
+		},
+	},
+	"widget-text-grid-ptr//set-cell": {
+		Argsn: 4,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextGrid
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextGrid)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-cell")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-cell")
+			}
+			var arg1Val int
+			if v, ok := arg1.(env.Integer); ok {
+				arg1Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-cell")
+			}
+			var arg2Val int
+			if v, ok := arg2.(env.Integer); ok {
+				arg2Val = int(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 2, []env.Type{env.IntegerType}, "widget-text-grid-ptr//set-cell")
+			}
+			var arg3Val widget.TextGridCell
+			if v, ok := arg3.(env.Native); ok {
+				arg3Val, ok = v.Value.(widget.TextGridCell)
+				if !ok {
+					return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-cell")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 3, []env.Type{env.NativeType}, "widget-text-grid-ptr//set-cell")
+			}
+			arg0Val.SetCell(arg1Val, arg2Val, arg3Val)
+			return arg0
+		},
+	},
+	"widget-hyperlink": {
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val string
+			if v, ok := arg0.(env.String); ok {
+				arg0Val = string(v.Value)
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "widget-hyperlink")
+			}
+			var arg1Val *url.URL
+			if v, ok := arg1.(env.Native); ok {
+				arg1Val, ok = v.Value.(*url.URL)
+				if !ok {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "widget-hyperlink")
+			}
+			res := widget.NewHyperlink(arg0Val, arg1Val)
+			var resObj env.Object
+			resObj = *env.NewNative(ps.Idx, res, "widget-hyperlink-ptr")
+			return resObj
+		},
+	},
+	"widget-text-segment-ptr//selected-text": {
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val *widget.TextSegment
+			if v, ok := arg0.(env.Native); ok {
+				arg0Val, ok = v.Value.(*widget.TextSegment)
+				if !ok {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//selected-text")
+				}
+			} else {
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-segment-ptr//selected-text")
+			}
+			res := arg0Val.SelectedText()
+			var resObj env.Object
+			resObj = *env.NewString(string(res))
+			return resObj
 		},
 	},
 }

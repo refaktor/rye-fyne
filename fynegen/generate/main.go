@@ -30,52 +30,26 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
 	cb.Indent++
 	for i, param := range params {
-		if param.IsGoBuiltin {
-			switch param.GoName {
-			case "string":
-				cb.Linef(`arg%vStr, ok := arg%v.(env.String)`, i, i)
-				cb.Linef(`if !ok {`)
-				cb.Indent++
-				cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.StringType}, "%v")`, i, fn.Name.RyeName)
-				cb.Indent--
-				cb.Linef(`}`)
-			case "float32", "float64":
-				cb.Linef(`arg%vDec, ok := arg%v.(env.Decimal)`, i, i)
-				cb.Linef(`if !ok {`)
-				cb.Indent++
-				cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.DecimalType}, "%v")`, i, fn.Name.RyeName)
-				cb.Indent--
-				cb.Linef(`}`)
-			case "bool", "int":
-				cb.Linef(`arg%vInt, ok := arg%v.(env.Integer)`, i, i)
-				cb.Linef(`if !ok {`)
-				cb.Indent++
-				cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.IntegerType}, "%v")`, i, fn.Name.RyeName)
-				cb.Indent--
-				cb.Linef(`}`)
-			case "error":
-				cb.Linef(`arg%vErr, ok := arg%v.(env.Error)`, i, i)
-				cb.Linef(`if !ok {`)
-				cb.Indent++
-				cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.ErrorType}, "%v")`, i, fn.Name.RyeName)
-				cb.Indent--
-				cb.Linef(`}`)
-			default:
-				return "", errors.New("unhandled builtin: " + param.GoName)
-			}
-		} else {
-			cb.Linef(`arg%vNat, ok := arg%v.(env.Native)`, i, i)
-			cb.Linef(`if !ok {`)
-			cb.Indent++
-			cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.NativeType}, "%v")`, i, fn.Name.RyeName)
-			cb.Indent--
-			cb.Linef(`}`)
-			cb.Linef(`arg%vVal, ok := arg%vNat.Value.(%v)`, i, i, param.GoName)
-			cb.Linef(`if !ok {`)
-			cb.Indent++
-			cb.Linef(`return evaldo.MakeArgError(ps, %v, []env.Type{env.NativeType}, "%v")`, i, fn.Name.RyeName)
-			cb.Indent--
-			cb.Linef(`}`)
+		cb.Linef(`var arg%vVal %v`, i, param.GoName)
+		if _, found := ConvRyeToGo(
+			&cb,
+			param,
+			fmt.Sprintf(`arg%v`, i),
+			fmt.Sprintf(`arg%vVal`, i),
+			func(allowedTypes ...string) string {
+				allowedTypesPfx := make([]string, len(allowedTypes))
+				for i := range allowedTypes {
+					allowedTypesPfx[i] = "env." + allowedTypes[i]
+				}
+				return fmt.Sprintf(
+					`evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
+					i,
+					strings.Join(allowedTypesPfx, ", "),
+					FuncRyeIdent(fn),
+				)
+			},
+		); !found {
+			return "", errors.New("unhandled type conversion (rye to go): " + param.GoName)
 		}
 	}
 
@@ -90,30 +64,11 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 			if i != start {
 				args.WriteString(`, `)
 			}
-			if param.IsGoBuiltin {
-				switch param.GoName {
-				case "string":
-					args.WriteString(fmt.Sprintf(`arg%vStr.Value`, i))
-				case "float32":
-					args.WriteString(fmt.Sprintf(`float32(arg%vDec.Value)`, i))
-				case "float64":
-					args.WriteString(fmt.Sprintf(`arg%vDec.Value`, i))
-				case "bool":
-					args.WriteString(fmt.Sprintf(`arg%vInt.Value != 0`, i))
-				case "int":
-					args.WriteString(fmt.Sprintf(`int(arg%vInt.Value)`, i))
-				case "error":
-					args.WriteString(fmt.Sprintf(`errors.New(arg%vErr.Print(*ps.Idx))`, i))
-				default:
-					return "", errors.New("unhandled builtin: " + param.GoName)
-				}
-			} else {
-				expand := ""
-				if param.IsEllipsis {
-					expand = "..."
-				}
-				args.WriteString(fmt.Sprintf(`arg%vVal%v`, i, expand))
+			expand := ""
+			if param.IsEllipsis {
+				expand = "..."
 			}
+			args.WriteString(fmt.Sprintf(`arg%vVal%v`, i, expand))
 		}
 	}
 
@@ -130,12 +85,22 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	}
 	cb.Linef(`%v%v%v(%v)`, assign, recv, fn.Name.GoName, args.String())
 	if len(fn.Results) > 0 {
-		cb.Linef(`return *env.NewNative(ps.Idx, res, "%v")`, fn.Results[0].RyeName)
+		cb.Linef(`var resObj env.Object`)
+		if _, found := ConvGoToRye(
+			&cb,
+			fn.Results[0],
+			`res`,
+			`resObj`,
+			nil,
+		); !found {
+			return "", errors.New("unhandled type conversion (go to rye): " + fn.Results[0].GoName)
+		}
+		cb.Linef(`return resObj`)
 	} else {
 		if fn.Recv == nil {
 			cb.Linef(`return nil`)
 		} else {
-			cb.Linef(`return arg0Nat`)
+			cb.Linef(`return arg0`)
 		}
 	}
 	cb.Indent--
@@ -168,7 +133,7 @@ func main() {
 	cb.Linef(``)
 	cb.Linef(`import (`)
 	cb.Indent++
-	cb.Linef(`"errors"`)
+	//cb.Linef(`"errors"`)
 	cb.Linef(`"net/url"`)
 	cb.Linef(``)
 	cb.Linef(`"github.com/refaktor/rye/env"`)
@@ -182,9 +147,23 @@ func main() {
 	cb.Linef(`"fyne.io/fyne/v2/driver/desktop"`)
 	cb.Linef(`"fyne.io/fyne/v2/driver/mobile"`)
 	//cb.Linef(`"fyne.io/fyne/v2/layout"`)
+	cb.Linef(`"fyne.io/fyne/v2/theme"`)
 	cb.Linef(`"fyne.io/fyne/v2/widget"`)
 	cb.Indent--
 	cb.Linef(`)`)
+	cb.Linef(``)
+
+	cb.Linef(`func boolToInt64(x bool) int64 {`)
+	cb.Indent++
+	cb.Linef(`var res int64`)
+	cb.Linef(`if x {`)
+	cb.Indent++
+	cb.Linef(`res = 1`)
+	cb.Indent--
+	cb.Linef(`}`)
+	cb.Linef(`return res`)
+	cb.Indent--
+	cb.Linef(`}`)
 	cb.Linef(``)
 
 	cb.Linef(`var Builtins_fynegen = map[string]*env.Builtin{`)
@@ -192,7 +171,7 @@ func main() {
 
 	data := NewData()
 	for pkgName, pkg := range pkgs {
-		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" {
+		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" && pkgName != "theme" {
 			continue
 		}
 		for _, f := range pkg.Files {

@@ -7,8 +7,20 @@ do\in fyne {
 
 	lab1: widget-rich-text-from-markdown "## Hello, world!"
 	lab2: widget-rich-text-from-markdown "The fyne bindings for this were generated :)"
+	sld1: widget-slider 0.0 10.0
 
 	a
-	|set-content container-h-split lab1 lab2
+	|set-content container-v-box [
+		lab1
+		widget-separator
+		lab2
+		sld1
+		container-center [ container-h-box [
+			widget-icon theme-content-copy-icon
+			widget-icon theme-content-paste-icon
+			widget-icon theme-content-undo-icon
+			widget-icon theme-content-redo-icon
+		] ]
+	]
 	|show-and-run
 }

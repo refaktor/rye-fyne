@@ -30,12 +30,11 @@ func IdentExprIsExported(expr ast.Expr) bool {
 }
 
 type Ident struct {
-	Expr        ast.Expr
-	GoName      string
-	RyeName     string
-	IsGoBuiltin bool
-	IsEllipsis  bool
-	RootPkg     string
+	Expr       ast.Expr
+	GoName     string
+	RyeName    string
+	IsEllipsis bool
+	RootPkg    string
 }
 
 func identExprToRyeName(rootPkg string, expr ast.Expr) (string, error) {
@@ -117,13 +116,11 @@ func NewIdent(rootPkg string, expr ast.Expr) (Ident, error) {
 		isEllipsis = true
 	}
 	return Ident{
-		Expr:    expr,
-		GoName:  goName,
-		RyeName: ryeName,
-		// Assume go builtin if type is not capitalized
-		IsGoBuiltin: !IdentExprIsExported(expr),
-		IsEllipsis:  isEllipsis,
-		RootPkg:     rootPkg,
+		Expr:       expr,
+		GoName:     goName,
+		RyeName:    ryeName,
+		IsEllipsis: isEllipsis,
+		RootPkg:    rootPkg,
 	}, nil
 }
 

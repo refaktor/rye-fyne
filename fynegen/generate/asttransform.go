@@ -311,7 +311,12 @@ func NewInterface(rootPkg string, name *ast.Ident, ifaceTyp *ast.InterfaceType) 
 func FuncGoIdent(fn *Func) string {
 	res := fn.Name.GoName
 	if fn.Recv != nil {
-		res = fn.Recv.GoName + "." + res
+		_, recvIsPtr := fn.Recv.Expr.(*ast.StarExpr)
+		recv := fn.Recv.GoName
+		if recvIsPtr {
+			recv = "(" + recv + ")"
+		}
+		res = recv + "." + res
 	}
 	return res
 }

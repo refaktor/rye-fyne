@@ -7,6 +7,7 @@ import (
 	"go/token"
 	"log"
 	"os"
+	"slices"
 	"strings"
 )
 
@@ -27,6 +28,7 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 
 	cb.Linef(`"%v": {`, FuncRyeIdent(fn))
 	cb.Indent++
+	cb.Linef(`Doc: "%v",`, FuncGoIdent(fn))
 	cb.Linef(`Argsn: %v,`, len(params))
 	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
 	cb.Indent++
@@ -197,9 +199,16 @@ func main() {
 	}
 
 	boundFuncs := make(map[string]struct{})
-	for _, iface := range data.Interfaces {
+
+	ifaceKeys := make([]string, 0, len(data.Interfaces))
+	for k := range data.Interfaces {
+		ifaceKeys = append(ifaceKeys, k)
+	}
+	slices.Sort(ifaceKeys)
+	for _, k := range ifaceKeys {
+		iface := data.Interfaces[k]
 		for _, fn := range iface.Funcs {
-			name := FuncGoIdent(fn)
+			name := FuncRyeIdent(fn)
 			if _, exists := boundFuncs[name]; exists {
 				continue
 			}
@@ -214,8 +223,15 @@ func main() {
 			boundFuncs[name] = struct{}{}
 		}
 	}
-	for _, fn := range data.Funcs {
-		name := FuncGoIdent(fn)
+
+	funcKeys := make([]string, 0, len(data.Funcs))
+	for k := range data.Funcs {
+		funcKeys = append(funcKeys, k)
+	}
+	slices.Sort(funcKeys)
+	for _, k := range funcKeys {
+		fn := data.Funcs[k]
+		name := FuncRyeIdent(fn)
 		if _, exists := boundFuncs[name]; exists {
 			continue
 		}

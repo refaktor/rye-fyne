@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"go/format"
 	"go/token"
 	"log"
 	"os"
@@ -116,12 +117,14 @@ func main() {
 	srcDir := "fyne-src"
 
 	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne"); err != nil {
-		panic(err)
+		fmt.Println("pull git repo:", err)
+		os.Exit(1)
 	}
 
 	pkgs, err := ParseDirFull(fset, srcDir)
 	if err != nil {
-		panic(err)
+		fmt.Println("parse source:", err)
+		os.Exit(1)
 	}
 
 	var cb CodeBuilder
@@ -182,6 +185,7 @@ func main() {
 	}
 	if err := data.ResolveInheritances(); err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	{
@@ -202,7 +206,7 @@ func main() {
 
 			code, err := GenerateBinding(fn, cb.Indent)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println(name+":", err)
 				continue
 			}
 			cb.Write(code)
@@ -218,7 +222,7 @@ func main() {
 
 		code, err := GenerateBinding(fn, cb.Indent)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(name+":", err)
 			continue
 		}
 		cb.Write(code)
@@ -229,7 +233,13 @@ func main() {
 	cb.Indent--
 	cb.Linef(`}`)
 
-	if err := os.WriteFile(outFile, []byte(cb.String()), 0666); err != nil {
+	code, err := format.Source([]byte(cb.String()))
+	if err != nil {
+		fmt.Println("gofmt:", err)
+		os.Exit(1)
+	}
+
+	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)
 	}
 	log.Println("Wrote bindings to", outFile)

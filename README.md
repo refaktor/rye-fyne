@@ -9,6 +9,10 @@
   - [Ebitengine - Game engine](Ebitengine-game-engine)
   - [Webview](Webview)
 
+## Current status
+
+Currently main focus is on testing an idea of autogenerating bindings to Fyne.
+
 ## Quick demo
 
 https://www.youtube.com/watch?v=YmYQRPvkSpM

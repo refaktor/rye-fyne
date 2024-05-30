@@ -6,8 +6,13 @@ do\in fyne {
 	a: app .window "Hello"
 
 	lab1: widget-rich-text-from-markdown "## Hello, world!"
-	lab2: widget-rich-text-from-markdown "The fyne bindings for this were generated :)"
+	lab2: widget-label "The fyne bindings for this were generated :)"
 	sld1: widget-slider 0.0 10.0
+    btn1: widget-button "Button" fn { } { lab2 .set-text "Button was clicked!" }
+    chk1: widget-check "Check" fn { checked } {
+        lab2 .set-text
+            either checked "Checked" "Not checked"
+    }
 
 	a
 	|set-content container-v-box [
@@ -15,12 +20,8 @@ do\in fyne {
 		widget-separator
 		lab2
 		sld1
-		container-center [ container-h-box [
-			widget-icon theme-content-copy-icon
-			widget-icon theme-content-paste-icon
-			widget-icon theme-content-undo-icon
-			widget-icon theme-content-redo-icon
-		] ]
+        btn1
+        chk1
 	]
 	|show-and-run
 }

@@ -45,7 +45,7 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 					allowedTypesPfx[i] = "env." + allowedTypes[i]
 				}
 				return fmt.Sprintf(
-					`evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
+					`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
 					i,
 					strings.Join(allowedTypesPfx, ", "),
 					FuncRyeIdent(fn),
@@ -140,6 +140,7 @@ func main() {
 	cb.Indent++
 	//cb.Linef(`"errors"`)
 	cb.Linef(`"net/url"`)
+	cb.Linef(`"time"`)
 	cb.Linef(``)
 	cb.Linef(`"github.com/refaktor/rye/env"`)
 	cb.Linef(`"github.com/refaktor/rye/evaldo"`)
@@ -152,7 +153,7 @@ func main() {
 	cb.Linef(`"fyne.io/fyne/v2/driver/desktop"`)
 	cb.Linef(`"fyne.io/fyne/v2/driver/mobile"`)
 	//cb.Linef(`"fyne.io/fyne/v2/layout"`)
-	cb.Linef(`"fyne.io/fyne/v2/theme"`)
+	//cb.Linef(`"fyne.io/fyne/v2/theme"`)
 	cb.Linef(`"fyne.io/fyne/v2/widget"`)
 	cb.Indent--
 	cb.Linef(`)`)
@@ -176,7 +177,7 @@ func main() {
 
 	data := NewData()
 	for pkgName, pkg := range pkgs {
-		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" && pkgName != "theme" {
+		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" {
 			continue
 		}
 		for _, f := range pkg.Files {
@@ -188,14 +189,6 @@ func main() {
 	if err := data.ResolveInheritances(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-	}
-
-	{
-		iface := data.Interfaces["fyne.Widget"]
-		fmt.Println("Interface", iface.Name)
-		for _, fn := range iface.Funcs {
-			fmt.Println(fn.String())
-		}
 	}
 
 	boundFuncs := make(map[string]struct{})
@@ -246,6 +239,11 @@ func main() {
 		boundFuncs[name] = struct{}{}
 	}
 
+	{
+		fn := data.Funcs["widget.NewButton"]
+		fmt.Println("Function", fn.String())
+	}
+
 	cb.Indent--
 	cb.Linef(`}`)
 
@@ -254,6 +252,7 @@ func main() {
 		fmt.Println("gofmt:", err)
 		os.Exit(1)
 	}
+	//code := []byte(cb.String())
 
 	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)

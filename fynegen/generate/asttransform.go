@@ -30,12 +30,11 @@ func IdentExprIsExported(expr ast.Expr) bool {
 }
 
 type Ident struct {
-	Expr        ast.Expr
-	GoName      string
-	RyeName     string
-	IsGoBuiltin bool
-	IsEllipsis  bool
-	RootPkg     string
+	Expr       ast.Expr
+	GoName     string
+	RyeName    string
+	IsEllipsis bool
+	RootPkg    string
 }
 
 func identExprToRyeName(rootPkg string, expr ast.Expr) (string, error) {
@@ -69,6 +68,8 @@ func identExprToRyeName(rootPkg string, expr ast.Expr) (string, error) {
 	case *ast.Ellipsis:
 		res, err := identExprToRyeName(rootPkg, expr.Elt)
 		return res + "-arr", err
+	case *ast.FuncType:
+		return "--go-any-func--", nil // TODO
 	default:
 		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
@@ -98,6 +99,42 @@ func identExprToGoName(rootPkg string, expr ast.Expr) (string, error) {
 	case *ast.Ellipsis:
 		res, err := identExprToGoName(rootPkg, expr.Elt)
 		return "[]" + res, err
+	case *ast.FuncType:
+		if expr.TypeParams != nil {
+			return "", errors.New("generic functions as parameters are unsupported")
+		}
+
+		var res strings.Builder
+
+		params, err := ParamsToIdents(rootPkg, expr.Params)
+		if err != nil {
+			return "", err
+		}
+		res.WriteString("func(")
+		for i, v := range params {
+			if i != 0 {
+				res.WriteString(", ")
+			}
+			res.WriteString(v.GoName)
+		}
+		res.WriteString(")")
+
+		if expr.Results != nil {
+			results, err := ParamsToIdents(rootPkg, expr.Results)
+			if err != nil {
+				return "", err
+			}
+			res.WriteString(" (")
+			for i, v := range results {
+				if i != 0 {
+					res.WriteString(", ")
+				}
+				res.WriteString(v.GoName)
+			}
+			res.WriteString(")")
+		}
+
+		return res.String(), nil
 	default:
 		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
@@ -117,13 +154,11 @@ func NewIdent(rootPkg string, expr ast.Expr) (Ident, error) {
 		isEllipsis = true
 	}
 	return Ident{
-		Expr:    expr,
-		GoName:  goName,
-		RyeName: ryeName,
-		// Assume go builtin if type is not capitalized
-		IsGoBuiltin: !IdentExprIsExported(expr),
-		IsEllipsis:  isEllipsis,
-		RootPkg:     rootPkg,
+		Expr:       expr,
+		GoName:     goName,
+		RyeName:    ryeName,
+		IsEllipsis: isEllipsis,
+		RootPkg:    rootPkg,
 	}, nil
 }
 
@@ -169,22 +204,20 @@ func (fn *Func) String() string {
 	return b.String()
 }
 
-func paramsToIdents(rootPkg string, fl *ast.FieldList) ([]Ident, error) {
+func ParamsToIdents(rootPkg string, fl *ast.FieldList) ([]Ident, error) {
 	var res []Ident
 	for _, v := range fl.List {
 		id, err := NewIdent(rootPkg, v.Type)
 		if err != nil {
 			return nil, err
 		}
-		{
-			n := 1
-			// e.g. func Max(x, y float32)
-			if len(v.Names) > 1 {
-				n = len(v.Names)
-			}
-			for i := 0; i < n; i++ {
-				res = append(res, id)
-			}
+		n := 1
+		// e.g. func Max(x, y float32)
+		if len(v.Names) > 1 {
+			n = len(v.Names)
+		}
+		for i := 0; i < n; i++ {
+			res = append(res, id)
 		}
 	}
 	return res, nil
@@ -214,14 +247,14 @@ func FuncFromGoFuncDecl(rootPkg string, fd *ast.FuncDecl) (*Func, error) {
 	}
 	fn := fd.Type
 	{
-		ids, err := paramsToIdents(rootPkg, fn.Params)
+		ids, err := ParamsToIdents(rootPkg, fn.Params)
 		if err != nil {
 			return nil, err
 		}
 		res.Params = ids
 	}
 	if fn.Results != nil {
-		ids, err := paramsToIdents(rootPkg, fn.Results)
+		ids, err := ParamsToIdents(rootPkg, fn.Results)
 		if err != nil {
 			return nil, err
 		}
@@ -259,14 +292,14 @@ func funcFromInterfaceField(rootPkg string, ifaceIdent Ident, f *ast.Field) (*Fu
 		panic("expected method type to be of type *ast.FuncType")
 	}
 	{
-		ids, err := paramsToIdents(rootPkg, fn.Params)
+		ids, err := ParamsToIdents(rootPkg, fn.Params)
 		if err != nil {
 			return nil, err
 		}
 		res.Params = ids
 	}
 	if fn.Results != nil {
-		ids, err := paramsToIdents(rootPkg, fn.Results)
+		ids, err := ParamsToIdents(rootPkg, fn.Results)
 		if err != nil {
 			return nil, err
 		}
@@ -311,7 +344,12 @@ func NewInterface(rootPkg string, name *ast.Ident, ifaceTyp *ast.InterfaceType) 
 func FuncGoIdent(fn *Func) string {
 	res := fn.Name.GoName
 	if fn.Recv != nil {
-		res = fn.Recv.GoName + "." + res
+		_, recvIsPtr := fn.Recv.Expr.(*ast.StarExpr)
+		recv := fn.Recv.GoName
+		if recvIsPtr {
+			recv = "(" + recv + ")"
+		}
+		res = recv + "." + res
 	}
 	return res
 }

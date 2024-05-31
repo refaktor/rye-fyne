@@ -3,9 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
+	"go/format"
 	"go/token"
 	"log"
 	"os"
+	"slices"
 	"strings"
 )
 
@@ -26,6 +28,7 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 
 	cb.Linef(`"%v": {`, FuncRyeIdent(fn))
 	cb.Indent++
+	cb.Linef(`Doc: "%v",`, FuncGoIdent(fn))
 	cb.Linef(`Argsn: %v,`, len(params))
 	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
 	cb.Indent++
@@ -42,7 +45,7 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 					allowedTypesPfx[i] = "env." + allowedTypes[i]
 				}
 				return fmt.Sprintf(
-					`evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
+					`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
 					i,
 					strings.Join(allowedTypesPfx, ", "),
 					FuncRyeIdent(fn),
@@ -116,12 +119,14 @@ func main() {
 	srcDir := "fyne-src"
 
 	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne"); err != nil {
-		panic(err)
+		fmt.Println("pull git repo:", err)
+		os.Exit(1)
 	}
 
 	pkgs, err := ParseDirFull(fset, srcDir)
 	if err != nil {
-		panic(err)
+		fmt.Println("parse source:", err)
+		os.Exit(1)
 	}
 
 	var cb CodeBuilder
@@ -135,6 +140,7 @@ func main() {
 	cb.Indent++
 	//cb.Linef(`"errors"`)
 	cb.Linef(`"net/url"`)
+	cb.Linef(`"time"`)
 	cb.Linef(``)
 	cb.Linef(`"github.com/refaktor/rye/env"`)
 	cb.Linef(`"github.com/refaktor/rye/evaldo"`)
@@ -147,7 +153,7 @@ func main() {
 	cb.Linef(`"fyne.io/fyne/v2/driver/desktop"`)
 	cb.Linef(`"fyne.io/fyne/v2/driver/mobile"`)
 	//cb.Linef(`"fyne.io/fyne/v2/layout"`)
-	cb.Linef(`"fyne.io/fyne/v2/theme"`)
+	//cb.Linef(`"fyne.io/fyne/v2/theme"`)
 	cb.Linef(`"fyne.io/fyne/v2/widget"`)
 	cb.Indent--
 	cb.Linef(`)`)
@@ -171,7 +177,7 @@ func main() {
 
 	data := NewData()
 	for pkgName, pkg := range pkgs {
-		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" && pkgName != "theme" {
+		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" {
 			continue
 		}
 		for _, f := range pkg.Files {
@@ -182,27 +188,27 @@ func main() {
 	}
 	if err := data.ResolveInheritances(); err != nil {
 		fmt.Println(err)
-	}
-
-	{
-		iface := data.Interfaces["fyne.Widget"]
-		fmt.Println("Interface", iface.Name)
-		for _, fn := range iface.Funcs {
-			fmt.Println(fn.String())
-		}
+		os.Exit(1)
 	}
 
 	boundFuncs := make(map[string]struct{})
-	for _, iface := range data.Interfaces {
+
+	ifaceKeys := make([]string, 0, len(data.Interfaces))
+	for k := range data.Interfaces {
+		ifaceKeys = append(ifaceKeys, k)
+	}
+	slices.Sort(ifaceKeys)
+	for _, k := range ifaceKeys {
+		iface := data.Interfaces[k]
 		for _, fn := range iface.Funcs {
-			name := FuncGoIdent(fn)
+			name := FuncRyeIdent(fn)
 			if _, exists := boundFuncs[name]; exists {
 				continue
 			}
 
 			code, err := GenerateBinding(fn, cb.Indent)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println(name+":", err)
 				continue
 			}
 			cb.Write(code)
@@ -210,15 +216,22 @@ func main() {
 			boundFuncs[name] = struct{}{}
 		}
 	}
-	for _, fn := range data.Funcs {
-		name := FuncGoIdent(fn)
+
+	funcKeys := make([]string, 0, len(data.Funcs))
+	for k := range data.Funcs {
+		funcKeys = append(funcKeys, k)
+	}
+	slices.Sort(funcKeys)
+	for _, k := range funcKeys {
+		fn := data.Funcs[k]
+		name := FuncRyeIdent(fn)
 		if _, exists := boundFuncs[name]; exists {
 			continue
 		}
 
 		code, err := GenerateBinding(fn, cb.Indent)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(name+":", err)
 			continue
 		}
 		cb.Write(code)
@@ -226,10 +239,22 @@ func main() {
 		boundFuncs[name] = struct{}{}
 	}
 
+	{
+		fn := data.Funcs["widget.NewButton"]
+		fmt.Println("Function", fn.String())
+	}
+
 	cb.Indent--
 	cb.Linef(`}`)
 
-	if err := os.WriteFile(outFile, []byte(cb.String()), 0666); err != nil {
+	code, err := format.Source([]byte(cb.String()))
+	if err != nil {
+		fmt.Println("gofmt:", err)
+		os.Exit(1)
+	}
+	//code := []byte(cb.String())
+
+	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)
 	}
 	log.Println("Wrote bindings to", outFile)

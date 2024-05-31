@@ -197,7 +197,9 @@ func main() {
 	for k := range data.Interfaces {
 		ifaceKeys = append(ifaceKeys, k)
 	}
-	slices.Sort(ifaceKeys)
+	slices.SortFunc(ifaceKeys, func(a, b string) int {
+		return strings.Compare(data.Interfaces[a].Name.RyeName, data.Interfaces[b].Name.RyeName)
+	})
 	for _, k := range ifaceKeys {
 		iface := data.Interfaces[k]
 		for _, fn := range iface.Funcs {
@@ -221,7 +223,9 @@ func main() {
 	for k := range data.Funcs {
 		funcKeys = append(funcKeys, k)
 	}
-	slices.Sort(funcKeys)
+	slices.SortFunc(funcKeys, func(a, b string) int {
+		return strings.Compare(FuncRyeIdent(data.Funcs[a]), FuncRyeIdent(data.Funcs[b]))
+	})
 	for _, k := range funcKeys {
 		fn := data.Funcs[k]
 		name := FuncRyeIdent(fn)

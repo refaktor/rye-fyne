@@ -15,12 +15,6 @@ do\in fyne {
     current: 0
 
     update: fn { } {
-        update-labels: fn { } {
-            label-a .set-text text-a
-            label-b .set-text text-b
-            label-res .set-text text-res
-        }
-        update-labels
         if current = 1 {
             either any { text-a = "" text-b = "" } {
                 label-eq .set-text ""
@@ -32,8 +26,10 @@ do\in fyne {
                 change! res .to-string 'text-res
                 label-eq .set-text "="
             }
-            update-labels
         }
+        label-a .set-text text-a
+        label-b .set-text text-b
+        label-res .set-text text-res
     }
 
     eval: fn { } {

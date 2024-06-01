@@ -7,12 +7,19 @@ do\in fyne {
 
 	lab1: widget-rich-text-from-markdown "## Hello, world!"
 	lab2: widget-label "The fyne bindings for this were generated :)"
+
 	sld1: widget-slider 0.0 10.0
-    btn1: widget-button "Button" fn { } { lab2 .set-text "Button was clicked!" }
+	sld1 .step! 0.5
+	sld1 .on-changed! fn { val } {
+		lab2 .set-text "Slider value is " + val .to-string + "."
+	}
     chk1: widget-check "Check" fn { checked } {
-        lab2 .set-text
-            either checked "Checked" "Not checked"
-    }
+		chk-text: either checked "checked" "not checked"
+		lab2 .set-text "Checkbox is " + chk-text + "."
+	}
+    btn1: widget-button "Button" fn { } {
+		lab2 .set-text "Button clicked"
+	}
 
 	a
 	|set-content container-v-box [

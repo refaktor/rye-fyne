@@ -1,0 +1,148 @@
+rye .needs { fyne }
+
+do\in fyne {
+	a: app .window "Calculator"
+
+    label-a: widget-label ""
+    label-b: widget-label ""
+    label-op: widget-label ""
+    label-eq: widget-label ""
+    label-res: widget-label ""
+    op: fn { x y } { 0 }
+    text-a: ""
+    text-b: ""
+    text-res: ""
+    current: 0
+
+    update: fn { } {
+        update-labels: fn { } {
+            label-a .set-text text-a
+            label-b .set-text text-b
+            label-res .set-text text-res
+        }
+        update-labels
+        if current = 1 {
+            either any { text-a = "" text-b = "" } {
+                label-eq .set-text ""
+                change! "" 'text-res
+            } {
+                a: text-a .to-integer
+                b: text-b .to-integer
+                res: op a b
+                change! res .to-string 'text-res
+                label-eq .set-text "="
+            }
+            update-labels
+        }
+    }
+
+    eval: fn { } {
+        change! text-res 'text-a
+        change! "" 'text-res
+        change! "" 'text-b
+        label-op .set-text ""
+        label-eq .set-text ""
+        change! 0 'current
+        update
+    }
+
+    set-op: fn { symbol opb } {
+        if current = 1 {
+            eval
+        }
+        if all { current = 0 not text-a = "" } {
+            change! get first opb 'op
+            label-op .set-text symbol
+            change! 1 'current
+        }
+    }
+
+    change-current-text: fn { f } {
+        text: either current = 0 text-a text-b
+        new-text: f text
+        change! new-text 'text
+        change! text either current = 0 'text-a 'text-b
+        update
+    }
+
+    make-num-button: fn { n } {
+        widget-button n closure { } {
+            change-current-text fn { text } { text + n }
+        }
+    }
+
+	a
+	|set-content container-border
+        container-h-box [ label-a label-op label-b label-eq label-res ]
+        widget-label "" ; TODO: Add support for nil
+        widget-label ""
+        widget-label ""
+        [ container-grid-with-columns 4 [
+            widget-label ""
+            widget-button "C" fn { } {
+                change! 0 'current
+                change! "" 'text-a
+                change! "" 'text-b
+                change! "" 'text-res
+                label-op .set-text ""
+                label-eq .set-text ""
+                update
+            }
+            widget-button "Del" fn { } {
+                either all { current = 1 text-b = "" } {
+                    change! 0 'current
+                    label-op .set-text ""
+                    update
+                } {
+                    change-current-text fn { text } {
+                        new-len: text .length? - 1
+                        text .head new-len
+                    }
+                }
+            }
+            widget-button "+" fn { } {
+                set-op "+" { + }
+            }
+
+            make-num-button "7"
+            make-num-button "8"
+            make-num-button "9"
+            widget-button "-" fn { } {
+                set-op "-" { - }
+            }
+
+            make-num-button "4"
+            make-num-button "5"
+            make-num-button "6"
+            widget-button "*" fn { } {
+                set-op "*" { * }
+            }
+
+            make-num-button "1"
+            make-num-button "2"
+            make-num-button "3"
+            widget-label ""
+            ;widget-button "/" fn { } {
+            ;    set-op "/" { / }
+            ;}
+
+            widget-button "+/-" fn { } {
+                change-current-text fn { text } {
+                    either text = "" {
+                        ""
+                    } {
+                        text-int: text .to-integer
+                        minus-text-int: 0 - text-int
+                        minus-text-int .to-string
+                    }
+                }
+            }
+            make-num-button "0"
+            widget-label ""
+            widget-button "=" fn { } {
+                eval
+            }
+        ] ]
+    |resize fyne-size 300.0 300.0
+	|show-and-run
+}

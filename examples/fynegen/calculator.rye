@@ -96,7 +96,12 @@ do\in fyne {
                 } {
                     change-current-text fn { text } {
                         new-len: text .length? - 1
-                        text .head new-len
+                        new-text: text .head new-len
+                        if new-text = "-" {
+                            dec! 'new-len
+                            change! new-text .head new-len 'new-text
+                        }
+                        new-text
                     }
                 }
             }

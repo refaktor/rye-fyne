@@ -29,7 +29,7 @@ func makeMakeRetArgErr(argn int, funcName string) func(allowedTypes ...string) s
 	}
 }
 
-func GenerateBinding(fn *Func, indent int) (name string, code string, err error) {
+func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string, err error) {
 	name = FuncRyeIdent(fn)
 
 	var cb CodeBuilder
@@ -53,6 +53,7 @@ func GenerateBinding(fn *Func, indent int) (name string, code string, err error)
 	for i, param := range params {
 		cb.Linef(`var arg%vVal %v`, i, param.GoName)
 		if _, found := ConvRyeToGo(
+			data,
 			&cb,
 			param,
 			fmt.Sprintf(`arg%v`, i),
@@ -97,6 +98,7 @@ func GenerateBinding(fn *Func, indent int) (name string, code string, err error)
 	if len(fn.Results) > 0 {
 		cb.Linef(`var resObj env.Object`)
 		if _, found := ConvGoToRye(
+			data,
 			&cb,
 			fn.Results[0],
 			`res`,
@@ -121,7 +123,7 @@ func GenerateBinding(fn *Func, indent int) (name string, code string, err error)
 	return name, cb.String(), nil
 }
 
-func GenerateGetterOrSetter(field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
+func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
 	if ptrToStruct {
 		var err error
 		structName, err = NewIdent(structName.RootPkg, &ast.StarExpr{X: structName.Expr})
@@ -153,6 +155,7 @@ func GenerateGetterOrSetter(field NamedIdent, structName Ident, indent int, ptrT
 
 	cb.Linef(`var self %v`, structName.GoName)
 	if _, found := ConvRyeToGo(
+		data,
 		&cb,
 		structName,
 		`arg0`,
@@ -164,6 +167,7 @@ func GenerateGetterOrSetter(field NamedIdent, structName Ident, indent int, ptrT
 
 	if setter {
 		if _, found := ConvRyeToGo(
+			data,
 			&cb,
 			field.Type,
 			`arg1`,
@@ -177,6 +181,7 @@ func GenerateGetterOrSetter(field NamedIdent, structName Ident, indent int, ptrT
 	} else {
 		cb.Linef(`var resObj env.Object`)
 		if _, found := ConvGoToRye(
+			data,
 			&cb,
 			field.Type,
 			`self.`+field.Name.GoName,
@@ -284,7 +289,7 @@ func main() {
 
 	for _, iface := range data.Interfaces {
 		for _, fn := range iface.Funcs {
-			name, code, err := GenerateBinding(fn, cb.Indent)
+			name, code, err := GenerateBinding(data, fn, cb.Indent)
 			if err != nil {
 				fmt.Println(name+":", err)
 				continue
@@ -294,7 +299,7 @@ func main() {
 	}
 
 	for _, fn := range data.Funcs {
-		name, code, err := GenerateBinding(fn, cb.Indent)
+		name, code, err := GenerateBinding(data, fn, cb.Indent)
 		if err != nil {
 			fmt.Println(name+":", err)
 			continue
@@ -306,7 +311,7 @@ func main() {
 		for _, f := range struc.Fields {
 			for _, ptrToStruct := range []bool{false, true} {
 				for _, setter := range []bool{false, true} {
-					name, code, err := GenerateGetterOrSetter(f, struc.Name, cb.Indent, ptrToStruct, setter)
+					name, code, err := GenerateGetterOrSetter(data, f, struc.Name, cb.Indent, ptrToStruct, setter)
 					if err != nil {
 						fmt.Println(struc.Name.GoName+"."+f.Name.GoName+":", err)
 						continue

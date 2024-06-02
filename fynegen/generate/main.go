@@ -205,7 +205,7 @@ func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
 	srcDir := "fyne-src"
 
-	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne"); err != nil {
+	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne", "refs/tags/v2.4.4"); err != nil {
 		fmt.Println("pull git repo:", err)
 		os.Exit(1)
 	}

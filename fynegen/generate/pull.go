@@ -5,9 +5,10 @@ import (
 	"os"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 )
 
-func PullGitRepo(path, repoURL string) error {
+func PullGitRepo(path, repoURL, refName string) error {
 	if _, err := os.Stat(path); err == nil {
 		log.Println("Updating", repoURL)
 		repo, err := git.PlainOpen(path)
@@ -19,16 +20,18 @@ func PullGitRepo(path, repoURL string) error {
 			return err
 		}
 		if err := wt.Pull(&git.PullOptions{
-			Progress: os.Stdout,
+			ReferenceName: plumbing.ReferenceName(refName),
+			Progress:      os.Stdout,
 		}); err != nil {
 			return err
 		}
 	} else {
 		log.Println("Fetching", repoURL)
 		_, err := git.PlainClone(path, false, &git.CloneOptions{
-			URL:      repoURL,
-			Depth:    1,
-			Progress: os.Stdout,
+			URL:           repoURL,
+			ReferenceName: plumbing.ReferenceName(refName),
+			Depth:         1,
+			Progress:      os.Stdout,
 		})
 		if err != nil {
 			return err

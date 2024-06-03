@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"go/ast"
 	"go/format"
 	"go/token"
 	"log"
@@ -13,7 +14,24 @@ import (
 
 var fset = token.NewFileSet()
 
-func GenerateBinding(fn *Func, indent int) (string, error) {
+func makeMakeRetArgErr(argn int, funcName string) func(allowedTypes ...string) string {
+	return func(allowedTypes ...string) string {
+		allowedTypesPfx := make([]string, len(allowedTypes))
+		for i := range allowedTypes {
+			allowedTypesPfx[i] = "env." + allowedTypes[i]
+		}
+		return fmt.Sprintf(
+			`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
+			argn,
+			strings.Join(allowedTypesPfx, ", "),
+			funcName,
+		)
+	}
+}
+
+func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string, err error) {
+	name = FuncRyeIdent(fn)
+
 	var cb CodeBuilder
 	cb.Indent = indent
 
@@ -23,10 +41,10 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	}
 
 	if len(params) > 5 {
-		return "", errors.New("can only handle at most 5 parameters")
+		return "", "", errors.New("can only handle at most 5 parameters")
 	}
 
-	cb.Linef(`"%v": {`, FuncRyeIdent(fn))
+	cb.Linef(`"%v": {`, name)
 	cb.Indent++
 	cb.Linef(`Doc: "%v",`, FuncGoIdent(fn))
 	cb.Linef(`Argsn: %v,`, len(params))
@@ -35,24 +53,14 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	for i, param := range params {
 		cb.Linef(`var arg%vVal %v`, i, param.GoName)
 		if _, found := ConvRyeToGo(
+			data,
 			&cb,
 			param,
 			fmt.Sprintf(`arg%v`, i),
 			fmt.Sprintf(`arg%vVal`, i),
-			func(allowedTypes ...string) string {
-				allowedTypesPfx := make([]string, len(allowedTypes))
-				for i := range allowedTypes {
-					allowedTypesPfx[i] = "env." + allowedTypes[i]
-				}
-				return fmt.Sprintf(
-					`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
-					i,
-					strings.Join(allowedTypesPfx, ", "),
-					FuncRyeIdent(fn),
-				)
-			},
+			makeMakeRetArgErr(i, name),
 		); !found {
-			return "", errors.New("unhandled type conversion (rye to go): " + param.GoName)
+			return "", "", errors.New("unhandled type conversion (rye to go): " + param.GoName)
 		}
 	}
 
@@ -80,7 +88,7 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 		assign = `res := `
 	}
 	if len(fn.Results) > 1 {
-		return "", errors.New("can only handle at most one return value")
+		return "", "", errors.New("can only handle at most one return value")
 	}
 	recv := ""
 	if fn.Recv != nil {
@@ -90,13 +98,14 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	if len(fn.Results) > 0 {
 		cb.Linef(`var resObj env.Object`)
 		if _, found := ConvGoToRye(
+			data,
 			&cb,
 			fn.Results[0],
 			`res`,
 			`resObj`,
 			nil,
 		); !found {
-			return "", errors.New("unhandled type conversion (go to rye): " + fn.Results[0].GoName)
+			return "", "", errors.New("unhandled type conversion (go to rye): " + fn.Results[0].GoName)
 		}
 		cb.Linef(`return resObj`)
 	} else {
@@ -111,14 +120,92 @@ func GenerateBinding(fn *Func, indent int) (string, error) {
 	cb.Indent--
 	cb.Linef(`},`)
 
-	return cb.String(), nil
+	return name, cb.String(), nil
+}
+
+func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
+	if ptrToStruct {
+		var err error
+		structName, err = NewIdent(structName.RootPkg, &ast.StarExpr{X: structName.Expr})
+		if err != nil {
+			return "", "", err
+		}
+	}
+
+	if setter {
+		name = fmt.Sprintf("%v//%v!", structName.RyeName, field.Name.RyeName)
+	} else {
+		name = fmt.Sprintf("%v//%v?", structName.RyeName, field.Name.RyeName)
+	}
+
+	var cb CodeBuilder
+	cb.Indent = indent
+
+	cb.Linef(`"%v": {`, name)
+	cb.Indent++
+	if setter {
+		cb.Linef(`Doc: "Set %v %v value",`, structName.GoName, field.Name.GoName)
+		cb.Linef(`Argsn: 2,`)
+	} else {
+		cb.Linef(`Doc: "Get %v %v value",`, structName.GoName, field.Name.GoName)
+		cb.Linef(`Argsn: 1,`)
+	}
+	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
+	cb.Indent++
+
+	cb.Linef(`var self %v`, structName.GoName)
+	if _, found := ConvRyeToGo(
+		data,
+		&cb,
+		structName,
+		`arg0`,
+		`self`,
+		makeMakeRetArgErr(0, name),
+	); !found {
+		return "", "", errors.New("unhandled type conversion (go to rye): " + structName.GoName)
+	}
+
+	if setter {
+		if _, found := ConvRyeToGo(
+			data,
+			&cb,
+			field.Type,
+			`arg1`,
+			`self.`+field.Name.GoName,
+			makeMakeRetArgErr(1, name),
+		); !found {
+			return "", "", errors.New("unhandled type conversion (go to rye): " + structName.GoName)
+		}
+
+		cb.Linef(`return arg0`)
+	} else {
+		cb.Linef(`var resObj env.Object`)
+		if _, found := ConvGoToRye(
+			data,
+			&cb,
+			field.Type,
+			`self.`+field.Name.GoName,
+			`resObj`,
+			nil,
+		); !found {
+			return "", "", errors.New("unhandled type conversion (go to rye): " + field.Type.GoName)
+		}
+		cb.Linef(`return resObj`)
+	}
+
+	cb.Indent--
+	cb.Linef(`},`)
+	cb.Indent--
+	cb.Linef(`},`)
+
+	return name, cb.String(), nil
 }
 
 func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
 	srcDir := "fyne-src"
 
-	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne"); err != nil {
+	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne", "refs/tags/v2.4.4"); err != nil {
 		fmt.Println("pull git repo:", err)
 		os.Exit(1)
 	}
@@ -139,6 +226,9 @@ func main() {
 	cb.Linef(`import (`)
 	cb.Indent++
 	//cb.Linef(`"errors"`)
+	cb.Linef(`"image"`)
+	cb.Linef(`"image/color"`)
+	cb.Linef(`"io"`)
 	cb.Linef(`"net/url"`)
 	cb.Linef(`"time"`)
 	cb.Linef(``)
@@ -150,10 +240,17 @@ func main() {
 	cb.Linef(`"fyne.io/fyne/v2/canvas"`)
 	cb.Linef(`"fyne.io/fyne/v2/container"`)
 	cb.Linef(`"fyne.io/fyne/v2/data/binding"`)
+	cb.Linef(`"fyne.io/fyne/v2/data/validation"`)
+	cb.Linef(`"fyne.io/fyne/v2/dialog"`)
+	cb.Linef(`"fyne.io/fyne/v2/driver"`)
 	cb.Linef(`"fyne.io/fyne/v2/driver/desktop"`)
 	cb.Linef(`"fyne.io/fyne/v2/driver/mobile"`)
-	//cb.Linef(`"fyne.io/fyne/v2/layout"`)
-	//cb.Linef(`"fyne.io/fyne/v2/theme"`)
+	cb.Linef(`"fyne.io/fyne/v2/driver/software"`)
+	cb.Linef(`"fyne.io/fyne/v2/layout"`)
+	cb.Linef(`"fyne.io/fyne/v2/storage"`)
+	cb.Linef(`"fyne.io/fyne/v2/storage/repository"`)
+	cb.Linef(`"fyne.io/fyne/v2/theme"`)
+	cb.Linef(`"fyne.io/fyne/v2/tools/playground"`)
 	cb.Linef(`"fyne.io/fyne/v2/widget"`)
 	cb.Indent--
 	cb.Linef(`)`)
@@ -176,10 +273,7 @@ func main() {
 	cb.Indent++
 
 	data := NewData()
-	for pkgName, pkg := range pkgs {
-		if pkgName != "app" && pkgName != "fyne" && pkgName != "widget" && pkgName != "container" {
-			continue
-		}
+	for _, pkg := range pkgs {
 		for _, f := range pkg.Files {
 			if err := data.AddFile(f); err != nil {
 				fmt.Println(err)
@@ -191,57 +285,50 @@ func main() {
 		os.Exit(1)
 	}
 
-	boundFuncs := make(map[string]struct{})
+	generatedFuncs := make(map[string]string)
 
-	ifaceKeys := make([]string, 0, len(data.Interfaces))
-	for k := range data.Interfaces {
-		ifaceKeys = append(ifaceKeys, k)
-	}
-	slices.Sort(ifaceKeys)
-	for _, k := range ifaceKeys {
-		iface := data.Interfaces[k]
+	for _, iface := range data.Interfaces {
 		for _, fn := range iface.Funcs {
-			name := FuncRyeIdent(fn)
-			if _, exists := boundFuncs[name]; exists {
-				continue
-			}
-
-			code, err := GenerateBinding(fn, cb.Indent)
+			name, code, err := GenerateBinding(data, fn, cb.Indent)
 			if err != nil {
 				fmt.Println(name+":", err)
 				continue
 			}
-			cb.Write(code)
-
-			boundFuncs[name] = struct{}{}
+			generatedFuncs[name] = code
 		}
 	}
 
-	funcKeys := make([]string, 0, len(data.Funcs))
-	for k := range data.Funcs {
-		funcKeys = append(funcKeys, k)
-	}
-	slices.Sort(funcKeys)
-	for _, k := range funcKeys {
-		fn := data.Funcs[k]
-		name := FuncRyeIdent(fn)
-		if _, exists := boundFuncs[name]; exists {
-			continue
-		}
-
-		code, err := GenerateBinding(fn, cb.Indent)
+	for _, fn := range data.Funcs {
+		name, code, err := GenerateBinding(data, fn, cb.Indent)
 		if err != nil {
 			fmt.Println(name+":", err)
 			continue
 		}
-		cb.Write(code)
-
-		boundFuncs[name] = struct{}{}
+		generatedFuncs[name] = code
 	}
 
-	{
-		fn := data.Funcs["widget.NewButton"]
-		fmt.Println("Function", fn.String())
+	for _, struc := range data.Structs {
+		for _, f := range struc.Fields {
+			for _, ptrToStruct := range []bool{false, true} {
+				for _, setter := range []bool{false, true} {
+					name, code, err := GenerateGetterOrSetter(data, f, struc.Name, cb.Indent, ptrToStruct, setter)
+					if err != nil {
+						fmt.Println(struc.Name.GoName+"."+f.Name.GoName+":", err)
+						continue
+					}
+					generatedFuncs[name] = code
+				}
+			}
+		}
+	}
+
+	generatedFuncKeys := make([]string, 0, len(generatedFuncs))
+	for k := range generatedFuncs {
+		generatedFuncKeys = append(generatedFuncKeys, k)
+	}
+	slices.Sort(generatedFuncKeys)
+	for _, k := range generatedFuncKeys {
+		cb.Write(generatedFuncs[k])
 	}
 
 	cb.Indent--
@@ -257,5 +344,5 @@ func main() {
 	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)
 	}
-	log.Println("Wrote bindings to", outFile)
+	log.Printf("Wrote bindings containing %v functions to %v", len(generatedFuncs), outFile)
 }

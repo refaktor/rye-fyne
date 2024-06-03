@@ -263,10 +263,71 @@ func FuncFromGoFuncDecl(rootPkg string, fd *ast.FuncDecl) (*Func, error) {
 	return res, nil
 }
 
+type NamedIdent struct {
+	Name Ident
+	Type Ident
+}
+
 type Struct struct {
 	Name     Ident
-	Fields   []Ident
+	Fields   []NamedIdent
 	Inherits []Ident
+}
+
+func NewStruct(rootPkg string, name *ast.Ident, structTyp *ast.StructType) (*Struct, error) {
+	res := &Struct{}
+	{
+		id, err := NewIdent(rootPkg, name)
+		if err != nil {
+			return nil, err
+		}
+		res.Name = id
+	}
+	for _, f := range structTyp.Fields.List {
+		if len(f.Names) > 0 {
+			typID, err := NewIdent(rootPkg, f.Type)
+			if err != nil {
+				return nil, err
+			}
+
+			// HACK: widget.ScrollDirection is from internal/widget, meaning it can't be accessed
+			// container.ScrollDirection is an alias
+			if typID.GoName == "widget.ScrollDirection" {
+				typID, _ = NewIdent(rootPkg, &ast.SelectorExpr{
+					X:   &ast.Ident{Name: "container"},
+					Sel: &ast.Ident{Name: "ScrollDirection"},
+				})
+			}
+
+			for _, name := range f.Names {
+				if !name.IsExported() {
+					continue
+				}
+				nameID, err := NewIdent("", name)
+				if err != nil {
+					return nil, err
+				}
+				res.Fields = append(res.Fields, NamedIdent{
+					Name: nameID,
+					Type: typID,
+				})
+			}
+		} else {
+			typ := f.Type
+			if se, ok := f.Type.(*ast.StarExpr); ok {
+				typ = se.X
+			}
+			if !IdentExprIsExported(typ) {
+				continue
+			}
+			id, err := NewIdent(rootPkg, typ)
+			if err != nil {
+				return nil, err
+			}
+			res.Inherits = append(res.Inherits, id)
+		}
+	}
+	return res, nil
 }
 
 type Interface struct {
@@ -402,15 +463,19 @@ func (d *Data) AddFile(f *ast.File) error {
 					if !typeSpec.Name.IsExported() {
 						continue
 					}
-					if ifaceTyp, ok := typeSpec.Type.(*ast.InterfaceType); ok {
-						/*if err := ast.Print(fset, it.Methods.List); err != nil {
-							panic(err)
-						}*/
-						iface, err := NewInterface(f.Name.Name, typeSpec.Name, ifaceTyp)
+					switch typ := typeSpec.Type.(type) {
+					case *ast.InterfaceType:
+						iface, err := NewInterface(f.Name.Name, typeSpec.Name, typ)
 						if err != nil {
 							return err
 						}
 						d.Interfaces[iface.Name.GoName] = iface
+					case *ast.StructType:
+						struc, err := NewStruct(f.Name.Name, typeSpec.Name, typ)
+						if err != nil {
+							return err
+						}
+						d.Structs[struc.Name.GoName] = struc
 					}
 				}
 			}
@@ -426,7 +491,9 @@ func (d *Data) ResolveInheritances() error {
 		for _, inh := range iface.Inherits {
 			inhIface, exists := d.Interfaces[inh.GoName]
 			if !exists {
-				return errors.New("cannot resolve interface inheritance " + inh.GoName + " in " + iface.Name.GoName + ": does not exist")
+				fmt.Println(errors.New("cannot resolve interface inheritance " + inh.GoName + " in " + iface.Name.GoName + ": does not exist"))
+				continue
+				//return
 			}
 			if err := resolveInheritedIfaces(inhIface); err != nil {
 				return err
@@ -438,6 +505,29 @@ func (d *Data) ResolveInheritances() error {
 	}
 	for _, iface := range d.Interfaces {
 		if err := resolveInheritedIfaces(iface); err != nil {
+			return err
+		}
+	}
+
+	var resolveInheritedStructs func(struc *Struct) error
+	resolveInheritedStructs = func(struc *Struct) error {
+		for _, inh := range struc.Inherits {
+			inhStruc, exists := d.Structs[inh.GoName]
+			if !exists {
+				fmt.Println(errors.New("cannot resolve struct inheritance " + inh.GoName + " in " + struc.Name.GoName + ": does not exist"))
+				continue
+				//return
+			}
+			if err := resolveInheritedStructs(inhStruc); err != nil {
+				return err
+			}
+			struc.Fields = append(struc.Fields, inhStruc.Fields...)
+			struc.Inherits = nil
+		}
+		return nil
+	}
+	for _, struc := range d.Structs {
+		if err := resolveInheritedStructs(struc); err != nil {
 			return err
 		}
 	}

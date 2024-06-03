@@ -21,7 +21,7 @@ func ParseDirFull(fset *token.FileSet, path string) (pkgs map[string]*ast.Packag
 		for _, ent := range ents {
 			path := filepath.Join(path, ent.Name())
 			if ent.IsDir() {
-				if ent.Name() == "test" || ent.Name() == "internal" {
+				if ent.Name() == "test" || ent.Name() == "internal" || ent.Name() == "cmd" {
 					continue
 				}
 				if err := doParseDir(path); err != nil {

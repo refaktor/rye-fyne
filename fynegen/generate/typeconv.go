@@ -325,6 +325,7 @@ var convListRyeToGo = []Converter{
 				cb.Indent--
 				cb.Linef(`}`)
 				cb.Linef(`%v = nil`, outVar)
+				cb.Indent--
 			}
 			cb.Linef(`default:`)
 			cb.Indent++

@@ -10,6 +10,8 @@ import (
 	"os"
 	"slices"
 	"strings"
+
+	"github.com/refaktor/rye-front/fynegen/generate/repo"
 )
 
 var fset = token.NewFileSet()
@@ -203,10 +205,10 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 
 func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
-	srcDir := "fyne-src"
 
-	if err := PullGitRepo(srcDir, "https://github.com/fyne-io/fyne", "refs/tags/v2.4.4"); err != nil {
-		fmt.Println("pull git repo:", err)
+	srcDir, err := repo.Get("srcrepos", "fyne.io/fyne/v2", "v2.4.4")
+	if err != nil {
+		fmt.Println("get repo:", err)
 		os.Exit(1)
 	}
 

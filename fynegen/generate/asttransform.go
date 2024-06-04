@@ -426,7 +426,7 @@ func FuncRyeIdent(fn *Func) string {
 type Data struct {
 	Funcs      map[string]*Func
 	Interfaces map[string]*Interface
-	Structs    map[string]*Struct // TODO
+	Structs    map[string]*Struct
 }
 
 func NewData() *Data {

@@ -42,5 +42,5 @@ bin/
 dist/
 tests/*.html
 
-# Fynegen: source code for fyne
-fynegen/fyne-src
+# Fynegen: source code of libraries for which bindings are generated
+fynegen/srcrepos

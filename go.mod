@@ -13,6 +13,7 @@ require (
 	github.com/iancoleman/strcase v0.3.0
 	github.com/refaktor/rye v0.0.20
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
+	golang.org/x/mod v0.12.0
 )
 
 require (
@@ -135,7 +136,6 @@ require (
 	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
-	golang.org/x/mod v0.12.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect

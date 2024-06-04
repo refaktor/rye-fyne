@@ -115,8 +115,8 @@ var convListRyeToGo = []Converter{
 	{
 		Name: "func",
 		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
-			var fnParams []Ident
-			var fnResults []Ident
+			var fnParams []NamedIdent
+			var fnResults []NamedIdent
 			var fnTyp string
 			switch t := typ.Expr.(type) {
 			case *ast.FuncType:
@@ -149,7 +149,7 @@ var convListRyeToGo = []Converter{
 					if i != 0 {
 						fnTypB.WriteString(", ")
 					}
-					fnTypB.WriteString(fmt.Sprintf("arg%v %v", i, param.GoName))
+					fnTypB.WriteString(fmt.Sprintf("arg%v %v", i, param.Type.GoName))
 				}
 				fnTypB.WriteString(")")
 				if len(fnResults) > 0 {
@@ -158,7 +158,7 @@ var convListRyeToGo = []Converter{
 						if i != 0 {
 							fnTypB.WriteString(", ")
 						}
-						fnTypB.WriteString(result.GoName)
+						fnTypB.WriteString(result.Type.GoName)
 					}
 					fnTypB.WriteString(")")
 				}
@@ -193,7 +193,7 @@ var convListRyeToGo = []Converter{
 				if _, found := ConvGoToRye(
 					data,
 					cb,
-					param,
+					param.Type,
 					fmt.Sprintf(`arg%v`, i),
 					fmt.Sprintf(`arg%vVal`, i),
 					nil,
@@ -211,11 +211,11 @@ var convListRyeToGo = []Converter{
 			}
 			cb.Linef(`evaldo.CallFunction%v(fn, ps, %v%v, ps.Ctx)`, argsSuffix, argVals.String(), toLeftArg)
 			if len(fnResults) > 0 {
-				cb.Linef(`var res %v`, fnResults[0].GoName)
+				cb.Linef(`var res %v`, fnResults[0].Type.GoName)
 				if _, found := ConvRyeToGo(
 					data,
 					cb,
-					fnResults[0],
+					fnResults[0].Type,
 					`ps.Res`,
 					`res`,
 					func(...string) string {
@@ -270,6 +270,9 @@ var convListRyeToGo = []Converter{
 			} else if id.Name == "string" {
 				ryeObj = "String"
 				ryeObjType = "StringType"
+			} else if id.Name == "error" {
+				ryeObj = "Error"
+				ryeObjType = "ErrorType"
 			} else {
 				return false
 			}
@@ -347,27 +350,24 @@ var convListGoToRye = []Converter{
 				return false
 			}
 
-			var convFunc string
-			var castFunc string
+			var convFmt string
 			if id.Name == "int" || id.Name == "uint" ||
 				id.Name == "uint8" || id.Name == "uint16" || id.Name == "uint32" || id.Name == "uint64" ||
 				id.Name == "int8" || id.Name == "int16" || id.Name == "int32" || id.Name == "int64" {
-				convFunc = "*env.NewInteger"
-				castFunc = "int64"
+				convFmt = `*env.NewInteger(int64(%v))`
 			} else if id.Name == "bool" {
-				convFunc = "*env.NewInteger"
-				castFunc = "boolToInt64"
+				convFmt = `*env.NewInteger(boolToInt64(%v))`
 			} else if id.Name == "float32" || id.Name == "float64" {
-				convFunc = "*env.NewDecimal"
-				castFunc = "float64"
+				convFmt = `*env.NewDecimal(float64(%v))`
 			} else if id.Name == "string" {
-				convFunc = "*env.NewString"
-				castFunc = "string"
+				convFmt = `*env.NewString(%v)`
+			} else if id.Name == "error" {
+				convFmt = `*env.NewError(%v.Error())`
 			} else {
 				return false
 			}
 
-			cb.Linef(`%v = %v(%v(%v))`, outVar, convFunc, castFunc, inVar)
+			cb.Linef(`%v = %v`, outVar, fmt.Sprintf(convFmt, inVar))
 			return true
 		},
 	},

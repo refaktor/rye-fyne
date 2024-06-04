@@ -39,7 +39,8 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 
 	params := fn.Params
 	if fn.Recv != nil {
-		params = append([]Ident{*fn.Recv}, params...)
+		recvName, _ := NewIdent("", &ast.Ident{Name: "__recv"})
+		params = append([]NamedIdent{{Name: recvName, Type: *fn.Recv}}, params...)
 	}
 
 	if len(params) > 5 {
@@ -53,16 +54,16 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
 	cb.Indent++
 	for i, param := range params {
-		cb.Linef(`var arg%vVal %v`, i, param.GoName)
+		cb.Linef(`var arg%vVal %v`, i, param.Type.GoName)
 		if _, found := ConvRyeToGo(
 			data,
 			&cb,
-			param,
+			param.Type,
 			fmt.Sprintf(`arg%v`, i),
 			fmt.Sprintf(`arg%vVal`, i),
 			makeMakeRetArgErr(i, name),
 		); !found {
-			return "", "", errors.New("unhandled type conversion (rye to go): " + param.GoName)
+			return "", "", errors.New("unhandled type conversion (rye to go): " + param.Type.GoName)
 		}
 	}
 
@@ -78,38 +79,56 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 				args.WriteString(`, `)
 			}
 			expand := ""
-			if param.IsEllipsis {
+			if param.Type.IsEllipsis {
 				expand = "..."
 			}
 			args.WriteString(fmt.Sprintf(`arg%vVal%v`, i, expand))
 		}
 	}
 
-	assign := ""
-	if len(fn.Results) > 0 {
-		assign = `res := `
+	var assign strings.Builder
+	{
+		for i := range fn.Results {
+			if i != 0 {
+				assign.WriteString(`, `)
+			}
+			assign.WriteString(fmt.Sprintf(`res%v`, i))
+		}
+		if len(fn.Results) > 0 {
+			assign.WriteString(` := `)
+		}
 	}
-	if len(fn.Results) > 1 {
-		return "", "", errors.New("can only handle at most one return value")
-	}
+
 	recv := ""
 	if fn.Recv != nil {
 		recv = `arg0Val.`
 	}
-	cb.Linef(`%v%v%v(%v)`, assign, recv, fn.Name.GoName, args.String())
+	cb.Linef(`%v%v%v(%v)`, assign.String(), recv, fn.Name.GoName, args.String())
 	if len(fn.Results) > 0 {
-		cb.Linef(`var resObj env.Object`)
-		if _, found := ConvGoToRye(
-			data,
-			&cb,
-			fn.Results[0],
-			`res`,
-			`resObj`,
-			nil,
-		); !found {
-			return "", "", errors.New("unhandled type conversion (go to rye): " + fn.Results[0].GoName)
+		for i, result := range fn.Results {
+			cb.Linef(`var res%vObj env.Object`, i)
+			if _, found := ConvGoToRye(
+				data,
+				&cb,
+				result.Type,
+				fmt.Sprintf(`res%v`, i),
+				fmt.Sprintf(`res%vObj`, i),
+				nil,
+			); !found {
+				return "", "", errors.New("unhandled type conversion (go to rye): " + result.Type.GoName)
+			}
 		}
-		cb.Linef(`return resObj`)
+		if len(fn.Results) == 1 {
+			cb.Linef(`return res0Obj`)
+		} else {
+			cb.Linef(`return env.NewDict(map[string]any{`)
+			cb.Indent++
+			for i, result := range fn.Results {
+				cb.Linef(`"%v": res%vObj,`, result.Name.RyeName, i)
+			}
+			cb.Indent--
+			cb.Linef(`})`)
+		}
 	} else {
 		if fn.Recv == nil {
 			cb.Linef(`return nil`)
@@ -227,7 +246,7 @@ func main() {
 	cb.Linef(``)
 	cb.Linef(`import (`)
 	cb.Indent++
-	//cb.Linef(`"errors"`)
+	cb.Linef(`"errors"`)
 	cb.Linef(`"image"`)
 	cb.Linef(`"image/color"`)
 	cb.Linef(`"io"`)

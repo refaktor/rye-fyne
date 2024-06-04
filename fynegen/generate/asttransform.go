@@ -7,6 +7,7 @@ import (
 	"go/format"
 	"go/token"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/iancoleman/strcase"
@@ -115,7 +116,7 @@ func identExprToGoName(rootPkg string, expr ast.Expr) (string, error) {
 			if i != 0 {
 				res.WriteString(", ")
 			}
-			res.WriteString(v.GoName)
+			res.WriteString(v.Type.GoName)
 		}
 		res.WriteString(")")
 
@@ -129,7 +130,7 @@ func identExprToGoName(rootPkg string, expr ast.Expr) (string, error) {
 				if i != 0 {
 					res.WriteString(", ")
 				}
-				res.WriteString(v.GoName)
+				res.WriteString(v.Type.GoName)
 			}
 			res.WriteString(")")
 		}
@@ -165,8 +166,8 @@ func NewIdent(rootPkg string, expr ast.Expr) (Ident, error) {
 type Func struct {
 	Name    Ident
 	Recv    *Ident // non-nil for methods
-	Params  []Ident
-	Results []Ident
+	Params  []NamedIdent
+	Results []NamedIdent
 }
 
 func (fn *Func) String() string {
@@ -187,7 +188,7 @@ func (fn *Func) String() string {
 		if i > 0 {
 			b.WriteString(", ")
 		}
-		b.WriteString(v.GoName)
+		b.WriteString(v.Type.GoName)
 		//b.WriteString("/")
 		//b.WriteString(v.RyeName)
 	}
@@ -196,7 +197,7 @@ func (fn *Func) String() string {
 		if i > 0 {
 			b.WriteString(", ")
 		}
-		b.WriteString(v.GoName)
+		b.WriteString(v.Type.GoName)
 		//b.WriteString("/")
 		//b.WriteString(v.RyeName)
 	}
@@ -204,20 +205,39 @@ func (fn *Func) String() string {
 	return b.String()
 }
 
-func ParamsToIdents(rootPkg string, fl *ast.FieldList) ([]Ident, error) {
-	var res []Ident
-	for _, v := range fl.List {
-		id, err := NewIdent(rootPkg, v.Type)
+func ParamsToIdents(rootPkg string, fl *ast.FieldList) ([]NamedIdent, error) {
+	var res []NamedIdent
+	for i, v := range fl.List {
+		typID, err := NewIdent(rootPkg, v.Type)
 		if err != nil {
 			return nil, err
 		}
-		n := 1
-		// e.g. func Max(x, y float32)
-		if len(v.Names) > 1 {
-			n = len(v.Names)
-		}
-		for i := 0; i < n; i++ {
-			res = append(res, id)
+		if len(v.Names) > 0 {
+			for _, n := range v.Names {
+				nameID, err := NewIdent("", n)
+				if err != nil {
+					return nil, err
+				}
+				res = append(res, NamedIdent{
+					Name: nameID,
+					Type: typID,
+				})
+			}
+		} else {
+			var shorthand string
+			if typID.GoName == "error" && i == len(fl.List)-1 {
+				shorthand = "err"
+			} else {
+				shorthand = strconv.Itoa(i + 1)
+			}
+			nameID, err := NewIdent("", &ast.Ident{Name: shorthand})
+			if err != nil {
+				return nil, err
+			}
+			res = append(res, NamedIdent{
+				Name: nameID,
+				Type: typID,
+			})
 		}
 	}
 	return res, nil

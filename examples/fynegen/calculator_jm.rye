@@ -1,10 +1,12 @@
+; Experimenting with sole language features, doesn't work yet
+
 rye .needs { fynegen }
 
 do\in fynegen {
 
 	app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
 
-    for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too
+    for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too [DONE]
 
     op: fn { x y } { 0 }
 
@@ -49,7 +51,7 @@ do\in fynegen {
 	app_ |set-content container-border
         container-h-box [ label-a label-op label-b label-eq label-res ]
         0 0 0 ; Use 0 for nil                   ; TODO -- if fyne needs nil it can define a function nil  that produces native nil
-        [ container-grid-with-columns 4 [
+        [ container-grid-with-columns 4 [       ; add unpack function that unpacks first level blocks (similar to specific compose)
             widget-label ""
             widget-button "C" fn { } {
                 change! 0 'current
@@ -81,17 +83,17 @@ do\in fynegen {
                 set-op "+" { + }
             }
 
-            for { "7" "8" "9" } { .make-num-button }
+            for { "7" "8" "9" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
             widget-button "-" fn { } {
                 set-op "-" { - }
             }
 
-			for { "4" "5" "6" } { .make-num-button }
+			for { "4" "5" "6" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
             widget-button "*" fn { } {
                 set-op "*" { * }
             }
 
-            for { "1" "2" "3" } { .make-num-button }
+            for { "1" "2" "3" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
             widget-label ""
 
             widget-button "+/-" fn { } {

@@ -7,6 +7,7 @@ import (
 	"go/format"
 	"go/token"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -340,11 +341,14 @@ type NamedIdent struct {
 type Struct struct {
 	Name     Ident
 	Fields   []NamedIdent
+	Methods  map[string]*Func
 	Inherits []Ident
 }
 
 func NewStruct(file *File, name *ast.Ident, structTyp *ast.StructType) (*Struct, error) {
-	res := &Struct{}
+	res := &Struct{
+		Methods: make(map[string]*Func),
+	}
 	{
 		id, err := NewIdent(file, name)
 		if err != nil {
@@ -588,8 +592,8 @@ func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]st
 	return nil
 }
 
-// Resolves interface and struct inheritance
-func (d *Data) ResolveInheritances() error {
+// Resolves interface, struct, and method inheritance
+func (d *Data) ResolveInheritancesAndMethods() error {
 	var resolveInheritedIfaces func(iface *Interface) error
 	resolveInheritedIfaces = func(iface *Interface) error {
 		for _, inh := range iface.Inherits {
@@ -613,6 +617,29 @@ func (d *Data) ResolveInheritances() error {
 		}
 	}
 
+	for _, fn := range d.Funcs {
+		if fn.Recv == nil {
+			continue
+		}
+		var recv Ident
+		if expr, ok := fn.Recv.Expr.(*ast.StarExpr); ok {
+			var err error
+			recv, err = NewIdent(fn.Recv.File, expr.X)
+			if err != nil {
+				return err
+			}
+		} else {
+			recv = *fn.Recv
+		}
+		struc, ok := d.Structs[recv.GoName]
+		if !ok {
+			fmt.Println(errors.New("function " + FuncGoIdent(fn) + " has unknown receiver struct " + recv.GoName))
+			continue
+			//return
+		}
+		struc.Methods[fn.Name.GoName] = fn
+	}
+
 	var resolveInheritedStructs func(struc *Struct) error
 	resolveInheritedStructs = func(struc *Struct) error {
 		for _, inh := range struc.Inherits {
@@ -626,6 +653,29 @@ func (d *Data) ResolveInheritances() error {
 				return err
 			}
 			struc.Fields = append(struc.Fields, inhStruc.Fields...)
+			for name, meth := range inhStruc.Methods {
+				if _, exists := struc.Methods[name]; !exists {
+					m := &Func{
+						Name:    meth.Name,
+						Recv:    &struc.Name,
+						Params:  slices.Clone(meth.Params),
+						Results: slices.Clone(meth.Results),
+					}
+
+					if _, ok := meth.Recv.Expr.(*ast.StarExpr); ok {
+						recv, err := NewIdent(struc.Name.File, &ast.StarExpr{X: struc.Name.Expr})
+						if err != nil {
+							panic(err)
+						}
+						m.Recv = &recv
+					} else {
+						m.Recv = &struc.Name
+					}
+					struc.Methods[name] = m
+
+					d.Funcs[FuncGoIdent(m)] = m
+				}
+			}
 			struc.Inherits = nil
 		}
 		return nil

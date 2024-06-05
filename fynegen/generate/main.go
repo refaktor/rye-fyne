@@ -301,7 +301,7 @@ func main() {
 			}
 		}
 	}
-	if err := data.ResolveInheritances(); err != nil {
+	if err := data.ResolveInheritancesAndMethods(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}

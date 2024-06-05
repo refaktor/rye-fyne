@@ -4,20 +4,9 @@
 package main
 
 import (
-	"regexp"
-
-	"github.com/refaktor/rye/contrib"
-
-	"fmt"
-	"io"
-	"log"
-	"os"
-
-	"github.com/refaktor/rye/env"
-	"github.com/refaktor/rye/evaldo"
-	"github.com/refaktor/rye/loader"
-
 	"github.com/refaktor/rye-front/current"
+	"github.com/refaktor/rye/env"
+	"github.com/refaktor/rye/runner"
 )
 
 /* type TagType int
@@ -41,12 +30,50 @@ type node struct {
 //
 
 func main() {
+
+	runner.DoMain(func(ps *env.ProgramState) {
+		current.RegisterBuiltins(ps)
+	})
+
+}
+
+/*
+func main_() {
 	evaldo.ShowResults = true
 
+	code := " "
+
 	if len(os.Args) == 1 {
+		main_rye_string(code, false, false)
+	} else if len(os.Args) == 3 {
 		main_rye_repl(os.Stdin, os.Stdout, false, false)
 	} else if len(os.Args) == 2 {
 		main_rye_file(os.Args[1], false, false)
+	}
+}
+
+func main_rye_string(content string, sig bool, subc bool) {
+	// info := true
+	//util.PrintHeader()
+	//defer profile.Start(profile.CPUProfile).Stop()
+
+	block, genv := loader.LoadString(content, sig)
+	switch val := block.(type) {
+	case env.Block:
+		es := env.NewProgramState(block.(env.Block).Series, genv)
+		evaldo.RegisterBuiltins(es)
+		contrib.RegisterBuiltins(es, &evaldo.BuiltinNames) // TODO -- remove this in next Rye release
+		current.RegisterBuiltins(es)
+
+		if subc {
+			ctx := es.Ctx
+			es.Ctx = env.NewEnv(ctx)
+		}
+
+		evaldo.EvalBlock(es)
+		evaldo.MaybeDisplayFailureOrError(es, genv)
+	case env.Error:
+		fmt.Println(val.Message)
 	}
 }
 
@@ -140,5 +167,6 @@ func main_rye_repl(_ io.Reader, _ io.Writer, subc bool, here bool) {
 		}
 	}
 
-	evaldo.DoRyeRepl(es, evaldo.ShowResults)
+	evaldo.DoRyeRepl(es, "do", evaldo.ShowResults)
 }
+*/

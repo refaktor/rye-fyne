@@ -1,0 +1,156 @@
+rye .needs { fynegen }
+
+do\in fynegen {
+
+	app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
+
+    for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too
+
+    op: fn { x y } { 0 }
+
+	data: context {
+		a: ""
+		b: ""
+		res: ""
+		cur: 'a
+		read: does { get 'cur }
+		write: fn { v } { .change! ?cur }
+        save: fn { v } { .change! 'res }
+	}
+
+    change-current-text: fn { f } {
+		data/write data/read f
+		update
+    }
+	
+    make-num-button: fn { n } {
+        widget-button n closure { } {
+            change-current-text fn { text } { text + n }
+        }
+    }
+
+    update: does {
+        if data/cur = 'b {
+            either any { text-a = "" text-b = "" } {
+                label-eq .set-text ""
+                "" \data\save
+            } {
+                op data/a .to-integer data/b .to-integer
+                \to-string
+                \data\save
+                label-eq .set-text "="
+            }
+        }
+        label-a .set-text data/a
+        label-b .set-text data/b
+        label-res .set-text data/res
+    }
+
+	app_ |set-content container-border
+        container-h-box [ label-a label-op label-b label-eq label-res ]
+        0 0 0 ; Use 0 for nil                   ; TODO -- if fyne needs nil it can define a function nil  that produces native nil
+        [ container-grid-with-columns 4 [
+            widget-label ""
+            widget-button "C" fn { } {
+                change! 0 'current
+                change! "" 'text-a
+                change! "" 'text-b
+                change! "" 'text-res
+                label-op .set-text ""
+                label-eq .set-text ""
+                update
+            }
+            widget-button "Del" fn { } {
+                either all { current = 1 text-b = "" } {
+                    change! 0 'current
+                    label-op .set-text ""
+                    update
+                } {
+                    change-current-text fn { text } {
+                        new-len: text .length? - 1
+                        new-text: text .head new-len
+                        if new-text = "-" {
+                            dec! 'new-len
+                            change! new-text .head new-len 'new-text
+                        }
+                        new-text
+                    }
+                }
+            }
+            widget-button "+" fn { } {
+                set-op "+" { + }
+            }
+
+            for { "7" "8" "9" } { .make-num-button }
+            widget-button "-" fn { } {
+                set-op "-" { - }
+            }
+
+			for { "4" "5" "6" } { .make-num-button }
+            widget-button "*" fn { } {
+                set-op "*" { * }
+            }
+
+            for { "1" "2" "3" } { .make-num-button }
+            widget-label ""
+
+            widget-button "+/-" fn { } {
+                change-current-text fn { text } {
+                    either text = "" {
+                        ""
+                    } {
+                        text-int: text .to-integer
+                        minus-text-int: 0 - text-int
+                        minus-text-int .to-string
+                    }
+                }
+            }
+            make-num-button "0"
+            widget-label ""
+            widget-button "=" fn { } {
+                eval
+            }
+        ] ]
+    |resize fyne-size 300.0 300.0
+	|show-and-run
+}
+
+
+    ` update: fn { } {
+        if current {
+            either any { text-a = "" text-b = "" } {
+                label-eq .set-text ""
+                change! "" 'text-res
+            } {
+                a: text-a .to-integer
+                b: text-b .to-integer
+                res: op a b
+                change! res .to-string 'text-res
+                label-eq .set-text "="
+            }
+        }
+        label-a .set-text text-a
+        label-b .set-text text-b
+        label-res .set-text text-res
+    }
+
+    eval: fn { } {
+        change! text-res 'text-a
+        change! "" 'text-res
+        change! "" 'text-b
+        label-op .set-text ""
+        label-eq .set-text ""
+        change! 0 'current
+        update
+    }
+
+    set-op: fn { symbol opb } {
+        if current {
+            eval
+        }
+        if all { not current  not text-a = "" } {
+            change! get first opb 'op
+            label-op .set-text symbol
+            change! 1 'current
+        }
+    } `

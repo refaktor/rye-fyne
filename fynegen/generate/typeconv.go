@@ -46,14 +46,14 @@ var convListRyeToGo = []Converter{
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
 				var err error
-				elTyp, err = NewIdent(typ.RootPkg, t.Elt)
+				elTyp, err = NewIdent(typ.File, t.Elt)
 				if err != nil {
 					// TODO
 					panic(err)
 				}
 			case *ast.Ellipsis:
 				var err error
-				elTyp, err = NewIdent(typ.RootPkg, t.Elt)
+				elTyp, err = NewIdent(typ.File, t.Elt)
 				if err != nil {
 					// TODO
 					panic(err)
@@ -66,6 +66,7 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`case env.Block:`)
 			cb.Indent++
 			cb.Linef(`%v = make(%v, len(v.Series.S))`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`for i, it := range v.Series.S {`)
 			cb.Indent++
 			if _, found := ConvRyeToGo(
@@ -88,6 +89,7 @@ var convListRyeToGo = []Converter{
 			cb.Indent++
 			cb.Linef(`var ok bool`)
 			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`if !ok {`)
 			cb.Indent++
 			cb.Linef(`%v`, makeRetArgErr("BlockType", "NativeType"))
@@ -121,13 +123,13 @@ var convListRyeToGo = []Converter{
 			switch t := typ.Expr.(type) {
 			case *ast.FuncType:
 				var err error
-				fnParams, err = ParamsToIdents(typ.RootPkg, t.Params)
+				fnParams, err = ParamsToIdents(typ.File, t.Params)
 				if err != nil {
 					// TODO
 					panic(err)
 				}
 				if t.Results != nil {
-					fnResults, err = ParamsToIdents(typ.RootPkg, t.Results)
+					fnResults, err = ParamsToIdents(typ.File, t.Results)
 					if err != nil {
 						// TODO
 						panic(err)
@@ -150,6 +152,7 @@ var convListRyeToGo = []Converter{
 						fnTypB.WriteString(", ")
 					}
 					fnTypB.WriteString(fmt.Sprintf("arg%v %v", i, param.Type.GoName))
+					param.Type.MarkUsed(data)
 				}
 				fnTypB.WriteString(")")
 				if len(fnResults) > 0 {
@@ -159,6 +162,7 @@ var convListRyeToGo = []Converter{
 							fnTypB.WriteString(", ")
 						}
 						fnTypB.WriteString(result.Type.GoName)
+						result.Type.MarkUsed(data)
 					}
 					fnTypB.WriteString(")")
 				}
@@ -212,6 +216,7 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`evaldo.CallFunction%v(fn, ps, %v%v, ps.Ctx)`, argsSuffix, argVals.String(), toLeftArg)
 			if len(fnResults) > 0 {
 				cb.Linef(`var res %v`, fnResults[0].Type.GoName)
+				fnResults[0].Type.MarkUsed(data)
 				if _, found := ConvRyeToGo(
 					data,
 					cb,
@@ -283,6 +288,7 @@ var convListRyeToGo = []Converter{
 				cb.Linef(`%v = v.Value != 0`, outVar)
 			} else if id.Name == "error" {
 				cb.Linef(`%v = errors.New(v.Print(*ps.Idx))`, outVar)
+				data.UsedImports["errors"] = struct{}{}
 			} else {
 				cb.Linef(`%v = %v(v.Value)`, outVar, id.Name)
 			}
@@ -313,6 +319,7 @@ var convListRyeToGo = []Converter{
 			cb.Indent++
 			cb.Linef(`var ok bool`)
 			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`if !ok {`)
 			cb.Indent++
 			cb.Linef(`%v`, makeRetArgErr("NativeType"))

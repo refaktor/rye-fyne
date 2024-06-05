@@ -14,7 +14,13 @@ import (
 	"golang.org/x/mod/module"
 )
 
-func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathHint string, onFile func(f *ast.File, filename, module string) error) (require []module.Version, err error) {
+type Package struct {
+	Name  string
+	Path  string
+	Files map[string]*ast.File
+}
+
+func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathHint string, includeInternal bool, onFile func(f *ast.File, filename, module string) error) (require []module.Version, err error) {
 	noGoMod := false
 
 	var modulePath string
@@ -49,7 +55,10 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 		for _, ent := range ents {
 			fsPath := filepath.Join(fsPath, ent.Name())
 			if ent.IsDir() {
-				if strings.HasPrefix(ent.Name(), "_") || ent.Name() == "test" || ent.Name() == "testdata" || ent.Name() == "internal" || ent.Name() == "cmd" {
+				if strings.HasPrefix(ent.Name(), "_") || ent.Name() == "testdata" {
+					continue
+				}
+				if !includeInternal && (ent.Name() == "test" || ent.Name() == "internal" || ent.Name() == "cmd") {
 					continue
 				}
 				modPath := modPath + "/" + ent.Name()
@@ -64,6 +73,18 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 				if err != nil {
 					return err
 				}
+				if func() bool {
+					for _, c := range f.Comments {
+						for _, c := range c.List {
+							if c.Text == "//go:build ignore" {
+								return true
+							}
+						}
+					}
+					return false
+				}() {
+					continue
+				}
 				if noGoMod {
 					for _, imp := range f.Imports {
 						pkg, err := strconv.Unquote(imp.Path.Value)
@@ -77,7 +98,7 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 					}
 				}
 				modName := f.Name.Name
-				if strings.HasSuffix(modName, "_test") || modName == "internal" || modName == "main" {
+				if !includeInternal && (strings.HasSuffix(modName, "_test") || modName == "internal" || modName == "main") {
 					continue
 				}
 				if err := onFile(f, fsPath, modPath); err != nil {
@@ -103,7 +124,7 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 
 func ParseDirModules(fset *token.FileSet, dirPath, modulePathHint string) (modules map[string]string, require []module.Version, err error) {
 	modules = make(map[string]string)
-	require, err = visitDir(fset, dirPath, parser.PackageClauseOnly|parser.ImportsOnly, modulePathHint, func(f *ast.File, filename, module string) error {
+	require, err = visitDir(fset, dirPath, parser.PackageClauseOnly|parser.ImportsOnly|parser.ParseComments, modulePathHint, true, func(f *ast.File, filename, module string) error {
 		if name, ok := modules[module]; ok && name != f.Name.Name {
 			return fmt.Errorf("package module %v has conflicting names: %v and %v", module, name, f.Name.Name)
 		}
@@ -117,13 +138,14 @@ func ParseDirModules(fset *token.FileSet, dirPath, modulePathHint string) (modul
 	return modules, require, nil
 }
 
-func ParseDir(fset *token.FileSet, dirPath string, modulePathHint string) (pkgs map[string]*ast.Package, err error) {
-	pkgs = make(map[string]*ast.Package)
-	_, err = visitDir(fset, dirPath, 0, modulePathHint, func(f *ast.File, filename, module string) error {
+func ParseDir(fset *token.FileSet, dirPath string, modulePathHint string) (pkgs map[string]*Package, err error) {
+	pkgs = make(map[string]*Package)
+	_, err = visitDir(fset, dirPath, 0, modulePathHint, false, func(f *ast.File, filename, module string) error {
 		pkg, ok := pkgs[module]
 		if !ok {
-			pkg = &ast.Package{
+			pkg = &Package{
 				Name:  f.Name.Name,
+				Path:  module,
 				Files: make(map[string]*ast.File),
 			}
 			pkgs[module] = pkg

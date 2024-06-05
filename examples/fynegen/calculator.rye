@@ -44,12 +44,12 @@ do\in fynegen {
         update
     }
 
-    set-op: fn { symbol opb } {
+    set-op: fn { symbol opfn } {
         if current = 1 {
             eval
         }
         if all { current = 0 not text-a = "" } {
-            change! get first opb 'op
+            change! closure { x y } { opfn x y } 'op ; TODO: figure out why `change! opfn 'op` doesn't work
             label-op .set-text symbol
             change! 1 'current
         }
@@ -57,7 +57,7 @@ do\in fynegen {
 
     change-current-text: fn { f } {
         text: either current = 0 text-a text-b
-        new-text: print f print text
+        new-text: f text
         change! new-text 'text
         change! text either current = 0 'text-a 'text-b
         update
@@ -102,30 +102,32 @@ do\in fynegen {
                 }
             }
             widget-button "+" fn { } {
-                set-op "+" { + }
+                set-op "+" fn { x y } { x + y }
             }
 
             make-num-button "7"
             make-num-button "8"
             make-num-button "9"
             widget-button "-" fn { } {
-                set-op "-" { - }
+                set-op "-" fn { x y } { x - y }
             }
 
             make-num-button "4"
             make-num-button "5"
             make-num-button "6"
             widget-button "*" fn { } {
-                set-op "*" { * }
+                set-op "*" fn { x y } { x * y }
             }
 
             make-num-button "1"
             make-num-button "2"
             make-num-button "3"
-            widget-label ""
-            ;widget-button "/" fn { } {
-            ;    set-op "/" { / }
-            ;}
+            widget-button "/" fn { } {
+                set-op "/" fn { x y } {
+                    res: x / y
+                    res .to-integer
+                }
+            }
 
             widget-button "+/-" fn { } {
                 change-current-text fn { text } {

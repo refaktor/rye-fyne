@@ -1,4 +1,4 @@
-; Experimenting with sole language features, doesn't work yet
+; Experimenting with some language features, doesn't work yet
 
 rye .needs { fynegen }
 
@@ -14,14 +14,23 @@ do\in fynegen {
 		a: ""
 		b: ""
 		res: ""
-		cur: 'a
-		read: does { get 'cur }
-		write: fn { v } { .change! ?cur }
-        save: fn { v } { .change! 'res }
+		cur: 'a   ; cursor on a or b
+		get: does { do [ cur ] }
+		set: fn { v } { .change! ?cur }                                              ; TODO -- make referencing parent or root context possible .~/change! conflicts with op-words
+        res!: fn { v } { .change! 'res }                                             ; so we can reuse the words in current ctx
 	}
+    
+    ui: context {                                                                    ; .~/change!       |~/change!      .//change!    |//change!
+        sync: does {
+            label-a .set-text data/a
+            label-b .set-text data/b
+            label-res .set-text data/res
+        }
+        eq!: fn { v } { .set-text* label-eq }
+    }
 
     change-current-text: fn { f } {
-		data/write data/read f
+		data/set f data/get ,
 		update
     }
 	
@@ -33,19 +42,17 @@ do\in fynegen {
 
     update: does {
         if data/cur = 'b {
-            either any { text-a = "" text-b = "" } {
-                label-eq .set-text ""
-                "" \data\save
+            either any { data/a = "" data/b = "" } {
+                data\res! "" ,
+                ui/eq! ""
+
             } {
                 op data/a .to-integer data/b .to-integer
-                \to-string
-                \data\save
-                label-eq .set-text "="
+                \to-string \data\save ,
+                ui/eq! "="
             }
         }
-        label-a .set-text data/a
-        label-b .set-text data/b
-        label-res .set-text data/res
+        ui/sync
     }
 
 	app_ |set-content container-border
@@ -93,7 +100,7 @@ do\in fynegen {
                 set-op "*" { * }
             }
 
-            for { "1" "2" "3" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
+            for { "1" "2" "3" } { .make-num-button }   ; TODO  --- change for to map after we have unpackclem
             widget-label ""
 
             widget-button "+/-" fn { } {

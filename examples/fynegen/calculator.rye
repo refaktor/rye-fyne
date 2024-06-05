@@ -1,6 +1,8 @@
-rye .needs { fyne }
 
-do\in fyne {
+; rye .needs { fynegen }
+
+do\in fynegen {
+
 	a: app .window "Calculator"
 
     label-a: widget-label ""
@@ -55,7 +57,7 @@ do\in fyne {
 
     change-current-text: fn { f } {
         text: either current = 0 text-a text-b
-        new-text: f text
+        new-text: print f print text
         change! new-text 'text
         change! text either current = 0 'text-a 'text-b
         update

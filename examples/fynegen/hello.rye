@@ -1,8 +1,8 @@
 ; Requires -tags b_fynegen
 
-rye .needs { fyne }
+rye .needs { fynegen }
 
-do\in fyne {
+do\in fynegen {
 	a: app .window "Hello"
 
 	lab1: widget-rich-text-from-markdown "## Hello, world!"

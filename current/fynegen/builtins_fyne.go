@@ -43,6 +43,12 @@ func boolToInt64(x bool) int64 {
 }
 
 var Builtins_fynegen = map[string]*env.Builtin{
+	"nil": {
+		Doc: "nil value for go types",
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			return *env.NewInteger(0)
+		},
+	},
 	"app": {
 		Doc:   "app.New",
 		Argsn: 0,

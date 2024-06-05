@@ -293,6 +293,17 @@ func main() {
 	cb.Linef(`var Builtins_fynegen = map[string]*env.Builtin{`)
 	cb.Indent++
 
+	cb.Linef(`"nil": {`)
+	cb.Indent++
+	cb.Linef(`Doc: "nil value for go types",`)
+	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
+	cb.Indent++
+	cb.Linef(`return *env.NewInteger(0)`)
+	cb.Indent--
+	cb.Linef(`},`)
+	cb.Indent--
+	cb.Linef(`},`)
+
 	data := NewData()
 	for _, pkg := range pkgs {
 		for _, f := range pkg.Files {

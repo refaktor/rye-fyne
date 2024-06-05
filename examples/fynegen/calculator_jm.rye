@@ -4,20 +4,20 @@ rye .needs { fynegen }
 
 do\par fynegen {
 
-	app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
+    app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
 
     for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too [DONE]
 
-	data: context {
-		a: b: res: op: ""
-		cur: 'a   ; cursor on a or b
-		get: does { do [ cur ] }
-		set: fn { v } { .change! ?cur }
+    data: context {
+        a: b: res: op: ""
+        cur: 'a   ; cursor on a or b
+        get: does { do [ cur ] }
+        set: fn { v } { .change! ?cur }
         res!: fn { v } { .change! 'res }
         cur!: fn { v } { .change! 'cur }
-		op!: fn { v } { .change! 'op }
-		clear: does { for { a b res op } { .change!* "" } } ; change! 'a 'cur
-	}
+        op!: fn { v } { .change! 'op }
+        clear: does { for { a b res op } { .change!* "" } } ; change! 'a 'cur
+    }
     
     ui: context {
         sync: does {
@@ -28,12 +28,12 @@ do\par fynegen {
         }
         eq!: fn { v } { .set-text* label-eq }
     }
-	empty-spot: does { widget-label "" }
+    empty-spot: does { widget-label "" }
 
     change-current-text: fn { f } {
-		data/set f data/get , update
+        data/set f data/get , update
     }
-	
+    
     make-num-button: fn { n } {
         widget-button n closure { } {
             change-current-text fn { text } { text + n }
@@ -53,45 +53,45 @@ do\par fynegen {
         ui/sync
     }
 
-	eval: does { data/clear , data/cur! 'a , update }
-	
+    eval: does { data/clear , data/cur! 'a , update }
+    
     set-op: fn { op } {
         if data/cur = 'b { eval }
         if all { data/cur = 'a  not data/a = "" } {
-			data/op! first op , data/cur! 'b , ui/sync
-		}
+            data/op! first op , data/cur! 'b , ui/sync
+        }
     }
 
-	delete-digit: does {
-		either all { current = 1 text-b = "" } {
-			change! 0 'current
-			ui/op! ""
-			update
-		} {
-			change-current-text fn { text } {
-				new-len: text .length? - 1
-				new-text: text .head new-len
-				if new-text = "-" {
-					dec! 'new-len
-					change! new-text .head new-len 'new-text
-				}
-				new-text
-			}
-		}
-	}
+    delete-digit: does {
+        either all { current = 1 text-b = "" } {
+            change! 0 'current
+            ui/op! ""
+            update
+        } {
+            change-current-text fn { text } {
+                new-len: text .length? - 1
+                new-text: text .head new-len
+                if new-text = "-" {
+                    dec! 'new-len
+                    change! new-text .head new-len 'new-text
+                }
+                new-text
+            }
+        }
+    }
 
-	negate-current: does {
-		change-current-text fn { text } {
-			^if text = "" { "" }
-			0 - data/get .to-integer \to-string \data/set , ui/sync
-		}
-	}
-	
-	app_ |set-content container-border
-	container-h-box [ label-a label-op label-b label-eq label-res ]
-	0 0 0 ; Use 0 for nil
-	[ container-grid-with-columns 4
-		unpack [
+    negate-current: does {
+        change-current-text fn { text } {
+            ^if text = "" { "" }
+            0 - data/get .to-integer \to-string \data/set , ui/sync
+        }
+    }
+    
+    app_ |set-content container-border
+    container-h-box [ label-a label-op label-b label-eq label-res ]
+    0 0 0 ; Use 0 for nil
+    [ container-grid-with-columns 4
+        unpack [
             empty-spot
             widget-button "C" does { data/clear , ui/eq! "" , update }
             widget-button "Del" does { delete-digit }
@@ -99,8 +99,8 @@ do\par fynegen {
 
             map { "7" "8" "9" } { .make-num-button }
             widget-button "-" does { set-op { - } }
-			
-			map { "4" "5" "6" } { .make-num-button }
+            
+            map { "4" "5" "6" } { .make-num-button }
             widget-button "*" does { set-op { * } }
 
             map { "1" "2" "3" } { .make-num-button }
@@ -111,7 +111,7 @@ do\par fynegen {
             empty-spot
             widget-button "=" does { eval }
         ]
-	]
+    ]
     |resize fyne-size 320.0 320.0
-	|show-and-run
+    |show-and-run
 }

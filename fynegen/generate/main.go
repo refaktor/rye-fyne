@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/refaktor/rye-front/fynegen/generate/repo"
+	"golang.org/x/mod/module"
 )
 
 var fset = token.NewFileSet()
@@ -225,13 +226,62 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
 
-	srcDir, err := repo.Get("srcrepos", "fyne.io/fyne/v2", "v2.4.4")
+	dstPath := "_srcrepos"
+	srcModule := "fyne.io/fyne/v2"
+	srcModuleVersion := "v2.4.4"
+
+	getRepo := func(pkg, semver string) (string, error) {
+		have, dir, err := repo.Have(dstPath, pkg, semver)
+		if err != nil {
+			return "", err
+		}
+		if !have {
+			log.Printf("downloading %v %v\n", pkg, semver)
+			_, err := repo.Get(dstPath, pkg, semver)
+			if err != nil {
+				return "", err
+			}
+		}
+		return dir, nil
+	}
+
+	srcDir, err := getRepo(srcModule, srcModuleVersion)
 	if err != nil {
 		fmt.Println("get repo:", err)
 		os.Exit(1)
 	}
 
-	pkgs, err := ParseDirFull(fset, srcDir)
+	pkgNames := make(map[string]string)
+	{
+		addPkgNames := func(dir string) ([]module.Version, error) {
+			pkgNms, req, err := ParseDirModules(fset, dir, srcModule)
+			if err != nil {
+				return nil, err
+			}
+			for mod, name := range pkgNms {
+				pkgNames[mod] = name
+			}
+			return req, nil
+		}
+		req, err := addPkgNames(srcDir)
+		if err != nil {
+			fmt.Println("parse modules:", err)
+			os.Exit(1)
+		}
+		for _, v := range req {
+			dir, err := getRepo(v.Path, v.Version)
+			if err != nil {
+				fmt.Println("get repo:", err)
+				os.Exit(1)
+			}
+			if _, err := addPkgNames(dir); err != nil {
+				fmt.Println("parse modules:", err)
+				os.Exit(1)
+			}
+		}
+	}
+
+	pkgs, err := ParseDir(fset, srcDir, srcModule)
 	if err != nil {
 		fmt.Println("parse source:", err)
 		os.Exit(1)

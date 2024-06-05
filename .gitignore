@@ -43,4 +43,4 @@ dist/
 tests/*.html
 
 # Fynegen: source code of libraries for which bindings are generated
-fynegen/srcrepos
+fynegen/_srcrepos

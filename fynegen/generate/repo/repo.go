@@ -3,6 +3,7 @@ package repo
 import (
 	"archive/zip"
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -15,30 +16,98 @@ import (
 
 const proxyURL = "https://proxy.golang.org/"
 
-func Get(dstPath, pkg, semver string) (string, error) {
+func proxyRequestURL(proxyURL, pkg string, path ...string) (string, error) {
+	pkg = strings.ToLower(pkg)
 	pkgElems := strings.Split(pkg, "/")
 
-	var outPath string
-	{
-		var pathElems []string
-		pathElems = append(pathElems, dstPath)
-		pathElems = append(pathElems, pkgElems[:len(pkgElems)-1]...)
-		pathElems = append(pathElems, pkgElems[len(pkgElems)-1]+"@"+semver)
-		outPath = filepath.Join(pathElems...)
+	u, err := url.Parse(proxyURL)
+	if err != nil {
+		return "", err
 	}
+	u = u.JoinPath(append(pkgElems, path...)...)
+
+	return u.String(), nil
+}
+
+func pkgPath(pkg, semver string) string {
+	pkg = strings.ToLower(pkg)
+	pkgElems := strings.Split(pkg, "/")
+
+	var pathElems []string
+	pathElems = append(pathElems, pkgElems[:len(pkgElems)-1]...)
+	pathElems = append(pathElems, pkgElems[len(pkgElems)-1]+"@"+semver)
+	return filepath.Join(pathElems...)
+}
+
+func GetLatestVersion(pkg string) (string, error) {
+	url, err := proxyRequestURL(proxyURL, pkg, "@latest")
+	if err != nil {
+		return "", err
+	}
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	var data struct {
+		Version string
+		Time    string
+		Origin  *struct {
+			VCS  string
+			URL  string
+			Ref  string
+			Hash string
+		}
+	}
+	if err := json.Unmarshal(b, &data); err != nil {
+		return "", err
+	}
+
+	return data.Version, nil
+}
+
+func Have(dstPath, pkg, semver string) (bool, string, error) {
+	if semver == "" {
+		v, err := GetLatestVersion(pkg)
+		if err != nil {
+			return false, "", err
+		}
+		semver = v
+	}
+
+	outPath := filepath.Join(dstPath, pkgPath(pkg, semver))
+
+	if _, err := os.Stat(outPath); err == nil {
+		return true, outPath, nil
+	}
+	return false, outPath, nil
+}
+
+func Get(dstPath, pkg, semver string) (string, error) {
+	if semver == "" {
+		v, err := GetLatestVersion(pkg)
+		if err != nil {
+			return "", err
+		}
+		semver = v
+	}
+
+	outPath := filepath.Join(dstPath, pkgPath(pkg, semver))
 
 	if _, err := os.Stat(outPath); err == nil {
 		return outPath, nil
 	}
 
-	var zipURL string
-	{
-		u, err := url.Parse(proxyURL)
-		if err != nil {
-			return "", err
-		}
-		u = u.JoinPath(append(pkgElems, "@v", semver+".zip")...)
-		zipURL = u.String()
+	zipURL, err := proxyRequestURL(proxyURL, pkg, "@v", semver+".zip")
+	if err != nil {
+		return "", err
 	}
 
 	resp, err := http.Get(zipURL)

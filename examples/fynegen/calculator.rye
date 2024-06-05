@@ -70,7 +70,7 @@ do\in fyne {
 	a
 	|set-content container-border
         container-h-box [ label-a label-op label-b label-eq label-res ]
-        0 0 0 ; Use 0 for nil
+        nil nil nil
         [ container-grid-with-columns 4 [
             widget-label ""
             widget-button "C" fn { } {

@@ -2,32 +2,33 @@
 
 rye .needs { fynegen }
 
-do\in fynegen {
+do\par fynegen {
 
 	app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
 
     for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too [DONE]
 
-    op: fn { x y } { 0 }
-
 	data: context {
-		a: ""
-		b: ""
-		res: ""
+		a: b: res: op: ""
 		cur: 'a   ; cursor on a or b
 		get: does { do [ cur ] }
-		set: fn { v } { .change! ?cur }                                              ; TODO -- make referencing parent or root context possible .~/change! conflicts with op-words
-        res!: fn { v } { .change! 'res }                                             ; so we can reuse the words in current ctx
+		set: fn { v } { .change! ?cur }
+        res!: fn { v } { .change! 'res }
+        cur!: fn { v } { .change! 'cur }
+		op!: fn { v } { .change! 'op }
+		clear: does { for { a b res op } { .change!* "" } } ; change! 'a 'cur
 	}
     
-    ui: context {                                                                    ; .~/change!       |~/change!      .//change!    |//change!
+    ui: context {
         sync: does {
             label-a .set-text data/a
             label-b .set-text data/b
             label-res .set-text data/res
+            data/op .to-string .third .fix { "" } \set-text* label-op 
         }
         eq!: fn { v } { .set-text* label-eq }
     }
+	empty-spot: does { widget-label "" }
 
     change-current-text: fn { f } {
 		data/set f data/get ,
@@ -43,123 +44,82 @@ do\in fynegen {
     update: does {
         if data/cur = 'b {
             either any { data/a = "" data/b = "" } {
-                data\res! "" ,
+                data/res! "" ,
                 ui/eq! ""
-
             } {
-                op data/a .to-integer data/b .to-integer
-                \to-string \data\save ,
+                do [ data/a .to-integer data/op  data/b .to-integer ]
+                \to-string \data/res! ,
                 ui/eq! "="
             }
         }
         ui/sync
     }
 
+	eval: does { data/clear , data/cur! 'a , update }
+	
+    set-op: fn { op } {
+        if data/cur = 'b {
+            eval
+        }
+        if all { data/cur = 'a  not data/a = "" } {
+			data/op! first op
+			data/cur! 'b
+			ui/sync
+        }
+    }
+
+	delete-digit: does {
+		either all { current = 1 text-b = "" } {
+			change! 0 'current
+			ui/op! ""
+			update
+		} {
+			change-current-text fn { text } {
+				new-len: text .length? - 1
+				new-text: text .head new-len
+				if new-text = "-" {
+					dec! 'new-len
+					change! new-text .head new-len 'new-text
+				}
+				new-text
+			}
+		}
+	}
+	
 	app_ |set-content container-border
-        container-h-box [ label-a label-op label-b label-eq label-res ]
-        0 0 0 ; Use 0 for nil                   ; TODO -- if fyne needs nil it can define a function nil  that produces native nil
-        [ container-grid-with-columns 4 [       ; add unpack function that unpacks first level blocks (similar to specific compose)
-            widget-label ""
-            widget-button "C" fn { } {
-                change! 0 'current
-                change! "" 'text-a
-                change! "" 'text-b
-                change! "" 'text-res
-                label-op .set-text ""
-                label-eq .set-text ""
-                update
-            }
-            widget-button "Del" fn { } {
-                either all { current = 1 text-b = "" } {
-                    change! 0 'current
-                    label-op .set-text ""
-                    update
-                } {
-                    change-current-text fn { text } {
-                        new-len: text .length? - 1
-                        new-text: text .head new-len
-                        if new-text = "-" {
-                            dec! 'new-len
-                            change! new-text .head new-len 'new-text
-                        }
-                        new-text
-                    }
-                }
-            }
-            widget-button "+" fn { } {
-                set-op "+" { + }
-            }
+	container-h-box [ label-a label-op label-b label-eq label-res ]
+	0 0 0 ; Use 0 for nil                   ; TODO -- if fyne needs nil it can define a function nil  that produces native nil
+	[ container-grid-with-columns 4
+		unpack [       ; add unpack function that unpacks first level blocks (similar to specific compose) [DONE]
+            empty-spot
+            widget-button "C" does { data/clear , ui/eq! "" , update }
+            widget-button "Del" does { delete-digit }
+            widget-button "+" does { set-op { + } }
 
-            for { "7" "8" "9" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
-            widget-button "-" fn { } {
-                set-op "-" { - }
-            }
+            map { "7" "8" "9" } { .make-num-button }
+            widget-button "-" does { set-op { - } }
+			
+			map { "4" "5" "6" } { .make-num-button }
+            widget-button "*" does { set-op { * } }
 
-			for { "4" "5" "6" } { .make-num-button }   ; TODO  --- change for to map after we have unpack
-            widget-button "*" fn { } {
-                set-op "*" { * }
-            }
+            map { "1" "2" "3" } { .make-num-button }
+            empty-spot
 
-            for { "1" "2" "3" } { .make-num-button }   ; TODO  --- change for to map after we have unpackclem
-            widget-label ""
-
-            widget-button "+/-" fn { } {
+            widget-button "+/-" does {
                 change-current-text fn { text } {
                     either text = "" {
                         ""
                     } {
-                        text-int: text .to-integer
-                        minus-text-int: 0 - text-int
-                        minus-text-int .to-string
+						0 - data/get .to-integer \to-string \data/set
+						ui/sync
                     }
                 }
             }
             make-num-button "0"
-            widget-label ""
-            widget-button "=" fn { } {
-                eval
-            }
-        ] ]
-    |resize fyne-size 300.0 300.0
+            empty-spot
+            widget-button "=" does { eval }
+        ]
+	]
+    |resize fyne-size 320.0 320.0
 	|show-and-run
 }
-
-
-    ` update: fn { } {
-        if current {
-            either any { text-a = "" text-b = "" } {
-                label-eq .set-text ""
-                change! "" 'text-res
-            } {
-                a: text-a .to-integer
-                b: text-b .to-integer
-                res: op a b
-                change! res .to-string 'text-res
-                label-eq .set-text "="
-            }
-        }
-        label-a .set-text text-a
-        label-b .set-text text-b
-        label-res .set-text text-res
-    }
-
-    eval: fn { } {
-        change! text-res 'text-a
-        change! "" 'text-res
-        change! "" 'text-b
-        label-op .set-text ""
-        label-eq .set-text ""
-        change! 0 'current
-        update
-    }
-
-    set-op: fn { symbol opb } {
-        if current {
-            eval
-        }
-        if all { not current  not text-a = "" } {
-            change! get first opb 'op
-            label-op .set-text symbol
-            change! 1 'current
-        }
-    } `

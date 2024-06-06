@@ -3,18 +3,31 @@
 
 do\in fynegen {
 
-	a: app .window "Calculator"
+	win: app .window "Calculator"
 
     label-a: widget-label ""
     label-b: widget-label ""
     label-op: widget-label ""
     label-eq: widget-label ""
     label-res: widget-label ""
+    btn-dot: widget-button "." fn { } { }
+    btn-copy: widget-button-with-icon "" theme-content-copy-icon fn { } { }
     op: fn { x y } { 0 }
     text-a: ""
     text-b: ""
     text-res: ""
     current: 0
+
+    format-decimal: fn { x } {
+        x-str: math/round\to x 4 |to-string
+        produce\while { ::s all {
+            contains s "."
+            any { "0" = last s "." = last s }
+        } } x-str {
+            ::s
+            s .head s .length? - 1
+        }
+    }
 
     update: fn { } {
         if current = 1 {
@@ -22,16 +35,20 @@ do\in fynegen {
                 label-eq .set-text ""
                 change! "" 'text-res
             } {
-                a: text-a .to-integer
-                b: text-b .to-integer
+                a: text-a .to-decimal
+                b: text-b .to-decimal
                 res: op a b
-                change! res .to-string 'text-res
+                change! format-decimal res 'text-res
                 label-eq .set-text "="
             }
         }
         label-a .set-text text-a
         label-b .set-text text-b
         label-res .set-text text-res
+
+        text: either current = 0 text-a text-b
+        either contains text "." { btn-dot .disable } { btn-dot .enable }
+        either text-res = "" { btn-copy .disable } { btn-copy .enable }
     }
 
     eval: fn { } {
@@ -44,20 +61,21 @@ do\in fynegen {
         update
     }
 
-    set-op: fn { symbol opb } {
+    set-op: fn { symbol opfn } {
         if current = 1 {
             eval
         }
         if all { current = 0 not text-a = "" } {
-            change! get first opb 'op
+            change! closure { x y } { opfn x y } 'op ; TODO: figure out why `change! opfn 'op` doesn't work
             label-op .set-text symbol
             change! 1 'current
         }
+        update
     }
 
     change-current-text: fn { f } {
         text: either current = 0 text-a text-b
-        new-text: print f print text
+        new-text: f text
         change! new-text 'text
         change! text either current = 0 'text-a 'text-b
         update
@@ -69,12 +87,29 @@ do\in fynegen {
         }
     }
 
-	a
+    btn-dot .on-tapped! fn { } {
+        change-current-text fn { text } {
+            either text = "" {
+                "0."
+            } {
+                either contains text "." { text } { text + "." }
+            }
+        }
+    }
+
+    btn-copy .on-tapped! fn { } {
+        if not text-res = "" {
+            win .clipboard .set-content text-res
+        }
+    }
+    btn-copy .disable
+
+	win
 	|set-content container-border
         container-h-box [ label-a label-op label-b label-eq label-res ]
-        0 0 0 ; Use 0 for nil
+        nil nil nil
         [ container-grid-with-columns 4 [
-            widget-label ""
+            btn-copy
             widget-button "C" fn { } {
                 change! 0 'current
                 change! "" 'text-a
@@ -102,44 +137,41 @@ do\in fynegen {
                 }
             }
             widget-button "+" fn { } {
-                set-op "+" { + }
+                set-op "+" fn { x y } { x + y }
             }
 
             make-num-button "7"
             make-num-button "8"
             make-num-button "9"
             widget-button "-" fn { } {
-                set-op "-" { - }
+                set-op "-" fn { x y } { x - y }
             }
 
             make-num-button "4"
             make-num-button "5"
             make-num-button "6"
             widget-button "*" fn { } {
-                set-op "*" { * }
+                set-op "*" fn { x y } { x * y }
             }
 
             make-num-button "1"
             make-num-button "2"
             make-num-button "3"
-            widget-label ""
-            ;widget-button "/" fn { } {
-            ;    set-op "/" { / }
-            ;}
+            widget-button "/" fn { } {
+                set-op "/" fn { x y } { x / y }
+            }
 
             widget-button "+/-" fn { } {
                 change-current-text fn { text } {
                     either text = "" {
                         ""
                     } {
-                        text-int: text .to-integer
-                        minus-text-int: 0 - text-int
-                        minus-text-int .to-string
+                        format-decimal 0 - text .to-decimal
                     }
                 }
             }
             make-num-button "0"
-            widget-label ""
+            btn-dot
             widget-button "=" fn { } {
                 eval
             }

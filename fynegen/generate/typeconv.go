@@ -46,14 +46,14 @@ var convListRyeToGo = []Converter{
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
 				var err error
-				elTyp, err = NewIdent(typ.RootPkg, t.Elt)
+				elTyp, err = NewIdent(typ.File, t.Elt)
 				if err != nil {
 					// TODO
 					panic(err)
 				}
 			case *ast.Ellipsis:
 				var err error
-				elTyp, err = NewIdent(typ.RootPkg, t.Elt)
+				elTyp, err = NewIdent(typ.File, t.Elt)
 				if err != nil {
 					// TODO
 					panic(err)
@@ -66,6 +66,7 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`case env.Block:`)
 			cb.Indent++
 			cb.Linef(`%v = make(%v, len(v.Series.S))`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`for i, it := range v.Series.S {`)
 			cb.Indent++
 			if _, found := ConvRyeToGo(
@@ -88,6 +89,7 @@ var convListRyeToGo = []Converter{
 			cb.Indent++
 			cb.Linef(`var ok bool`)
 			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`if !ok {`)
 			cb.Indent++
 			cb.Linef(`%v`, makeRetArgErr("BlockType", "NativeType"))
@@ -115,19 +117,19 @@ var convListRyeToGo = []Converter{
 	{
 		Name: "func",
 		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
-			var fnParams []Ident
-			var fnResults []Ident
+			var fnParams []NamedIdent
+			var fnResults []NamedIdent
 			var fnTyp string
 			switch t := typ.Expr.(type) {
 			case *ast.FuncType:
 				var err error
-				fnParams, err = ParamsToIdents(typ.RootPkg, t.Params)
+				fnParams, err = ParamsToIdents(typ.File, t.Params)
 				if err != nil {
 					// TODO
 					panic(err)
 				}
 				if t.Results != nil {
-					fnResults, err = ParamsToIdents(typ.RootPkg, t.Results)
+					fnResults, err = ParamsToIdents(typ.File, t.Results)
 					if err != nil {
 						// TODO
 						panic(err)
@@ -149,7 +151,8 @@ var convListRyeToGo = []Converter{
 					if i != 0 {
 						fnTypB.WriteString(", ")
 					}
-					fnTypB.WriteString(fmt.Sprintf("arg%v %v", i, param.GoName))
+					fnTypB.WriteString(fmt.Sprintf("arg%v %v", i, param.Type.GoName))
+					param.Type.MarkUsed(data)
 				}
 				fnTypB.WriteString(")")
 				if len(fnResults) > 0 {
@@ -158,7 +161,8 @@ var convListRyeToGo = []Converter{
 						if i != 0 {
 							fnTypB.WriteString(", ")
 						}
-						fnTypB.WriteString(result.GoName)
+						fnTypB.WriteString(result.Type.GoName)
+						result.Type.MarkUsed(data)
 					}
 					fnTypB.WriteString(")")
 				}
@@ -193,7 +197,7 @@ var convListRyeToGo = []Converter{
 				if _, found := ConvGoToRye(
 					data,
 					cb,
-					param,
+					param.Type,
 					fmt.Sprintf(`arg%v`, i),
 					fmt.Sprintf(`arg%vVal`, i),
 					nil,
@@ -211,11 +215,12 @@ var convListRyeToGo = []Converter{
 			}
 			cb.Linef(`evaldo.CallFunction%v(fn, ps, %v%v, ps.Ctx)`, argsSuffix, argVals.String(), toLeftArg)
 			if len(fnResults) > 0 {
-				cb.Linef(`var res %v`, fnResults[0].GoName)
+				cb.Linef(`var res %v`, fnResults[0].Type.GoName)
+				fnResults[0].Type.MarkUsed(data)
 				if _, found := ConvRyeToGo(
 					data,
 					cb,
-					fnResults[0],
+					fnResults[0].Type,
 					`ps.Res`,
 					`res`,
 					func(...string) string {
@@ -270,6 +275,9 @@ var convListRyeToGo = []Converter{
 			} else if id.Name == "string" {
 				ryeObj = "String"
 				ryeObjType = "StringType"
+			} else if id.Name == "error" {
+				ryeObj = "Error"
+				ryeObjType = "ErrorType"
 			} else {
 				return false
 			}
@@ -280,6 +288,7 @@ var convListRyeToGo = []Converter{
 				cb.Linef(`%v = v.Value != 0`, outVar)
 			} else if id.Name == "error" {
 				cb.Linef(`%v = errors.New(v.Print(*ps.Idx))`, outVar)
+				data.UsedImports["errors"] = struct{}{}
 			} else {
 				cb.Linef(`%v = %v(v.Value)`, outVar, id.Name)
 			}
@@ -310,6 +319,7 @@ var convListRyeToGo = []Converter{
 			cb.Indent++
 			cb.Linef(`var ok bool`)
 			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
 			cb.Linef(`if !ok {`)
 			cb.Indent++
 			cb.Linef(`%v`, makeRetArgErr("NativeType"))
@@ -325,6 +335,7 @@ var convListRyeToGo = []Converter{
 				cb.Indent--
 				cb.Linef(`}`)
 				cb.Linef(`%v = nil`, outVar)
+				cb.Indent--
 			}
 			cb.Linef(`default:`)
 			cb.Indent++
@@ -346,27 +357,24 @@ var convListGoToRye = []Converter{
 				return false
 			}
 
-			var convFunc string
-			var castFunc string
+			var convFmt string
 			if id.Name == "int" || id.Name == "uint" ||
 				id.Name == "uint8" || id.Name == "uint16" || id.Name == "uint32" || id.Name == "uint64" ||
 				id.Name == "int8" || id.Name == "int16" || id.Name == "int32" || id.Name == "int64" {
-				convFunc = "*env.NewInteger"
-				castFunc = "int64"
+				convFmt = `*env.NewInteger(int64(%v))`
 			} else if id.Name == "bool" {
-				convFunc = "*env.NewInteger"
-				castFunc = "boolToInt64"
+				convFmt = `*env.NewInteger(boolToInt64(%v))`
 			} else if id.Name == "float32" || id.Name == "float64" {
-				convFunc = "*env.NewDecimal"
-				castFunc = "float64"
+				convFmt = `*env.NewDecimal(float64(%v))`
 			} else if id.Name == "string" {
-				convFunc = "*env.NewString"
-				castFunc = "string"
+				convFmt = `*env.NewString(%v)`
+			} else if id.Name == "error" {
+				convFmt = `*env.NewError(%v.Error())`
 			} else {
 				return false
 			}
 
-			cb.Linef(`%v = %v(%v(%v))`, outVar, convFunc, castFunc, inVar)
+			cb.Linef(`%v = %v`, outVar, fmt.Sprintf(convFmt, inVar))
 			return true
 		},
 	},

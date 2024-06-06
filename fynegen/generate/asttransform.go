@@ -81,6 +81,12 @@ func (id Ident) MarkUsed(data *Data) {
 }
 
 func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
+	// From https://github.com/refaktor/rye/blob/main/loader/loader.go#L444
+	// WORD          <-  LETTER LETTERORNUM* / NORMOPWORDS
+	// LETTER        <-  < [a-zA-Z^(` + "`" + `] >
+	// LETTERORNUM   <-  < [a-zA-Z0-9-?=.\\!_+<>\]*()] >
+	// NORMOPWORDS   <-  < ("_"[<>*+-=/]) >
+
 	switch expr := expr.(type) {
 	case *ast.Ident:
 		res := expr.Name
@@ -98,7 +104,7 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 		return res, nil
 	case *ast.StarExpr:
 		res, err := identExprToRyeName(file, expr.X)
-		return res + "-ptr", err
+		return "ptr-" + res, err
 	case *ast.SelectorExpr:
 		mod, ok := expr.X.(*ast.Ident)
 		if !ok {
@@ -111,12 +117,56 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 		return identExprToRyeName(f, expr.Sel)
 	case *ast.ArrayType:
 		res, err := identExprToRyeName(file, expr.Elt)
-		return res + "-arr", err
+		return "arr-" + res, err
 	case *ast.Ellipsis:
 		res, err := identExprToRyeName(file, expr.Elt)
-		return res + "-arr", err
+		return "arr-" + res, err
 	case *ast.FuncType:
-		return "--go-any-func--", nil // TODO
+		if expr.TypeParams != nil {
+			return "", errors.New("generic functions as parameters are unsupported")
+		}
+
+		var res strings.Builder
+
+		params, err := ParamsToIdents(file, expr.Params)
+		if err != nil {
+			return "", err
+		}
+		res.WriteString("func(")
+		for i, v := range params {
+			if i != 0 {
+				res.WriteString("_")
+			}
+			res.WriteString(v.Type.RyeName)
+		}
+		res.WriteString(")")
+
+		if expr.Results != nil {
+			results, err := ParamsToIdents(file, expr.Results)
+			if err != nil {
+				return "", err
+			}
+			res.WriteString("_(")
+			for i, v := range results {
+				if i != 0 {
+					res.WriteString("_")
+				}
+				res.WriteString(v.Type.RyeName)
+			}
+			res.WriteString(")")
+		}
+
+		return res.String(), nil
+	case *ast.MapType:
+		key, err := identExprToRyeName(file, expr.Key)
+		if err != nil {
+			return "", err
+		}
+		val, err := identExprToRyeName(file, expr.Value)
+		if err != nil {
+			return "", err
+		}
+		return "map(" + key + ")" + val, nil
 	default:
 		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
@@ -186,6 +236,16 @@ func identExprToGoName(file *File, expr ast.Expr) (string, error) {
 		}
 
 		return res.String(), nil
+	case *ast.MapType:
+		key, err := identExprToGoName(file, expr.Key)
+		if err != nil {
+			return "", err
+		}
+		val, err := identExprToGoName(file, expr.Value)
+		if err != nil {
+			return "", err
+		}
+		return "map[" + key + "]" + val, nil
 	default:
 		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}

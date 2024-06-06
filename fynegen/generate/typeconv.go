@@ -21,7 +21,7 @@ func ConvRyeToGo(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, m
 }
 
 func ConvGoToRye(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
-	for _, conv := range convListGoToRye {
+	for _, conv := range ConvListGoToRye {
 		if conv.TryConv(data, cb, typ, inVar, outVar, makeRetArgErr) {
 			return conv.Name, true
 		}
@@ -108,6 +108,129 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`default:`)
 			cb.Indent++
 			cb.Linef(`%v`, makeRetArgErr("BlockType", "NativeType"))
+			cb.Indent--
+			cb.Linef(`}`)
+
+			return true
+		},
+	},
+	{
+		Name: "map",
+		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			var kTyp, vTyp Ident
+			if t, ok := typ.Expr.(*ast.MapType); ok {
+				var err error
+				kTyp, err = NewIdent(typ.File, t.Key)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+				vTyp, err = NewIdent(typ.File, t.Value)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+			} else {
+				return false
+			}
+
+			allowedTyps := []string{"BlockType", "NativeType"}
+			if kTyp.GoName == "string" {
+				allowedTyps = append(allowedTyps, "DictType")
+			}
+
+			convAndInsert := func(inKeyVar, inValVar string, convKey bool) bool {
+				if convKey {
+					cb.Linef(`var mapK %v`, kTyp.GoName)
+					kTyp.MarkUsed(data)
+					if _, found := ConvRyeToGo(
+						data,
+						cb,
+						kTyp,
+						inKeyVar,
+						`mapK`,
+						func(...string) string {
+							// Force toplevel allowed types
+							return makeRetArgErr(allowedTyps...)
+						},
+					); !found {
+						return false
+					}
+				} else {
+					cb.Linef(`mapK := %v`, inKeyVar)
+				}
+				cb.Linef(`var mapV %v`, vTyp.GoName)
+				vTyp.MarkUsed(data)
+				if _, found := ConvRyeToGo(
+					data,
+					cb,
+					vTyp,
+					inValVar,
+					`mapV`,
+					func(...string) string {
+						// Force toplevel allowed types
+						return makeRetArgErr(allowedTyps...)
+					},
+				); !found {
+					return false
+				}
+				cb.Linef(`%v[mapK] = mapV`, outVar)
+				return true
+			}
+
+			cb.Linef(`switch v := %v.(type) {`, inVar)
+			cb.Linef(`case env.Block:`)
+			cb.Indent++
+			cb.Linef(`if len(v.Series.S) %% 2 != 0 {`)
+			cb.Indent++
+			cb.Linef(`%v`, makeRetArgErr(allowedTyps...))
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Linef(`%v = make(%v, len(v.Series.S)/2)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
+			cb.Linef(`for i := 0; i < len(v.Series.S); i += 2 {`)
+			cb.Indent++
+			if !convAndInsert(`v.Series.S[i+0]`, `v.Series.S[i+1]`, true) {
+				return false
+			}
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Indent--
+			cb.Linef(`case env.Dict:`)
+			cb.Indent++
+			cb.Linef(`%v = make(%v, len(v.Data))`, outVar, typ.GoName)
+			typ.MarkUsed(data)
+			cb.Linef(`for dictK, dictV := range v.Data {`)
+			cb.Indent++
+			if !convAndInsert(`dictK`, `dictV`, false) {
+				return false
+			}
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Indent--
+			cb.Linef(`case env.Native:`)
+			cb.Indent++
+			cb.Linef(`var ok bool`)
+			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+			typ.MarkUsed(data)
+			cb.Linef(`if !ok {`)
+			cb.Indent++
+			cb.Linef(`%v`, makeRetArgErr(allowedTyps...))
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Indent--
+			cb.Linef(`case env.Integer:`)
+			cb.Indent++
+			cb.Linef(`if v.Value != 0 {`)
+			cb.Indent++
+			cb.Linef(`%v`, makeRetArgErr(allowedTyps...))
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Linef(`%v = nil`, outVar)
+			cb.Indent--
+			cb.Linef(`default:`)
+			cb.Indent++
+			cb.Linef(`%v`, makeRetArgErr(allowedTyps...))
 			cb.Indent--
 			cb.Linef(`}`)
 
@@ -349,6 +472,103 @@ var convListRyeToGo = []Converter{
 }
 
 var convListGoToRye = []Converter{
+	{
+		Name: "array",
+		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			var elTyp Ident
+			switch t := typ.Expr.(type) {
+			case *ast.ArrayType:
+				var err error
+				elTyp, err = NewIdent(typ.File, t.Elt)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+			case *ast.Ellipsis:
+				var err error
+				elTyp, err = NewIdent(typ.File, t.Elt)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+			default:
+				return false
+			}
+
+			cb.Linef(`{`)
+			cb.Indent++
+			cb.Linef(`items := make([]env.Object, len(%v))`, inVar)
+			cb.Linef(`for i, it := range %v {`, inVar)
+			cb.Indent++
+			if _, found := ConvGoToRye(
+				data,
+				cb,
+				elTyp,
+				`it`,
+				`items[i]`,
+				nil,
+			); !found {
+				return false
+			}
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Linef(`%v = *env.NewBlock(*env.NewTSeries(items))`, outVar)
+			cb.Indent--
+			cb.Linef(`}`)
+
+			return true
+		},
+	},
+	{
+		Name: "map",
+		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			var kTyp, vTyp Ident
+			if t, ok := typ.Expr.(*ast.MapType); ok {
+				var err error
+				kTyp, err = NewIdent(typ.File, t.Key)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+				vTyp, err = NewIdent(typ.File, t.Value)
+				if err != nil {
+					// TODO
+					panic(err)
+				}
+			} else {
+				return false
+			}
+
+			if kTyp.GoName != "string" {
+				return false
+			}
+
+			cb.Linef(`{`)
+			cb.Indent++
+			cb.Linef(`data := make(map[string]any, len(%v))`, inVar)
+			cb.Linef(`for mKey, mVal := range %v {`, inVar)
+			cb.Indent++
+			cb.Linef(`var dVal env.Object`)
+			if _, found := ConvGoToRye(
+				data,
+				cb,
+				vTyp,
+				`mVal`,
+				`dVal`,
+				nil,
+			); !found {
+				return false
+			}
+			cb.Linef(`data[mKey] = dVal`)
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Linef(`%v = *env.NewDict(data)`, outVar)
+			cb.Indent--
+			cb.Linef(`}`)
+
+			return true
+		},
+	},
 	{
 		Name: "builtin",
 		TryConv: func(data *Data, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {

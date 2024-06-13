@@ -2,15 +2,14 @@ module github.com/refaktor/rye-front
 
 go 1.21.5
 
-// replace github.com/refaktor/rye v0.0.20 => github.com/xypwn/rye v0.0.19-0.20240601191219-d8aa1d82bbf3
-
-replace github.com/refaktor/rye v0.0.20 => ../rye
+// replace github.com/refaktor/rye v0.0.20 => ../rye
 
 require (
 	fyne.io/fyne/v2 v2.4.4
+	github.com/BurntSushi/toml v1.3.2
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
 	github.com/iancoleman/strcase v0.3.0
-	github.com/refaktor/rye v0.0.20
+	github.com/refaktor/rye v0.0.21-0.20240613091039-01d356399f23
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
 	golang.org/x/mod v0.12.0
 )
@@ -108,8 +107,8 @@ require (
 	github.com/refaktor/liner v1.2.10 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
-	github.com/sashabaranov/go-openai v1.24.0 // indirect
-	github.com/shirou/gopsutil/v3 v3.24.4 // indirect
+	github.com/sashabaranov/go-openai v1.24.1 // indirect
+	github.com/shirou/gopsutil/v3 v3.24.5 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
@@ -129,9 +128,9 @@ require (
 	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
-	golang.org/x/net v0.24.0 // indirect
+	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect

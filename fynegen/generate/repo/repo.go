@@ -91,7 +91,7 @@ func Have(dstPath, pkg, semver string) (bool, string, error) {
 }
 
 func Get(dstPath, pkg, semver string) (string, error) {
-	if semver == "" {
+	if semver == "" || semver == "latest" {
 		v, err := GetLatestVersion(pkg)
 		if err != nil {
 			return "", err

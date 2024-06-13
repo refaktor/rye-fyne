@@ -13,6 +13,7 @@ import (
 
 	"golang.org/x/mod/module"
 
+	"github.com/BurntSushi/toml"
 	"github.com/refaktor/rye-front/fynegen/generate/repo"
 )
 
@@ -33,7 +34,7 @@ func makeMakeRetArgErr(argn int, funcName string) func(allowedTypes ...string) s
 	}
 }
 
-func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string, err error) {
+func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code string, err error) {
 	name = FuncRyeIdent(fn)
 
 	var cb CodeBuilder
@@ -41,7 +42,7 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 
 	params := fn.Params
 	if fn.Recv != nil {
-		recvName, _ := NewIdent(nil, &ast.Ident{Name: "__recv"})
+		recvName, _ := NewIdent(ctx, nil, &ast.Ident{Name: "__recv"})
 		params = append([]NamedIdent{{Name: recvName, Type: *fn.Recv}}, params...)
 	}
 
@@ -57,9 +58,9 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 	cb.Indent++
 	for i, param := range params {
 		cb.Linef(`var arg%vVal %v`, i, param.Type.GoName)
-		param.Type.MarkUsed(data)
+		ctx.MarkUsed(param.Type)
 		if _, found := ConvRyeToGo(
-			data,
+			ctx,
 			&cb,
 			param.Type,
 			fmt.Sprintf(`arg%v`, i),
@@ -107,12 +108,12 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 		recv = `arg0Val.`
 	}
 	cb.Linef(`%v%v%v(%v)`, assign.String(), recv, fn.Name.GoName, args.String())
-	fn.Name.MarkUsed(data)
+	ctx.MarkUsed(fn.Name)
 	if len(fn.Results) > 0 {
 		for i, result := range fn.Results {
 			cb.Linef(`var res%vObj env.Object`, i)
 			if _, found := ConvGoToRye(
-				data,
+				ctx,
 				&cb,
 				result.Type,
 				fmt.Sprintf(`res%v`, i),
@@ -148,10 +149,10 @@ func GenerateBinding(data *Data, fn *Func, indent int) (name string, code string
 	return name, cb.String(), nil
 }
 
-func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
+func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
 	if ptrToStruct {
 		var err error
-		structName, err = NewIdent(structName.File, &ast.StarExpr{X: structName.Expr})
+		structName, err = NewIdent(ctx, structName.File, &ast.StarExpr{X: structName.Expr})
 		if err != nil {
 			return "", "", err
 		}
@@ -179,9 +180,9 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 	cb.Indent++
 
 	cb.Linef(`var self %v`, structName.GoName)
-	structName.MarkUsed(data)
+	ctx.MarkUsed(structName)
 	if _, found := ConvRyeToGo(
-		data,
+		ctx,
 		&cb,
 		structName,
 		`arg0`,
@@ -193,7 +194,7 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 
 	if setter {
 		if _, found := ConvRyeToGo(
-			data,
+			ctx,
 			&cb,
 			field.Type,
 			`arg1`,
@@ -207,7 +208,7 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 	} else {
 		cb.Linef(`var resObj env.Object`)
 		if _, found := ConvGoToRye(
-			data,
+			ctx,
 			&cb,
 			field.Type,
 			`self.`+field.Name.GoName,
@@ -230,9 +231,22 @@ func GenerateGetterOrSetter(data *Data, field NamedIdent, structName Ident, inde
 func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
 
+	configPath := "config.toml"
+	if _, err := os.Stat(configPath); err != nil {
+		if err := os.WriteFile(configPath, []byte(DefaultConfig), 0666); err != nil {
+			fmt.Println("create default config:", err)
+			os.Exit(1)
+		}
+		fmt.Println("created default config at", configPath)
+		os.Exit(0)
+	}
+	var cfg Config
+	if _, err := toml.DecodeFile(configPath, &cfg); err != nil {
+		fmt.Println("open config:", err)
+		os.Exit(1)
+	}
+
 	dstPath := "_srcrepos"
-	srcModule := "fyne.io/fyne/v2"
-	srcModuleVersion := "v2.4.4"
 
 	getRepo := func(pkg, semver string) (string, error) {
 		have, dir, err := repo.Have(dstPath, pkg, semver)
@@ -249,7 +263,7 @@ func main() {
 		return dir, nil
 	}
 
-	srcDir, err := getRepo(srcModule, srcModuleVersion)
+	srcDir, err := getRepo(cfg.Package, cfg.Version)
 	if err != nil {
 		fmt.Println("get repo:", err)
 		os.Exit(1)
@@ -267,7 +281,7 @@ func main() {
 			}
 			return req, nil
 		}
-		req, err := addPkgNames(srcDir, srcModule)
+		req, err := addPkgNames(srcDir, cfg.Package)
 		if err != nil {
 			fmt.Println("parse modules:", err)
 			os.Exit(1)
@@ -285,7 +299,7 @@ func main() {
 		}
 	}
 
-	pkgs, err := ParseDir(fset, srcDir, srcModule)
+	pkgs, err := ParseDir(fset, srcDir, cfg.Package)
 	if err != nil {
 		fmt.Println("parse source:", err)
 		os.Exit(1)
@@ -293,58 +307,101 @@ func main() {
 
 	const bindingCodeIndent = 1
 
-	data := NewData()
+	data := &Data{
+		Funcs:      make(map[string]*Func),
+		Interfaces: make(map[string]*Interface),
+		Structs:    make(map[string]*Struct),
+	}
+	ctx := &Context{
+		Config:      &cfg,
+		Data:        data,
+		ModuleNames: moduleNames,
+		UsedImports: make(map[string]struct{}),
+	}
+
 	for _, pkg := range pkgs {
 		for _, f := range pkg.Files {
-			if err := data.AddFile(f, pkg.Path, moduleNames); err != nil {
+			if err := data.AddFile(ctx, f, pkg.Path, moduleNames); err != nil {
 				fmt.Printf("%v: %v\n", pkg.Name, err)
 			}
 		}
 	}
-	if err := data.ResolveInheritancesAndMethods(); err != nil {
+	if err := data.ResolveInheritancesAndMethods(ctx); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	generatedFuncs := make(map[string]string)
+	type GeneratedFunc struct {
+		Name string
+		Code string
+		File *File
+	}
+
+	generatedFuncs := make(map[string]GeneratedFunc)
+
+	checkFuncCollision := func(name string, file *File) {
+		if oldFn, exists := generatedFuncs[name]; exists &&
+			file.ModulePath != oldFn.File.ModulePath {
+			fmt.Printf(
+				"conflict exists between funcs %v (package %v) and %v (package %v)\n",
+				name, file.ModulePath,
+				oldFn.Name, oldFn.File.ModulePath,
+			)
+		}
+	}
 
 	for _, iface := range data.Interfaces {
 		for _, fn := range iface.Funcs {
-			name, code, err := GenerateBinding(data, fn, bindingCodeIndent)
+			name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 			if err != nil {
 				fmt.Println(name+":", err)
 				continue
 			}
-			generatedFuncs[name] = code
+			checkFuncCollision(name, fn.File)
+			generatedFuncs[name] = GeneratedFunc{
+				Name: name,
+				Code: code,
+				File: fn.File,
+			}
 		}
 	}
 
 	for _, fn := range data.Funcs {
-		name, code, err := GenerateBinding(data, fn, bindingCodeIndent)
+		name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 		if err != nil {
 			fmt.Println(name+":", err)
 			continue
 		}
-		generatedFuncs[name] = code
+		checkFuncCollision(name, fn.File)
+		generatedFuncs[name] = GeneratedFunc{
+			Name: name,
+			Code: code,
+			File: fn.File,
+		}
 	}
 
 	for _, struc := range data.Structs {
 		for _, f := range struc.Fields {
 			for _, ptrToStruct := range []bool{false, true} {
 				for _, setter := range []bool{false, true} {
-					name, code, err := GenerateGetterOrSetter(data, f, struc.Name, bindingCodeIndent, ptrToStruct, setter)
+					name, code, err := GenerateGetterOrSetter(ctx, f, struc.Name, bindingCodeIndent, ptrToStruct, setter)
 					if err != nil {
 						fmt.Println(struc.Name.GoName+"."+f.Name.GoName+":", err)
 						continue
 					}
-					generatedFuncs[name] = code
+					checkFuncCollision(name, struc.Name.File)
+					generatedFuncs[name] = GeneratedFunc{
+						Name: name,
+						Code: code,
+						File: struc.Name.File,
+					}
 				}
 			}
 		}
 	}
 
-	data.UsedImports["github.com/refaktor/rye/env"] = struct{}{}
-	data.UsedImports["github.com/refaktor/rye/evaldo"] = struct{}{}
+	ctx.UsedImports["github.com/refaktor/rye/env"] = struct{}{}
+	ctx.UsedImports["github.com/refaktor/rye/evaldo"] = struct{}{}
 
 	var cb CodeBuilder
 	cb.Linef(`//go:build b_fynegen`)
@@ -355,8 +412,8 @@ func main() {
 	cb.Linef(``)
 	cb.Linef(`import (`)
 	cb.Indent++
-	usedImportKeys := make([]string, 0, len(data.UsedImports))
-	for k := range data.UsedImports {
+	usedImportKeys := make([]string, 0, len(ctx.UsedImports))
+	for k := range ctx.UsedImports {
 		usedImportKeys = append(usedImportKeys, k)
 	}
 	slices.Sort(usedImportKeys)
@@ -405,7 +462,7 @@ func main() {
 	}
 	slices.Sort(generatedFuncKeys)
 	for _, k := range generatedFuncKeys {
-		cb.Write(generatedFuncs[k])
+		cb.Write(generatedFuncs[k].Code)
 	}
 
 	cb.Indent--

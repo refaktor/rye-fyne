@@ -14,10 +14,18 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
+const namespacePrefix = false
+
 type File struct {
-	ModuleName string
-	ModulePath string
-	Imports    map[string]*File
+	ModuleName    string
+	ModulePath    string
+	ImportsByName map[string]*File
+	ImportsByPath map[string]*File
+}
+
+func (f *File) AddImport(imp *File) {
+	f.ImportsByName[imp.ModuleName] = imp
+	f.ImportsByPath[imp.ModulePath] = imp
 }
 
 func IdentExprIsExported(expr ast.Expr) bool {
@@ -38,49 +46,15 @@ func IdentExprIsExported(expr ast.Expr) bool {
 }
 
 type Ident struct {
-	Expr       ast.Expr
-	GoName     string
-	RyeName    string
-	IsEllipsis bool
-	File       *File
+	Expr        ast.Expr
+	GoName      string
+	RyeName     string
+	IsEllipsis  bool
+	File        *File
+	UsedImports []*File
 }
 
-func markIdentUsed(expr ast.Expr, file *File, data *Data) {
-	if file == nil {
-		return
-	}
-	switch expr := expr.(type) {
-	case *ast.Ident:
-		data.UsedImports[file.ModulePath] = struct{}{}
-	case *ast.StarExpr:
-		markIdentUsed(expr.X, file, data)
-	case *ast.SelectorExpr:
-		mod, ok := expr.X.(*ast.Ident)
-		if !ok {
-			panic("expected ast.SelectorExpr.X to be of type *ast.Ident")
-		}
-		imp, ok := file.Imports[mod.Name]
-		if !ok {
-			panic("expected a file in module " + file.ModulePath + " to have import " + mod.Name)
-		}
-		data.UsedImports[imp.ModulePath] = struct{}{}
-	case *ast.ArrayType:
-		markIdentUsed(expr.Elt, file, data)
-	case *ast.Ellipsis:
-		markIdentUsed(expr.Elt, file, data)
-	case *ast.ChanType:
-		markIdentUsed(expr.Value, file, data)
-	case *ast.MapType:
-		markIdentUsed(expr.Key, file, data)
-		markIdentUsed(expr.Value, file, data)
-	}
-}
-
-func (id Ident) MarkUsed(data *Data) {
-	markIdentUsed(id.Expr, id.File, data)
-}
-
-func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
+func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error) {
 	// From https://github.com/refaktor/rye/blob/main/loader/loader.go#L444
 	// WORD          <-  LETTER LETTERORNUM* / NORMOPWORDS
 	// LETTER        <-  < [a-zA-Z^(` + "`" + `] >
@@ -91,35 +65,39 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 	case *ast.Ident:
 		res := expr.Name
 		if ast.IsExported(expr.Name) {
-			res = strcase.ToKebab(strings.TrimPrefix(expr.Name, "New"))
+			if ctx.Config.CutNew {
+				res = strcase.ToKebab(strings.TrimPrefix(res, "New"))
+			}
 			if file != nil {
 				if res == "" {
 					// e.g. app.New => app
 					res = strcase.ToKebab(file.ModuleName)
 				} else {
-					res = strcase.ToKebab(file.ModuleName) + "-" + res
+					if ctx.Config.AlwaysPrefix {
+						res = strcase.ToKebab(file.ModuleName) + "-" + res
+					}
 				}
 			}
 		}
 		return res, nil
 	case *ast.StarExpr:
-		res, err := identExprToRyeName(file, expr.X)
+		res, err := identExprToRyeName(ctx, file, expr.X)
 		return "ptr-" + res, err
 	case *ast.SelectorExpr:
 		mod, ok := expr.X.(*ast.Ident)
 		if !ok {
 			panic("expected ast.SelectorExpr.X to be of type *ast.Ident")
 		}
-		f, ok := file.Imports[mod.Name]
+		f, ok := file.ImportsByName[mod.Name]
 		if !ok {
 			return "", fmt.Errorf("module %v imported by %v not found", mod.Name, file.ModulePath)
 		}
-		return identExprToRyeName(f, expr.Sel)
+		return identExprToRyeName(ctx, f, expr.Sel)
 	case *ast.ArrayType:
-		res, err := identExprToRyeName(file, expr.Elt)
+		res, err := identExprToRyeName(ctx, file, expr.Elt)
 		return "arr-" + res, err
 	case *ast.Ellipsis:
-		res, err := identExprToRyeName(file, expr.Elt)
+		res, err := identExprToRyeName(ctx, file, expr.Elt)
 		return "arr-" + res, err
 	case *ast.FuncType:
 		if expr.TypeParams != nil {
@@ -128,7 +106,7 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 
 		var res strings.Builder
 
-		params, err := ParamsToIdents(file, expr.Params)
+		params, _, err := ParamsToIdents(ctx, file, expr.Params)
 		if err != nil {
 			return "", err
 		}
@@ -142,7 +120,7 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 		res.WriteString(")")
 
 		if expr.Results != nil {
-			results, err := ParamsToIdents(file, expr.Results)
+			results, _, err := ParamsToIdents(ctx, file, expr.Results)
 			if err != nil {
 				return "", err
 			}
@@ -158,11 +136,11 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 
 		return res.String(), nil
 	case *ast.MapType:
-		key, err := identExprToRyeName(file, expr.Key)
+		key, err := identExprToRyeName(ctx, file, expr.Key)
 		if err != nil {
 			return "", err
 		}
-		val, err := identExprToRyeName(file, expr.Value)
+		val, err := identExprToRyeName(ctx, file, expr.Value)
 		if err != nil {
 			return "", err
 		}
@@ -172,44 +150,67 @@ func identExprToRyeName(file *File, expr ast.Expr) (string, error) {
 	}
 }
 
-func identExprToGoName(file *File, expr ast.Expr) (string, error) {
+func identExprToGoName(ctx *Context, file *File, expr ast.Expr) (ident string, usedImports []*File, err error) {
 	switch expr := expr.(type) {
 	case *ast.Ident:
-		if ast.IsExported(expr.Name) {
-			if file != nil {
-				return file.ModuleName + "." + expr.Name, nil
+		splitModuleAndIdent := func(s string) (mod, id string, ok bool) {
+			i := strings.LastIndex(s, ".")
+			if i == -1 {
+				return "", "", false
+			}
+			return s[:i], s[i+1:], true
+		}
+		if file != nil {
+			if idx := slices.IndexFunc(ctx.Config.Substitute, func(s [2]string) bool {
+				pkg, id, ok := splitModuleAndIdent(s[0])
+				return ok && pkg == file.ModulePath && id == expr.Name
+			}); idx != -1 {
+				subst := ctx.Config.Substitute[idx][1]
+				modPath, id, ok := splitModuleAndIdent(subst)
+				if !ok {
+					return "", nil, fmt.Errorf("unable to substitute \"%v\": need format \"example.com/foo/bar.identifier\"", subst)
+				}
+				mod, ok := ctx.ModuleNames[modPath]
+				if !ok {
+					return "", nil, fmt.Errorf("invalid substitute module \"%v\"", modPath)
+				}
+				return mod + "." + id, []*File{{ModuleName: mod, ModulePath: modPath}}, nil
+			}
+			if ast.IsExported(expr.Name) {
+				return file.ModuleName + "." + expr.Name, []*File{file}, nil
 			}
 		}
-		return expr.Name, nil
+		return expr.Name, []*File{file}, nil
 	case *ast.StarExpr:
-		res, err := identExprToGoName(file, expr.X)
-		return "*" + res, err
+		res, imps, err := identExprToGoName(ctx, file, expr.X)
+		return "*" + res, imps, err
 	case *ast.SelectorExpr:
 		mod, ok := expr.X.(*ast.Ident)
 		if !ok {
 			panic("expected ast.SelectorExpr.X to be of type *ast.Ident")
 		}
-		f, ok := file.Imports[mod.Name]
+		f, ok := file.ImportsByName[mod.Name]
 		if !ok {
-			return "", fmt.Errorf("module %v imported by %v not found", mod.Name, file.ModulePath)
+			return "", nil, fmt.Errorf("module %v imported by %v not found", mod.Name, file.ModulePath)
 		}
-		return identExprToGoName(f, expr.Sel)
+		res, imps, err := identExprToGoName(ctx, f, expr.Sel)
+		return res, imps, err
 	case *ast.ArrayType:
-		res, err := identExprToGoName(file, expr.Elt)
-		return "[]" + res, err
+		res, imps, err := identExprToGoName(ctx, file, expr.Elt)
+		return "[]" + res, imps, err
 	case *ast.Ellipsis:
-		res, err := identExprToGoName(file, expr.Elt)
-		return "[]" + res, err
+		res, imps, err := identExprToGoName(ctx, file, expr.Elt)
+		return "[]" + res, imps, err
 	case *ast.FuncType:
 		if expr.TypeParams != nil {
-			return "", errors.New("generic functions as parameters are unsupported")
+			return "", nil, errors.New("generic functions as parameters are unsupported")
 		}
 
 		var res strings.Builder
 
-		params, err := ParamsToIdents(file, expr.Params)
+		params, imps, err := ParamsToIdents(ctx, file, expr.Params)
 		if err != nil {
-			return "", err
+			return "", nil, err
 		}
 		res.WriteString("func(")
 		for i, v := range params {
@@ -221,10 +222,11 @@ func identExprToGoName(file *File, expr ast.Expr) (string, error) {
 		res.WriteString(")")
 
 		if expr.Results != nil {
-			results, err := ParamsToIdents(file, expr.Results)
+			results, impsR, err := ParamsToIdents(ctx, file, expr.Results)
 			if err != nil {
-				return "", err
+				return "", nil, err
 			}
+			imps = append(imps, impsR...)
 			res.WriteString(" (")
 			for i, v := range results {
 				if i != 0 {
@@ -235,28 +237,28 @@ func identExprToGoName(file *File, expr ast.Expr) (string, error) {
 			res.WriteString(")")
 		}
 
-		return res.String(), nil
+		return res.String(), imps, nil
 	case *ast.MapType:
-		key, err := identExprToGoName(file, expr.Key)
+		key, impsK, err := identExprToGoName(ctx, file, expr.Key)
 		if err != nil {
-			return "", err
+			return "", nil, err
 		}
-		val, err := identExprToGoName(file, expr.Value)
+		val, impsV, err := identExprToGoName(ctx, file, expr.Value)
 		if err != nil {
-			return "", err
+			return "", nil, err
 		}
-		return "map[" + key + "]" + val, nil
+		return "map[" + key + "]" + val, append(impsK, impsV...), nil
 	default:
-		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
+		return "", nil, errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
 }
 
-func NewIdent(file *File, expr ast.Expr) (Ident, error) {
-	goName, err := identExprToGoName(file, expr)
+func NewIdent(ctx *Context, file *File, expr ast.Expr) (Ident, error) {
+	goName, imps, err := identExprToGoName(ctx, file, expr)
 	if err != nil {
 		return Ident{}, err
 	}
-	ryeName, err := identExprToRyeName(file, expr)
+	ryeName, err := identExprToRyeName(ctx, file, expr)
 	if err != nil {
 		return Ident{}, err
 	}
@@ -265,11 +267,12 @@ func NewIdent(file *File, expr ast.Expr) (Ident, error) {
 		isEllipsis = true
 	}
 	return Ident{
-		Expr:       expr,
-		GoName:     goName,
-		RyeName:    ryeName,
-		IsEllipsis: isEllipsis,
-		File:       file,
+		Expr:        expr,
+		GoName:      goName,
+		RyeName:     ryeName,
+		IsEllipsis:  isEllipsis,
+		File:        file,
+		UsedImports: imps,
 	}, nil
 }
 
@@ -278,6 +281,7 @@ type Func struct {
 	Recv    *Ident // non-nil for methods
 	Params  []NamedIdent
 	Results []NamedIdent
+	File    *File
 }
 
 func (fn *Func) String() string {
@@ -315,18 +319,20 @@ func (fn *Func) String() string {
 	return b.String()
 }
 
-func ParamsToIdents(file *File, fl *ast.FieldList) ([]NamedIdent, error) {
+func ParamsToIdents(ctx *Context, file *File, fl *ast.FieldList) (idents []NamedIdent, substImports []*File, err error) {
 	var res []NamedIdent
+	var substImps []*File
 	for i, v := range fl.List {
-		typID, err := NewIdent(file, v.Type)
+		typID, err := NewIdent(ctx, file, v.Type)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
+		substImps = append(substImps, typID.UsedImports...)
 		if len(v.Names) > 0 {
 			for _, n := range v.Names {
-				nameID, err := NewIdent(nil, n)
+				nameID, err := NewIdent(ctx, nil, n)
 				if err != nil {
-					return nil, err
+					return nil, nil, err
 				}
 				res = append(res, NamedIdent{
 					Name: nameID,
@@ -340,9 +346,9 @@ func ParamsToIdents(file *File, fl *ast.FieldList) ([]NamedIdent, error) {
 			} else {
 				shorthand = strconv.Itoa(i + 1)
 			}
-			nameID, err := NewIdent(nil, &ast.Ident{Name: shorthand})
+			nameID, err := NewIdent(ctx, nil, &ast.Ident{Name: shorthand})
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			res = append(res, NamedIdent{
 				Name: nameID,
@@ -350,26 +356,28 @@ func ParamsToIdents(file *File, fl *ast.FieldList) ([]NamedIdent, error) {
 			})
 		}
 	}
-	return res, nil
+	return res, substImps, nil
 }
 
-func FuncFromGoFuncDecl(file *File, fd *ast.FuncDecl) (*Func, error) {
+func FuncFromGoFuncDecl(ctx *Context, file *File, fd *ast.FuncDecl) (*Func, error) {
 	var err error
-	res := &Func{}
+	res := &Func{
+		File: file,
+	}
 	if fd.Recv == nil {
-		res.Name, err = NewIdent(file, fd.Name)
+		res.Name, err = NewIdent(ctx, file, fd.Name)
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		res.Name, err = NewIdent(nil, fd.Name)
+		res.Name, err = NewIdent(ctx, nil, fd.Name)
 		if err != nil {
 			return nil, err
 		}
 		if len(fd.Recv.List) != 1 {
 			panic("expected exactly one receiver in method")
 		}
-		id, err := NewIdent(file, fd.Recv.List[0].Type)
+		id, err := NewIdent(ctx, file, fd.Recv.List[0].Type)
 		if err != nil {
 			return nil, err
 		}
@@ -377,14 +385,14 @@ func FuncFromGoFuncDecl(file *File, fd *ast.FuncDecl) (*Func, error) {
 	}
 	fn := fd.Type
 	{
-		ids, err := ParamsToIdents(file, fn.Params)
+		ids, _, err := ParamsToIdents(ctx, file, fn.Params)
 		if err != nil {
 			return nil, err
 		}
 		res.Params = ids
 	}
 	if fn.Results != nil {
-		ids, err := ParamsToIdents(file, fn.Results)
+		ids, _, err := ParamsToIdents(ctx, file, fn.Results)
 		if err != nil {
 			return nil, err
 		}
@@ -405,12 +413,12 @@ type Struct struct {
 	Inherits []Ident
 }
 
-func NewStruct(file *File, name *ast.Ident, structTyp *ast.StructType) (*Struct, error) {
+func NewStruct(ctx *Context, file *File, name *ast.Ident, structTyp *ast.StructType) (*Struct, error) {
 	res := &Struct{
 		Methods: make(map[string]*Func),
 	}
 	{
-		id, err := NewIdent(file, name)
+		id, err := NewIdent(ctx, file, name)
 		if err != nil {
 			return nil, err
 		}
@@ -418,26 +426,16 @@ func NewStruct(file *File, name *ast.Ident, structTyp *ast.StructType) (*Struct,
 	}
 	for _, f := range structTyp.Fields.List {
 		if len(f.Names) > 0 {
-			typID, err := NewIdent(file, f.Type)
+			typID, err := NewIdent(ctx, file, f.Type)
 			if err != nil {
 				return nil, err
-			}
-
-			// HACK: widget.ScrollDirection is from internal/widget, meaning it can't be accessed
-			// container.ScrollDirection is an alias
-			if typID.GoName == "widget.ScrollDirection" {
-				return nil, errors.New("widget.ScrollDirection TBD")
-				/*typID, _ = NewIdent(file, &ast.SelectorExpr{
-					X:   &ast.Ident{Name: "container"},
-					Sel: &ast.Ident{Name: "ScrollDirection"},
-				})*/
 			}
 
 			for _, name := range f.Names {
 				if !name.IsExported() {
 					continue
 				}
-				nameID, err := NewIdent(nil, name)
+				nameID, err := NewIdent(ctx, nil, name)
 				if err != nil {
 					return nil, err
 				}
@@ -454,7 +452,7 @@ func NewStruct(file *File, name *ast.Ident, structTyp *ast.StructType) (*Struct,
 			if !IdentExprIsExported(typ) {
 				continue
 			}
-			id, err := NewIdent(file, typ)
+			id, err := NewIdent(ctx, file, typ)
 			if err != nil {
 				return nil, err
 			}
@@ -470,14 +468,15 @@ type Interface struct {
 	Inherits []Ident
 }
 
-func funcFromInterfaceField(file *File, ifaceIdent Ident, f *ast.Field) (*Func, error) {
+func funcFromInterfaceField(ctx *Context, file *File, ifaceIdent Ident, f *ast.Field) (*Func, error) {
 	var err error
-	res := &Func{}
+	res := &Func{
+		File: file,
+	}
 	if len(f.Names) != 1 {
 		panic("expected method to have 1 name")
 	}
-	// interface field is method => not scoped => no namespace
-	res.Name, err = NewIdent(nil, f.Names[0])
+	res.Name, err = NewIdent(ctx, nil, f.Names[0])
 	if err != nil {
 		return nil, err
 	}
@@ -487,14 +486,14 @@ func funcFromInterfaceField(file *File, ifaceIdent Ident, f *ast.Field) (*Func, 
 		panic("expected method type to be of type *ast.FuncType")
 	}
 	{
-		ids, err := ParamsToIdents(file, fn.Params)
+		ids, _, err := ParamsToIdents(ctx, file, fn.Params)
 		if err != nil {
 			return nil, err
 		}
 		res.Params = ids
 	}
 	if fn.Results != nil {
-		ids, err := ParamsToIdents(file, fn.Results)
+		ids, _, err := ParamsToIdents(ctx, file, fn.Results)
 		if err != nil {
 			return nil, err
 		}
@@ -503,10 +502,10 @@ func funcFromInterfaceField(file *File, ifaceIdent Ident, f *ast.Field) (*Func, 
 	return res, nil
 }
 
-func NewInterface(file *File, name *ast.Ident, ifaceTyp *ast.InterfaceType) (*Interface, error) {
+func NewInterface(ctx *Context, file *File, name *ast.Ident, ifaceTyp *ast.InterfaceType) (*Interface, error) {
 	res := &Interface{}
 	{
-		id, err := NewIdent(file, name)
+		id, err := NewIdent(ctx, file, name)
 		if err != nil {
 			return nil, err
 		}
@@ -515,14 +514,14 @@ func NewInterface(file *File, name *ast.Ident, ifaceTyp *ast.InterfaceType) (*In
 	for _, f := range ifaceTyp.Methods.List {
 		switch ft := f.Type.(type) {
 		case *ast.FuncType:
-			fn, err := funcFromInterfaceField(file, res.Name, f)
+			fn, err := funcFromInterfaceField(ctx, file, res.Name, f)
 			if err != nil {
 				fmt.Println("i2fs:", err)
 				continue
 			}
 			res.Funcs = append(res.Funcs, fn)
 		case *ast.Ident:
-			id, err := NewIdent(file, ft)
+			id, err := NewIdent(ctx, file, ft)
 			if err != nil {
 				return nil, err
 			}
@@ -558,27 +557,19 @@ func FuncRyeIdent(fn *Func) string {
 }
 
 type Data struct {
-	Funcs       map[string]*Func
-	Interfaces  map[string]*Interface
-	Structs     map[string]*Struct
-	UsedImports map[string]struct{}
+	Funcs      map[string]*Func
+	Interfaces map[string]*Interface
+	Structs    map[string]*Struct
 }
 
-func NewData() *Data {
-	return &Data{
-		Funcs:       make(map[string]*Func),
-		Interfaces:  make(map[string]*Interface),
-		Structs:     make(map[string]*Struct),
-		UsedImports: make(map[string]struct{}),
-	}
-}
-
-func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]string) error {
+func (d *Data) AddFile(ctx *Context, f *ast.File, modulePath string, moduleNames map[string]string) error {
 	file := &File{
-		ModuleName: f.Name.Name,
-		ModulePath: modulePath,
-		Imports:    make(map[string]*File),
+		ModuleName:    f.Name.Name,
+		ModulePath:    modulePath,
+		ImportsByName: make(map[string]*File),
+		ImportsByPath: make(map[string]*File),
 	}
+
 	for _, imp := range f.Imports {
 		var name string
 		path, err := strconv.Unquote(imp.Path.Value)
@@ -603,7 +594,12 @@ func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]st
 				name = pathElems[len(pathElems)-1]
 			}
 		}
-		file.Imports[name] = &File{ModuleName: name, ModulePath: path, Imports: make(map[string]*File)}
+		file.AddImport(&File{
+			ModuleName:    name,
+			ModulePath:    path,
+			ImportsByName: make(map[string]*File),
+			ImportsByPath: make(map[string]*File),
+		})
 	}
 
 	for _, decl := range f.Decls {
@@ -620,7 +616,7 @@ func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]st
 					continue
 				}
 			}
-			fn, err := FuncFromGoFuncDecl(file, decl)
+			fn, err := FuncFromGoFuncDecl(ctx, file, decl)
 			if err != nil {
 				return err
 			}
@@ -633,13 +629,13 @@ func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]st
 					}
 					switch typ := typeSpec.Type.(type) {
 					case *ast.InterfaceType:
-						iface, err := NewInterface(file, typeSpec.Name, typ)
+						iface, err := NewInterface(ctx, file, typeSpec.Name, typ)
 						if err != nil {
 							return err
 						}
 						d.Interfaces[iface.Name.GoName] = iface
 					case *ast.StructType:
-						struc, err := NewStruct(file, typeSpec.Name, typ)
+						struc, err := NewStruct(ctx, file, typeSpec.Name, typ)
 						if err != nil {
 							return err
 						}
@@ -653,7 +649,7 @@ func (d *Data) AddFile(f *ast.File, modulePath string, moduleNames map[string]st
 }
 
 // Resolves interface, struct, and method inheritance
-func (d *Data) ResolveInheritancesAndMethods() error {
+func (d *Data) ResolveInheritancesAndMethods(ctx *Context) error {
 	var resolveInheritedIfaces func(iface *Interface) error
 	resolveInheritedIfaces = func(iface *Interface) error {
 		for _, inh := range iface.Inherits {
@@ -684,7 +680,7 @@ func (d *Data) ResolveInheritancesAndMethods() error {
 		var recv Ident
 		if expr, ok := fn.Recv.Expr.(*ast.StarExpr); ok {
 			var err error
-			recv, err = NewIdent(fn.Recv.File, expr.X)
+			recv, err = NewIdent(ctx, fn.Recv.File, expr.X)
 			if err != nil {
 				return err
 			}
@@ -723,7 +719,7 @@ func (d *Data) ResolveInheritancesAndMethods() error {
 					}
 
 					if _, ok := meth.Recv.Expr.(*ast.StarExpr); ok {
-						recv, err := NewIdent(struc.Name.File, &ast.StarExpr{X: struc.Name.Expr})
+						recv, err := NewIdent(ctx, struc.Name.File, &ast.StarExpr{X: struc.Name.Expr})
 						if err != nil {
 							panic(err)
 						}

@@ -5,13 +5,13 @@ do\in fynegen {
 
 	win: app .window "Calculator"
 
-    label-a: widget-label ""
-    label-b: widget-label ""
-    label-op: widget-label ""
-    label-eq: widget-label ""
-    label-res: widget-label ""
-    btn-dot: widget-button "." fn { } { }
-    btn-copy: widget-button-with-icon "" theme-content-copy-icon fn { } { }
+    label-a: label ""
+    label-b: label ""
+    label-op: label ""
+    label-eq: label ""
+    label-res: label ""
+    btn-dot: button "." fn { } { }
+    btn-copy: button-with-icon "" content-copy-icon fn { } { }
     op: fn { x y } { 0 }
     text-a: ""
     text-b: ""
@@ -65,7 +65,10 @@ do\in fynegen {
         if current = 1 {
             eval
         }
-        if all { current = 0 not text-a = "" } {
+        if all {
+           current = 0
+           text-a .length? > 0
+        } {
             change! closure { x y } { opfn x y } 'op ; TODO: figure out why `change! opfn 'op` doesn't work
             label-op .set-text symbol
             change! 1 'current
@@ -82,7 +85,7 @@ do\in fynegen {
     }
 
     make-num-button: fn { n } {
-        widget-button n closure { } {
+        button n closure { } {
             change-current-text fn { text } { text + n }
         }
     }
@@ -105,12 +108,12 @@ do\in fynegen {
     btn-copy .disable
 
 	win
-	|set-content container-border
-        container-h-box [ label-a label-op label-b label-eq label-res ]
+	|set-content border
+        h-box [ label-a label-op label-b label-eq label-res ]
         nil nil nil
-        [ container-grid-with-columns 4 [
+        [ grid-with-columns 4 [
             btn-copy
-            widget-button "C" fn { } {
+            button "C" fn { } {
                 change! 0 'current
                 change! "" 'text-a
                 change! "" 'text-b
@@ -119,7 +122,7 @@ do\in fynegen {
                 label-eq .set-text ""
                 update
             }
-            widget-button "Del" fn { } {
+            button "Del" fn { } {
                 either all { current = 1 text-b = "" } {
                     change! 0 'current
                     label-op .set-text ""
@@ -136,32 +139,32 @@ do\in fynegen {
                     }
                 }
             }
-            widget-button "+" fn { } {
+            button "+" fn { } {
                 set-op "+" fn { x y } { x + y }
             }
 
             make-num-button "7"
             make-num-button "8"
             make-num-button "9"
-            widget-button "-" fn { } {
+            button "-" fn { } {
                 set-op "-" fn { x y } { x - y }
             }
 
             make-num-button "4"
             make-num-button "5"
             make-num-button "6"
-            widget-button "*" fn { } {
+            button "*" fn { } {
                 set-op "*" fn { x y } { x * y }
             }
 
             make-num-button "1"
             make-num-button "2"
             make-num-button "3"
-            widget-button "/" fn { } {
+            button "/" fn { } {
                 set-op "/" fn { x y } { x / y }
             }
 
-            widget-button "+/-" fn { } {
+            button "+/-" fn { } {
                 change-current-text fn { text } {
                     either text = "" {
                         ""
@@ -172,10 +175,10 @@ do\in fynegen {
             }
             make-num-button "0"
             btn-dot
-            widget-button "=" fn { } {
+            button "=" fn { } {
                 eval
             }
         ] ]
-    |resize fyne-size 300.0 300.0
+    |resize size 300.0 300.0
 	|show-and-run
 }

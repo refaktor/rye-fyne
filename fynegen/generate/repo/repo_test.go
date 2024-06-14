@@ -16,7 +16,7 @@ func testRepo(t *testing.T, dir, pkg, semver, wantFile string) {
 		t.Fatal(err)
 	}
 
-	if semver != "" {
+	if semver != "" && semver != "latest" {
 		gotPath := filepath.ToSlash(path)
 		wantPath := filepath.ToSlash(filepath.Join(dir, strings.ToLower(pkg)+"@"+semver))
 		if gotPath != wantPath {
@@ -39,6 +39,8 @@ func TestRepo(t *testing.T) {
 	testRepo(t, "test-out", "github.com/BurntSushi/toml", "v1.3.2", "")
 	// No go.mod
 	testRepo(t, "test-out", "github.com/fogleman/gg", "", "gradient.go")
+	// Latest version
+	testRepo(t, "test-out", "github.com/BurntSushi/toml", "latest", "")
 
 	// Windows tends to complain of simultaneous access (although all files were closed).
 	time.Sleep(500 * time.Millisecond)

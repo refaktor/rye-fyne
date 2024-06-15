@@ -1,13 +1,15 @@
-; Experimenting with some language features, doesn't work yet
+rye .needs { fynegen } ; experimenting with some language features, doesn't work yet
 
-rye .needs { fynegen }
+not_: ?not
 
-do\par fynegen {
+do\in fynegen {
 
-    app_: app .window "Calculator" ; TODO -- rename app to application in Fyne
+    win: app .window "Calculator"
 
-    for { label-a label-b label-op label-eq label-res } { .set!* widget-label "" }   ; TODO -- make set accept words too [DONE]
-
+    for { label-a label-b label-op label-eq label-res } { .set!* label "" }   ; TODO -- make set accept words too [DONE]
+    btn-dot: button "." does { }
+    btn-copy: button-with-icon "" content-copy-icon does { }
+	
     data: context {
         a: b: res: op: ""
         cur: 'a   ; cursor on a or b
@@ -16,7 +18,8 @@ do\par fynegen {
         res!: fn { v } { .change! 'res }
         cur!: fn { v } { .change! 'cur }
         op!: fn { v } { .change! 'op }
-        clear: does { for { a b res op } { .change!* "" } } ; change! 'a 'cur
+        clear: does { for { a b res op } { .change!* "" } }
+		clear1: does { for { b res op } { .change!* "" } }
     }
     
     ui: context {
@@ -27,15 +30,17 @@ do\par fynegen {
             data/op .to-string .third .fix { "" } \set-text* label-op 
         }
         eq!: fn { v } { .set-text* label-eq }
+        empty: does { label "" }
     }
-    empty-spot: does { widget-label "" }
 
+	format-decimal: fn1 { .format "%.4f" \trim\ "0." }
+	
     change-current-text: fn { f } {
         data/set f data/get , update
     }
     
-    make-num-button: fn { n } {
-        widget-button n closure { } {
+    num-button: fn { n } {
+        button n closure { } {
             change-current-text fn { text } { text + n }
         }
     }
@@ -45,73 +50,84 @@ do\par fynegen {
             either any { data/a = "" data/b = "" } {
                 data/res! "" , ui/eq! ""
             } {
-                do [ data/a .to-integer data/op  data/b .to-integer ]
-                \to-string \data/res! ,
+                do [ data/a .to-decimal data/op  data/b .to-decimal ]
+                \format-decimal \data/res! ,
                 ui/eq! "="
             }
         }
         ui/sync
     }
 
-    eval: does { data/clear , data/cur! 'a , update }
+    eval: does {
+		data/cur! 'a 
+		data/set data/res
+		ui/eq! ""
+		data/clear1 , update
+	}
     
     set-op: fn { op } {
         if data/cur = 'b { eval }
-        if all { data/cur = 'a  not data/a = "" } {
+        if all { data/cur = 'a  not_ data/a = "" } {
             data/op! first op , data/cur! 'b , ui/sync
         }
     }
 
     delete-digit: does {
-        either all { current = 1 text-b = "" } {
-            change! 0 'current
-            ui/op! ""
-            update
-        } {
-            change-current-text fn { text } {
-                new-len: text .length? - 1
-                new-text: text .head new-len
-                if new-text = "-" {
-                    dec! 'new-len
-                    change! new-text .head new-len 'new-text
-                }
-                new-text
-            }
+        ^if data/get = "" { data/cur! 'a , data/op! "" , update }
+        change-current-text fn { t } {
+            length? t |- 1 |head* t :r
+            |= "-" \either { "" } { r } 
         }
     }
 
     negate-current: does {
         change-current-text fn { text } {
-            ^if text = "" { "" }
-            0 - data/get .to-integer \to-string \data/set , ui/sync
+            0 - text .to-decimal \fix { 0.0 } \format-decimal
         }
     }
-    
-    app_ |set-content container-border
-    container-h-box [ label-a label-op label-b label-eq label-res ]
+
+    btn-dot .on-tapped! fn { } {
+        change-current-text fn { text } {
+            either text = "" {
+                "0."
+            } {
+                either contains text "." { text } { text + "." }
+            }
+        }
+    }
+
+    btn-copy .on-tapped! fn { } {
+        if not data/res = "" {
+            win .clipboard .set-content data/res
+        }
+    }
+    btn-copy .disable
+	
+    win \set-content border
+    h-box [ label-a label-op label-b label-eq label-res ]
     0 0 0 ; Use 0 for nil
-    [ container-grid-with-columns 4
+    [ grid-with-columns 4
         unpack [
-            empty-spot
-            widget-button "C" does { data/clear , ui/eq! "" , update }
-            widget-button "Del" does { delete-digit }
-            widget-button "+" does { set-op { + } }
+			btn-copy
+            button "C" does { data/cur! 'a , data/clear , ui/eq! "" , update }
+            button "Del" does { delete-digit }
+            button "+" does { set-op { + } }
 
-            map { "7" "8" "9" } { .make-num-button }
-            widget-button "-" does { set-op { - } }
+            map { "7" "8" "9" } { .num-button }
+            button "-" does { set-op { - } }
             
-            map { "4" "5" "6" } { .make-num-button }
-            widget-button "*" does { set-op { * } }
+            map { "4" "5" "6" } { .num-button }
+            button "*" does { set-op { * } }
 
-            map { "1" "2" "3" } { .make-num-button }
-            empty-spot
+            map { "1" "2" "3" } { .num-button }
+            button "/" does { set-op { / } }
 
-            widget-button "+/-" does { negate-current  }
-            make-num-button "0"
-            empty-spot
-            widget-button "=" does { eval }
+            button "+/-" does { negate-current  }
+            num-button "0"
+            btn-dot
+            button "=" does { eval }
         ]
     ]
-    |resize fyne-size 320.0 320.0
+    |resize size 320.0 320.0
     |show-and-run
 }

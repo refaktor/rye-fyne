@@ -30,10 +30,13 @@ do\in fynegen {
             data/op .to-string .third .fix { "" } \set-text* label-op 
         }
         eq!: fn { v } { .set-text* label-eq }
-        empty: does { label "" }
     }
 
-	format-decimal: fn1 { .format "%.4f" \trim\ "0." }
+	format-decimal: fn1 {
+		.format "%.4f" :r
+		\contains "."
+		\either { r \trim\ "0" \trim\ "." } { r }
+	}
 	
     change-current-text: fn { f } {
         data/set f data/get , update
@@ -50,7 +53,7 @@ do\in fynegen {
             either any { data/a = "" data/b = "" } {
                 data/res! "" , ui/eq! ""
             } {
-                do [ data/a .to-decimal data/op  data/b .to-decimal ]
+                do probe [ data/a .to-decimal data/op  data/b .to-decimal ]
                 \format-decimal \data/res! ,
                 ui/eq! "="
             }

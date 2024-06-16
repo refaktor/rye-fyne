@@ -36,14 +36,4 @@ always-prefix = false
 #prefixes = [
 #  ["my-fyne", "fyne.io/fyne/v2"],
 #  ["my-widget", "fyne.io/fyne/v2/widget"],
-#]
-
-## Any time the first identifier is encountered, replace with the second identifier.
-## Useful if argument type is unexported (first identifier), but has an
-## exported typedef (second identifier).
-#substitute = [
-#  [
-#    "fyne.io/fyne/v2/internal/widget.ScrollDirection",
-#    "fyne.io/fyne/v2/container.ScrollDirection",
-#  ],
 #]`

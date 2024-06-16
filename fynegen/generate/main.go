@@ -8,8 +8,11 @@ import (
 	"go/token"
 	"log"
 	"os"
+	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
+	"time"
 
 	"golang.org/x/mod/module"
 
@@ -228,6 +231,44 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 	return name, cb.String(), nil
 }
 
+// Order of importance (descending):
+// - Part of stdlib
+// - Prefix of preferPkg
+// - Shorter path
+// - Smaller string according to strings.Compare
+func makeCompareModulePaths(preferPkg string) func(a, b string) int {
+	return func(a, b string) int {
+		{
+			aSp := strings.SplitN(a, "/", 2)
+			bSp := strings.SplitN(b, "/", 2)
+			if len(aSp) > 0 && len(bSp) > 0{
+				aStd := !strings.Contains(aSp[0], ".")
+				bStd := !strings.Contains(bSp[0], ".")
+				if aStd && !bStd {
+					return -1
+				} else if !aStd && bStd {
+					return 1
+				}
+			}
+		}
+		if preferPkg != "" {
+			aPfx := strings.HasPrefix(a, preferPkg)
+			bPfx := strings.HasPrefix(b, preferPkg)
+			if aPfx && !bPfx {
+				return -1
+			} else if !aPfx && bPfx {
+				return 1
+			}
+		}
+		if len(a) < len(b) {
+			return -1
+		} else if len(a) > len(b) {
+			return 1
+		}
+		return strings.Compare(a, b)
+	}
+}
+
 func main() {
 	outFile := "../current/fynegen/builtins_fyne.go"
 
@@ -248,14 +289,14 @@ func main() {
 
 	dstPath := "_srcrepos"
 
-	getRepo := func(pkg, semver string) (string, error) {
-		have, dir, err := repo.Have(dstPath, pkg, semver)
+	getRepo := func(pkg, version string) (string, error) {
+		have, dir, _, err := repo.Have(dstPath, pkg, version)
 		if err != nil {
 			return "", err
 		}
 		if !have {
-			log.Printf("downloading %v %v\n", pkg, semver)
-			_, err := repo.Get(dstPath, pkg, semver)
+			log.Printf("downloading %v %v\n", pkg, version)
+			_, err := repo.Get(dstPath, pkg, version)
 			if err != nil {
 				return "", err
 			}
@@ -269,35 +310,57 @@ func main() {
 		os.Exit(1)
 	}
 
-	moduleNames := make(map[string]string)
+	moduleNames := make(map[string]string) // module path to name
 	{
-		addPkgNames := func(dir, modulePath string) ([]module.Version, error) {
-			pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
+		addPkgNames := func(dir, modulePath string) (string, []module.Version, error) {
+			goVer, pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
 			if err != nil {
-				return nil, err
+				return "", nil, err
 			}
 			for mod, name := range pkgNms {
 				moduleNames[mod] = name
 			}
-			return req, nil
+			return goVer, req, nil
 		}
-		req, err := addPkgNames(srcDir, cfg.Package)
+		goVer, req, err := addPkgNames(srcDir, cfg.Package)
 		if err != nil {
 			fmt.Println("parse modules:", err)
 			os.Exit(1)
 		}
+		req = append(req, module.Version{Path: "std", Version: goVer})
 		for _, v := range req {
 			dir, err := getRepo(v.Path, v.Version)
 			if err != nil {
 				fmt.Println("get repo:", err)
 				os.Exit(1)
 			}
-			if _, err := addPkgNames(dir, v.Path); err != nil {
+			if _, _, err := addPkgNames(dir, v.Path); err != nil {
 				fmt.Println("parse modules:", err)
 				os.Exit(1)
 			}
 		}
 	}
+	moduleImportNames := make(map[string]string) // module path to name; each name value is unique
+	{
+		moduleNameKeys := make([]string, 0, len(moduleNames))
+		for k := range moduleNames {
+			moduleNameKeys = append(moduleNameKeys, k)
+		}
+		slices.SortFunc(moduleNameKeys, makeCompareModulePaths(cfg.Package))
+
+		moduleNameIdxs := make(map[string]int) // module name to number of occurrences
+		for _, mod := range moduleNameKeys {
+			name := moduleNames[mod]
+			impName := name
+			if idx := moduleNameIdxs[name]; idx > 0 {
+				impName += "_" + strconv.Itoa(idx)
+			}
+			moduleImportNames[mod] = impName
+			moduleNameIdxs[name]++
+		}
+	}
+
+	startTime := time.Now()
 
 	pkgs, err := ParseDir(fset, srcDir, cfg.Package)
 	if err != nil {
@@ -308,20 +371,22 @@ func main() {
 	const bindingCodeIndent = 1
 
 	data := &Data{
-		Funcs:      make(map[string]*Func),
-		Interfaces: make(map[string]*Interface),
-		Structs:    make(map[string]*Struct),
+		Funcs:           make(map[string]*Func),
+		Interfaces:      make(map[string]*Interface),
+		Structs:         make(map[string]*Struct),
+		Typedefs:        make(map[string]Ident),
 	}
 	ctx := &Context{
 		Config:      &cfg,
 		Data:        data,
-		ModuleNames: moduleNames,
+		ModuleNames: moduleImportNames,
 		UsedImports: make(map[string]struct{}),
 	}
 
 	for _, pkg := range pkgs {
-		for _, f := range pkg.Files {
-			if err := data.AddFile(ctx, f, pkg.Path, moduleNames); err != nil {
+		for name, f := range pkg.Files {
+			name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
+			if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames); err != nil {
 				fmt.Printf("%v: %v\n", pkg.Name, err)
 			}
 		}
@@ -351,6 +416,9 @@ func main() {
 	}
 
 	for _, iface := range data.Interfaces {
+		if IdentIsInternal(ctx, iface.Name) {
+			continue
+		}
 		for _, fn := range iface.Funcs {
 			name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 			if err != nil {
@@ -367,6 +435,9 @@ func main() {
 	}
 
 	for _, fn := range data.Funcs {
+		if IdentIsInternal(ctx, fn.Name) || (fn.Recv != nil && IdentIsInternal(ctx, *fn.Recv)) {
+			continue
+		}
 		name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 		if err != nil {
 			fmt.Println(name+":", err)
@@ -381,6 +452,9 @@ func main() {
 	}
 
 	for _, struc := range data.Structs {
+		if IdentIsInternal(ctx, struc.Name) {
+			continue
+		}
 		for _, f := range struc.Fields {
 			for _, ptrToStruct := range []bool{false, true} {
 				for _, setter := range []bool{false, true} {
@@ -417,8 +491,14 @@ func main() {
 		usedImportKeys = append(usedImportKeys, k)
 	}
 	slices.Sort(usedImportKeys)
-	for _, imp := range usedImportKeys {
-		cb.Linef(`"%v"`, imp)
+	for _, mod := range usedImportKeys {
+		name := moduleNames[mod]
+		impName := moduleImportNames[mod]
+		if name == impName {
+			cb.Linef(`"%v"`, mod)
+		} else {
+			cb.Linef(`%v "%v"`, impName, mod)
+		}
 	}
 	cb.Indent--
 	cb.Linef(`)`)
@@ -475,8 +555,10 @@ func main() {
 	}
 	//code := []byte(cb.String())
 
+	log.Printf("Generated bindings containing %v functions in %v", len(generatedFuncs), time.Since(startTime))
+
 	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)
 	}
-	log.Printf("Wrote bindings containing %v functions to %v", len(generatedFuncs), outFile)
+	log.Printf("Wrote bindings to %v", outFile)
 }

@@ -426,6 +426,81 @@ var convListRyeToGo = []Converter{
 		},
 	},
 	{
+		Name: "typedef",
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			underlying, ok := ctx.Data.Typedefs[typ.GoName]
+			if !ok {
+				return false
+			}
+
+			cb.Linef(`{`)
+			cb.Indent++
+			cb.Linef(`nat, natOk := %v.(env.Native)`, inVar)
+			cb.Linef(`var natValOk bool`)
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`var rOut, rIn reflect.Value`)
+				cb.Linef(`if natOk {`)
+				cb.Indent++
+				cb.Linef(`// HACK: %v, natValOk = %v(u)`, outVar, typ.GoName)
+				cb.Linef(`rOut = reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn = reflect.ValueOf(nat.Value)`)
+				cb.Linef(`natValOk = rIn.CanConvert(rOut.Type())`)
+				cb.Indent--
+				cb.Linef(`}`)
+			} else {
+				cb.Linef(`var natVal %v`, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Linef(`if natOk {`)
+				cb.Indent++
+				cb.Linef(`natVal, natValOk = nat.Value.(%v)`, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Indent--
+				cb.Linef(`}`)
+			}
+			cb.Linef(`if natOk && natValOk {`)
+			cb.Indent++
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+			} else {
+				cb.Linef(`%v = natVal`, outVar)
+			}
+			cb.Indent--
+			cb.Linef(`} else {`)
+			cb.Indent++
+			cb.Linef(`var u %v`, underlying.GoName)
+			ctx.MarkUsed(underlying)
+			if _, found := ConvRyeToGo(
+				ctx,
+				cb,
+				underlying,
+				inVar,
+				`u`,
+				func(...string) string {
+					// Force toplevel allowed types
+					return makeRetArgErr("NativeType")
+				},
+			); !found {
+				return false
+			}
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`// HACK: %v = %v(u)`, outVar, typ.GoName)
+				cb.Linef(`rOut := reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn := reflect.ValueOf(u)`)
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+				ctx.UsedImports["reflect"] = struct{}{}
+			} else {
+				cb.Linef(`%v = %v(u)`, outVar, typ.GoName)
+				ctx.MarkUsed(typ)
+			}
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Indent--
+			cb.Linef(`}`)
+
+			return true
+		},
+	},
+	{
 		Name: "native",
 		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			isNillable := false
@@ -440,14 +515,30 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`switch v := %v.(type) {`, inVar)
 			cb.Linef(`case env.Native:`)
 			cb.Indent++
-			cb.Linef(`var ok bool`)
-			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
-			ctx.MarkUsed(typ)
-			cb.Linef(`if !ok {`)
-			cb.Indent++
-			cb.Linef(`%v`, makeRetArgErr("NativeType"))
-			cb.Indent--
-			cb.Linef(`}`)
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`// HACK: %v, ok = v.Value.(%v)`, outVar, typ.GoName)
+				cb.Linef(`rOut := reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn := reflect.ValueOf(v.Value)`)
+				cb.Linef(`if rIn.CanConvert(rOut.Type()) {`)
+				cb.Indent++
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+				cb.Indent--
+				cb.Linef(`} else {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("NativeType"))
+				cb.Indent--
+				cb.Linef(`}`)
+				ctx.UsedImports["reflect"] = struct{}{}
+			} else {
+				cb.Linef(`var ok bool`)
+				cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Linef(`if !ok {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("NativeType"))
+				cb.Indent--
+				cb.Linef(`}`)
+			}
 			cb.Indent--
 			if isNillable {
 				cb.Linef(`case env.Integer:`)
@@ -601,6 +692,9 @@ var convListGoToRye = []Converter{
 	{
 		Name: "native",
 		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			/*if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
+
+			}*/
 			cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
 			return true
 		},

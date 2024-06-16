@@ -35,7 +35,7 @@ do\in fynegen {
 	format-decimal: fn1 {
 		.format "%.4f" :r
 		\contains "."
-		\either { r \trim\ "0" \trim\ "." } { r }
+		\either { r \trim\right "0" \trim\right "." } { r }
 	}
 	
     change-current-text: fn { f } {
@@ -53,7 +53,7 @@ do\in fynegen {
             either any { data/a = "" data/b = "" } {
                 data/res! "" , ui/eq! ""
             } {
-                do probe [ data/a .to-decimal data/op  data/b .to-decimal ]
+                do [ data/a .to-decimal data/op  data/b .to-decimal ]
                 \format-decimal \data/res! ,
                 ui/eq! "="
             }

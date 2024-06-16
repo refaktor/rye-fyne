@@ -13,13 +13,20 @@ do\in fynegen {
 	sld1 .on-changed! fn { val } {
 		lab2 .set-text "Slider value is " + val .to-string + "."
 	}
-    chk1: check "Check" fn { checked } {
+	chk1: check "Check" fn { checked } {
 		chk-text: either checked "checked" "not checked"
 		lab2 .set-text "Checkbox is " + chk-text + "."
 	}
-    btn1: button "Button" fn { } {
+	btn1: button "Button" fn { } {
 		lab2 .set-text "Button clicked"
 	}
+	ent1: entry
+	ent1 .on-changed! fn { text } {
+		lab2 .set-text
+			either text { "Entry text is '" + text + "'." } { "Entry is empty." }
+	}
+	ent1 .place-holder! "Enter some text..."
+	ent1 .multi-line! true
 
 	a
 	|set-content v-box [
@@ -27,8 +34,9 @@ do\in fynegen {
 		separator
 		lab2
 		sld1
-        btn1
-        chk1
+		ent1
+		btn1
+		chk1
 	]
 	|show-and-run
 }

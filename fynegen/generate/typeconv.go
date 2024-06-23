@@ -692,10 +692,20 @@ var convListGoToRye = []Converter{
 	{
 		Name: "native",
 		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
-			/*if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
-
-			}*/
-			cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+			if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
+				if _, found := ConvGoToRye(
+					ctx,
+					cb,
+					underlying,
+					outVar,
+					fmt.Sprintf(`%v(%v)`, underlying.GoName, inVar),
+					nil,
+				); !found {
+					return false
+				}
+			} else {
+				cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+			}
 			return true
 		},
 	},

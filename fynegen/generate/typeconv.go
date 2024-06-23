@@ -8,21 +8,21 @@ import (
 
 type Converter struct {
 	Name    string
-	TryConv func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool
+	TryConv func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool
 }
 
-func ConvRyeToGo(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
+func ConvRyeToGo(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
 	for _, conv := range ConvListRyeToGo {
-		if conv.TryConv(ctx, cb, typ, inVar, outVar, makeRetArgErr) {
+		if conv.TryConv(ctx, cb, typ, outVar, inVar, makeRetArgErr) {
 			return conv.Name, true
 		}
 	}
 	return "", false
 }
 
-func ConvGoToRye(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
+func ConvGoToRye(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
 	for _, conv := range ConvListGoToRye {
-		if conv.TryConv(ctx, cb, typ, inVar, outVar, makeRetArgErr) {
+		if conv.TryConv(ctx, cb, typ, outVar, inVar, makeRetArgErr) {
 			return conv.Name, true
 		}
 	}
@@ -41,7 +41,7 @@ func init() {
 var convListRyeToGo = []Converter{
 	{
 		Name: "array",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var elTyp Ident
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
@@ -73,8 +73,8 @@ var convListRyeToGo = []Converter{
 				ctx,
 				cb,
 				elTyp,
-				`it`,
 				fmt.Sprintf(`%v[i]`, outVar),
+				`it`,
 				func(...string) string {
 					// Force toplevel allowed types
 					return makeRetArgErr("BlockType", "NativeType")
@@ -116,7 +116,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "map",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var kTyp, vTyp Ident
 			if t, ok := typ.Expr.(*ast.MapType); ok {
 				var err error
@@ -147,8 +147,8 @@ var convListRyeToGo = []Converter{
 						ctx,
 						cb,
 						kTyp,
-						inKeyVar,
 						`mapK`,
+						inKeyVar,
 						func(...string) string {
 							// Force toplevel allowed types
 							return makeRetArgErr(allowedTyps...)
@@ -165,8 +165,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					vTyp,
-					inValVar,
 					`mapV`,
+					inValVar,
 					func(...string) string {
 						// Force toplevel allowed types
 						return makeRetArgErr(allowedTyps...)
@@ -239,7 +239,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "func",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var fnParams []NamedIdent
 			var fnResults []NamedIdent
 			var fnTyp string
@@ -321,8 +321,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					param.Type,
-					fmt.Sprintf(`arg%v`, i),
 					fmt.Sprintf(`arg%vVal`, i),
+					fmt.Sprintf(`arg%v`, i),
 					nil,
 				); !found {
 					return false
@@ -344,8 +344,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					fnResults[0].Type,
-					`ps.Res`,
 					`res`,
+					`ps.Res`,
 					func(...string) string {
 						// Can't return error from inside function
 						return "// TODO: Invalid type"
@@ -378,7 +378,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "builtin",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			id, ok := typ.Expr.(*ast.Ident)
 			if !ok {
 				return false
@@ -427,7 +427,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "typedef",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			underlying, ok := ctx.Data.Typedefs[typ.GoName]
 			if !ok {
 				return false
@@ -473,8 +473,8 @@ var convListRyeToGo = []Converter{
 				ctx,
 				cb,
 				underlying,
-				inVar,
 				`u`,
+				inVar,
 				func(...string) string {
 					// Force toplevel allowed types
 					return makeRetArgErr("NativeType")
@@ -502,7 +502,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "native",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			isNillable := false
 			switch typ.Expr.(type) {
 			case *ast.StarExpr, *ast.ArrayType:
@@ -565,7 +565,7 @@ var convListRyeToGo = []Converter{
 var convListGoToRye = []Converter{
 	{
 		Name: "array",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var elTyp Ident
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
@@ -595,8 +595,8 @@ var convListGoToRye = []Converter{
 				ctx,
 				cb,
 				elTyp,
-				`it`,
 				`items[i]`,
+				`it`,
 				nil,
 			); !found {
 				return false
@@ -612,7 +612,7 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "map",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var kTyp, vTyp Ident
 			if t, ok := typ.Expr.(*ast.MapType); ok {
 				var err error
@@ -644,8 +644,8 @@ var convListGoToRye = []Converter{
 				ctx,
 				cb,
 				vTyp,
-				`mVal`,
 				`dVal`,
+				`mVal`,
 				nil,
 			); !found {
 				return false
@@ -662,7 +662,7 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "builtin",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			id, ok := typ.Expr.(*ast.Ident)
 			if !ok {
 				return false
@@ -691,7 +691,7 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "native",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			/*if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
 
 			}*/

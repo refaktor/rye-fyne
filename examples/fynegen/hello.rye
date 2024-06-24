@@ -31,10 +31,13 @@ do\in fynegen {
 	ent1 .place-holder! "Enter some text..."
 	ent1 .multi-line! true
 
-;	lst1: list
-;		fn { } { 10 }
-;		fn { } { label "PLACEHOLDER" }
-;		fn { id obj } { }
+	lst1: list
+		fn { } { 10 }
+		fn { } { label "PLACEHOLDER" }
+		fn { id lab } {
+			print lab
+			lab .set-text id .to-string
+        }
 
 	a
 	|set-content v-box [
@@ -45,7 +48,7 @@ do\in fynegen {
 		ent1
 		btn1
 		chk1
-;		lst1
+		;lst1
 	]
 	|show-and-run
 }

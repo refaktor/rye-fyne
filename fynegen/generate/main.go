@@ -415,6 +415,7 @@ func main() {
 		Data:        data,
 		ModuleNames: moduleImportNames,
 		UsedImports: make(map[string]struct{}),
+		UsedTyps: make(map[string]Ident),
 	}
 
 	for _, pkg := range pkgs {
@@ -608,6 +609,46 @@ func main() {
 	cb.Indent--
 	cb.Linef(`}`)
 	cb.Linef(`return res`)
+	cb.Indent--
+	cb.Linef(`}`)
+	cb.Linef(``)
+
+	cb.Linef(`var ryeStructNameLookup = map[string]string{`)
+	cb.Indent++
+	{
+		typNames := make(map[string]string, len(data.Structs)*2)
+		for _, struc := range data.Structs {
+			id := struc.Name
+			if !IdentExprIsExported(id.Expr) || IdentIsInternal(ctx, id) {
+				continue
+			}
+			var nameNoMod string
+			switch expr := id.Expr.(type) {
+			case *ast.Ident:
+				nameNoMod = expr.Name
+			case *ast.StarExpr:
+				id, ok := expr.X.(*ast.Ident)
+				if !ok {
+					continue
+				}
+				nameNoMod = "*"+id.Name
+			case *ast.SelectorExpr:
+				nameNoMod = expr.Sel.Name
+			default:
+				continue
+			}
+			typNames[id.File.ModulePath + "." + nameNoMod] = id.RyeName
+			typNames[id.File.ModulePath + ".*" + nameNoMod] = "ptr-" + id.RyeName
+		}
+		strucNameKeys := make([]string, 0, len(typNames))
+		for k := range typNames {
+			strucNameKeys = append(strucNameKeys, k)
+		}
+		slices.Sort(strucNameKeys)
+		for _, k := range strucNameKeys {
+			cb.Linef(`"%v": "%v",`, k, typNames[k])
+		}
+	}
 	cb.Indent--
 	cb.Linef(`}`)
 	cb.Linef(``)

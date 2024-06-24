@@ -692,6 +692,22 @@ var convListGoToRye = []Converter{
 	{
 		Name: "native",
 		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			isInterface := false
+			if _, ok := ctx.Data.Interfaces[typ.GoName]; ok {
+				cb.Linef(`{`)
+				cb.Indent++
+				cb.Linef(`typ := reflect.TypeOf(%v)`, inVar)
+				cb.Linef(`var typPfx string`)
+				cb.Linef(`if typ.Kind() == reflect.Pointer {`)
+				cb.Indent++
+				cb.Linef(`typPfx = "*"`)
+				cb.Linef(`typ = typ.Elem()`)
+				cb.Indent--
+				cb.Linef(`}`)
+				ctx.UsedImports["reflect"] = struct{}{}
+				cb.Linef(`typRyeName, ok := ryeStructNameLookup[typ.PkgPath() + "." + typPfx + typ.Name()]`)
+				isInterface = true
+			}
 			if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
 				if _, found := ConvGoToRye(
 					ctx,
@@ -704,7 +720,23 @@ var convListGoToRye = []Converter{
 					return false
 				}
 			} else {
-				cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+				if isInterface {
+					cb.Linef(`if ok {`)
+					cb.Indent++
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, typRyeName)`, outVar, inVar)
+					cb.Indent--
+					cb.Linef(`} else {`)
+					cb.Indent++
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+					cb.Indent--
+					cb.Linef(`}`)
+				} else {
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+				}
+			}
+			if isInterface {
+				cb.Indent--
+				cb.Linef(`}`)
 			}
 			return true
 		},

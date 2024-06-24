@@ -45,6 +45,213 @@ func boolToInt64(x bool) int64 {
 	return res
 }
 
+var ryeStructNameLookup = map[string]string{
+	"fyne.io/fyne/v2.*Animation":                     "ptr-fyne-animation",
+	"fyne.io/fyne/v2.*AppMetadata":                   "ptr-fyne-app-metadata",
+	"fyne.io/fyne/v2.*Container":                     "ptr-fyne-container",
+	"fyne.io/fyne/v2.*Delta":                         "ptr-fyne-delta",
+	"fyne.io/fyne/v2.*DragEvent":                     "ptr-fyne-drag-event",
+	"fyne.io/fyne/v2.*HardwareKey":                   "ptr-fyne-hardware-key",
+	"fyne.io/fyne/v2.*KeyEvent":                      "ptr-fyne-key-event",
+	"fyne.io/fyne/v2.*MainMenu":                      "ptr-fyne-main-menu",
+	"fyne.io/fyne/v2.*Menu":                          "ptr-fyne-menu",
+	"fyne.io/fyne/v2.*MenuItem":                      "ptr-fyne-menu-item",
+	"fyne.io/fyne/v2.*Notification":                  "ptr-fyne-notification",
+	"fyne.io/fyne/v2.*PointEvent":                    "ptr-fyne-point-event",
+	"fyne.io/fyne/v2.*Position":                      "ptr-fyne-position",
+	"fyne.io/fyne/v2.*ScrollEvent":                   "ptr-fyne-scroll-event",
+	"fyne.io/fyne/v2.*ShortcutCopy":                  "ptr-fyne-shortcut-copy",
+	"fyne.io/fyne/v2.*ShortcutCut":                   "ptr-fyne-shortcut-cut",
+	"fyne.io/fyne/v2.*ShortcutHandler":               "ptr-fyne-shortcut-handler",
+	"fyne.io/fyne/v2.*ShortcutPaste":                 "ptr-fyne-shortcut-paste",
+	"fyne.io/fyne/v2.*ShortcutSelectAll":             "ptr-fyne-shortcut-select-all",
+	"fyne.io/fyne/v2.*Size":                          "ptr-fyne-size",
+	"fyne.io/fyne/v2.*StaticResource":                "ptr-fyne-static-resource",
+	"fyne.io/fyne/v2.*TextStyle":                     "ptr-fyne-text-style",
+	"fyne.io/fyne/v2.Animation":                      "fyne-animation",
+	"fyne.io/fyne/v2.AppMetadata":                    "fyne-app-metadata",
+	"fyne.io/fyne/v2.Container":                      "fyne-container",
+	"fyne.io/fyne/v2.Delta":                          "fyne-delta",
+	"fyne.io/fyne/v2.DragEvent":                      "fyne-drag-event",
+	"fyne.io/fyne/v2.HardwareKey":                    "fyne-hardware-key",
+	"fyne.io/fyne/v2.KeyEvent":                       "fyne-key-event",
+	"fyne.io/fyne/v2.MainMenu":                       "fyne-main-menu",
+	"fyne.io/fyne/v2.Menu":                           "fyne-menu",
+	"fyne.io/fyne/v2.MenuItem":                       "fyne-menu-item",
+	"fyne.io/fyne/v2.Notification":                   "fyne-notification",
+	"fyne.io/fyne/v2.PointEvent":                     "fyne-point-event",
+	"fyne.io/fyne/v2.Position":                       "fyne-position",
+	"fyne.io/fyne/v2.ScrollEvent":                    "fyne-scroll-event",
+	"fyne.io/fyne/v2.ShortcutCopy":                   "fyne-shortcut-copy",
+	"fyne.io/fyne/v2.ShortcutCut":                    "fyne-shortcut-cut",
+	"fyne.io/fyne/v2.ShortcutHandler":                "fyne-shortcut-handler",
+	"fyne.io/fyne/v2.ShortcutPaste":                  "fyne-shortcut-paste",
+	"fyne.io/fyne/v2.ShortcutSelectAll":              "fyne-shortcut-select-all",
+	"fyne.io/fyne/v2.Size":                           "fyne-size",
+	"fyne.io/fyne/v2.StaticResource":                 "fyne-static-resource",
+	"fyne.io/fyne/v2.TextStyle":                      "fyne-text-style",
+	"fyne.io/fyne/v2/app.*SettingsSchema":            "ptr-app-settings-schema",
+	"fyne.io/fyne/v2/app.SettingsSchema":             "app-settings-schema",
+	"fyne.io/fyne/v2/canvas.*Circle":                 "ptr-canvas-circle",
+	"fyne.io/fyne/v2/canvas.*Image":                  "ptr-canvas-image",
+	"fyne.io/fyne/v2/canvas.*Line":                   "ptr-canvas-line",
+	"fyne.io/fyne/v2/canvas.*LinearGradient":         "ptr-canvas-linear-gradient",
+	"fyne.io/fyne/v2/canvas.*RadialGradient":         "ptr-canvas-radial-gradient",
+	"fyne.io/fyne/v2/canvas.*Raster":                 "ptr-canvas-raster",
+	"fyne.io/fyne/v2/canvas.*Rectangle":              "ptr-canvas-rectangle",
+	"fyne.io/fyne/v2/canvas.*Text":                   "ptr-canvas-text",
+	"fyne.io/fyne/v2/canvas.Circle":                  "canvas-circle",
+	"fyne.io/fyne/v2/canvas.Image":                   "canvas-image",
+	"fyne.io/fyne/v2/canvas.Line":                    "canvas-line",
+	"fyne.io/fyne/v2/canvas.LinearGradient":          "canvas-linear-gradient",
+	"fyne.io/fyne/v2/canvas.RadialGradient":          "canvas-radial-gradient",
+	"fyne.io/fyne/v2/canvas.Raster":                  "canvas-raster",
+	"fyne.io/fyne/v2/canvas.Rectangle":               "canvas-rectangle",
+	"fyne.io/fyne/v2/canvas.Text":                    "canvas-text",
+	"fyne.io/fyne/v2/container.*AppTabs":             "ptr-container-app-tabs",
+	"fyne.io/fyne/v2/container.*DocTabs":             "ptr-container-doc-tabs",
+	"fyne.io/fyne/v2/container.*Split":               "ptr-container-split",
+	"fyne.io/fyne/v2/container.*TabItem":             "ptr-container-tab-item",
+	"fyne.io/fyne/v2/container.AppTabs":              "container-app-tabs",
+	"fyne.io/fyne/v2/container.DocTabs":              "container-doc-tabs",
+	"fyne.io/fyne/v2/container.Split":                "container-split",
+	"fyne.io/fyne/v2/container.TabItem":              "container-tab-item",
+	"fyne.io/fyne/v2/dialog.*ColorPickerDialog":      "ptr-dialog-color-picker-dialog",
+	"fyne.io/fyne/v2/dialog.*ConfirmDialog":          "ptr-dialog-confirm-dialog",
+	"fyne.io/fyne/v2/dialog.*CustomDialog":           "ptr-dialog-custom-dialog",
+	"fyne.io/fyne/v2/dialog.*EntryDialog":            "ptr-dialog-entry-dialog",
+	"fyne.io/fyne/v2/dialog.*FileDialog":             "ptr-dialog-file-dialog",
+	"fyne.io/fyne/v2/dialog.*FormDialog":             "ptr-dialog-form-dialog",
+	"fyne.io/fyne/v2/dialog.*ProgressDialog":         "ptr-dialog-progress-dialog",
+	"fyne.io/fyne/v2/dialog.*ProgressInfiniteDialog": "ptr-dialog-progress-infinite-dialog",
+	"fyne.io/fyne/v2/dialog.ColorPickerDialog":       "dialog-color-picker-dialog",
+	"fyne.io/fyne/v2/dialog.ConfirmDialog":           "dialog-confirm-dialog",
+	"fyne.io/fyne/v2/dialog.CustomDialog":            "dialog-custom-dialog",
+	"fyne.io/fyne/v2/dialog.EntryDialog":             "dialog-entry-dialog",
+	"fyne.io/fyne/v2/dialog.FileDialog":              "dialog-file-dialog",
+	"fyne.io/fyne/v2/dialog.FormDialog":              "dialog-form-dialog",
+	"fyne.io/fyne/v2/dialog.ProgressDialog":          "dialog-progress-dialog",
+	"fyne.io/fyne/v2/dialog.ProgressInfiniteDialog":  "dialog-progress-infinite-dialog",
+	"fyne.io/fyne/v2/driver.*AndroidContext":         "ptr-driver-1-android-context",
+	"fyne.io/fyne/v2/driver.*UnknownContext":         "ptr-driver-1-unknown-context",
+	"fyne.io/fyne/v2/driver.AndroidContext":          "driver-1-android-context",
+	"fyne.io/fyne/v2/driver.UnknownContext":          "driver-1-unknown-context",
+	"fyne.io/fyne/v2/driver/desktop.*CustomShortcut": "ptr-desktop-custom-shortcut",
+	"fyne.io/fyne/v2/driver/desktop.*MouseEvent":     "ptr-desktop-mouse-event",
+	"fyne.io/fyne/v2/driver/desktop.CustomShortcut":  "desktop-custom-shortcut",
+	"fyne.io/fyne/v2/driver/desktop.MouseEvent":      "desktop-mouse-event",
+	"fyne.io/fyne/v2/driver/mobile.*TouchEvent":      "ptr-mobile-touch-event",
+	"fyne.io/fyne/v2/driver/mobile.TouchEvent":       "mobile-touch-event",
+	"fyne.io/fyne/v2/layout.*Spacer":                 "ptr-layout-spacer",
+	"fyne.io/fyne/v2/layout.Spacer":                  "layout-spacer",
+	"fyne.io/fyne/v2/storage.*ExtensionFileFilter":   "ptr-storage-extension-file-filter",
+	"fyne.io/fyne/v2/storage.*MimeTypeFileFilter":    "ptr-storage-mime-type-file-filter",
+	"fyne.io/fyne/v2/storage.ExtensionFileFilter":    "storage-extension-file-filter",
+	"fyne.io/fyne/v2/storage.MimeTypeFileFilter":     "storage-mime-type-file-filter",
+	"fyne.io/fyne/v2/theme.*DisabledResource":        "ptr-theme-disabled-resource",
+	"fyne.io/fyne/v2/theme.*ErrorThemedResource":     "ptr-theme-error-themed-resource",
+	"fyne.io/fyne/v2/theme.*InvertedThemedResource":  "ptr-theme-inverted-themed-resource",
+	"fyne.io/fyne/v2/theme.*PrimaryThemedResource":   "ptr-theme-primary-themed-resource",
+	"fyne.io/fyne/v2/theme.*ThemedResource":          "ptr-theme-themed-resource",
+	"fyne.io/fyne/v2/theme.DisabledResource":         "theme-disabled-resource",
+	"fyne.io/fyne/v2/theme.ErrorThemedResource":      "theme-error-themed-resource",
+	"fyne.io/fyne/v2/theme.InvertedThemedResource":   "theme-inverted-themed-resource",
+	"fyne.io/fyne/v2/theme.PrimaryThemedResource":    "theme-primary-themed-resource",
+	"fyne.io/fyne/v2/theme.ThemedResource":           "theme-themed-resource",
+	"fyne.io/fyne/v2/widget.*Accordion":              "ptr-widget-accordion",
+	"fyne.io/fyne/v2/widget.*AccordionItem":          "ptr-widget-accordion-item",
+	"fyne.io/fyne/v2/widget.*BaseWidget":             "ptr-widget-base-widget",
+	"fyne.io/fyne/v2/widget.*Button":                 "ptr-widget-button",
+	"fyne.io/fyne/v2/widget.*Card":                   "ptr-widget-card",
+	"fyne.io/fyne/v2/widget.*Check":                  "ptr-widget-check",
+	"fyne.io/fyne/v2/widget.*CheckGroup":             "ptr-widget-check-group",
+	"fyne.io/fyne/v2/widget.*CustomTextGridStyle":    "ptr-widget-custom-text-grid-style",
+	"fyne.io/fyne/v2/widget.*DisableableWidget":      "ptr-widget-disableable-widget",
+	"fyne.io/fyne/v2/widget.*Entry":                  "ptr-widget-entry",
+	"fyne.io/fyne/v2/widget.*FileIcon":               "ptr-widget-file-icon",
+	"fyne.io/fyne/v2/widget.*Form":                   "ptr-widget-form",
+	"fyne.io/fyne/v2/widget.*FormItem":               "ptr-widget-form-item",
+	"fyne.io/fyne/v2/widget.*GridWrap":               "ptr-widget-grid-wrap",
+	"fyne.io/fyne/v2/widget.*Hyperlink":              "ptr-widget-hyperlink",
+	"fyne.io/fyne/v2/widget.*HyperlinkSegment":       "ptr-widget-hyperlink-segment",
+	"fyne.io/fyne/v2/widget.*Icon":                   "ptr-widget-icon",
+	"fyne.io/fyne/v2/widget.*ImageSegment":           "ptr-widget-image-segment",
+	"fyne.io/fyne/v2/widget.*Label":                  "ptr-widget-label",
+	"fyne.io/fyne/v2/widget.*List":                   "ptr-widget-list",
+	"fyne.io/fyne/v2/widget.*ListSegment":            "ptr-widget-list-segment",
+	"fyne.io/fyne/v2/widget.*Menu":                   "ptr-widget-menu",
+	"fyne.io/fyne/v2/widget.*ParagraphSegment":       "ptr-widget-paragraph-segment",
+	"fyne.io/fyne/v2/widget.*PopUp":                  "ptr-widget-pop-up",
+	"fyne.io/fyne/v2/widget.*PopUpMenu":              "ptr-widget-pop-up-menu",
+	"fyne.io/fyne/v2/widget.*ProgressBar":            "ptr-widget-progress-bar",
+	"fyne.io/fyne/v2/widget.*ProgressBarInfinite":    "ptr-widget-progress-bar-infinite",
+	"fyne.io/fyne/v2/widget.*RadioGroup":             "ptr-widget-radio-group",
+	"fyne.io/fyne/v2/widget.*RichText":               "ptr-widget-rich-text",
+	"fyne.io/fyne/v2/widget.*RichTextStyle":          "ptr-widget-rich-text-style",
+	"fyne.io/fyne/v2/widget.*Select":                 "ptr-widget-select",
+	"fyne.io/fyne/v2/widget.*SelectEntry":            "ptr-widget-select-entry",
+	"fyne.io/fyne/v2/widget.*Separator":              "ptr-widget-separator",
+	"fyne.io/fyne/v2/widget.*SeparatorSegment":       "ptr-widget-separator-segment",
+	"fyne.io/fyne/v2/widget.*Slider":                 "ptr-widget-slider",
+	"fyne.io/fyne/v2/widget.*Table":                  "ptr-widget-table",
+	"fyne.io/fyne/v2/widget.*TableCellID":            "ptr-widget-table-cell-id",
+	"fyne.io/fyne/v2/widget.*TextGrid":               "ptr-widget-text-grid",
+	"fyne.io/fyne/v2/widget.*TextGridCell":           "ptr-widget-text-grid-cell",
+	"fyne.io/fyne/v2/widget.*TextGridRow":            "ptr-widget-text-grid-row",
+	"fyne.io/fyne/v2/widget.*TextSegment":            "ptr-widget-text-segment",
+	"fyne.io/fyne/v2/widget.*Toolbar":                "ptr-widget-toolbar",
+	"fyne.io/fyne/v2/widget.*ToolbarAction":          "ptr-widget-toolbar-action",
+	"fyne.io/fyne/v2/widget.*ToolbarSeparator":       "ptr-widget-toolbar-separator",
+	"fyne.io/fyne/v2/widget.*ToolbarSpacer":          "ptr-widget-toolbar-spacer",
+	"fyne.io/fyne/v2/widget.*Tree":                   "ptr-widget-tree",
+	"fyne.io/fyne/v2/widget.Accordion":               "widget-accordion",
+	"fyne.io/fyne/v2/widget.AccordionItem":           "widget-accordion-item",
+	"fyne.io/fyne/v2/widget.BaseWidget":              "widget-base-widget",
+	"fyne.io/fyne/v2/widget.Button":                  "widget-button",
+	"fyne.io/fyne/v2/widget.Card":                    "widget-card",
+	"fyne.io/fyne/v2/widget.Check":                   "widget-check",
+	"fyne.io/fyne/v2/widget.CheckGroup":              "widget-check-group",
+	"fyne.io/fyne/v2/widget.CustomTextGridStyle":     "widget-custom-text-grid-style",
+	"fyne.io/fyne/v2/widget.DisableableWidget":       "widget-disableable-widget",
+	"fyne.io/fyne/v2/widget.Entry":                   "widget-entry",
+	"fyne.io/fyne/v2/widget.FileIcon":                "widget-file-icon",
+	"fyne.io/fyne/v2/widget.Form":                    "widget-form",
+	"fyne.io/fyne/v2/widget.FormItem":                "widget-form-item",
+	"fyne.io/fyne/v2/widget.GridWrap":                "widget-grid-wrap",
+	"fyne.io/fyne/v2/widget.Hyperlink":               "widget-hyperlink",
+	"fyne.io/fyne/v2/widget.HyperlinkSegment":        "widget-hyperlink-segment",
+	"fyne.io/fyne/v2/widget.Icon":                    "widget-icon",
+	"fyne.io/fyne/v2/widget.ImageSegment":            "widget-image-segment",
+	"fyne.io/fyne/v2/widget.Label":                   "widget-label",
+	"fyne.io/fyne/v2/widget.List":                    "widget-list",
+	"fyne.io/fyne/v2/widget.ListSegment":             "widget-list-segment",
+	"fyne.io/fyne/v2/widget.Menu":                    "widget-menu",
+	"fyne.io/fyne/v2/widget.ParagraphSegment":        "widget-paragraph-segment",
+	"fyne.io/fyne/v2/widget.PopUp":                   "widget-pop-up",
+	"fyne.io/fyne/v2/widget.PopUpMenu":               "widget-pop-up-menu",
+	"fyne.io/fyne/v2/widget.ProgressBar":             "widget-progress-bar",
+	"fyne.io/fyne/v2/widget.ProgressBarInfinite":     "widget-progress-bar-infinite",
+	"fyne.io/fyne/v2/widget.RadioGroup":              "widget-radio-group",
+	"fyne.io/fyne/v2/widget.RichText":                "widget-rich-text",
+	"fyne.io/fyne/v2/widget.RichTextStyle":           "widget-rich-text-style",
+	"fyne.io/fyne/v2/widget.Select":                  "widget-select",
+	"fyne.io/fyne/v2/widget.SelectEntry":             "widget-select-entry",
+	"fyne.io/fyne/v2/widget.Separator":               "widget-separator",
+	"fyne.io/fyne/v2/widget.SeparatorSegment":        "widget-separator-segment",
+	"fyne.io/fyne/v2/widget.Slider":                  "widget-slider",
+	"fyne.io/fyne/v2/widget.Table":                   "widget-table",
+	"fyne.io/fyne/v2/widget.TableCellID":             "widget-table-cell-id",
+	"fyne.io/fyne/v2/widget.TextGrid":                "widget-text-grid",
+	"fyne.io/fyne/v2/widget.TextGridCell":            "widget-text-grid-cell",
+	"fyne.io/fyne/v2/widget.TextGridRow":             "widget-text-grid-row",
+	"fyne.io/fyne/v2/widget.TextSegment":             "widget-text-segment",
+	"fyne.io/fyne/v2/widget.Toolbar":                 "widget-toolbar",
+	"fyne.io/fyne/v2/widget.ToolbarAction":           "widget-toolbar-action",
+	"fyne.io/fyne/v2/widget.ToolbarSeparator":        "widget-toolbar-separator",
+	"fyne.io/fyne/v2/widget.ToolbarSpacer":           "widget-toolbar-spacer",
+	"fyne.io/fyne/v2/widget.Tree":                    "widget-tree",
+}
+
 var Builtins_fynegen = map[string]*env.Builtin{
 	"nil": {
 		Doc: "nil value for go types",
@@ -58,7 +265,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := app.New()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -74,7 +294,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := app.NewWithID(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -396,7 +629,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.And(arg0Val...)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -422,7 +668,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBool(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -448,7 +707,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBoolList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -490,7 +762,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBoolTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bool-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -516,7 +801,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBytes(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -542,7 +840,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBytesList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -584,7 +895,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindBytesTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-bytes-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -610,7 +934,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindFloat(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -636,7 +973,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindFloatList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -678,7 +1028,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindFloatTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-float-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -704,7 +1067,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindInt(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -730,7 +1106,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindIntList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -772,7 +1161,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindIntTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-int-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -804,7 +1206,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindPreferenceBool(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -836,7 +1251,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindPreferenceFloat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -868,7 +1296,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindPreferenceInt(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -900,7 +1341,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindPreferenceString(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -926,7 +1380,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindRune(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -952,7 +1419,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindRuneList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -994,7 +1474,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindRuneTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-rune-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1020,7 +1513,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1046,7 +1552,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindStringList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1088,7 +1607,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindStringTree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-string-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1109,7 +1641,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindStruct(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-struct")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-struct")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1130,7 +1675,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindUntyped(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1156,7 +1714,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindUntypedList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1182,7 +1753,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindUntypedMap(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped-map")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-untyped-map")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1208,7 +1792,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1234,7 +1831,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindURIList(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1276,7 +1886,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BindURITree(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-external-uri-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1529,7 +2152,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BoolToString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -1561,7 +2197,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.BoolToStringWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -3054,7 +3703,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.GetItem(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -3141,7 +3803,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.GetItem(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -3248,7 +3923,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.GetItem(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-item")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -4130,7 +4818,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.FloatToString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -4162,7 +4863,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.FloatToStringWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -4857,7 +5571,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.IntToString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -4889,7 +5616,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.IntToStringWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5341,7 +6081,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBool()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5351,7 +6104,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBoolList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5361,7 +6127,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBoolTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5371,7 +6150,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBytes()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5381,7 +6173,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBytesList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5391,7 +6196,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewBytesTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bytes-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5418,7 +6236,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.NewDataListener(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-listener")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-data-listener")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5428,7 +6259,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewFloat()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5438,7 +6282,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewFloatList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5448,7 +6305,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewFloatTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5458,7 +6328,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewInt()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5468,7 +6351,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewIntList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5478,7 +6374,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewIntTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5488,7 +6397,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewRune()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5498,7 +6420,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewRuneList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5508,7 +6443,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewRuneTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-rune-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5559,7 +6507,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.NewSprintf(arg0Val, arg1Val...)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5569,7 +6530,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewString()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5579,7 +6553,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewStringList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5589,7 +6576,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewStringTree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5599,7 +6599,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewUntyped()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5609,7 +6622,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewUntypedList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5619,7 +6645,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewUntypedMap()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped-map")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-untyped-map")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5629,7 +6668,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewURI()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5639,7 +6691,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewURIList()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri-list")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri-list")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5649,7 +6714,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := binding.NewURITree()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri-tree")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri-tree")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5675,7 +6753,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.Not(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -5720,7 +6811,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.Or(arg0Val...)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6692,7 +7796,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToBool(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6724,7 +7841,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToBoolWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-bool")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6750,7 +7880,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToFloat(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6782,7 +7925,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToFloatWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-float")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6808,7 +7964,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToInt(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6840,7 +8009,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToIntWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-int")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6872,7 +8054,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToStringWithFormat(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -6898,7 +8093,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.StringToURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -8267,7 +9475,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := binding.URIToString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "binding-string")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -9218,7 +10439,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "canvas-image//resource?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Resource)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Resource, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -12981,7 +14215,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split//leading?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Leading, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Leading)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Leading, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Leading, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -13077,7 +14324,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-split//trailing?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Trailing, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Trailing)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Trailing, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Trailing, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -13130,7 +14390,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-tab-item//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -13183,7 +14456,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "container-tab-item//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -13504,7 +14790,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -13587,7 +14886,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateSplashWindow()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -14597,7 +15909,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := dialog.NewError(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "dialog-dialog")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "dialog-dialog")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -14773,7 +16098,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := dialog.NewInformation(arg0Val, arg1Val, arg2Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "dialog-dialog")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "dialog-dialog")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -15946,7 +17284,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-app-metadata//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -16144,7 +17495,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CloudProvider()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-cloud-provider")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-cloud-provider")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16170,7 +17534,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Driver()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-driver")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-driver")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16196,7 +17573,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Icon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16222,7 +17612,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Lifecycle()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-lifecycle")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-lifecycle")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16280,7 +17683,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.NewWindow(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16348,7 +17764,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Preferences()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-preferences")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-preferences")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16542,7 +17971,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Settings()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-settings")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-settings")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16568,7 +18010,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Storage()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-storage")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-storage")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -16888,7 +18343,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				}
 				arg2Val = func(arg0 fyne.Shortcut) {
 					var arg0Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-shortcut")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-shortcut")
+						}
+					}
 					evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 				}
 			case env.Integer:
@@ -16951,7 +18419,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Content()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17065,7 +18546,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Focused()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-focusable")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-focusable")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17174,7 +18668,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Overlays()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-overlay-stack")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-overlay-stack")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17596,7 +19103,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CloudPreferences(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-preferences")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-preferences")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17638,7 +19158,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CloudStorage(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-storage")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-storage")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17730,7 +19263,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.ProviderIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17894,7 +19440,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-container//layout?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Layout, "fyne-layout")
+			{
+				typ := reflect.TypeOf(self.Layout)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Layout, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Layout, "fyne-layout")
+				}
+			}
 			return resObj
 		},
 	},
@@ -17969,7 +19528,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Objects))
 				for i, it := range self.Objects {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -17982,7 +19554,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := fyne.CurrentApp()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-app")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -17992,7 +19577,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := fyne.CurrentDevice()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-device")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-device")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -18664,7 +20262,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-window")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-window")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -18709,7 +20320,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CanvasForObject(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -18741,7 +20365,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateWindow(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-window")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -18767,7 +20404,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Device()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-device")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-device")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -19853,7 +21503,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.TextBoldFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -19879,7 +21542,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.TextBoldItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -19931,7 +21607,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.TextFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -19957,7 +21646,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.TextItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -19983,7 +21685,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.TextMonospaceFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -20189,7 +21904,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := fyne.LoadResourceFromPath(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -20210,7 +21938,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := fyne.LoadResourceFromURLString(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -20614,7 +22355,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-menu-item//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -20796,7 +22550,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-menu-item//shortcut?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Shortcut, "fyne-shortcut")
+			{
+				typ := reflect.TypeOf(self.Shortcut)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Shortcut, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Shortcut, "fyne-shortcut")
+				}
+			}
 			return resObj
 		},
 	},
@@ -21590,7 +23357,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -21659,7 +23439,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Top()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -23655,7 +25448,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Theme()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -23734,7 +25540,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcut-copy//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -23787,7 +25606,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcut-cut//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -23840,7 +25672,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "fyne-shortcut-paste//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -24954,7 +26799,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Font(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25000,7 +26858,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Icon(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25286,7 +27157,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -25339,7 +27223,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25365,7 +27262,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Canvas()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25415,7 +27325,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Clipboard()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-clipboard")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25465,7 +27388,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Content()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -25567,7 +27503,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Icon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26164,7 +28113,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewAdaptiveGridLayout(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26238,7 +28200,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewBorderLayout(arg0Val, arg1Val, arg2Val, arg3Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26248,7 +28223,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewCenterLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26258,7 +28246,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewFormLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26274,7 +28275,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewGridLayout(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26290,7 +28304,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewGridLayoutWithColumns(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26306,7 +28333,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewGridLayoutWithRows(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26327,7 +28367,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := layout.NewGridWrapLayout(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26337,7 +28390,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewHBoxLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26347,7 +28413,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewMaxLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26357,7 +28436,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewPaddedLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26367,7 +28459,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewSpacer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26377,7 +28482,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewStackLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -26387,7 +28505,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := layout.NewVBoxLayout()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-layout")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -28294,7 +30425,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-canvas-image//resource?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Resource)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Resource, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -30790,7 +32934,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -32104,7 +34261,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -33271,7 +35441,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -33504,7 +35687,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-container-split//leading?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Leading, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Leading)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Leading, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Leading, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -33846,7 +36042,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-container-split//trailing?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Trailing, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Trailing)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Trailing, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Trailing, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -33935,7 +36144,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-container-tab-item//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -34024,7 +36246,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-container-tab-item//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -36041,7 +38276,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-app-metadata//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -36473,7 +38721,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-container//layout?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Layout, "fyne-layout")
+			{
+				typ := reflect.TypeOf(self.Layout)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Layout, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Layout, "fyne-layout")
+				}
+			}
 			return resObj
 		},
 	},
@@ -36619,7 +38880,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Objects))
 				for i, it := range self.Objects {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -37713,7 +39987,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-menu-item//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -37935,7 +40222,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-menu-item//shortcut?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Shortcut, "fyne-shortcut")
+			{
+				typ := reflect.TypeOf(self.Shortcut)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Shortcut, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Shortcut, "fyne-shortcut")
+				}
+			}
 			return resObj
 		},
 	},
@@ -38665,7 +40965,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-shortcut-copy//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -38806,7 +41119,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-shortcut-cut//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -38932,7 +41258,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				}
 				arg2Val = func(arg0 fyne.Shortcut) {
 					var arg0Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-shortcut")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-shortcut")
+						}
+					}
 					evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 				}
 			case env.Integer:
@@ -39086,7 +41425,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-fyne-shortcut-paste//clipboard?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+			{
+				typ := reflect.TypeOf(self.Clipboard)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Clipboard, "fyne-clipboard")
+				}
+			}
 			return resObj
 		},
 	},
@@ -40725,7 +43077,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Original()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -40809,7 +43174,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Original()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -40893,7 +43271,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Original()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -41107,7 +43498,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-accordion-item//detail?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Detail, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Detail)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Detail, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Detail, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -41333,7 +43737,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -42369,7 +44786,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -42395,7 +44825,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -42764,7 +45207,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-button//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -43522,7 +45978,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-card//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -43548,7 +46017,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -44252,7 +46734,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -45199,7 +47694,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -46752,7 +49260,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-entry//action-item?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.ActionItem)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -46848,7 +49369,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -46874,7 +49408,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -49004,7 +51551,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -49688,7 +52248,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-form-item//widget?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Widget, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Widget)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Widget, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Widget, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -49853,7 +52426,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -50711,7 +53297,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -51686,7 +54285,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateItem = func(arg0 widget.GridWrapItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -52208,7 +54820,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -52301,7 +54926,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -52327,7 +54965,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -53366,7 +56017,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -53692,7 +56356,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-icon//resource?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Resource)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Resource, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -54200,7 +56877,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -54333,7 +57023,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -55149,7 +57852,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -55234,7 +57950,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -55425,7 +58154,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -55532,7 +58274,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -56501,7 +59256,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateItem = func(arg0 widget.ListItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -56662,7 +59430,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -56938,7 +59719,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -57346,7 +60140,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -57506,7 +60313,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Texts))
 				for i, it := range self.Texts {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -57625,7 +60445,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -57725,7 +60558,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -58049,7 +60895,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -58626,7 +61485,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-pop-up//canvas?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Canvas, "fyne-canvas")
+			{
+				typ := reflect.TypeOf(self.Canvas)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Canvas, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Canvas, "fyne-canvas")
+				}
+			}
 			return resObj
 		},
 	},
@@ -58689,7 +61561,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-pop-up//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -58715,7 +61600,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -59246,7 +62144,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -59725,7 +62636,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -60404,7 +63328,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -61488,7 +64425,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -61939,7 +64889,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Segments))
 				for i, it := range self.Segments {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -62267,7 +65230,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-select-entry//action-item?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.ActionItem)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -62363,7 +65339,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -62389,7 +65378,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -64659,7 +67661,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -65938,7 +68953,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -65964,7 +68992,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -66369,7 +69410,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -67798,7 +70852,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -67824,7 +70891,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Cursor()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "desktop-cursor")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -69434,7 +72514,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateCell = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -69501,7 +72594,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateHeader = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -69683,7 +72789,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-text-grid-cell//style?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+			{
+				typ := reflect.TypeOf(self.Style)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Style, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+				}
+			}
 			return resObj
 		},
 	},
@@ -69829,7 +72948,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-text-grid-row//style?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+			{
+				typ := reflect.TypeOf(self.Style)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Style, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+				}
+			}
 			return resObj
 		},
 	},
@@ -69855,7 +72987,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71114,7 +74259,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71177,7 +74335,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-toolbar-action//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -71307,7 +74478,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.ToolbarObject()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71333,7 +74517,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.ToolbarObject()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71359,7 +74556,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.ToolbarObject()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71425,7 +74635,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -71627,7 +74850,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-toolbar-item")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-toolbar-item")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -72175,7 +75411,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.CreateRenderer()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -73592,7 +76841,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := repository.ForScheme(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "repository-repository")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "repository-repository")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -73618,7 +76880,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := repository.ForURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "repository-repository")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "repository-repository")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -74832,7 +78107,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := storage.LoadResourceFromURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -74972,7 +78260,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := storage.NewExtensionFileFilter(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "storage-file-filter")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "storage-file-filter")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75023,7 +78324,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := storage.NewMimeTypeFileFilter(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "storage-file-filter")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "storage-file-filter")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75200,7 +78514,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.AccountIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75220,7 +78547,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.BrokenImageIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75240,7 +78580,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.CancelIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75260,7 +78613,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.CheckButtonCheckedIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75270,7 +78636,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.CheckButtonIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75280,7 +78659,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ColorAchromaticIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75290,7 +78682,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ColorChromaticIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75300,7 +78705,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ColorPaletteIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75310,7 +78728,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ComputerIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75320,7 +78751,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ConfirmIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75330,7 +78774,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentAddIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75340,7 +78797,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentClearIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75350,7 +78820,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentCopyIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75360,7 +78843,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentCutIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75370,7 +78866,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentPasteIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75380,7 +78889,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentRedoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75390,7 +78912,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentRemoveIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75400,7 +78935,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ContentUndoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75410,7 +78958,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DarkTheme()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75420,7 +78981,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultEmojiFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75430,7 +79004,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultSymbolFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75440,7 +79027,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTextBoldFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75450,7 +79050,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTextBoldItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75460,7 +79073,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTextFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75470,7 +79096,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTextItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75480,7 +79119,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTextMonospaceFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75490,7 +79142,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DefaultTheme()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75500,7 +79165,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DeleteIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75540,7 +79218,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DocumentCreateIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75550,7 +79241,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DocumentIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75560,7 +79264,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DocumentPrintIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75570,7 +79287,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DocumentSaveIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75580,7 +79310,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.DownloadIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75600,7 +79343,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ErrorIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75610,7 +79366,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileApplicationIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75620,7 +79389,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileAudioIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75630,7 +79412,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75640,7 +79435,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileImageIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75650,7 +79458,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileTextIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75660,7 +79481,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FileVideoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75680,7 +79514,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FolderIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75690,7 +79537,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FolderNewIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75700,7 +79560,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FolderOpenIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75726,7 +79599,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := theme.FromJSON(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -75752,7 +79638,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0, res1 := theme.FromJSONReader(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -75783,7 +79682,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := theme.FromLegacy(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75793,7 +79705,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.FyneLogo()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75803,7 +79728,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.GridIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75823,7 +79761,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.HelpIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75833,7 +79784,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.HistoryIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75843,7 +79807,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.HomeIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75883,7 +79860,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.InfoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75943,7 +79933,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.LightTheme()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-theme")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75963,7 +79966,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ListIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75973,7 +79989,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.LoginIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75983,7 +80012,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.LogoutIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -75993,7 +80035,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailAttachmentIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76003,7 +80058,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailComposeIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76013,7 +80081,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailForwardIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76023,7 +80104,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailReplyAllIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76033,7 +80127,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailReplyIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76043,7 +80150,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MailSendIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76053,7 +80173,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaFastForwardIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76063,7 +80196,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaFastRewindIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76073,7 +80219,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaMusicIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76083,7 +80242,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaPauseIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76093,7 +80265,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaPhotoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76103,7 +80288,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaPlayIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76113,7 +80311,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaRecordIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76123,7 +80334,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaReplayIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76133,7 +80357,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaSkipNextIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76143,7 +80380,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaSkipPreviousIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76153,7 +80403,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaStopIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76163,7 +80426,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MediaVideoIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76183,7 +80459,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MenuDropDownIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76193,7 +80482,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MenuDropUpIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76203,7 +80505,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MenuExpandIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76213,7 +80528,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MenuIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76223,7 +80551,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MoreHorizontalIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76233,7 +80574,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MoreVerticalIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76243,7 +80597,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MoveDownIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76253,7 +80620,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.MoveUpIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76263,7 +80643,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.NavigateBackIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76273,7 +80666,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.NavigateNextIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76593,7 +80999,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.QuestionIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76603,7 +81022,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.RadioButtonCheckedIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76613,7 +81045,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.RadioButtonIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76653,7 +81098,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.SearchIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76663,7 +81121,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.SearchReplaceIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76713,7 +81184,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.SettingsIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76733,7 +81217,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.StorageIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76753,7 +81250,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.SymbolFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76763,7 +81273,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.TextBoldFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76773,7 +81296,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.TextBoldItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76793,7 +81329,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.TextFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76813,7 +81362,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.TextItalicFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76823,7 +81385,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.TextMonospaceFont()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76910,7 +81485,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.UploadIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76920,7 +81508,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ViewFullScreenIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76930,7 +81531,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ViewRefreshIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76940,7 +81554,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ViewRestoreIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76950,7 +81577,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.VisibilityIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76960,7 +81600,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.VisibilityOffIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76970,7 +81623,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.VolumeDownIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76980,7 +81646,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.VolumeMuteIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -76990,7 +81669,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.VolumeUpIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -77010,7 +81702,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.WarningIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -77020,7 +81725,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ZoomFitIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -77030,7 +81748,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ZoomInIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -77040,7 +81771,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			res0 := theme.ZoomOutIcon()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-resource")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -77200,7 +81944,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-accordion-item//detail?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Detail, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Detail)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Detail, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Detail, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -77703,7 +82460,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-button//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -77910,7 +82680,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-card//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -78796,7 +83579,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-entry//action-item?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.ActionItem)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -79781,7 +84577,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-form-item//widget?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Widget, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Widget)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Widget, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Widget, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -80410,7 +85219,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateItem = func(arg0 widget.GridWrapItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -81098,7 +85920,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-icon//resource?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Resource)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Resource, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Resource, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -81683,7 +86518,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -82043,7 +86891,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateItem = func(arg0 widget.ListItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -82191,7 +87052,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -82781,7 +87655,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				arg2Val = func(arg0 widget.GridWrapItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -82860,8 +87747,34 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				}
 				arg2Val = func(arg0 binding.DataItem, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "binding-data-item")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "binding-data-item")
+						}
+					}
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -83159,7 +88072,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				arg2Val = func(arg0 widget.ListItemID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewInteger(int64(int(arg0)))
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -83238,8 +88164,34 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				}
 				arg2Val = func(arg0 binding.DataItem, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "binding-data-item")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "binding-data-item")
+						}
+					}
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -83726,7 +88678,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := widget.NewSimpleRenderer(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-widget-renderer")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -83848,7 +88813,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				arg2Val = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -83923,7 +88901,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				arg2Val = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -84456,7 +89447,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Texts))
 				for i, it := range self.Texts {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -84577,7 +89581,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-canvas-object")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -84687,7 +89704,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up//canvas?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Canvas, "fyne-canvas")
+			{
+				typ := reflect.TypeOf(self.Canvas)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Canvas, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Canvas, "fyne-canvas")
+				}
+			}
 			return resObj
 		},
 	},
@@ -84740,7 +89770,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-pop-up//content?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.Content)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Content, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Content, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -85384,7 +90427,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -85601,7 +90657,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.Visual()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -86044,7 +91113,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Segments))
 				for i, it := range self.Segments {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-rich-text-segment")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -86214,7 +91296,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-select-entry//action-item?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(self.ActionItem)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.ActionItem, "fyne-canvas-object")
+				}
+			}
 			return resObj
 		},
 	},
@@ -88609,7 +93704,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateCell = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -88666,7 +93774,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				self.UpdateHeader = func(arg0 widget.TableCellID, arg1 fyne.CanvasObject) {
 					var arg0Val, arg1Val env.Object
 					arg0Val = *env.NewNative(ps.Idx, arg0, "widget-table-cell-id")
-					arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+					{
+						typ := reflect.TypeOf(arg1)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg1Val = *env.NewNative(ps.Idx, arg1, typRyeName)
+						} else {
+							arg1Val = *env.NewNative(ps.Idx, arg1, "fyne-canvas-object")
+						}
+					}
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
 			case env.Integer:
@@ -88797,7 +93918,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-cell//style?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+			{
+				typ := reflect.TypeOf(self.Style)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Style, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+				}
+			}
 			return resObj
 		},
 	},
@@ -88923,7 +94057,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-text-grid-row//style?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+			{
+				typ := reflect.TypeOf(self.Style)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Style, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+				}
+			}
 			return resObj
 		},
 	},
@@ -89364,7 +94511,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "widget-toolbar-action//icon?")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+			{
+				typ := reflect.TypeOf(self.Icon)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Icon, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Icon, "fyne-resource")
+				}
+			}
 			return resObj
 		},
 	},
@@ -89444,7 +94604,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.ToolbarObject()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-canvas-object")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -89562,7 +94735,20 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(self.Items))
 				for i, it := range self.Items {
-					items[i] = *env.NewNative(ps.Idx, it, "widget-toolbar-item")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "widget-toolbar-item")
+						}
+					}
 				}
 				resObj = *env.NewBlock(*env.NewTSeries(items))
 			}

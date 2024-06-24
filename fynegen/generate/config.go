@@ -4,10 +4,8 @@ type Config struct {
 	Package          string      `toml:"package"`
 	Version          string      `toml:"version"`
 	CutNew           bool        `toml:"cut-new"`
-	AlwaysPrefix     bool        `toml:"always-prefix"`
-	PriorityPackages []string    `toml:"priority-packages,omitempty"`
-	Prefixes         [][2]string `toml:"prefixes,omitempty"`   // {prefix, package}
-	Substitute       [][2]string `toml:"substitute,omitempty"` // {old, new}
+	NoPrefix         []string    `toml:"no-prefix,omitempty"`
+	CustomPrefixes   [][2]string `toml:"custom-prefixes,omitempty"`   // {prefix, package}
 }
 
 const DefaultConfig = `# Go name of package.
@@ -16,24 +14,17 @@ package = "github.com/<user>/<repo>"
 version = "vX.Y.Z"
 # Auto-remove "New" part of functions (e.g. widget.NewLabel => widget-label, app.New => app).
 cut-new = true
-# If true, always prefix function with package name.
-# If false, only conflicting functions are prefixed (see "priority-packages").
-# See "prefixes" for custom prefixes.
-always-prefix = false
 
-## Descending priority. Packages not listed are always lower priority.
+## Descending priority. Packages not listed will always be prefixed.
 ## In case of conflicting function names, only the function from the
-## package with the highest priority is not prefixed. All other functions
-## are prefixed.
-## See "always-prefix".
-#priority-packages = [
+## package with the highest priority is not prefixed.
+#no-prefix = [
 #  "github.com/<user>/<repo>",
-#  "github.com/<user>/<repo>/important_math",
-#  "github.com/<user>/<repo>/not_as_important_math",
+#  "github.com/<user>/<repo>/important",
 #]
 
-## Set prefix for all symbols in the package (if applicable: see "always-prefix").
-#prefixes = [
+## Set custom prefix for all symbols in the package (if applicable: see "no-prefix").
+#custom-prefixes = [
 #  ["my-fyne", "fyne.io/fyne/v2"],
 #  ["my-widget", "fyne.io/fyne/v2/widget"],
 #]`

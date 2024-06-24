@@ -13,13 +13,16 @@ do\in fynegen {
 	sld1 .on-changed! fn { val } {
 		lab2 .set-text "Slider value is " + val .to-string + "."
 	}
+
 	chk1: check "Check" fn { checked } {
 		chk-text: either checked "checked" "not checked"
 		lab2 .set-text "Checkbox is " + chk-text + "."
 	}
+
 	btn1: button "Button" fn { } {
 		lab2 .set-text "Button clicked"
 	}
+
 	ent1: entry
 	ent1 .on-changed! fn { text } {
 		lab2 .set-text
@@ -27,6 +30,11 @@ do\in fynegen {
 	}
 	ent1 .place-holder! "Enter some text..."
 	ent1 .multi-line! true
+
+;	lst1: list
+;		fn { } { 10 }
+;		fn { } { label "PLACEHOLDER" }
+;		fn { id obj } { }
 
 	a
 	|set-content v-box [
@@ -37,6 +45,7 @@ do\in fynegen {
 		ent1
 		btn1
 		chk1
+;		lst1
 	]
 	|show-and-run
 }

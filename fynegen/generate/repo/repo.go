@@ -113,7 +113,7 @@ func Get(dstPath, pkg, version string) (string, error) {
 
 	var zipURL string
 	if pkg == "std" {
-		zipURL = goZipURL+"go"+version+".zip"
+		zipURL = goZipURL + "go" + version + ".zip"
 	} else {
 		zipURL, err = proxyRequestURL(proxyURL, pkg, "@v", version+".zip")
 		if err != nil {

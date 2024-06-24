@@ -14,8 +14,6 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
-const namespacePrefix = false
-
 type File struct {
 	Name          string
 	ModuleName    string
@@ -89,21 +87,9 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 
 	switch expr := expr.(type) {
 	case *ast.Ident:
-		res := expr.Name
-		if ast.IsExported(expr.Name) {
-			if ctx.Config.CutNew {
-				res = strcase.ToKebab(strings.TrimPrefix(res, "New"))
-			}
-			if file != nil {
-				if res == "" {
-					// e.g. app.New => app
-					res = strcase.ToKebab(file.ModuleName)
-				} else {
-					if ctx.Config.AlwaysPrefix {
-						res = strcase.ToKebab(file.ModuleName) + "-" + res
-					}
-				}
-			}
+		res := strcase.ToKebab(expr.Name)
+		if ast.IsExported(expr.Name) && file != nil {
+			res = strcase.ToKebab(ctx.ModuleNames[file.ModulePath]) + "-" + res
 		}
 		return res, nil
 	case *ast.StarExpr:
@@ -570,19 +556,11 @@ func FuncGoIdent(fn *Func) string {
 	return res
 }
 
-func FuncRyeIdent(fn *Func) string {
-	res := fn.Name.RyeName
-	if fn.Recv != nil {
-		res = fn.Recv.RyeName + "//" + res
-	}
-	return res
-}
-
 type Data struct {
-	Funcs           map[string]*Func
-	Interfaces      map[string]*Interface
-	Structs         map[string]*Struct
-	Typedefs        map[string]Ident
+	Funcs      map[string]*Func
+	Interfaces map[string]*Interface
+	Structs    map[string]*Struct
+	Typedefs   map[string]Ident
 }
 
 func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath string, moduleNames map[string]string) error {

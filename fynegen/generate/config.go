@@ -1,11 +1,11 @@
 package main
 
 type Config struct {
-	Package          string      `toml:"package"`
-	Version          string      `toml:"version"`
-	CutNew           bool        `toml:"cut-new"`
-	NoPrefix         []string    `toml:"no-prefix,omitempty"`
-	CustomPrefixes   [][2]string `toml:"custom-prefixes,omitempty"`   // {prefix, package}
+	Package        string      `toml:"package"`
+	Version        string      `toml:"version"`
+	CutNew         bool        `toml:"cut-new"`
+	NoPrefix       []string    `toml:"no-prefix,omitempty"`
+	CustomPrefixes [][2]string `toml:"custom-prefixes,omitempty"` // {prefix, package}
 }
 
 const DefaultConfig = `# Go name of package.

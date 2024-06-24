@@ -443,7 +443,7 @@ func main() {
 		Data:        data,
 		ModuleNames: moduleImportNames,
 		UsedImports: make(map[string]struct{}),
-		UsedTyps: make(map[string]Ident),
+		UsedTyps:    make(map[string]Ident),
 	}
 
 	for _, pkg := range pkgs {
@@ -672,14 +672,14 @@ func main() {
 				if !ok {
 					continue
 				}
-				nameNoMod = "*"+id.Name
+				nameNoMod = "*" + id.Name
 			case *ast.SelectorExpr:
 				nameNoMod = expr.Sel.Name
 			default:
 				continue
 			}
-			typNames[id.File.ModulePath + "." + nameNoMod] = id.RyeName
-			typNames[id.File.ModulePath + ".*" + nameNoMod] = "ptr-" + id.RyeName
+			typNames[id.File.ModulePath+"."+nameNoMod] = id.RyeName
+			typNames[id.File.ModulePath+".*"+nameNoMod] = "ptr-" + id.RyeName
 		}
 		strucNameKeys := make([]string, 0, len(typNames))
 		for k := range typNames {

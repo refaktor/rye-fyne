@@ -78508,7 +78508,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			})
 		},
 	},
-	"theme-account-icon": {
+	"account-icon": {
 		Doc:   "theme.AccountIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78531,7 +78531,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-background-color": {
+	"background-color": {
 		Doc:   "theme.BackgroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78541,7 +78541,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-broken-image-icon": {
+	"broken-image-icon": {
 		Doc:   "theme.BrokenImageIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78564,7 +78564,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-button-color": {
+	"button-color": {
 		Doc:   "theme.ButtonColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78574,7 +78574,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-cancel-icon": {
+	"cancel-icon": {
 		Doc:   "theme.CancelIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78597,7 +78597,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-caption-text-size": {
+	"caption-text-size": {
 		Doc:   "theme.CaptionTextSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78607,7 +78607,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-check-button-checked-icon": {
+	"check-button-checked-icon": {
 		Doc:   "theme.CheckButtonCheckedIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78630,7 +78630,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-check-button-icon": {
+	"check-button-icon": {
 		Doc:   "theme.CheckButtonIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78653,7 +78653,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-color-achromatic-icon": {
+	"color-achromatic-icon": {
 		Doc:   "theme.ColorAchromaticIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78676,7 +78676,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-color-chromatic-icon": {
+	"color-chromatic-icon": {
 		Doc:   "theme.ColorChromaticIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78699,7 +78699,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-color-palette-icon": {
+	"color-palette-icon": {
 		Doc:   "theme.ColorPaletteIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78722,7 +78722,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-computer-icon": {
+	"computer-icon": {
 		Doc:   "theme.ComputerIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78745,7 +78745,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-confirm-icon": {
+	"confirm-icon": {
 		Doc:   "theme.ConfirmIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78768,7 +78768,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-add-icon": {
+	"content-add-icon": {
 		Doc:   "theme.ContentAddIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78791,7 +78791,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-clear-icon": {
+	"content-clear-icon": {
 		Doc:   "theme.ContentClearIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78814,7 +78814,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-copy-icon": {
+	"content-copy-icon": {
 		Doc:   "theme.ContentCopyIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78837,7 +78837,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-cut-icon": {
+	"content-cut-icon": {
 		Doc:   "theme.ContentCutIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78860,7 +78860,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-paste-icon": {
+	"content-paste-icon": {
 		Doc:   "theme.ContentPasteIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78883,7 +78883,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-redo-icon": {
+	"content-redo-icon": {
 		Doc:   "theme.ContentRedoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78906,7 +78906,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-remove-icon": {
+	"content-remove-icon": {
 		Doc:   "theme.ContentRemoveIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78929,7 +78929,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-content-undo-icon": {
+	"content-undo-icon": {
 		Doc:   "theme.ContentUndoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78952,7 +78952,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-dark-theme": {
+	"dark-theme": {
 		Doc:   "theme.DarkTheme",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78975,7 +78975,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-emoji-font": {
+	"default-emoji-font": {
 		Doc:   "theme.DefaultEmojiFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -78998,7 +78998,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-symbol-font": {
+	"default-symbol-font": {
 		Doc:   "theme.DefaultSymbolFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79021,7 +79021,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-text-bold-font": {
+	"default-text-bold-font": {
 		Doc:   "theme.DefaultTextBoldFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79044,7 +79044,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-text-bold-italic-font": {
+	"default-text-bold-italic-font": {
 		Doc:   "theme.DefaultTextBoldItalicFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79067,7 +79067,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-text-font": {
+	"default-text-font": {
 		Doc:   "theme.DefaultTextFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79090,7 +79090,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-text-italic-font": {
+	"default-text-italic-font": {
 		Doc:   "theme.DefaultTextItalicFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79113,7 +79113,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-text-monospace-font": {
+	"default-text-monospace-font": {
 		Doc:   "theme.DefaultTextMonospaceFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79136,7 +79136,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-default-theme": {
+	"default-theme": {
 		Doc:   "theme.DefaultTheme",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79159,7 +79159,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-delete-icon": {
+	"delete-icon": {
 		Doc:   "theme.DeleteIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79182,7 +79182,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-disabled-button-color": {
+	"disabled-button-color": {
 		Doc:   "theme.DisabledButtonColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79192,7 +79192,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-disabled-color": {
+	"disabled-color": {
 		Doc:   "theme.DisabledColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79202,7 +79202,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-disabled-text-color": {
+	"disabled-text-color": {
 		Doc:   "theme.DisabledTextColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79212,7 +79212,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-document-create-icon": {
+	"document-create-icon": {
 		Doc:   "theme.DocumentCreateIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79235,7 +79235,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-document-icon": {
+	"document-icon": {
 		Doc:   "theme.DocumentIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79258,7 +79258,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-document-print-icon": {
+	"document-print-icon": {
 		Doc:   "theme.DocumentPrintIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79281,7 +79281,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-document-save-icon": {
+	"document-save-icon": {
 		Doc:   "theme.DocumentSaveIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79304,7 +79304,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-download-icon": {
+	"download-icon": {
 		Doc:   "theme.DownloadIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79327,7 +79327,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-error-color": {
+	"error-color": {
 		Doc:   "theme.ErrorColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79337,7 +79337,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-error-icon": {
+	"error-icon": {
 		Doc:   "theme.ErrorIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79360,7 +79360,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-file-application-icon": {
+	"file-application-icon": {
 		Doc:   "theme.FileApplicationIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79383,7 +79383,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-file-audio-icon": {
+	"file-audio-icon": {
 		Doc:   "theme.FileAudioIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79429,7 +79429,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-file-image-icon": {
+	"file-image-icon": {
 		Doc:   "theme.FileImageIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79452,7 +79452,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-file-text-icon": {
+	"file-text-icon": {
 		Doc:   "theme.FileTextIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79475,7 +79475,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-file-video-icon": {
+	"file-video-icon": {
 		Doc:   "theme.FileVideoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79498,7 +79498,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-focus-color": {
+	"focus-color": {
 		Doc:   "theme.FocusColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79508,7 +79508,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-folder-icon": {
+	"folder-icon": {
 		Doc:   "theme.FolderIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79531,7 +79531,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-folder-new-icon": {
+	"folder-new-icon": {
 		Doc:   "theme.FolderNewIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79554,7 +79554,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-folder-open-icon": {
+	"folder-open-icon": {
 		Doc:   "theme.FolderOpenIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79577,7 +79577,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-foreground-color": {
+	"foreground-color": {
 		Doc:   "theme.ForegroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79587,7 +79587,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-from-json": {
+	"from-json": {
 		Doc:   "theme.FromJSON",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79595,7 +79595,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			if v, ok := arg0.(env.String); ok {
 				arg0Val = string(v.Value)
 			} else {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "theme-from-json")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "from-json")
 			}
 			res0, res1 := theme.FromJSON(arg0Val)
 			var res0Obj env.Object
@@ -79621,7 +79621,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			})
 		},
 	},
-	"theme-from-json-reader": {
+	"from-json-reader": {
 		Doc:   "theme.FromJSONReader",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79631,10 +79631,10 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(io.Reader)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-json-reader")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "from-json-reader")
 				}
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-json-reader")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "from-json-reader")
 			}
 			res0, res1 := theme.FromJSONReader(arg0Val)
 			var res0Obj env.Object
@@ -79660,7 +79660,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			})
 		},
 	},
-	"theme-from-legacy": {
+	"from-legacy": {
 		Doc:   "theme.FromLegacy",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79670,15 +79670,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.LegacyTheme)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-legacy")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "from-legacy")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-legacy")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "from-legacy")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-from-legacy")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "from-legacy")
 			}
 			res0 := theme.FromLegacy(arg0Val)
 			var res0Obj env.Object
@@ -79699,7 +79699,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-fyne-logo": {
+	"fyne-logo": {
 		Doc:   "theme.FyneLogo",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79722,7 +79722,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-grid-icon": {
+	"grid-icon": {
 		Doc:   "theme.GridIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79745,7 +79745,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-header-background-color": {
+	"header-background-color": {
 		Doc:   "theme.HeaderBackgroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79755,7 +79755,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-help-icon": {
+	"help-icon": {
 		Doc:   "theme.HelpIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79778,7 +79778,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-history-icon": {
+	"history-icon": {
 		Doc:   "theme.HistoryIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79801,7 +79801,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-home-icon": {
+	"home-icon": {
 		Doc:   "theme.HomeIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79824,7 +79824,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-hover-color": {
+	"hover-color": {
 		Doc:   "theme.HoverColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79834,7 +79834,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-hyperlink-color": {
+	"hyperlink-color": {
 		Doc:   "theme.HyperlinkColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79844,7 +79844,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-icon-inline-size": {
+	"icon-inline-size": {
 		Doc:   "theme.IconInlineSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79854,7 +79854,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-info-icon": {
+	"info-icon": {
 		Doc:   "theme.InfoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79877,7 +79877,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-inner-padding": {
+	"inner-padding": {
 		Doc:   "theme.InnerPadding",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79887,7 +79887,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-input-background-color": {
+	"input-background-color": {
 		Doc:   "theme.InputBackgroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79897,7 +79897,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-input-border-color": {
+	"input-border-color": {
 		Doc:   "theme.InputBorderColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79907,7 +79907,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-input-border-size": {
+	"input-border-size": {
 		Doc:   "theme.InputBorderSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79917,7 +79917,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-input-radius-size": {
+	"input-radius-size": {
 		Doc:   "theme.InputRadiusSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79927,7 +79927,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-light-theme": {
+	"light-theme": {
 		Doc:   "theme.LightTheme",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79950,7 +79950,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-line-spacing": {
+	"line-spacing": {
 		Doc:   "theme.LineSpacing",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79960,7 +79960,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-list-icon": {
+	"list-icon": {
 		Doc:   "theme.ListIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -79983,7 +79983,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-login-icon": {
+	"login-icon": {
 		Doc:   "theme.LoginIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80006,7 +80006,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-logout-icon": {
+	"logout-icon": {
 		Doc:   "theme.LogoutIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80029,7 +80029,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-attachment-icon": {
+	"mail-attachment-icon": {
 		Doc:   "theme.MailAttachmentIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80052,7 +80052,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-compose-icon": {
+	"mail-compose-icon": {
 		Doc:   "theme.MailComposeIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80075,7 +80075,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-forward-icon": {
+	"mail-forward-icon": {
 		Doc:   "theme.MailForwardIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80098,7 +80098,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-reply-all-icon": {
+	"mail-reply-all-icon": {
 		Doc:   "theme.MailReplyAllIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80121,7 +80121,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-reply-icon": {
+	"mail-reply-icon": {
 		Doc:   "theme.MailReplyIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80144,7 +80144,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-mail-send-icon": {
+	"mail-send-icon": {
 		Doc:   "theme.MailSendIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80167,7 +80167,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-fast-forward-icon": {
+	"media-fast-forward-icon": {
 		Doc:   "theme.MediaFastForwardIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80190,7 +80190,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-fast-rewind-icon": {
+	"media-fast-rewind-icon": {
 		Doc:   "theme.MediaFastRewindIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80213,7 +80213,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-music-icon": {
+	"media-music-icon": {
 		Doc:   "theme.MediaMusicIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80236,7 +80236,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-pause-icon": {
+	"media-pause-icon": {
 		Doc:   "theme.MediaPauseIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80259,7 +80259,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-photo-icon": {
+	"media-photo-icon": {
 		Doc:   "theme.MediaPhotoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80282,7 +80282,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-play-icon": {
+	"media-play-icon": {
 		Doc:   "theme.MediaPlayIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80305,7 +80305,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-record-icon": {
+	"media-record-icon": {
 		Doc:   "theme.MediaRecordIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80328,7 +80328,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-replay-icon": {
+	"media-replay-icon": {
 		Doc:   "theme.MediaReplayIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80351,7 +80351,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-skip-next-icon": {
+	"media-skip-next-icon": {
 		Doc:   "theme.MediaSkipNextIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80374,7 +80374,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-skip-previous-icon": {
+	"media-skip-previous-icon": {
 		Doc:   "theme.MediaSkipPreviousIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80397,7 +80397,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-stop-icon": {
+	"media-stop-icon": {
 		Doc:   "theme.MediaStopIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80420,7 +80420,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-media-video-icon": {
+	"media-video-icon": {
 		Doc:   "theme.MediaVideoIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80443,7 +80443,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-menu-background-color": {
+	"menu-background-color": {
 		Doc:   "theme.MenuBackgroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80453,7 +80453,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-menu-drop-down-icon": {
+	"menu-drop-down-icon": {
 		Doc:   "theme.MenuDropDownIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80476,7 +80476,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-menu-drop-up-icon": {
+	"menu-drop-up-icon": {
 		Doc:   "theme.MenuDropUpIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80499,7 +80499,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-menu-expand-icon": {
+	"menu-expand-icon": {
 		Doc:   "theme.MenuExpandIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80522,7 +80522,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-menu-icon": {
+	"menu-icon": {
 		Doc:   "theme.MenuIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80545,7 +80545,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-more-horizontal-icon": {
+	"more-horizontal-icon": {
 		Doc:   "theme.MoreHorizontalIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80568,7 +80568,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-more-vertical-icon": {
+	"more-vertical-icon": {
 		Doc:   "theme.MoreVerticalIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80591,7 +80591,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-move-down-icon": {
+	"move-down-icon": {
 		Doc:   "theme.MoveDownIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80614,7 +80614,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-move-up-icon": {
+	"move-up-icon": {
 		Doc:   "theme.MoveUpIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80637,7 +80637,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-navigate-back-icon": {
+	"navigate-back-icon": {
 		Doc:   "theme.NavigateBackIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80660,7 +80660,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-navigate-next-icon": {
+	"navigate-next-icon": {
 		Doc:   "theme.NavigateNextIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80683,7 +80683,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-colored-resource": {
+	"colored-resource": {
 		Doc:   "theme.NewColoredResource",
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80693,15 +80693,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-colored-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "colored-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-colored-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "colored-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-colored-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "colored-resource")
 			}
 			var arg1Val fyne.ThemeColorName
 			{
@@ -80718,7 +80718,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 					if v, ok := arg1.(env.String); ok {
 						u = string(v.Value)
 					} else {
-						return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "theme-colored-resource")
+						return evaldo.MakeArgError(ps, 1, []env.Type{env.NativeType}, "colored-resource")
 					}
 					arg1Val = fyne.ThemeColorName(u)
 				}
@@ -80729,7 +80729,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-disabled-resource": {
+	"disabled-resource": {
 		Doc:   "theme.NewDisabledResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80739,15 +80739,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-disabled-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "disabled-resource")
 			}
 			res0 := theme.NewDisabledResource(arg0Val)
 			var res0Obj env.Object
@@ -80755,7 +80755,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-error-themed-resource": {
+	"error-themed-resource": {
 		Doc:   "theme.NewErrorThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80765,15 +80765,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "error-themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "error-themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-error-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "error-themed-resource")
 			}
 			res0 := theme.NewErrorThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80781,7 +80781,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-inverted-themed-resource": {
+	"inverted-themed-resource": {
 		Doc:   "theme.NewInvertedThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80791,15 +80791,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inverted-themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inverted-themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-inverted-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "inverted-themed-resource")
 			}
 			res0 := theme.NewInvertedThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80807,7 +80807,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-primary-themed-resource": {
+	"primary-themed-resource": {
 		Doc:   "theme.NewPrimaryThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80817,15 +80817,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-primary-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "primary-themed-resource")
 			}
 			res0 := theme.NewPrimaryThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80833,7 +80833,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-success-themed-resource": {
+	"success-themed-resource": {
 		Doc:   "theme.NewSuccessThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80843,15 +80843,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-success-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "success-themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-success-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "success-themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-success-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "success-themed-resource")
 			}
 			res0 := theme.NewSuccessThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80859,7 +80859,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-themed-resource": {
+	"themed-resource": {
 		Doc:   "theme.NewThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80869,15 +80869,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "themed-resource")
 			}
 			res0 := theme.NewThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80885,7 +80885,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-warning-themed-resource": {
+	"warning-themed-resource": {
 		Doc:   "theme.NewWarningThemedResource",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80895,15 +80895,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				var ok bool
 				arg0Val, ok = v.Value.(fyne.Resource)
 				if !ok {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-warning-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "warning-themed-resource")
 				}
 			case env.Integer:
 				if v.Value != 0 {
-					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-warning-themed-resource")
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "warning-themed-resource")
 				}
 				arg0Val = nil
 			default:
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "theme-warning-themed-resource")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "warning-themed-resource")
 			}
 			res0 := theme.NewWarningThemedResource(arg0Val)
 			var res0Obj env.Object
@@ -80911,7 +80911,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-overlay-background-color": {
+	"overlay-background-color": {
 		Doc:   "theme.OverlayBackgroundColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80921,7 +80921,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-padding": {
+	"padding": {
 		Doc:   "theme.Padding",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80931,7 +80931,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-place-holder-color": {
+	"place-holder-color": {
 		Doc:   "theme.PlaceHolderColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80941,7 +80941,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-pressed-color": {
+	"pressed-color": {
 		Doc:   "theme.PressedColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80951,7 +80951,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-primary-color": {
+	"primary-color": {
 		Doc:   "theme.PrimaryColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80961,7 +80961,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-primary-color-named": {
+	"primary-color-named": {
 		Doc:   "theme.PrimaryColorNamed",
 		Argsn: 1,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80969,7 +80969,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			if v, ok := arg0.(env.String); ok {
 				arg0Val = string(v.Value)
 			} else {
-				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "theme-primary-color-named")
+				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "primary-color-named")
 			}
 			res0 := theme.PrimaryColorNamed(arg0Val)
 			var res0Obj env.Object
@@ -80977,7 +80977,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-primary-color-names": {
+	"primary-color-names": {
 		Doc:   "theme.PrimaryColorNames",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -80993,7 +80993,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-question-icon": {
+	"question-icon": {
 		Doc:   "theme.QuestionIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81016,7 +81016,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-radio-button-checked-icon": {
+	"radio-button-checked-icon": {
 		Doc:   "theme.RadioButtonCheckedIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81039,7 +81039,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-radio-button-icon": {
+	"radio-button-icon": {
 		Doc:   "theme.RadioButtonIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81062,7 +81062,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-scroll-bar-color": {
+	"scroll-bar-color": {
 		Doc:   "theme.ScrollBarColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81072,7 +81072,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-scroll-bar-size": {
+	"scroll-bar-size": {
 		Doc:   "theme.ScrollBarSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81082,7 +81082,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-scroll-bar-small-size": {
+	"scroll-bar-small-size": {
 		Doc:   "theme.ScrollBarSmallSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81092,7 +81092,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-search-icon": {
+	"search-icon": {
 		Doc:   "theme.SearchIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81115,7 +81115,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-search-replace-icon": {
+	"search-replace-icon": {
 		Doc:   "theme.SearchReplaceIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81138,7 +81138,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-selection-color": {
+	"selection-color": {
 		Doc:   "theme.SelectionColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81148,7 +81148,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-selection-radius-size": {
+	"selection-radius-size": {
 		Doc:   "theme.SelectionRadiusSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81158,7 +81158,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-separator-color": {
+	"separator-color": {
 		Doc:   "theme.SeparatorColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81168,7 +81168,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-separator-thickness-size": {
+	"separator-thickness-size": {
 		Doc:   "theme.SeparatorThicknessSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81178,7 +81178,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-settings-icon": {
+	"settings-icon": {
 		Doc:   "theme.SettingsIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81201,7 +81201,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-shadow-color": {
+	"shadow-color": {
 		Doc:   "theme.ShadowColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81211,7 +81211,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-storage-icon": {
+	"storage-icon": {
 		Doc:   "theme.StorageIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81234,7 +81234,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-success-color": {
+	"success-color": {
 		Doc:   "theme.SuccessColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81244,7 +81244,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-symbol-font": {
+	"symbol-font": {
 		Doc:   "theme.SymbolFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81267,7 +81267,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-bold-font": {
+	"text-bold-font": {
 		Doc:   "theme.TextBoldFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81290,7 +81290,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-bold-italic-font": {
+	"text-bold-italic-font": {
 		Doc:   "theme.TextBoldItalicFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81313,7 +81313,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-color": {
+	"text-color": {
 		Doc:   "theme.TextColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81323,7 +81323,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-font": {
+	"text-font": {
 		Doc:   "theme.TextFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81346,7 +81346,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-heading-size": {
+	"text-heading-size": {
 		Doc:   "theme.TextHeadingSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81356,7 +81356,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-italic-font": {
+	"text-italic-font": {
 		Doc:   "theme.TextItalicFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81379,7 +81379,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-monospace-font": {
+	"text-monospace-font": {
 		Doc:   "theme.TextMonospaceFont",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81402,7 +81402,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-size": {
+	"text-size": {
 		Doc:   "theme.TextSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81412,7 +81412,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-text-sub-heading-size": {
+	"text-sub-heading-size": {
 		Doc:   "theme.TextSubHeadingSize",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81479,7 +81479,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
-	"theme-upload-icon": {
+	"upload-icon": {
 		Doc:   "theme.UploadIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81502,7 +81502,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-view-full-screen-icon": {
+	"view-full-screen-icon": {
 		Doc:   "theme.ViewFullScreenIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81525,7 +81525,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-view-refresh-icon": {
+	"view-refresh-icon": {
 		Doc:   "theme.ViewRefreshIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81548,7 +81548,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-view-restore-icon": {
+	"view-restore-icon": {
 		Doc:   "theme.ViewRestoreIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81571,7 +81571,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-visibility-icon": {
+	"visibility-icon": {
 		Doc:   "theme.VisibilityIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81594,7 +81594,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-visibility-off-icon": {
+	"visibility-off-icon": {
 		Doc:   "theme.VisibilityOffIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81617,7 +81617,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-volume-down-icon": {
+	"volume-down-icon": {
 		Doc:   "theme.VolumeDownIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81640,7 +81640,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-volume-mute-icon": {
+	"volume-mute-icon": {
 		Doc:   "theme.VolumeMuteIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81663,7 +81663,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-volume-up-icon": {
+	"volume-up-icon": {
 		Doc:   "theme.VolumeUpIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81686,7 +81686,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-warning-color": {
+	"warning-color": {
 		Doc:   "theme.WarningColor",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81696,7 +81696,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-warning-icon": {
+	"warning-icon": {
 		Doc:   "theme.WarningIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81719,7 +81719,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-zoom-fit-icon": {
+	"zoom-fit-icon": {
 		Doc:   "theme.ZoomFitIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81742,7 +81742,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-zoom-in-icon": {
+	"zoom-in-icon": {
 		Doc:   "theme.ZoomInIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
@@ -81765,7 +81765,7 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
-	"theme-zoom-out-icon": {
+	"zoom-out-icon": {
 		Doc:   "theme.ZoomOutIcon",
 		Argsn: 0,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {

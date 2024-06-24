@@ -19,7 +19,7 @@ do\in fynegen {
 		lab2 .set-text "Checkbox is " + chk-text + "."
 	}
 
-	btn1: button "Button" fn { } {
+	btn1: button-with-icon "Button" question-icon fn { } {
 		lab2 .set-text "Button clicked"
 	}
 

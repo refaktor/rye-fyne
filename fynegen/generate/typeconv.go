@@ -29,6 +29,19 @@ func ConvGoToRye(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string,
 	return "", false
 }
 
+func getUnderlyingType(ctx *Context, typ Ident) (Ident, bool) {
+	retOk := false
+	for {
+		if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
+			retOk = true
+			typ = underlying
+		} else {
+			break
+		}
+	}
+	return typ, retOk
+}
+
 // If conversion lists are declared directly, the compiler falsely complains of an initialization cycle.
 var ConvListRyeToGo []Converter
 var ConvListGoToRye []Converter
@@ -428,7 +441,7 @@ var convListRyeToGo = []Converter{
 	{
 		Name: "typedef",
 		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
-			underlying, ok := ctx.Data.Typedefs[typ.GoName]
+			underlying, ok := getUnderlyingType(ctx, typ)
 			if !ok {
 				return false
 			}
@@ -708,7 +721,7 @@ var convListGoToRye = []Converter{
 				cb.Linef(`typRyeName, ok := ryeStructNameLookup[typ.PkgPath() + "." + typPfx + typ.Name()]`)
 				isInterface = true
 			}
-			if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
+			if underlying, ok := getUnderlyingType(ctx, typ); ok {
 				if _, found := ConvGoToRye(
 					ctx,
 					cb,

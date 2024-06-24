@@ -10242,6 +10242,60 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"canvas-image-fill-contain": {
+		Doc:   "Get canvas.ImageFillContain value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(canvas.ImageFillContain)))
+			return resObj
+		},
+	},
+	"canvas-image-fill-original": {
+		Doc:   "Get canvas.ImageFillOriginal value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(canvas.ImageFillOriginal)))
+			return resObj
+		},
+	},
+	"canvas-image-fill-stretch": {
+		Doc:   "Get canvas.ImageFillStretch value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(canvas.ImageFillStretch)))
+			return resObj
+		},
+	},
+	"canvas-image-scale-fastest": {
+		Doc:   "Get canvas.ImageScaleFastest value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(canvas.ImageScaleFastest)))
+			return resObj
+		},
+	},
+	"canvas-image-scale-pixels": {
+		Doc:   "Get canvas.ImageScalePixels value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(canvas.ImageScalePixels)))
+			return resObj
+		},
+	},
+	"canvas-image-scale-smooth": {
+		Doc:   "Get canvas.ImageScaleSmooth value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(canvas.ImageScaleSmooth)))
+			return resObj
+		},
+	},
 	"canvas-image//file!": {
 		Doc:   "Set canvas.Image File value",
 		Argsn: 2,
@@ -14080,6 +14134,42 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"scroll-both": {
+		Doc:   "Get container.ScrollBoth value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.ScrollBoth)))
+			return resObj
+		},
+	},
+	"scroll-horizontal-only": {
+		Doc:   "Get container.ScrollHorizontalOnly value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.ScrollHorizontalOnly)))
+			return resObj
+		},
+	},
+	"scroll-none": {
+		Doc:   "Get container.ScrollNone value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.ScrollNone)))
+			return resObj
+		},
+	},
+	"scroll-vertical-only": {
+		Doc:   "Get container.ScrollVerticalOnly value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.ScrollVerticalOnly)))
+			return resObj
+		},
+	},
 	"container-split//hidden!": {
 		Doc:   "Set container.Split Hidden value",
 		Argsn: 2,
@@ -14516,6 +14606,42 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"tab-location-bottom": {
+		Doc:   "Get container.TabLocationBottom value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.TabLocationBottom)))
+			return resObj
+		},
+	},
+	"tab-location-leading": {
+		Doc:   "Get container.TabLocationLeading value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.TabLocationLeading)))
+			return resObj
+		},
+	},
+	"tab-location-top": {
+		Doc:   "Get container.TabLocationTop value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.TabLocationTop)))
+			return resObj
+		},
+	},
+	"tab-location-trailing": {
+		Doc:   "Get container.TabLocationTrailing value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(container.TabLocationTrailing)))
+			return resObj
+		},
+	},
 	"desktop-app//set-system-tray-icon": {
 		Doc:   "desktop.App.SetSystemTrayIcon",
 		Argsn: 2,
@@ -14734,6 +14860,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return arg0
 		},
 	},
+	"desktop-crosshair-cursor": {
+		Doc:   "Get desktop.CrosshairCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.CrosshairCursor)))
+			return resObj
+		},
+	},
 	"desktop-cursor//image": {
 		Doc:   "desktop.Cursor.Image",
 		Argsn: 1,
@@ -14864,6 +14999,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"desktop-default-cursor": {
+		Doc:   "Get desktop.DefaultCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.DefaultCursor)))
+			return resObj
+		},
+	},
 	"desktop-driver//create-splash-window": {
 		Doc:   "desktop.Driver.CreateSplashWindow",
 		Argsn: 1,
@@ -14927,6 +15071,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			var res0Obj env.Object
 			res0Obj = *env.NewInteger(int64(int(res0)))
 			return res0Obj
+		},
+	},
+	"desktop-h-resize-cursor": {
+		Doc:   "Get desktop.HResizeCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.HResizeCursor)))
+			return resObj
+		},
+	},
+	"desktop-hidden-cursor": {
+		Doc:   "Get desktop.HiddenCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.HiddenCursor)))
+			return resObj
 		},
 	},
 	"desktop-hoverable//mouse-in": {
@@ -15031,6 +15193,150 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			arg0Val.MouseOut()
 			return arg0
+		},
+	},
+	"desktop-key-alt-left": {
+		Doc:   "Get desktop.KeyAltLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyAltLeft))
+			return resObj
+		},
+	},
+	"desktop-key-alt-right": {
+		Doc:   "Get desktop.KeyAltRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyAltRight))
+			return resObj
+		},
+	},
+	"desktop-key-caps-lock": {
+		Doc:   "Get desktop.KeyCapsLock value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyCapsLock))
+			return resObj
+		},
+	},
+	"desktop-key-control-left": {
+		Doc:   "Get desktop.KeyControlLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyControlLeft))
+			return resObj
+		},
+	},
+	"desktop-key-control-right": {
+		Doc:   "Get desktop.KeyControlRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyControlRight))
+			return resObj
+		},
+	},
+	"desktop-key-menu": {
+		Doc:   "Get desktop.KeyMenu value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyMenu))
+			return resObj
+		},
+	},
+	"desktop-key-none": {
+		Doc:   "Get desktop.KeyNone value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyNone))
+			return resObj
+		},
+	},
+	"desktop-key-print-screen": {
+		Doc:   "Get desktop.KeyPrintScreen value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyPrintScreen))
+			return resObj
+		},
+	},
+	"desktop-key-shift-left": {
+		Doc:   "Get desktop.KeyShiftLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyShiftLeft))
+			return resObj
+		},
+	},
+	"desktop-key-shift-right": {
+		Doc:   "Get desktop.KeyShiftRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeyShiftRight))
+			return resObj
+		},
+	},
+	"desktop-key-super-left": {
+		Doc:   "Get desktop.KeySuperLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeySuperLeft))
+			return resObj
+		},
+	},
+	"desktop-key-super-right": {
+		Doc:   "Get desktop.KeySuperRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(desktop.KeySuperRight))
+			return resObj
+		},
+	},
+	"desktop-left-mouse-button": {
+		Doc:   "Get desktop.LeftMouseButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.LeftMouseButton)))
+			return resObj
+		},
+	},
+	"desktop-mouse-button-primary": {
+		Doc:   "Get desktop.MouseButtonPrimary value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.MouseButtonPrimary)))
+			return resObj
+		},
+	},
+	"desktop-mouse-button-secondary": {
+		Doc:   "Get desktop.MouseButtonSecondary value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.MouseButtonSecondary)))
+			return resObj
+		},
+	},
+	"desktop-mouse-button-tertiary": {
+		Doc:   "Get desktop.MouseButtonTertiary value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.MouseButtonTertiary)))
+			return resObj
 		},
 	},
 	"desktop-mouse-event//absolute-position!": {
@@ -15323,6 +15629,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return arg0
 		},
 	},
+	"desktop-pointer-cursor": {
+		Doc:   "Get desktop.PointerCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.PointerCursor)))
+			return resObj
+		},
+	},
+	"desktop-right-mouse-button": {
+		Doc:   "Get desktop.RightMouseButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.RightMouseButton)))
+			return resObj
+		},
+	},
 	"desktop-standard-cursor//image": {
 		Doc:   "desktop.StandardCursor.Image",
 		Argsn: 1,
@@ -15359,6 +15683,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				"2": res1Obj,
 				"3": res2Obj,
 			})
+		},
+	},
+	"desktop-text-cursor": {
+		Doc:   "Get desktop.TextCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.TextCursor)))
+			return resObj
+		},
+	},
+	"desktop-v-resize-cursor": {
+		Doc:   "Get desktop.VResizeCursor value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(desktop.VResizeCursor)))
+			return resObj
 		},
 	},
 	"dialog-color-picker-dialog//advanced!": {
@@ -18051,6 +18393,33 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			var res0Obj env.Object
 			res0Obj = *env.NewString(res0)
 			return res0Obj
+		},
+	},
+	"build-debug": {
+		Doc:   "Get fyne.BuildDebug value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.BuildDebug)))
+			return resObj
+		},
+	},
+	"build-release": {
+		Doc:   "Get fyne.BuildRelease value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.BuildRelease)))
+			return resObj
+		},
+	},
+	"build-standard": {
+		Doc:   "Get fyne.BuildStandard value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.BuildStandard)))
+			return resObj
 		},
 	},
 	"fyne-canvas-object//hide": {
@@ -20829,6 +21198,249 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"key-0": {
+		Doc:   "Get fyne.Key0 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key0))
+			return resObj
+		},
+	},
+	"key-1": {
+		Doc:   "Get fyne.Key1 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key1))
+			return resObj
+		},
+	},
+	"key-2": {
+		Doc:   "Get fyne.Key2 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key2))
+			return resObj
+		},
+	},
+	"key-3": {
+		Doc:   "Get fyne.Key3 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key3))
+			return resObj
+		},
+	},
+	"key-4": {
+		Doc:   "Get fyne.Key4 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key4))
+			return resObj
+		},
+	},
+	"key-5": {
+		Doc:   "Get fyne.Key5 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key5))
+			return resObj
+		},
+	},
+	"key-6": {
+		Doc:   "Get fyne.Key6 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key6))
+			return resObj
+		},
+	},
+	"key-7": {
+		Doc:   "Get fyne.Key7 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key7))
+			return resObj
+		},
+	},
+	"key-8": {
+		Doc:   "Get fyne.Key8 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key8))
+			return resObj
+		},
+	},
+	"key-9": {
+		Doc:   "Get fyne.Key9 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.Key9))
+			return resObj
+		},
+	},
+	"key-a": {
+		Doc:   "Get fyne.KeyA value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyA))
+			return resObj
+		},
+	},
+	"key-apostrophe": {
+		Doc:   "Get fyne.KeyApostrophe value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyApostrophe))
+			return resObj
+		},
+	},
+	"key-asterisk": {
+		Doc:   "Get fyne.KeyAsterisk value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyAsterisk))
+			return resObj
+		},
+	},
+	"key-b": {
+		Doc:   "Get fyne.KeyB value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyB))
+			return resObj
+		},
+	},
+	"key-back-tick": {
+		Doc:   "Get fyne.KeyBackTick value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyBackTick))
+			return resObj
+		},
+	},
+	"key-backslash": {
+		Doc:   "Get fyne.KeyBackslash value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyBackslash))
+			return resObj
+		},
+	},
+	"key-backspace": {
+		Doc:   "Get fyne.KeyBackspace value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyBackspace))
+			return resObj
+		},
+	},
+	"key-c": {
+		Doc:   "Get fyne.KeyC value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyC))
+			return resObj
+		},
+	},
+	"key-comma": {
+		Doc:   "Get fyne.KeyComma value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyComma))
+			return resObj
+		},
+	},
+	"key-d": {
+		Doc:   "Get fyne.KeyD value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyD))
+			return resObj
+		},
+	},
+	"key-delete": {
+		Doc:   "Get fyne.KeyDelete value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyDelete))
+			return resObj
+		},
+	},
+	"key-down": {
+		Doc:   "Get fyne.KeyDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyDown))
+			return resObj
+		},
+	},
+	"key-e": {
+		Doc:   "Get fyne.KeyE value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyE))
+			return resObj
+		},
+	},
+	"key-end": {
+		Doc:   "Get fyne.KeyEnd value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyEnd))
+			return resObj
+		},
+	},
+	"key-enter": {
+		Doc:   "Get fyne.KeyEnter value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyEnter))
+			return resObj
+		},
+	},
+	"key-equal": {
+		Doc:   "Get fyne.KeyEqual value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyEqual))
+			return resObj
+		},
+	},
+	"key-escape": {
+		Doc:   "Get fyne.KeyEscape value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyEscape))
+			return resObj
+		},
+	},
 	"fyne-key-event//name!": {
 		Doc:   "Set fyne.KeyEvent Name value",
 		Argsn: 2,
@@ -20931,6 +21543,501 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewNative(ps.Idx, self.Physical, "fyne-hardware-key")
+			return resObj
+		},
+	},
+	"key-f": {
+		Doc:   "Get fyne.KeyF value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF))
+			return resObj
+		},
+	},
+	"key-f-1": {
+		Doc:   "Get fyne.KeyF1 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF1))
+			return resObj
+		},
+	},
+	"key-f-10": {
+		Doc:   "Get fyne.KeyF10 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF10))
+			return resObj
+		},
+	},
+	"key-f-11": {
+		Doc:   "Get fyne.KeyF11 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF11))
+			return resObj
+		},
+	},
+	"key-f-12": {
+		Doc:   "Get fyne.KeyF12 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF12))
+			return resObj
+		},
+	},
+	"key-f-2": {
+		Doc:   "Get fyne.KeyF2 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF2))
+			return resObj
+		},
+	},
+	"key-f-3": {
+		Doc:   "Get fyne.KeyF3 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF3))
+			return resObj
+		},
+	},
+	"key-f-4": {
+		Doc:   "Get fyne.KeyF4 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF4))
+			return resObj
+		},
+	},
+	"key-f-5": {
+		Doc:   "Get fyne.KeyF5 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF5))
+			return resObj
+		},
+	},
+	"key-f-6": {
+		Doc:   "Get fyne.KeyF6 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF6))
+			return resObj
+		},
+	},
+	"key-f-7": {
+		Doc:   "Get fyne.KeyF7 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF7))
+			return resObj
+		},
+	},
+	"key-f-8": {
+		Doc:   "Get fyne.KeyF8 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF8))
+			return resObj
+		},
+	},
+	"key-f-9": {
+		Doc:   "Get fyne.KeyF9 value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyF9))
+			return resObj
+		},
+	},
+	"key-g": {
+		Doc:   "Get fyne.KeyG value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyG))
+			return resObj
+		},
+	},
+	"key-h": {
+		Doc:   "Get fyne.KeyH value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyH))
+			return resObj
+		},
+	},
+	"key-home": {
+		Doc:   "Get fyne.KeyHome value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyHome))
+			return resObj
+		},
+	},
+	"key-i": {
+		Doc:   "Get fyne.KeyI value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyI))
+			return resObj
+		},
+	},
+	"key-insert": {
+		Doc:   "Get fyne.KeyInsert value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyInsert))
+			return resObj
+		},
+	},
+	"key-j": {
+		Doc:   "Get fyne.KeyJ value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyJ))
+			return resObj
+		},
+	},
+	"key-k": {
+		Doc:   "Get fyne.KeyK value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyK))
+			return resObj
+		},
+	},
+	"key-l": {
+		Doc:   "Get fyne.KeyL value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyL))
+			return resObj
+		},
+	},
+	"key-left": {
+		Doc:   "Get fyne.KeyLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyLeft))
+			return resObj
+		},
+	},
+	"key-left-bracket": {
+		Doc:   "Get fyne.KeyLeftBracket value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyLeftBracket))
+			return resObj
+		},
+	},
+	"key-m": {
+		Doc:   "Get fyne.KeyM value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyM))
+			return resObj
+		},
+	},
+	"key-minus": {
+		Doc:   "Get fyne.KeyMinus value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyMinus))
+			return resObj
+		},
+	},
+	"key-modifier-alt": {
+		Doc:   "Get fyne.KeyModifierAlt value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.KeyModifierAlt)))
+			return resObj
+		},
+	},
+	"key-modifier-control": {
+		Doc:   "Get fyne.KeyModifierControl value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.KeyModifierControl)))
+			return resObj
+		},
+	},
+	"key-modifier-shift": {
+		Doc:   "Get fyne.KeyModifierShift value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.KeyModifierShift)))
+			return resObj
+		},
+	},
+	"key-modifier-super": {
+		Doc:   "Get fyne.KeyModifierSuper value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.KeyModifierSuper)))
+			return resObj
+		},
+	},
+	"key-n": {
+		Doc:   "Get fyne.KeyN value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyN))
+			return resObj
+		},
+	},
+	"key-o": {
+		Doc:   "Get fyne.KeyO value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyO))
+			return resObj
+		},
+	},
+	"key-p": {
+		Doc:   "Get fyne.KeyP value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyP))
+			return resObj
+		},
+	},
+	"key-page-down": {
+		Doc:   "Get fyne.KeyPageDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyPageDown))
+			return resObj
+		},
+	},
+	"key-page-up": {
+		Doc:   "Get fyne.KeyPageUp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyPageUp))
+			return resObj
+		},
+	},
+	"key-period": {
+		Doc:   "Get fyne.KeyPeriod value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyPeriod))
+			return resObj
+		},
+	},
+	"key-plus": {
+		Doc:   "Get fyne.KeyPlus value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyPlus))
+			return resObj
+		},
+	},
+	"key-q": {
+		Doc:   "Get fyne.KeyQ value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyQ))
+			return resObj
+		},
+	},
+	"key-r": {
+		Doc:   "Get fyne.KeyR value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyR))
+			return resObj
+		},
+	},
+	"key-return": {
+		Doc:   "Get fyne.KeyReturn value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyReturn))
+			return resObj
+		},
+	},
+	"key-right": {
+		Doc:   "Get fyne.KeyRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyRight))
+			return resObj
+		},
+	},
+	"key-right-bracket": {
+		Doc:   "Get fyne.KeyRightBracket value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyRightBracket))
+			return resObj
+		},
+	},
+	"key-s": {
+		Doc:   "Get fyne.KeyS value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyS))
+			return resObj
+		},
+	},
+	"key-semicolon": {
+		Doc:   "Get fyne.KeySemicolon value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeySemicolon))
+			return resObj
+		},
+	},
+	"key-slash": {
+		Doc:   "Get fyne.KeySlash value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeySlash))
+			return resObj
+		},
+	},
+	"key-space": {
+		Doc:   "Get fyne.KeySpace value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeySpace))
+			return resObj
+		},
+	},
+	"key-t": {
+		Doc:   "Get fyne.KeyT value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyT))
+			return resObj
+		},
+	},
+	"key-tab": {
+		Doc:   "Get fyne.KeyTab value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyTab))
+			return resObj
+		},
+	},
+	"key-u": {
+		Doc:   "Get fyne.KeyU value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyU))
+			return resObj
+		},
+	},
+	"key-unknown": {
+		Doc:   "Get fyne.KeyUnknown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyUnknown))
+			return resObj
+		},
+	},
+	"key-up": {
+		Doc:   "Get fyne.KeyUp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyUp))
+			return resObj
+		},
+	},
+	"key-v": {
+		Doc:   "Get fyne.KeyV value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyV))
+			return resObj
+		},
+	},
+	"key-w": {
+		Doc:   "Get fyne.KeyW value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyW))
+			return resObj
+		},
+	},
+	"key-x": {
+		Doc:   "Get fyne.KeyX value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyX))
+			return resObj
+		},
+	},
+	"key-y": {
+		Doc:   "Get fyne.KeyY value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyY))
+			return resObj
+		},
+	},
+	"key-z": {
+		Doc:   "Get fyne.KeyZ value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(fyne.KeyZ))
 			return resObj
 		},
 	},
@@ -23289,6 +24396,42 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewString(self.Title)
+			return resObj
+		},
+	},
+	"orientation-horizontal-left": {
+		Doc:   "Get fyne.OrientationHorizontalLeft value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.OrientationHorizontalLeft)))
+			return resObj
+		},
+	},
+	"orientation-horizontal-right": {
+		Doc:   "Get fyne.OrientationHorizontalRight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.OrientationHorizontalRight)))
+			return resObj
+		},
+	},
+	"orientation-vertical": {
+		Doc:   "Get fyne.OrientationVertical value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.OrientationVertical)))
+			return resObj
+		},
+	},
+	"orientation-vertical-upside-down": {
+		Doc:   "Get fyne.OrientationVerticalUpsideDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.OrientationVerticalUpsideDown)))
 			return resObj
 		},
 	},
@@ -26485,6 +27628,33 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return arg0
 		},
 	},
+	"text-align-center": {
+		Doc:   "Get fyne.TextAlignCenter value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextAlignCenter)))
+			return resObj
+		},
+	},
+	"text-align-leading": {
+		Doc:   "Get fyne.TextAlignLeading value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextAlignLeading)))
+			return resObj
+		},
+	},
+	"text-align-trailing": {
+		Doc:   "Get fyne.TextAlignTrailing value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextAlignTrailing)))
+			return resObj
+		},
+	},
 	"fyne-text-style//bold!": {
 		Doc:   "Set fyne.TextStyle Bold value",
 		Argsn: 2,
@@ -26697,6 +27867,69 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewInteger(int64(self.TabWidth))
+			return resObj
+		},
+	},
+	"text-truncate": {
+		Doc:   "Get fyne.TextTruncate value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextTruncate)))
+			return resObj
+		},
+	},
+	"text-truncate-clip": {
+		Doc:   "Get fyne.TextTruncateClip value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextTruncateClip)))
+			return resObj
+		},
+	},
+	"text-truncate-ellipsis": {
+		Doc:   "Get fyne.TextTruncateEllipsis value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextTruncateEllipsis)))
+			return resObj
+		},
+	},
+	"text-truncate-off": {
+		Doc:   "Get fyne.TextTruncateOff value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextTruncateOff)))
+			return resObj
+		},
+	},
+	"text-wrap-break": {
+		Doc:   "Get fyne.TextWrapBreak value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextWrapBreak)))
+			return resObj
+		},
+	},
+	"text-wrap-off": {
+		Doc:   "Get fyne.TextWrapOff value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextWrapOff)))
+			return resObj
+		},
+	},
+	"text-wrap-word": {
+		Doc:   "Get fyne.TextWrapWord value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(fyne.TextWrapWord)))
 			return resObj
 		},
 	},
@@ -28660,6 +29893,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"mobile-default-keyboard": {
+		Doc:   "Get mobile.DefaultKeyboard value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(mobile.DefaultKeyboard)))
+			return resObj
+		},
+	},
 	"mobile-device//hide-virtual-keyboard": {
 		Doc:   "mobile.Device.HideVirtualKeyboard",
 		Argsn: 1,
@@ -28774,6 +30016,42 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			arg0Val.GoBack()
 			return arg0
+		},
+	},
+	"mobile-key-back": {
+		Doc:   "Get mobile.KeyBack value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(mobile.KeyBack))
+			return resObj
+		},
+	},
+	"mobile-number-keyboard": {
+		Doc:   "Get mobile.NumberKeyboard value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(mobile.NumberKeyboard)))
+			return resObj
+		},
+	},
+	"mobile-password-keyboard": {
+		Doc:   "Get mobile.PasswordKeyboard value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(mobile.PasswordKeyboard)))
+			return resObj
+		},
+	},
+	"mobile-single-line-keyboard": {
+		Doc:   "Get mobile.SingleLineKeyboard value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int32(mobile.SingleLineKeyboard)))
+			return resObj
 		},
 	},
 	"mobile-touch-event//absolute-position!": {
@@ -78699,6 +79977,213 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"color-name-background": {
+		Doc:   "Get theme.ColorNameBackground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameBackground))
+			return resObj
+		},
+	},
+	"color-name-button": {
+		Doc:   "Get theme.ColorNameButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameButton))
+			return resObj
+		},
+	},
+	"color-name-disabled": {
+		Doc:   "Get theme.ColorNameDisabled value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameDisabled))
+			return resObj
+		},
+	},
+	"color-name-disabled-button": {
+		Doc:   "Get theme.ColorNameDisabledButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameDisabledButton))
+			return resObj
+		},
+	},
+	"color-name-error": {
+		Doc:   "Get theme.ColorNameError value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameError))
+			return resObj
+		},
+	},
+	"color-name-focus": {
+		Doc:   "Get theme.ColorNameFocus value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameFocus))
+			return resObj
+		},
+	},
+	"color-name-foreground": {
+		Doc:   "Get theme.ColorNameForeground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameForeground))
+			return resObj
+		},
+	},
+	"color-name-header-background": {
+		Doc:   "Get theme.ColorNameHeaderBackground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameHeaderBackground))
+			return resObj
+		},
+	},
+	"color-name-hover": {
+		Doc:   "Get theme.ColorNameHover value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameHover))
+			return resObj
+		},
+	},
+	"color-name-hyperlink": {
+		Doc:   "Get theme.ColorNameHyperlink value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameHyperlink))
+			return resObj
+		},
+	},
+	"color-name-input-background": {
+		Doc:   "Get theme.ColorNameInputBackground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameInputBackground))
+			return resObj
+		},
+	},
+	"color-name-input-border": {
+		Doc:   "Get theme.ColorNameInputBorder value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameInputBorder))
+			return resObj
+		},
+	},
+	"color-name-menu-background": {
+		Doc:   "Get theme.ColorNameMenuBackground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameMenuBackground))
+			return resObj
+		},
+	},
+	"color-name-overlay-background": {
+		Doc:   "Get theme.ColorNameOverlayBackground value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameOverlayBackground))
+			return resObj
+		},
+	},
+	"color-name-place-holder": {
+		Doc:   "Get theme.ColorNamePlaceHolder value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNamePlaceHolder))
+			return resObj
+		},
+	},
+	"color-name-pressed": {
+		Doc:   "Get theme.ColorNamePressed value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNamePressed))
+			return resObj
+		},
+	},
+	"color-name-primary": {
+		Doc:   "Get theme.ColorNamePrimary value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNamePrimary))
+			return resObj
+		},
+	},
+	"color-name-scroll-bar": {
+		Doc:   "Get theme.ColorNameScrollBar value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameScrollBar))
+			return resObj
+		},
+	},
+	"color-name-selection": {
+		Doc:   "Get theme.ColorNameSelection value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameSelection))
+			return resObj
+		},
+	},
+	"color-name-separator": {
+		Doc:   "Get theme.ColorNameSeparator value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameSeparator))
+			return resObj
+		},
+	},
+	"color-name-shadow": {
+		Doc:   "Get theme.ColorNameShadow value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameShadow))
+			return resObj
+		},
+	},
+	"color-name-success": {
+		Doc:   "Get theme.ColorNameSuccess value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameSuccess))
+			return resObj
+		},
+	},
+	"color-name-warning": {
+		Doc:   "Get theme.ColorNameWarning value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.ColorNameWarning))
+			return resObj
+		},
+	},
 	"color-palette-icon": {
 		Doc:   "theme.ColorPaletteIcon",
 		Argsn: 0,
@@ -79852,6 +81337,816 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			var res0Obj env.Object
 			res0Obj = *env.NewDecimal(float64(res0))
 			return res0Obj
+		},
+	},
+	"icon-name-account": {
+		Doc:   "Get theme.IconNameAccount value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameAccount))
+			return resObj
+		},
+	},
+	"icon-name-arrow-drop-down": {
+		Doc:   "Get theme.IconNameArrowDropDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameArrowDropDown))
+			return resObj
+		},
+	},
+	"icon-name-arrow-drop-up": {
+		Doc:   "Get theme.IconNameArrowDropUp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameArrowDropUp))
+			return resObj
+		},
+	},
+	"icon-name-broken-image": {
+		Doc:   "Get theme.IconNameBrokenImage value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameBrokenImage))
+			return resObj
+		},
+	},
+	"icon-name-cancel": {
+		Doc:   "Get theme.IconNameCancel value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameCancel))
+			return resObj
+		},
+	},
+	"icon-name-check-button": {
+		Doc:   "Get theme.IconNameCheckButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameCheckButton))
+			return resObj
+		},
+	},
+	"icon-name-check-button-checked": {
+		Doc:   "Get theme.IconNameCheckButtonChecked value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameCheckButtonChecked))
+			return resObj
+		},
+	},
+	"icon-name-color-achromatic": {
+		Doc:   "Get theme.IconNameColorAchromatic value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameColorAchromatic))
+			return resObj
+		},
+	},
+	"icon-name-color-chromatic": {
+		Doc:   "Get theme.IconNameColorChromatic value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameColorChromatic))
+			return resObj
+		},
+	},
+	"icon-name-color-palette": {
+		Doc:   "Get theme.IconNameColorPalette value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameColorPalette))
+			return resObj
+		},
+	},
+	"icon-name-computer": {
+		Doc:   "Get theme.IconNameComputer value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameComputer))
+			return resObj
+		},
+	},
+	"icon-name-confirm": {
+		Doc:   "Get theme.IconNameConfirm value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameConfirm))
+			return resObj
+		},
+	},
+	"icon-name-content-add": {
+		Doc:   "Get theme.IconNameContentAdd value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentAdd))
+			return resObj
+		},
+	},
+	"icon-name-content-clear": {
+		Doc:   "Get theme.IconNameContentClear value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentClear))
+			return resObj
+		},
+	},
+	"icon-name-content-copy": {
+		Doc:   "Get theme.IconNameContentCopy value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentCopy))
+			return resObj
+		},
+	},
+	"icon-name-content-cut": {
+		Doc:   "Get theme.IconNameContentCut value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentCut))
+			return resObj
+		},
+	},
+	"icon-name-content-paste": {
+		Doc:   "Get theme.IconNameContentPaste value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentPaste))
+			return resObj
+		},
+	},
+	"icon-name-content-redo": {
+		Doc:   "Get theme.IconNameContentRedo value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentRedo))
+			return resObj
+		},
+	},
+	"icon-name-content-remove": {
+		Doc:   "Get theme.IconNameContentRemove value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentRemove))
+			return resObj
+		},
+	},
+	"icon-name-content-undo": {
+		Doc:   "Get theme.IconNameContentUndo value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameContentUndo))
+			return resObj
+		},
+	},
+	"icon-name-delete": {
+		Doc:   "Get theme.IconNameDelete value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDelete))
+			return resObj
+		},
+	},
+	"icon-name-document": {
+		Doc:   "Get theme.IconNameDocument value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDocument))
+			return resObj
+		},
+	},
+	"icon-name-document-create": {
+		Doc:   "Get theme.IconNameDocumentCreate value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDocumentCreate))
+			return resObj
+		},
+	},
+	"icon-name-document-print": {
+		Doc:   "Get theme.IconNameDocumentPrint value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDocumentPrint))
+			return resObj
+		},
+	},
+	"icon-name-document-save": {
+		Doc:   "Get theme.IconNameDocumentSave value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDocumentSave))
+			return resObj
+		},
+	},
+	"icon-name-download": {
+		Doc:   "Get theme.IconNameDownload value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameDownload))
+			return resObj
+		},
+	},
+	"icon-name-error": {
+		Doc:   "Get theme.IconNameError value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameError))
+			return resObj
+		},
+	},
+	"icon-name-file": {
+		Doc:   "Get theme.IconNameFile value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFile))
+			return resObj
+		},
+	},
+	"icon-name-file-application": {
+		Doc:   "Get theme.IconNameFileApplication value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFileApplication))
+			return resObj
+		},
+	},
+	"icon-name-file-audio": {
+		Doc:   "Get theme.IconNameFileAudio value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFileAudio))
+			return resObj
+		},
+	},
+	"icon-name-file-image": {
+		Doc:   "Get theme.IconNameFileImage value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFileImage))
+			return resObj
+		},
+	},
+	"icon-name-file-text": {
+		Doc:   "Get theme.IconNameFileText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFileText))
+			return resObj
+		},
+	},
+	"icon-name-file-video": {
+		Doc:   "Get theme.IconNameFileVideo value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFileVideo))
+			return resObj
+		},
+	},
+	"icon-name-folder": {
+		Doc:   "Get theme.IconNameFolder value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFolder))
+			return resObj
+		},
+	},
+	"icon-name-folder-new": {
+		Doc:   "Get theme.IconNameFolderNew value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFolderNew))
+			return resObj
+		},
+	},
+	"icon-name-folder-open": {
+		Doc:   "Get theme.IconNameFolderOpen value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameFolderOpen))
+			return resObj
+		},
+	},
+	"icon-name-grid": {
+		Doc:   "Get theme.IconNameGrid value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameGrid))
+			return resObj
+		},
+	},
+	"icon-name-help": {
+		Doc:   "Get theme.IconNameHelp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameHelp))
+			return resObj
+		},
+	},
+	"icon-name-history": {
+		Doc:   "Get theme.IconNameHistory value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameHistory))
+			return resObj
+		},
+	},
+	"icon-name-home": {
+		Doc:   "Get theme.IconNameHome value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameHome))
+			return resObj
+		},
+	},
+	"icon-name-info": {
+		Doc:   "Get theme.IconNameInfo value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameInfo))
+			return resObj
+		},
+	},
+	"icon-name-list": {
+		Doc:   "Get theme.IconNameList value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameList))
+			return resObj
+		},
+	},
+	"icon-name-login": {
+		Doc:   "Get theme.IconNameLogin value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameLogin))
+			return resObj
+		},
+	},
+	"icon-name-logout": {
+		Doc:   "Get theme.IconNameLogout value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameLogout))
+			return resObj
+		},
+	},
+	"icon-name-mail-attachment": {
+		Doc:   "Get theme.IconNameMailAttachment value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailAttachment))
+			return resObj
+		},
+	},
+	"icon-name-mail-compose": {
+		Doc:   "Get theme.IconNameMailCompose value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailCompose))
+			return resObj
+		},
+	},
+	"icon-name-mail-forward": {
+		Doc:   "Get theme.IconNameMailForward value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailForward))
+			return resObj
+		},
+	},
+	"icon-name-mail-reply": {
+		Doc:   "Get theme.IconNameMailReply value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailReply))
+			return resObj
+		},
+	},
+	"icon-name-mail-reply-all": {
+		Doc:   "Get theme.IconNameMailReplyAll value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailReplyAll))
+			return resObj
+		},
+	},
+	"icon-name-mail-send": {
+		Doc:   "Get theme.IconNameMailSend value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMailSend))
+			return resObj
+		},
+	},
+	"icon-name-media-fast-forward": {
+		Doc:   "Get theme.IconNameMediaFastForward value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaFastForward))
+			return resObj
+		},
+	},
+	"icon-name-media-fast-rewind": {
+		Doc:   "Get theme.IconNameMediaFastRewind value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaFastRewind))
+			return resObj
+		},
+	},
+	"icon-name-media-music": {
+		Doc:   "Get theme.IconNameMediaMusic value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaMusic))
+			return resObj
+		},
+	},
+	"icon-name-media-pause": {
+		Doc:   "Get theme.IconNameMediaPause value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaPause))
+			return resObj
+		},
+	},
+	"icon-name-media-photo": {
+		Doc:   "Get theme.IconNameMediaPhoto value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaPhoto))
+			return resObj
+		},
+	},
+	"icon-name-media-play": {
+		Doc:   "Get theme.IconNameMediaPlay value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaPlay))
+			return resObj
+		},
+	},
+	"icon-name-media-record": {
+		Doc:   "Get theme.IconNameMediaRecord value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaRecord))
+			return resObj
+		},
+	},
+	"icon-name-media-replay": {
+		Doc:   "Get theme.IconNameMediaReplay value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaReplay))
+			return resObj
+		},
+	},
+	"icon-name-media-skip-next": {
+		Doc:   "Get theme.IconNameMediaSkipNext value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaSkipNext))
+			return resObj
+		},
+	},
+	"icon-name-media-skip-previous": {
+		Doc:   "Get theme.IconNameMediaSkipPrevious value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaSkipPrevious))
+			return resObj
+		},
+	},
+	"icon-name-media-stop": {
+		Doc:   "Get theme.IconNameMediaStop value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaStop))
+			return resObj
+		},
+	},
+	"icon-name-media-video": {
+		Doc:   "Get theme.IconNameMediaVideo value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMediaVideo))
+			return resObj
+		},
+	},
+	"icon-name-menu": {
+		Doc:   "Get theme.IconNameMenu value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMenu))
+			return resObj
+		},
+	},
+	"icon-name-menu-expand": {
+		Doc:   "Get theme.IconNameMenuExpand value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMenuExpand))
+			return resObj
+		},
+	},
+	"icon-name-more-horizontal": {
+		Doc:   "Get theme.IconNameMoreHorizontal value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMoreHorizontal))
+			return resObj
+		},
+	},
+	"icon-name-more-vertical": {
+		Doc:   "Get theme.IconNameMoreVertical value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMoreVertical))
+			return resObj
+		},
+	},
+	"icon-name-move-down": {
+		Doc:   "Get theme.IconNameMoveDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMoveDown))
+			return resObj
+		},
+	},
+	"icon-name-move-up": {
+		Doc:   "Get theme.IconNameMoveUp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameMoveUp))
+			return resObj
+		},
+	},
+	"icon-name-navigate-back": {
+		Doc:   "Get theme.IconNameNavigateBack value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameNavigateBack))
+			return resObj
+		},
+	},
+	"icon-name-navigate-next": {
+		Doc:   "Get theme.IconNameNavigateNext value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameNavigateNext))
+			return resObj
+		},
+	},
+	"icon-name-question": {
+		Doc:   "Get theme.IconNameQuestion value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameQuestion))
+			return resObj
+		},
+	},
+	"icon-name-radio-button": {
+		Doc:   "Get theme.IconNameRadioButton value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameRadioButton))
+			return resObj
+		},
+	},
+	"icon-name-radio-button-checked": {
+		Doc:   "Get theme.IconNameRadioButtonChecked value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameRadioButtonChecked))
+			return resObj
+		},
+	},
+	"icon-name-search": {
+		Doc:   "Get theme.IconNameSearch value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameSearch))
+			return resObj
+		},
+	},
+	"icon-name-search-replace": {
+		Doc:   "Get theme.IconNameSearchReplace value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameSearchReplace))
+			return resObj
+		},
+	},
+	"icon-name-settings": {
+		Doc:   "Get theme.IconNameSettings value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameSettings))
+			return resObj
+		},
+	},
+	"icon-name-storage": {
+		Doc:   "Get theme.IconNameStorage value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameStorage))
+			return resObj
+		},
+	},
+	"icon-name-upload": {
+		Doc:   "Get theme.IconNameUpload value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameUpload))
+			return resObj
+		},
+	},
+	"icon-name-view-full-screen": {
+		Doc:   "Get theme.IconNameViewFullScreen value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewFullScreen))
+			return resObj
+		},
+	},
+	"icon-name-view-refresh": {
+		Doc:   "Get theme.IconNameViewRefresh value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewRefresh))
+			return resObj
+		},
+	},
+	"icon-name-view-restore": {
+		Doc:   "Get theme.IconNameViewRestore value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewRestore))
+			return resObj
+		},
+	},
+	"icon-name-view-zoom-fit": {
+		Doc:   "Get theme.IconNameViewZoomFit value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewZoomFit))
+			return resObj
+		},
+	},
+	"icon-name-view-zoom-in": {
+		Doc:   "Get theme.IconNameViewZoomIn value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewZoomIn))
+			return resObj
+		},
+	},
+	"icon-name-view-zoom-out": {
+		Doc:   "Get theme.IconNameViewZoomOut value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameViewZoomOut))
+			return resObj
+		},
+	},
+	"icon-name-visibility": {
+		Doc:   "Get theme.IconNameVisibility value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameVisibility))
+			return resObj
+		},
+	},
+	"icon-name-visibility-off": {
+		Doc:   "Get theme.IconNameVisibilityOff value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameVisibilityOff))
+			return resObj
+		},
+	},
+	"icon-name-volume-down": {
+		Doc:   "Get theme.IconNameVolumeDown value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameVolumeDown))
+			return resObj
+		},
+	},
+	"icon-name-volume-mute": {
+		Doc:   "Get theme.IconNameVolumeMute value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameVolumeMute))
+			return resObj
+		},
+	},
+	"icon-name-volume-up": {
+		Doc:   "Get theme.IconNameVolumeUp value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameVolumeUp))
+			return resObj
+		},
+	},
+	"icon-name-warning": {
+		Doc:   "Get theme.IconNameWarning value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.IconNameWarning))
+			return resObj
 		},
 	},
 	"info-icon": {
@@ -81211,6 +83506,132 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"size-name-caption-text": {
+		Doc:   "Get theme.SizeNameCaptionText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameCaptionText))
+			return resObj
+		},
+	},
+	"size-name-heading-text": {
+		Doc:   "Get theme.SizeNameHeadingText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameHeadingText))
+			return resObj
+		},
+	},
+	"size-name-inline-icon": {
+		Doc:   "Get theme.SizeNameInlineIcon value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameInlineIcon))
+			return resObj
+		},
+	},
+	"size-name-inner-padding": {
+		Doc:   "Get theme.SizeNameInnerPadding value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameInnerPadding))
+			return resObj
+		},
+	},
+	"size-name-input-border": {
+		Doc:   "Get theme.SizeNameInputBorder value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameInputBorder))
+			return resObj
+		},
+	},
+	"size-name-input-radius": {
+		Doc:   "Get theme.SizeNameInputRadius value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameInputRadius))
+			return resObj
+		},
+	},
+	"size-name-line-spacing": {
+		Doc:   "Get theme.SizeNameLineSpacing value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameLineSpacing))
+			return resObj
+		},
+	},
+	"size-name-padding": {
+		Doc:   "Get theme.SizeNamePadding value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNamePadding))
+			return resObj
+		},
+	},
+	"size-name-scroll-bar": {
+		Doc:   "Get theme.SizeNameScrollBar value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameScrollBar))
+			return resObj
+		},
+	},
+	"size-name-scroll-bar-small": {
+		Doc:   "Get theme.SizeNameScrollBarSmall value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameScrollBarSmall))
+			return resObj
+		},
+	},
+	"size-name-selection-radius": {
+		Doc:   "Get theme.SizeNameSelectionRadius value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameSelectionRadius))
+			return resObj
+		},
+	},
+	"size-name-separator-thickness": {
+		Doc:   "Get theme.SizeNameSeparatorThickness value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameSeparatorThickness))
+			return resObj
+		},
+	},
+	"size-name-sub-heading-text": {
+		Doc:   "Get theme.SizeNameSubHeadingText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameSubHeadingText))
+			return resObj
+		},
+	},
+	"size-name-text": {
+		Doc:   "Get theme.SizeNameText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewString(string(theme.SizeNameText))
+			return resObj
+		},
+	},
 	"storage-icon": {
 		Doc:   "theme.StorageIcon",
 		Argsn: 0,
@@ -81500,6 +83921,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				}
 			}
 			return res0Obj
+		},
+	},
+	"variant-dark": {
+		Doc:   "Get theme.VariantDark value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(uint(theme.VariantDark)))
+			return resObj
+		},
+	},
+	"variant-light": {
+		Doc:   "Get theme.VariantLight value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(uint(theme.VariantLight)))
+			return resObj
 		},
 	},
 	"view-full-screen-icon": {
@@ -82251,6 +84690,51 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewInteger(boolToInt64(self.Hidden))
+			return resObj
+		},
+	},
+	"button-align-center": {
+		Doc:   "Get widget.ButtonAlignCenter value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.ButtonAlignCenter)))
+			return resObj
+		},
+	},
+	"button-align-leading": {
+		Doc:   "Get widget.ButtonAlignLeading value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.ButtonAlignLeading)))
+			return resObj
+		},
+	},
+	"button-align-trailing": {
+		Doc:   "Get widget.ButtonAlignTrailing value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.ButtonAlignTrailing)))
+			return resObj
+		},
+	},
+	"button-icon-leading-text": {
+		Doc:   "Get widget.ButtonIconLeadingText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.ButtonIconLeadingText)))
+			return resObj
+		},
+	},
+	"button-icon-trailing-text": {
+		Doc:   "Get widget.ButtonIconTrailingText value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.ButtonIconTrailingText)))
 			return resObj
 		},
 	},
@@ -83484,6 +85968,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewNative(ps.Idx, self.FGColor, "color-color")
+			return resObj
+		},
+	},
+	"danger-importance": {
+		Doc:   "Get widget.DangerImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.DangerImportance)))
 			return resObj
 		},
 	},
@@ -85266,6 +87759,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"high-importance": {
+		Doc:   "Get widget.HighImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.HighImportance)))
+			return resObj
+		},
+	},
+	"horizontal": {
+		Doc:   "Get widget.Horizontal value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.Horizontal)))
+			return resObj
+		},
+	},
 	"widget-hyperlink-segment//alignment!": {
 		Doc:   "Set widget.HyperlinkSegment Alignment value",
 		Argsn: 2,
@@ -86935,6 +89446,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewNative(ps.Idx, self.UpdateItem, "func(widget-list-item-id_fyne-canvas-object)")
+			return resObj
+		},
+	},
+	"low-importance": {
+		Doc:   "Get widget.LowImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.LowImportance)))
+			return resObj
+		},
+	},
+	"medium-importance": {
+		Doc:   "Get widget.MediumImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.MediumImportance)))
 			return resObj
 		},
 	},
@@ -93078,6 +95607,15 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			return resObj
 		},
 	},
+	"success-importance": {
+		Doc:   "Get widget.SuccessImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.SuccessImportance)))
+			return resObj
+		},
+	},
 	"widget-table-cell-id//col!": {
 		Doc:   "Set widget.TableCellID Col value",
 		Argsn: 2,
@@ -94069,6 +96607,50 @@ var Builtins_fynegen = map[string]*env.Builtin{
 					resObj = *env.NewNative(ps.Idx, self.Style, typRyeName)
 				} else {
 					resObj = *env.NewNative(ps.Idx, self.Style, "widget-text-grid-style")
+				}
+			}
+			return resObj
+		},
+	},
+	"text-grid-style-default": {
+		Doc:   "Get widget.TextGridStyleDefault value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			{
+				typ := reflect.TypeOf(widget.TextGridStyleDefault)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, widget.TextGridStyleDefault, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, widget.TextGridStyleDefault, "widget-text-grid-style")
+				}
+			}
+			return resObj
+		},
+	},
+	"text-grid-style-whitespace": {
+		Doc:   "Get widget.TextGridStyleWhitespace value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			{
+				typ := reflect.TypeOf(widget.TextGridStyleWhitespace)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, widget.TextGridStyleWhitespace, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, widget.TextGridStyleWhitespace, "widget-text-grid-style")
 				}
 			}
 			return resObj
@@ -95356,6 +97938,24 @@ var Builtins_fynegen = map[string]*env.Builtin{
 			}
 			var resObj env.Object
 			resObj = *env.NewNative(ps.Idx, self.UpdateNode, "func(widget-tree-node-id_bool_fyne-canvas-object)")
+			return resObj
+		},
+	},
+	"vertical": {
+		Doc:   "Get widget.Vertical value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.Vertical)))
+			return resObj
+		},
+	},
+	"warning-importance": {
+		Doc:   "Get widget.WarningImportance value",
+		Argsn: 0,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var resObj env.Object
+			resObj = *env.NewInteger(int64(int(widget.WarningImportance)))
 			return resObj
 		},
 	},

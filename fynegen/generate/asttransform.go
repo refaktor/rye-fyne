@@ -561,6 +561,7 @@ type Data struct {
 	Interfaces map[string]*Interface
 	Structs    map[string]*Struct
 	Typedefs   map[string]Ident
+	Values     map[string]NamedIdent // consts and vars
 }
 
 func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath string, moduleNames map[string]string) error {
@@ -624,7 +625,36 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath strin
 			}
 			d.Funcs[FuncGoIdent(fn)] = fn
 		case *ast.GenDecl:
-			if decl.Tok == token.TYPE {
+			if decl.Tok == token.CONST || decl.Tok == token.VAR {
+				var typ *Ident
+				for _, spec := range decl.Specs {
+					if valSpec, ok := spec.(*ast.ValueSpec); ok {
+						if valSpec.Type != nil {
+							newTyp, err := NewIdent(ctx, file, valSpec.Type)
+							if err != nil {
+								return err
+							}
+							typ = &newTyp
+						}
+						if typ == nil {
+							continue
+						}
+						for _, specName := range valSpec.Names {
+							if !specName.IsExported() {
+								continue
+							}
+							name, err := NewIdent(ctx, file, specName)
+							if err != nil {
+								return err
+							}
+							d.Values[name.GoName] = NamedIdent{
+								Type: *typ,
+								Name: name,
+							}
+						}
+					}
+				}
+			} else if decl.Tok == token.TYPE {
 				if typeSpec, ok := decl.Specs[0].(*ast.TypeSpec); ok {
 					if !typeSpec.Name.IsExported() {
 						continue

@@ -265,6 +265,33 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 	return res, nil
 }
 
+func GenerateValue(ctx *Context, value NamedIdent, indent int) (*BindingFunc, error) {
+	res := &BindingFunc{}
+	res.Name = value.Name.RyeName
+	res.NameIdent = &value.Name
+	res.Doc = fmt.Sprintf("Get %v value", value.Name.GoName)
+	res.Argsn = 0
+
+	var cb CodeBuilder
+	cb.Indent = indent
+
+	cb.Linef(`var resObj env.Object`)
+	if _, found := ConvGoToRye(
+		ctx,
+		&cb,
+		value.Type,
+		`resObj`,
+		value.Name.GoName,
+		nil,
+	); !found {
+		return nil, errors.New("unhandled type conversion (go to rye): " + value.Type.GoName)
+	}
+	cb.Linef(`return resObj`)
+	res.Body = cb.String()
+
+	return res, nil
+}
+
 // Order of importance (descending):
 // - Part of stdlib
 // - Prefix of preferPkg
@@ -409,6 +436,7 @@ func main() {
 		Interfaces: make(map[string]*Interface),
 		Structs:    make(map[string]*Struct),
 		Typedefs:   make(map[string]Ident),
+		Values:     make(map[string]NamedIdent),
 	}
 	ctx := &Context{
 		Config:      &cfg,
@@ -481,6 +509,19 @@ func main() {
 				}
 			}
 		}
+	}
+
+	for _, value := range data.Values {
+		if IdentIsInternal(ctx, value.Name) {
+			continue
+		}
+		bind, err := GenerateValue(ctx, value, bindingCodeIndent)
+		if err != nil {
+			s := value.Name.RyeName
+			fmt.Println(s+":", err)
+			continue
+		}
+		bindingFuncs[bind.FullName()] = bind
 	}
 
 	// rye ident to list of modules with priority

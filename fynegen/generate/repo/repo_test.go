@@ -10,15 +10,22 @@ import (
 	"github.com/refaktor/rye-front/fynegen/generate/repo"
 )
 
-func testRepo(t *testing.T, dir, pkg, semver, wantFile string) {
-	path, err := repo.Get(dir, pkg, semver)
+func testRepo(t *testing.T, dir, pkg, version, wantFile string) {
+	t.Log("Downloading", pkg, version)
+
+	path, err := repo.Get(dir, pkg, version)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if semver != "" && semver != "latest" {
+	if version != "" && version != "latest" {
 		gotPath := filepath.ToSlash(path)
-		wantPath := filepath.ToSlash(filepath.Join(dir, strings.ToLower(pkg)+"@"+semver))
+		var wantPath string
+		if pkg == "std" {
+			wantPath = filepath.ToSlash(filepath.Join(dir, "go-go"+version, "src"))
+		} else {
+			wantPath = filepath.ToSlash(filepath.Join(dir, strings.ToLower(pkg)+"@"+version))
+		}
 		if gotPath != wantPath {
 			t.Fatalf("expected path %v, but got %v", wantPath, gotPath)
 		}
@@ -41,6 +48,8 @@ func TestRepo(t *testing.T) {
 	testRepo(t, "test-out", "github.com/fogleman/gg", "", "gradient.go")
 	// Latest version
 	testRepo(t, "test-out", "github.com/BurntSushi/toml", "latest", "")
+	// Go stdlib
+	testRepo(t, "test-out", "std", "1.21.5", "bytes/buffer.go")
 
 	// Windows tends to complain of simultaneous access (although all files were closed).
 	time.Sleep(500 * time.Millisecond)

@@ -7,35 +7,83 @@ import (
 	"go/format"
 	"go/token"
 	"log"
+	"math"
 	"os"
+	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
+	"time"
 
 	"golang.org/x/mod/module"
 
 	"github.com/BurntSushi/toml"
+	"github.com/iancoleman/strcase"
 	"github.com/refaktor/rye-front/fynegen/generate/repo"
 )
 
 var fset = token.NewFileSet()
 
-func makeMakeRetArgErr(argn int, funcName string) func(allowedTypes ...string) string {
+func makeMakeRetArgErr(argn int) func(allowedTypes ...string) string {
 	return func(allowedTypes ...string) string {
 		allowedTypesPfx := make([]string, len(allowedTypes))
 		for i := range allowedTypes {
 			allowedTypesPfx[i] = "env." + allowedTypes[i]
 		}
 		return fmt.Sprintf(
-			`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "%v")`,
+			`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "((RYEGEN:FUNCNAME))")`,
 			argn,
 			strings.Join(allowedTypesPfx, ", "),
-			funcName,
 		)
 	}
 }
 
-func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code string, err error) {
-	name = FuncRyeIdent(fn)
+type BindingFunc struct {
+	Recv      string
+	Name      string
+	NameIdent *Ident
+	Doc       string
+	Argsn     int
+	Body      string
+}
+
+func (bind *BindingFunc) FullName() string {
+	if bind.Recv != "" {
+		return bind.Recv + "//" + bind.Name
+	} else {
+		return bind.Name
+	}
+}
+
+func (bind *BindingFunc) SplitGoNameAndMod() (string, *File) {
+	file := bind.NameIdent.File
+	var name string
+	switch expr := bind.NameIdent.Expr.(type) {
+	case *ast.Ident:
+		name = expr.Name
+	case *ast.SelectorExpr:
+		mod, ok := expr.X.(*ast.Ident)
+		if !ok {
+			panic("expected ast.SelectorExpr.X to be of type *ast.Ident")
+		}
+		file, ok = file.ImportsByName[mod.Name]
+		if !ok {
+			panic(fmt.Errorf("module %v imported by %v not found", mod.Name, file.Name))
+		}
+		name = expr.Sel.Name
+	default:
+		panic("expected func name identifier to be of type *ast.Ident or *ast.SelectorExpr")
+	}
+	return name, file
+}
+
+func GenerateBinding(ctx *Context, fn *Func, indent int) (*BindingFunc, error) {
+	res := &BindingFunc{}
+	res.Name = fn.Name.RyeName
+	res.NameIdent = &fn.Name
+	if fn.Recv != nil {
+		res.Recv = fn.Recv.RyeName
+	}
 
 	var cb CodeBuilder
 	cb.Indent = indent
@@ -47,15 +95,12 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code stri
 	}
 
 	if len(params) > 5 {
-		return "", "", errors.New("can only handle at most 5 parameters")
+		return nil, errors.New("can only handle at most 5 parameters")
 	}
 
-	cb.Linef(`"%v": {`, name)
-	cb.Indent++
-	cb.Linef(`Doc: "%v",`, FuncGoIdent(fn))
-	cb.Linef(`Argsn: %v,`, len(params))
-	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
-	cb.Indent++
+	res.Doc = FuncGoIdent(fn)
+	res.Argsn = len(params)
+
 	for i, param := range params {
 		cb.Linef(`var arg%vVal %v`, i, param.Type.GoName)
 		ctx.MarkUsed(param.Type)
@@ -63,11 +108,11 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code stri
 			ctx,
 			&cb,
 			param.Type,
-			fmt.Sprintf(`arg%v`, i),
 			fmt.Sprintf(`arg%vVal`, i),
-			makeMakeRetArgErr(i, name),
+			fmt.Sprintf(`arg%v`, i),
+			makeMakeRetArgErr(i),
 		); !found {
-			return "", "", errors.New("unhandled type conversion (rye to go): " + param.Type.GoName)
+			return nil, errors.New("unhandled type conversion (rye to go): " + param.Type.GoName)
 		}
 	}
 
@@ -116,11 +161,11 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code stri
 				ctx,
 				&cb,
 				result.Type,
-				fmt.Sprintf(`res%v`, i),
 				fmt.Sprintf(`res%vObj`, i),
+				fmt.Sprintf(`res%v`, i),
 				nil,
 			); !found {
-				return "", "", errors.New("unhandled type conversion (go to rye): " + result.Type.GoName)
+				return nil, errors.New("unhandled type conversion (go to rye): " + result.Type.GoName)
 			}
 		}
 		if len(fn.Results) == 1 {
@@ -141,43 +186,39 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (name string, code stri
 			cb.Linef(`return arg0`)
 		}
 	}
-	cb.Indent--
-	cb.Linef(`},`)
-	cb.Indent--
-	cb.Linef(`},`)
+	res.Body = cb.String()
 
-	return name, cb.String(), nil
+	return res, nil
 }
 
-func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (name string, code string, err error) {
+func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, indent int, ptrToStruct, setter bool) (*BindingFunc, error) {
+	res := &BindingFunc{}
+
 	if ptrToStruct {
 		var err error
 		structName, err = NewIdent(ctx, structName.File, &ast.StarExpr{X: structName.Expr})
 		if err != nil {
-			return "", "", err
+			return nil, err
 		}
 	}
 
+	res.Recv = structName.RyeName
 	if setter {
-		name = fmt.Sprintf("%v//%v!", structName.RyeName, field.Name.RyeName)
+		res.Name = field.Name.RyeName + "!"
 	} else {
-		name = fmt.Sprintf("%v//%v?", structName.RyeName, field.Name.RyeName)
+		res.Name = field.Name.RyeName + "?"
 	}
 
 	var cb CodeBuilder
 	cb.Indent = indent
 
-	cb.Linef(`"%v": {`, name)
-	cb.Indent++
 	if setter {
-		cb.Linef(`Doc: "Set %v %v value",`, structName.GoName, field.Name.GoName)
-		cb.Linef(`Argsn: 2,`)
+		res.Doc = fmt.Sprintf("Set %v %v value", structName.GoName, field.Name.GoName)
+		res.Argsn = 2
 	} else {
-		cb.Linef(`Doc: "Get %v %v value",`, structName.GoName, field.Name.GoName)
-		cb.Linef(`Argsn: 1,`)
+		res.Doc = fmt.Sprintf("Get %v %v value", structName.GoName, field.Name.GoName)
+		res.Argsn = 1
 	}
-	cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
-	cb.Indent++
 
 	cb.Linef(`var self %v`, structName.GoName)
 	ctx.MarkUsed(structName)
@@ -185,11 +226,11 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 		ctx,
 		&cb,
 		structName,
-		`arg0`,
 		`self`,
-		makeMakeRetArgErr(0, name),
+		`arg0`,
+		makeMakeRetArgErr(0),
 	); !found {
-		return "", "", errors.New("unhandled type conversion (go to rye): " + structName.GoName)
+		return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
 	}
 
 	if setter {
@@ -197,11 +238,11 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			ctx,
 			&cb,
 			field.Type,
-			`arg1`,
 			`self.`+field.Name.GoName,
-			makeMakeRetArgErr(1, name),
+			`arg1`,
+			makeMakeRetArgErr(1),
 		); !found {
-			return "", "", errors.New("unhandled type conversion (go to rye): " + structName.GoName)
+			return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
 		}
 
 		cb.Linef(`return arg0`)
@@ -211,21 +252,82 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			ctx,
 			&cb,
 			field.Type,
-			`self.`+field.Name.GoName,
 			`resObj`,
+			`self.`+field.Name.GoName,
 			nil,
 		); !found {
-			return "", "", errors.New("unhandled type conversion (go to rye): " + field.Type.GoName)
+			return nil, errors.New("unhandled type conversion (go to rye): " + field.Type.GoName)
 		}
 		cb.Linef(`return resObj`)
 	}
+	res.Body = cb.String()
 
-	cb.Indent--
-	cb.Linef(`},`)
-	cb.Indent--
-	cb.Linef(`},`)
+	return res, nil
+}
 
-	return name, cb.String(), nil
+func GenerateValue(ctx *Context, value NamedIdent, indent int) (*BindingFunc, error) {
+	res := &BindingFunc{}
+	res.Name = value.Name.RyeName
+	res.NameIdent = &value.Name
+	res.Doc = fmt.Sprintf("Get %v value", value.Name.GoName)
+	res.Argsn = 0
+
+	var cb CodeBuilder
+	cb.Indent = indent
+
+	cb.Linef(`var resObj env.Object`)
+	if _, found := ConvGoToRye(
+		ctx,
+		&cb,
+		value.Type,
+		`resObj`,
+		value.Name.GoName,
+		nil,
+	); !found {
+		return nil, errors.New("unhandled type conversion (go to rye): " + value.Type.GoName)
+	}
+	cb.Linef(`return resObj`)
+	res.Body = cb.String()
+
+	return res, nil
+}
+
+// Order of importance (descending):
+// - Part of stdlib
+// - Prefix of preferPkg
+// - Shorter path
+// - Smaller string according to strings.Compare
+func makeCompareModulePaths(preferPkg string) func(a, b string) int {
+	return func(a, b string) int {
+		{
+			aSp := strings.SplitN(a, "/", 2)
+			bSp := strings.SplitN(b, "/", 2)
+			if len(aSp) > 0 && len(bSp) > 0 {
+				aStd := !strings.Contains(aSp[0], ".")
+				bStd := !strings.Contains(bSp[0], ".")
+				if aStd && !bStd {
+					return -1
+				} else if !aStd && bStd {
+					return 1
+				}
+			}
+		}
+		if preferPkg != "" {
+			aPfx := strings.HasPrefix(a, preferPkg)
+			bPfx := strings.HasPrefix(b, preferPkg)
+			if aPfx && !bPfx {
+				return -1
+			} else if !aPfx && bPfx {
+				return 1
+			}
+		}
+		if len(a) < len(b) {
+			return -1
+		} else if len(a) > len(b) {
+			return 1
+		}
+		return strings.Compare(a, b)
+	}
 }
 
 func main() {
@@ -248,14 +350,14 @@ func main() {
 
 	dstPath := "_srcrepos"
 
-	getRepo := func(pkg, semver string) (string, error) {
-		have, dir, err := repo.Have(dstPath, pkg, semver)
+	getRepo := func(pkg, version string) (string, error) {
+		have, dir, _, err := repo.Have(dstPath, pkg, version)
 		if err != nil {
 			return "", err
 		}
 		if !have {
-			log.Printf("downloading %v %v\n", pkg, semver)
-			_, err := repo.Get(dstPath, pkg, semver)
+			log.Printf("downloading %v %v\n", pkg, version)
+			_, err := repo.Get(dstPath, pkg, version)
 			if err != nil {
 				return "", err
 			}
@@ -269,35 +371,57 @@ func main() {
 		os.Exit(1)
 	}
 
-	moduleNames := make(map[string]string)
+	moduleNames := make(map[string]string) // module path to name
 	{
-		addPkgNames := func(dir, modulePath string) ([]module.Version, error) {
-			pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
+		addPkgNames := func(dir, modulePath string) (string, []module.Version, error) {
+			goVer, pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
 			if err != nil {
-				return nil, err
+				return "", nil, err
 			}
 			for mod, name := range pkgNms {
 				moduleNames[mod] = name
 			}
-			return req, nil
+			return goVer, req, nil
 		}
-		req, err := addPkgNames(srcDir, cfg.Package)
+		goVer, req, err := addPkgNames(srcDir, cfg.Package)
 		if err != nil {
 			fmt.Println("parse modules:", err)
 			os.Exit(1)
 		}
+		req = append(req, module.Version{Path: "std", Version: goVer})
 		for _, v := range req {
 			dir, err := getRepo(v.Path, v.Version)
 			if err != nil {
 				fmt.Println("get repo:", err)
 				os.Exit(1)
 			}
-			if _, err := addPkgNames(dir, v.Path); err != nil {
+			if _, _, err := addPkgNames(dir, v.Path); err != nil {
 				fmt.Println("parse modules:", err)
 				os.Exit(1)
 			}
 		}
 	}
+	moduleImportNames := make(map[string]string) // module path to name; each name value is unique
+	{
+		moduleNameKeys := make([]string, 0, len(moduleNames))
+		for k := range moduleNames {
+			moduleNameKeys = append(moduleNameKeys, k)
+		}
+		slices.SortFunc(moduleNameKeys, makeCompareModulePaths(cfg.Package))
+
+		moduleNameIdxs := make(map[string]int) // module name to number of occurrences
+		for _, mod := range moduleNameKeys {
+			name := moduleNames[mod]
+			impName := name
+			if idx := moduleNameIdxs[name]; idx > 0 {
+				impName += "_" + strconv.Itoa(idx)
+			}
+			moduleImportNames[mod] = impName
+			moduleNameIdxs[name]++
+		}
+	}
+
+	startTime := time.Now()
 
 	pkgs, err := ParseDir(fset, srcDir, cfg.Package)
 	if err != nil {
@@ -305,23 +429,27 @@ func main() {
 		os.Exit(1)
 	}
 
-	const bindingCodeIndent = 1
+	const bindingCodeIndent = 3
 
 	data := &Data{
 		Funcs:      make(map[string]*Func),
 		Interfaces: make(map[string]*Interface),
 		Structs:    make(map[string]*Struct),
+		Typedefs:   make(map[string]Ident),
+		Values:     make(map[string]NamedIdent),
 	}
 	ctx := &Context{
 		Config:      &cfg,
 		Data:        data,
-		ModuleNames: moduleNames,
+		ModuleNames: moduleImportNames,
 		UsedImports: make(map[string]struct{}),
+		UsedTyps:    make(map[string]Ident),
 	}
 
 	for _, pkg := range pkgs {
-		for _, f := range pkg.Files {
-			if err := data.AddFile(ctx, f, pkg.Path, moduleNames); err != nil {
+		for name, f := range pkg.Files {
+			name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
+			if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames); err != nil {
 				fmt.Printf("%v: %v\n", pkg.Name, err)
 			}
 		}
@@ -331,73 +459,151 @@ func main() {
 		os.Exit(1)
 	}
 
-	type GeneratedFunc struct {
-		Name string
-		Code string
-		File *File
-	}
-
-	generatedFuncs := make(map[string]GeneratedFunc)
-
-	checkFuncCollision := func(name string, file *File) {
-		if oldFn, exists := generatedFuncs[name]; exists &&
-			file.ModulePath != oldFn.File.ModulePath {
-			fmt.Printf(
-				"conflict exists between funcs %v (package %v) and %v (package %v)\n",
-				name, file.ModulePath,
-				oldFn.Name, oldFn.File.ModulePath,
-			)
-		}
-	}
+	bindingFuncs := make(map[string]*BindingFunc)
 
 	for _, iface := range data.Interfaces {
+		if IdentIsInternal(ctx, iface.Name) {
+			continue
+		}
 		for _, fn := range iface.Funcs {
-			name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
+			bind, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 			if err != nil {
-				fmt.Println(name+":", err)
+				fmt.Println(fn.String()+":", err)
 				continue
 			}
-			checkFuncCollision(name, fn.File)
-			generatedFuncs[name] = GeneratedFunc{
-				Name: name,
-				Code: code,
-				File: fn.File,
-			}
+			bindingFuncs[bind.FullName()] = bind
 		}
 	}
 
 	for _, fn := range data.Funcs {
-		name, code, err := GenerateBinding(ctx, fn, bindingCodeIndent)
-		if err != nil {
-			fmt.Println(name+":", err)
+		if IdentIsInternal(ctx, fn.Name) || (fn.Recv != nil && IdentIsInternal(ctx, *fn.Recv)) {
 			continue
 		}
-		checkFuncCollision(name, fn.File)
-		generatedFuncs[name] = GeneratedFunc{
-			Name: name,
-			Code: code,
-			File: fn.File,
+		bind, err := GenerateBinding(ctx, fn, bindingCodeIndent)
+		if err != nil {
+			fmt.Println(fn.String()+":", err)
+			continue
 		}
+		bindingFuncs[bind.FullName()] = bind
 	}
 
 	for _, struc := range data.Structs {
+		if IdentIsInternal(ctx, struc.Name) {
+			continue
+		}
 		for _, f := range struc.Fields {
 			for _, ptrToStruct := range []bool{false, true} {
 				for _, setter := range []bool{false, true} {
-					name, code, err := GenerateGetterOrSetter(ctx, f, struc.Name, bindingCodeIndent, ptrToStruct, setter)
+					bind, err := GenerateGetterOrSetter(ctx, f, struc.Name, bindingCodeIndent, ptrToStruct, setter)
 					if err != nil {
-						fmt.Println(struc.Name.GoName+"."+f.Name.GoName+":", err)
+						s := struc.Name.RyeName + "//" + f.Name.RyeName
+						if setter {
+							s += "!"
+						} else {
+							s += "?"
+						}
+						fmt.Println(s+":", err)
 						continue
 					}
-					checkFuncCollision(name, struc.Name.File)
-					generatedFuncs[name] = GeneratedFunc{
-						Name: name,
-						Code: code,
-						File: struc.Name.File,
-					}
+					bindingFuncs[bind.FullName()] = bind
 				}
 			}
 		}
+	}
+
+	for _, value := range data.Values {
+		if IdentIsInternal(ctx, value.Name) {
+			continue
+		}
+		bind, err := GenerateValue(ctx, value, bindingCodeIndent)
+		if err != nil {
+			s := value.Name.RyeName
+			fmt.Println(s+":", err)
+			continue
+		}
+		bindingFuncs[bind.FullName()] = bind
+	}
+
+	// rye ident to list of modules with priority
+	bindingFuncPrios := make(map[string][]struct {
+		Mod  string
+		Prio int // less => higher prio
+	})
+	addBindingFuncPrio := func(bind *BindingFunc) {
+		if bind.NameIdent == nil || bind.Recv != "" {
+			return
+		}
+
+		name, file := bind.SplitGoNameAndMod()
+		if ctx.Config.CutNew {
+			name = strcase.ToKebab(strings.TrimPrefix(name, "New"))
+			if name == "" {
+				name = strcase.ToKebab(ctx.ModuleNames[file.ModulePath])
+			}
+		}
+
+		ps := bindingFuncPrios[name]
+		for _, p := range ps {
+			if file.ModulePath == p.Mod {
+				return
+			}
+		}
+
+		prio := math.MaxInt
+		for i, v := range ctx.Config.NoPrefix {
+			if v == file.ModulePath {
+				prio = i
+			}
+		}
+		if prio == math.MaxInt {
+			return
+		}
+
+		bindingFuncPrios[name] = append(bindingFuncPrios[name], struct {
+			Mod  string
+			Prio int
+		}{
+			Mod:  file.ModulePath,
+			Prio: prio,
+		})
+	}
+	for _, bind := range bindingFuncs {
+		if bind.Recv != "" {
+			continue
+		}
+		addBindingFuncPrio(bind)
+	}
+	for _, bind := range bindingFuncs {
+		if bind.NameIdent == nil {
+			continue
+		}
+
+		newName, file := bind.SplitGoNameAndMod()
+
+		newNameIsPfx := false
+		if ctx.Config.CutNew {
+			newName = strings.TrimPrefix(newName, "New")
+			if newName == "" {
+				newName = strcase.ToKebab(ctx.ModuleNames[file.ModulePath])
+				newNameIsPfx = true
+			}
+		}
+		newName = strcase.ToKebab(newName)
+
+		if bind.Recv == "" {
+			prios := bindingFuncPrios[newName]
+			isHighestPrio := len(prios) > 0 && slices.MinFunc(prios, func(a, b struct {
+				Mod  string
+				Prio int
+			}) int {
+				return a.Prio - b.Prio
+			}).Mod == file.ModulePath
+			if !(isHighestPrio || (newNameIsPfx && len(prios) == 0)) {
+				newName = strcase.ToKebab(ctx.ModuleNames[file.ModulePath]) + "-" + newName
+			}
+		}
+
+		bind.Name = newName
 	}
 
 	ctx.UsedImports["github.com/refaktor/rye/env"] = struct{}{}
@@ -417,8 +623,14 @@ func main() {
 		usedImportKeys = append(usedImportKeys, k)
 	}
 	slices.Sort(usedImportKeys)
-	for _, imp := range usedImportKeys {
-		cb.Linef(`"%v"`, imp)
+	for _, mod := range usedImportKeys {
+		name := moduleNames[mod]
+		impName := moduleImportNames[mod]
+		if name == impName {
+			cb.Linef(`"%v"`, mod)
+		} else {
+			cb.Linef(`%v "%v"`, impName, mod)
+		}
 	}
 	cb.Indent--
 	cb.Linef(`)`)
@@ -442,6 +654,46 @@ func main() {
 	cb.Linef(`}`)
 	cb.Linef(``)
 
+	cb.Linef(`var ryeStructNameLookup = map[string]string{`)
+	cb.Indent++
+	{
+		typNames := make(map[string]string, len(data.Structs)*2)
+		for _, struc := range data.Structs {
+			id := struc.Name
+			if !IdentExprIsExported(id.Expr) || IdentIsInternal(ctx, id) {
+				continue
+			}
+			var nameNoMod string
+			switch expr := id.Expr.(type) {
+			case *ast.Ident:
+				nameNoMod = expr.Name
+			case *ast.StarExpr:
+				id, ok := expr.X.(*ast.Ident)
+				if !ok {
+					continue
+				}
+				nameNoMod = "*" + id.Name
+			case *ast.SelectorExpr:
+				nameNoMod = expr.Sel.Name
+			default:
+				continue
+			}
+			typNames[id.File.ModulePath+"."+nameNoMod] = id.RyeName
+			typNames[id.File.ModulePath+".*"+nameNoMod] = "ptr-" + id.RyeName
+		}
+		strucNameKeys := make([]string, 0, len(typNames))
+		for k := range typNames {
+			strucNameKeys = append(strucNameKeys, k)
+		}
+		slices.Sort(strucNameKeys)
+		for _, k := range strucNameKeys {
+			cb.Linef(`"%v": "%v",`, k, typNames[k])
+		}
+	}
+	cb.Indent--
+	cb.Linef(`}`)
+	cb.Linef(``)
+
 	cb.Linef(`var Builtins_fynegen = map[string]*env.Builtin{`)
 	cb.Indent++
 
@@ -456,13 +708,25 @@ func main() {
 	cb.Indent--
 	cb.Linef(`},`)
 
-	generatedFuncKeys := make([]string, 0, len(generatedFuncs))
-	for k := range generatedFuncs {
-		generatedFuncKeys = append(generatedFuncKeys, k)
+	bindingFuncKeys := make([]string, 0, len(bindingFuncs))
+	for k := range bindingFuncs {
+		bindingFuncKeys = append(bindingFuncKeys, k)
 	}
-	slices.Sort(generatedFuncKeys)
-	for _, k := range generatedFuncKeys {
-		cb.Write(generatedFuncs[k].Code)
+	slices.Sort(bindingFuncKeys)
+	for _, k := range bindingFuncKeys {
+		bind := bindingFuncs[k]
+		cb.Linef(`"%v": {`, bind.FullName())
+		cb.Indent++
+		cb.Linef(`Doc: "%v",`, bind.Doc)
+		cb.Linef(`Argsn: %v,`, bind.Argsn)
+		cb.Linef(`Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {`)
+		cb.Indent++
+		rep := strings.NewReplacer(`((RYEGEN:FUNCNAME))`, bind.FullName())
+		cb.Write(rep.Replace(bind.Body))
+		cb.Indent--
+		cb.Linef(`},`)
+		cb.Indent--
+		cb.Linef(`},`)
 	}
 
 	cb.Indent--
@@ -475,8 +739,10 @@ func main() {
 	}
 	//code := []byte(cb.String())
 
+	log.Printf("Generated bindings containing %v functions in %v", len(bindingFuncs), time.Since(startTime))
+
 	if err := os.WriteFile(outFile, code, 0666); err != nil {
 		panic(err)
 	}
-	log.Printf("Wrote bindings containing %v functions to %v", len(generatedFuncs), outFile)
+	log.Printf("Wrote bindings to %v", outFile)
 }

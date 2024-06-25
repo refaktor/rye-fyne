@@ -14,9 +14,8 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
-const namespacePrefix = false
-
 type File struct {
+	Name          string
 	ModuleName    string
 	ModulePath    string
 	ImportsByName map[string]*File
@@ -45,6 +44,31 @@ func IdentExprIsExported(expr ast.Expr) bool {
 	}
 }
 
+func ModulePathIsInternal(ctx *Context, p string) bool {
+	if _, ok := ctx.ModuleNames[p]; !ok {
+		return false
+	}
+	sp := strings.Split(p, "/")
+	for _, elem := range sp {
+		if elem == "internal" {
+			return true
+		}
+	}
+	return false
+}
+
+func IdentIsInternal(ctx *Context, id Ident) bool {
+	if id.File == nil {
+		return false
+	}
+	for _, imp := range id.UsedImports {
+		if ModulePathIsInternal(ctx, imp.ModulePath) {
+			return true
+		}
+	}
+	return false
+}
+
 type Ident struct {
 	Expr        ast.Expr
 	GoName      string
@@ -63,21 +87,9 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 
 	switch expr := expr.(type) {
 	case *ast.Ident:
-		res := expr.Name
-		if ast.IsExported(expr.Name) {
-			if ctx.Config.CutNew {
-				res = strcase.ToKebab(strings.TrimPrefix(res, "New"))
-			}
-			if file != nil {
-				if res == "" {
-					// e.g. app.New => app
-					res = strcase.ToKebab(file.ModuleName)
-				} else {
-					if ctx.Config.AlwaysPrefix {
-						res = strcase.ToKebab(file.ModuleName) + "-" + res
-					}
-				}
-			}
+		res := strcase.ToKebab(expr.Name)
+		if ast.IsExported(expr.Name) && file != nil {
+			res = strcase.ToKebab(ctx.ModuleNames[file.ModulePath]) + "-" + res
 		}
 		return res, nil
 	case *ast.StarExpr:
@@ -90,7 +102,7 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 		}
 		f, ok := file.ImportsByName[mod.Name]
 		if !ok {
-			return "", fmt.Errorf("module %v imported by %v not found", mod.Name, file.ModulePath)
+			return "", fmt.Errorf("module %v imported by %v not found", mod.Name, file.Name)
 		}
 		return identExprToRyeName(ctx, f, expr.Sel)
 	case *ast.ArrayType:
@@ -145,6 +157,11 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 			return "", err
 		}
 		return "map(" + key + ")" + val, nil
+	case *ast.InterfaceType:
+		if len(expr.Methods.List) == 0 {
+			return "any", nil
+		}
+		return "", errors.New("non-empty inline interfaces not supported")
 	default:
 		return "", errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
@@ -153,34 +170,20 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 func identExprToGoName(ctx *Context, file *File, expr ast.Expr) (ident string, usedImports []*File, err error) {
 	switch expr := expr.(type) {
 	case *ast.Ident:
-		splitModuleAndIdent := func(s string) (mod, id string, ok bool) {
-			i := strings.LastIndex(s, ".")
-			if i == -1 {
-				return "", "", false
-			}
-			return s[:i], s[i+1:], true
-		}
 		if file != nil {
-			if idx := slices.IndexFunc(ctx.Config.Substitute, func(s [2]string) bool {
-				pkg, id, ok := splitModuleAndIdent(s[0])
-				return ok && pkg == file.ModulePath && id == expr.Name
-			}); idx != -1 {
-				subst := ctx.Config.Substitute[idx][1]
-				modPath, id, ok := splitModuleAndIdent(subst)
-				if !ok {
-					return "", nil, fmt.Errorf("unable to substitute \"%v\": need format \"example.com/foo/bar.identifier\"", subst)
-				}
-				mod, ok := ctx.ModuleNames[modPath]
-				if !ok {
-					return "", nil, fmt.Errorf("invalid substitute module \"%v\"", modPath)
-				}
-				return mod + "." + id, []*File{{ModuleName: mod, ModulePath: modPath}}, nil
-			}
 			if ast.IsExported(expr.Name) {
-				return file.ModuleName + "." + expr.Name, []*File{file}, nil
+				mod, ok := ctx.ModuleNames[file.ModulePath]
+				if !ok {
+					return "", nil, fmt.Errorf("unknown module path %v", file.ModulePath)
+				}
+				return mod + "." + expr.Name, []*File{file}, nil
 			}
 		}
-		return expr.Name, []*File{file}, nil
+		if ast.IsExported(expr.Name) {
+			return expr.Name, []*File{file}, nil
+		} else {
+			return expr.Name, nil, nil
+		}
 	case *ast.StarExpr:
 		res, imps, err := identExprToGoName(ctx, file, expr.X)
 		return "*" + res, imps, err
@@ -191,7 +194,7 @@ func identExprToGoName(ctx *Context, file *File, expr ast.Expr) (ident string, u
 		}
 		f, ok := file.ImportsByName[mod.Name]
 		if !ok {
-			return "", nil, fmt.Errorf("module %v imported by %v not found", mod.Name, file.ModulePath)
+			return "", nil, fmt.Errorf("module %v imported by %v not found", mod.Name, file.Name)
 		}
 		res, imps, err := identExprToGoName(ctx, f, expr.Sel)
 		return res, imps, err
@@ -248,6 +251,11 @@ func identExprToGoName(ctx *Context, file *File, expr ast.Expr) (ident string, u
 			return "", nil, err
 		}
 		return "map[" + key + "]" + val, append(impsK, impsV...), nil
+	case *ast.InterfaceType:
+		if len(expr.Methods.List) == 0 {
+			return "any", nil, nil
+		}
+		return "", nil, errors.New("non-empty inline interfaces not supported")
 	default:
 		return "", nil, errors.New("invalid identifier expression type " + reflect.TypeOf(expr).String())
 	}
@@ -474,7 +482,7 @@ func funcFromInterfaceField(ctx *Context, file *File, ifaceIdent Ident, f *ast.F
 		File: file,
 	}
 	if len(f.Names) != 1 {
-		panic("expected method to have 1 name")
+		panic("expected interface method to have 1 name")
 	}
 	res.Name, err = NewIdent(ctx, nil, f.Names[0])
 	if err != nil {
@@ -516,7 +524,7 @@ func NewInterface(ctx *Context, file *File, name *ast.Ident, ifaceTyp *ast.Inter
 		case *ast.FuncType:
 			fn, err := funcFromInterfaceField(ctx, file, res.Name, f)
 			if err != nil {
-				fmt.Println("i2fs:", err)
+				fmt.Println("i2fs:", res.Name.GoName+":", err)
 				continue
 			}
 			res.Funcs = append(res.Funcs, fn)
@@ -548,22 +556,17 @@ func FuncGoIdent(fn *Func) string {
 	return res
 }
 
-func FuncRyeIdent(fn *Func) string {
-	res := fn.Name.RyeName
-	if fn.Recv != nil {
-		res = fn.Recv.RyeName + "//" + res
-	}
-	return res
-}
-
 type Data struct {
 	Funcs      map[string]*Func
 	Interfaces map[string]*Interface
 	Structs    map[string]*Struct
+	Typedefs   map[string]Ident
+	Values     map[string]NamedIdent // consts and vars
 }
 
-func (d *Data) AddFile(ctx *Context, f *ast.File, modulePath string, moduleNames map[string]string) error {
+func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath string, moduleNames map[string]string) error {
 	file := &File{
+		Name:          fName,
 		ModuleName:    f.Name.Name,
 		ModulePath:    modulePath,
 		ImportsByName: make(map[string]*File),
@@ -622,7 +625,36 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, modulePath string, moduleNames
 			}
 			d.Funcs[FuncGoIdent(fn)] = fn
 		case *ast.GenDecl:
-			if decl.Tok == token.TYPE {
+			if decl.Tok == token.CONST || decl.Tok == token.VAR {
+				var typ *Ident
+				for _, spec := range decl.Specs {
+					if valSpec, ok := spec.(*ast.ValueSpec); ok {
+						if valSpec.Type != nil {
+							newTyp, err := NewIdent(ctx, file, valSpec.Type)
+							if err != nil {
+								return err
+							}
+							typ = &newTyp
+						}
+						if typ == nil {
+							continue
+						}
+						for _, specName := range valSpec.Names {
+							if !specName.IsExported() {
+								continue
+							}
+							name, err := NewIdent(ctx, file, specName)
+							if err != nil {
+								return err
+							}
+							d.Values[name.GoName] = NamedIdent{
+								Type: *typ,
+								Name: name,
+							}
+						}
+					}
+				}
+			} else if decl.Tok == token.TYPE {
 				if typeSpec, ok := decl.Specs[0].(*ast.TypeSpec); ok {
 					if !typeSpec.Name.IsExported() {
 						continue
@@ -640,6 +672,16 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, modulePath string, moduleNames
 							return err
 						}
 						d.Structs[struc.Name.GoName] = struc
+					default:
+						name, err := NewIdent(ctx, file, typeSpec.Name)
+						if err != nil {
+							return err
+						}
+						id, err := NewIdent(ctx, file, typ)
+						if err != nil {
+							return err
+						}
+						d.Typedefs[name.GoName] = id
 					}
 				}
 			}

@@ -15,6 +15,7 @@ import (
 )
 
 const proxyURL = "https://proxy.golang.org/"
+const goZipURL = "https://github.com/golang/go/archive/refs/tags/"
 
 func proxyRequestURL(proxyURL, pkg string, path ...string) (string, error) {
 	pkg = strings.ToLower(pkg)
@@ -29,17 +30,25 @@ func proxyRequestURL(proxyURL, pkg string, path ...string) (string, error) {
 	return u.String(), nil
 }
 
-func pkgPath(pkg, semver string) string {
-	pkg = strings.ToLower(pkg)
-	pkgElems := strings.Split(pkg, "/")
+func pkgPath(pkg, version string) string {
+	if pkg == "std" {
+		return filepath.Join("go-go"+version, "src")
+	} else {
+		pkg = strings.ToLower(pkg)
+		pkgElems := strings.Split(pkg, "/")
 
-	var pathElems []string
-	pathElems = append(pathElems, pkgElems[:len(pkgElems)-1]...)
-	pathElems = append(pathElems, pkgElems[len(pkgElems)-1]+"@"+semver)
-	return filepath.Join(pathElems...)
+		var pathElems []string
+		pathElems = append(pathElems, pkgElems[:len(pkgElems)-1]...)
+		pathElems = append(pathElems, pkgElems[len(pkgElems)-1]+"@"+version)
+		return filepath.Join(pathElems...)
+	}
 }
 
 func GetLatestVersion(pkg string) (string, error) {
+	if pkg == "std" {
+		return "", errors.New("cannot get latest version for pkg std")
+	}
+
 	url, err := proxyRequestURL(proxyURL, pkg, "@latest")
 	if err != nil {
 		return "", err
@@ -73,41 +82,43 @@ func GetLatestVersion(pkg string) (string, error) {
 	return data.Version, nil
 }
 
-func Have(dstPath, pkg, semver string) (bool, string, error) {
-	if semver == "" {
+func Have(dstPath, pkg, version string) (have bool, outPath string, exactVersion string, err error) {
+	if version == "" || version == "latest" {
 		v, err := GetLatestVersion(pkg)
 		if err != nil {
-			return false, "", err
+			return false, "", "", err
 		}
-		semver = v
+		version = v
 	}
 
-	outPath := filepath.Join(dstPath, pkgPath(pkg, semver))
+	outPath = filepath.Join(dstPath, pkgPath(pkg, version))
 
-	if _, err := os.Stat(outPath); err == nil {
-		return true, outPath, nil
+	if _, err := os.Stat(outPath); err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return false, outPath, version, nil
+		} else {
+			return false, "", "", err
+		}
 	}
-	return false, outPath, nil
+	return true, outPath, version, nil
 }
 
-func Get(dstPath, pkg, semver string) (string, error) {
-	if semver == "" || semver == "latest" {
-		v, err := GetLatestVersion(pkg)
-		if err != nil {
-			return "", err
-		}
-		semver = v
-	}
-
-	outPath := filepath.Join(dstPath, pkgPath(pkg, semver))
-
-	if _, err := os.Stat(outPath); err == nil {
+// pkg is the go package name, or "std" for the go std library.
+// version is the semantic version (e.g. v1.0.0), or the go version (e.g. 1.21.5) if pkg == "std".
+func Get(dstPath, pkg, version string) (string, error) {
+	have, outPath, version, err := Have(dstPath, pkg, version)
+	if have {
 		return outPath, nil
 	}
 
-	zipURL, err := proxyRequestURL(proxyURL, pkg, "@v", semver+".zip")
-	if err != nil {
-		return "", err
+	var zipURL string
+	if pkg == "std" {
+		zipURL = goZipURL + "go" + version + ".zip"
+	} else {
+		zipURL, err = proxyRequestURL(proxyURL, pkg, "@v", version+".zip")
+		if err != nil {
+			return "", err
+		}
 	}
 
 	resp, err := http.Get(zipURL)
@@ -128,9 +139,17 @@ func Get(dstPath, pkg, semver string) (string, error) {
 		return "", fmt.Errorf("get %v: %v (%v)", zipURL, resp.Status, resp.StatusCode)
 	}
 
+	if err := unzip(dstPath, data); err != nil {
+		return "", err
+	}
+
+	return outPath, nil
+}
+
+func unzip(dstPath string, data []byte) error {
 	archive, err := zip.NewReader(bytes.NewReader(data), int64(len(data)))
 	if err != nil {
-		return "", err
+		return err
 	}
 	extractFile := func(f *zip.File) error {
 		path := filepath.Join(dstPath, f.Name)
@@ -165,9 +184,8 @@ func Get(dstPath, pkg, semver string) (string, error) {
 	}
 	for _, f := range archive.File {
 		if err := extractFile(f); err != nil {
-			return "", err
+			return err
 		}
 	}
-
-	return outPath, nil
+	return nil
 }

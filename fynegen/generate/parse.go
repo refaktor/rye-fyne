@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go/ast"
+	"go/build/constraint"
 	"go/parser"
 	"go/token"
 	"os"
@@ -20,7 +21,7 @@ type Package struct {
 	Files map[string]*ast.File
 }
 
-func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathHint string, includeInternal bool, onFile func(f *ast.File, filename, module string) error) (require []module.Version, err error) {
+func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathHint string, onFile func(f *ast.File, filename, module string) error) (goVer string, require []module.Version, err error) {
 	noGoMod := false
 
 	var modulePath string
@@ -28,11 +29,14 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 	if _, err := os.Stat(goModPath); err == nil {
 		data, err := os.ReadFile(goModPath)
 		if err != nil {
-			return nil, err
+			return "", nil, err
 		}
 		mod, err := modfile.Parse(goModPath, data, nil)
 		if err != nil {
-			return nil, err
+			return "", nil, err
+		}
+		if mod.Go != nil {
+			goVer = mod.Go.Version
 		}
 		require = make([]module.Version, len(mod.Require))
 		for i, v := range mod.Require {
@@ -58,11 +62,15 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 				if strings.HasPrefix(ent.Name(), "_") || ent.Name() == "testdata" {
 					continue
 				}
-				if !includeInternal && (ent.Name() == "test" || ent.Name() == "internal" || ent.Name() == "cmd") {
+				if ent.Name() == "test" || ent.Name() == "cmd" {
 					continue
 				}
-				modPath := modPath + "/" + ent.Name()
-				if err := doVisitDir(fsPath, modPath); err != nil {
+				var newModPath string
+				if modPath != "" {
+					newModPath = modPath + "/"
+				}
+				newModPath += ent.Name()
+				if err := doVisitDir(fsPath, newModPath); err != nil {
 					return err
 				}
 			} else if strings.HasSuffix(ent.Name(), ".go") {
@@ -73,16 +81,27 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 				if err != nil {
 					return err
 				}
-				if func() bool {
+				skip, err := func() (bool, error) {
 					for _, c := range f.Comments {
 						for _, c := range c.List {
-							if c.Text == "//go:build ignore" {
-								return true
+							if !constraint.IsGoBuild(c.Text) {
+								continue
 							}
+							expr, err := constraint.Parse(c.Text)
+							if err != nil {
+								return false, err
+							}
+							return !expr.Eval(func(tag string) bool {
+								return tag == "linux" || tag == "amd64"
+							}), nil
 						}
 					}
-					return false
-				}() {
+					return false, nil
+				}()
+				if err != nil {
+					return err
+				}
+				if skip {
 					continue
 				}
 				if noGoMod {
@@ -98,7 +117,7 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 					}
 				}
 				modName := f.Name.Name
-				if !includeInternal && (strings.HasSuffix(modName, "_test") || modName == "internal" || modName == "main") {
+				if strings.HasSuffix(modName, "_test") || modName == "main" {
 					continue
 				}
 				if err := onFile(f, fsPath, modPath); err != nil {
@@ -116,15 +135,19 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 		}
 	}
 
-	if err := doVisitDir(dirPath, modulePath); err != nil {
-		return nil, err
+	if modulePath == "std" {
+		modulePath = ""
 	}
-	return require, nil
+
+	if err := doVisitDir(dirPath, modulePath); err != nil {
+		return "", nil, err
+	}
+	return goVer, require, nil
 }
 
-func ParseDirModules(fset *token.FileSet, dirPath, modulePathHint string) (modules map[string]string, require []module.Version, err error) {
+func ParseDirModules(fset *token.FileSet, dirPath, modulePathHint string) (goVer string, modules map[string]string, require []module.Version, err error) {
 	modules = make(map[string]string)
-	require, err = visitDir(fset, dirPath, parser.PackageClauseOnly|parser.ImportsOnly|parser.ParseComments, modulePathHint, true, func(f *ast.File, filename, module string) error {
+	goVer, require, err = visitDir(fset, dirPath, parser.PackageClauseOnly|parser.ImportsOnly|parser.ParseComments, modulePathHint, func(f *ast.File, filename, module string) error {
 		if name, ok := modules[module]; ok && name != f.Name.Name {
 			return fmt.Errorf("package module %v has conflicting names: %v and %v", module, name, f.Name.Name)
 		}
@@ -132,15 +155,15 @@ func ParseDirModules(fset *token.FileSet, dirPath, modulePathHint string) (modul
 		return nil
 	})
 	if err != nil {
-		return nil, nil, err
+		return "", nil, nil, err
 	}
 
-	return modules, require, nil
+	return goVer, modules, require, nil
 }
 
 func ParseDir(fset *token.FileSet, dirPath string, modulePathHint string) (pkgs map[string]*Package, err error) {
 	pkgs = make(map[string]*Package)
-	_, err = visitDir(fset, dirPath, 0, modulePathHint, false, func(f *ast.File, filename, module string) error {
+	_, _, err = visitDir(fset, dirPath, 0, modulePathHint, func(f *ast.File, filename, module string) error {
 		pkg, ok := pkgs[module]
 		if !ok {
 			pkg = &Package{

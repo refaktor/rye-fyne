@@ -8,25 +8,38 @@ import (
 
 type Converter struct {
 	Name    string
-	TryConv func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool
+	TryConv func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool
 }
 
-func ConvRyeToGo(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
+func ConvRyeToGo(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
 	for _, conv := range ConvListRyeToGo {
-		if conv.TryConv(ctx, cb, typ, inVar, outVar, makeRetArgErr) {
+		if conv.TryConv(ctx, cb, typ, outVar, inVar, makeRetArgErr) {
 			return conv.Name, true
 		}
 	}
 	return "", false
 }
 
-func ConvGoToRye(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
+func ConvGoToRye(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) (string, bool) {
 	for _, conv := range ConvListGoToRye {
-		if conv.TryConv(ctx, cb, typ, inVar, outVar, makeRetArgErr) {
+		if conv.TryConv(ctx, cb, typ, outVar, inVar, makeRetArgErr) {
 			return conv.Name, true
 		}
 	}
 	return "", false
+}
+
+func getUnderlyingType(ctx *Context, typ Ident) (Ident, bool) {
+	retOk := false
+	for {
+		if underlying, ok := ctx.Data.Typedefs[typ.GoName]; ok {
+			retOk = true
+			typ = underlying
+		} else {
+			break
+		}
+	}
+	return typ, retOk
 }
 
 // If conversion lists are declared directly, the compiler falsely complains of an initialization cycle.
@@ -41,7 +54,7 @@ func init() {
 var convListRyeToGo = []Converter{
 	{
 		Name: "array",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var elTyp Ident
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
@@ -73,8 +86,8 @@ var convListRyeToGo = []Converter{
 				ctx,
 				cb,
 				elTyp,
-				`it`,
 				fmt.Sprintf(`%v[i]`, outVar),
+				`it`,
 				func(...string) string {
 					// Force toplevel allowed types
 					return makeRetArgErr("BlockType", "NativeType")
@@ -116,7 +129,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "map",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var kTyp, vTyp Ident
 			if t, ok := typ.Expr.(*ast.MapType); ok {
 				var err error
@@ -147,8 +160,8 @@ var convListRyeToGo = []Converter{
 						ctx,
 						cb,
 						kTyp,
-						inKeyVar,
 						`mapK`,
+						inKeyVar,
 						func(...string) string {
 							// Force toplevel allowed types
 							return makeRetArgErr(allowedTyps...)
@@ -165,8 +178,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					vTyp,
-					inValVar,
 					`mapV`,
+					inValVar,
 					func(...string) string {
 						// Force toplevel allowed types
 						return makeRetArgErr(allowedTyps...)
@@ -239,7 +252,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "func",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var fnParams []NamedIdent
 			var fnResults []NamedIdent
 			var fnTyp string
@@ -321,8 +334,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					param.Type,
-					fmt.Sprintf(`arg%v`, i),
 					fmt.Sprintf(`arg%vVal`, i),
+					fmt.Sprintf(`arg%v`, i),
 					nil,
 				); !found {
 					return false
@@ -344,8 +357,8 @@ var convListRyeToGo = []Converter{
 					ctx,
 					cb,
 					fnResults[0].Type,
-					`ps.Res`,
 					`res`,
+					`ps.Res`,
 					func(...string) string {
 						// Can't return error from inside function
 						return "// TODO: Invalid type"
@@ -378,7 +391,7 @@ var convListRyeToGo = []Converter{
 	},
 	{
 		Name: "builtin",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			id, ok := typ.Expr.(*ast.Ident)
 			if !ok {
 				return false
@@ -426,8 +439,83 @@ var convListRyeToGo = []Converter{
 		},
 	},
 	{
+		Name: "typedef",
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			underlying, ok := getUnderlyingType(ctx, typ)
+			if !ok {
+				return false
+			}
+
+			cb.Linef(`{`)
+			cb.Indent++
+			cb.Linef(`nat, natOk := %v.(env.Native)`, inVar)
+			cb.Linef(`var natValOk bool`)
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`var rOut, rIn reflect.Value`)
+				cb.Linef(`if natOk {`)
+				cb.Indent++
+				cb.Linef(`// HACK: %v, natValOk = %v(u)`, outVar, typ.GoName)
+				cb.Linef(`rOut = reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn = reflect.ValueOf(nat.Value)`)
+				cb.Linef(`natValOk = rIn.CanConvert(rOut.Type())`)
+				cb.Indent--
+				cb.Linef(`}`)
+			} else {
+				cb.Linef(`var natVal %v`, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Linef(`if natOk {`)
+				cb.Indent++
+				cb.Linef(`natVal, natValOk = nat.Value.(%v)`, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Indent--
+				cb.Linef(`}`)
+			}
+			cb.Linef(`if natOk && natValOk {`)
+			cb.Indent++
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+			} else {
+				cb.Linef(`%v = natVal`, outVar)
+			}
+			cb.Indent--
+			cb.Linef(`} else {`)
+			cb.Indent++
+			cb.Linef(`var u %v`, underlying.GoName)
+			ctx.MarkUsed(underlying)
+			if _, found := ConvRyeToGo(
+				ctx,
+				cb,
+				underlying,
+				`u`,
+				inVar,
+				func(...string) string {
+					// Force toplevel allowed types
+					return makeRetArgErr("NativeType")
+				},
+			); !found {
+				return false
+			}
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`// HACK: %v = %v(u)`, outVar, typ.GoName)
+				cb.Linef(`rOut := reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn := reflect.ValueOf(u)`)
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+				ctx.UsedImports["reflect"] = struct{}{}
+			} else {
+				cb.Linef(`%v = %v(u)`, outVar, typ.GoName)
+				ctx.MarkUsed(typ)
+			}
+			cb.Indent--
+			cb.Linef(`}`)
+			cb.Indent--
+			cb.Linef(`}`)
+
+			return true
+		},
+	},
+	{
 		Name: "native",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			isNillable := false
 			switch typ.Expr.(type) {
 			case *ast.StarExpr, *ast.ArrayType:
@@ -440,14 +528,30 @@ var convListRyeToGo = []Converter{
 			cb.Linef(`switch v := %v.(type) {`, inVar)
 			cb.Linef(`case env.Native:`)
 			cb.Indent++
-			cb.Linef(`var ok bool`)
-			cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
-			ctx.MarkUsed(typ)
-			cb.Linef(`if !ok {`)
-			cb.Indent++
-			cb.Linef(`%v`, makeRetArgErr("NativeType"))
-			cb.Indent--
-			cb.Linef(`}`)
+			if IdentIsInternal(ctx, typ) {
+				cb.Linef(`// HACK: %v, ok = v.Value.(%v)`, outVar, typ.GoName)
+				cb.Linef(`rOut := reflect.ValueOf(&%v).Elem()`, outVar)
+				cb.Linef(`rIn := reflect.ValueOf(v.Value)`)
+				cb.Linef(`if rIn.CanConvert(rOut.Type()) {`)
+				cb.Indent++
+				cb.Linef(`rOut.Set(rIn.Convert(rOut.Type()))`)
+				cb.Indent--
+				cb.Linef(`} else {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("NativeType"))
+				cb.Indent--
+				cb.Linef(`}`)
+				ctx.UsedImports["reflect"] = struct{}{}
+			} else {
+				cb.Linef(`var ok bool`)
+				cb.Linef(`%v, ok = v.Value.(%v)`, outVar, typ.GoName)
+				ctx.MarkUsed(typ)
+				cb.Linef(`if !ok {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("NativeType"))
+				cb.Indent--
+				cb.Linef(`}`)
+			}
 			cb.Indent--
 			if isNillable {
 				cb.Linef(`case env.Integer:`)
@@ -474,7 +578,7 @@ var convListRyeToGo = []Converter{
 var convListGoToRye = []Converter{
 	{
 		Name: "array",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var elTyp Ident
 			switch t := typ.Expr.(type) {
 			case *ast.ArrayType:
@@ -504,8 +608,8 @@ var convListGoToRye = []Converter{
 				ctx,
 				cb,
 				elTyp,
-				`it`,
 				`items[i]`,
+				`it`,
 				nil,
 			); !found {
 				return false
@@ -521,7 +625,7 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "map",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			var kTyp, vTyp Ident
 			if t, ok := typ.Expr.(*ast.MapType); ok {
 				var err error
@@ -553,8 +657,8 @@ var convListGoToRye = []Converter{
 				ctx,
 				cb,
 				vTyp,
-				`mVal`,
 				`dVal`,
+				`mVal`,
 				nil,
 			); !found {
 				return false
@@ -571,7 +675,7 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "builtin",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
 			id, ok := typ.Expr.(*ast.Ident)
 			if !ok {
 				return false
@@ -600,8 +704,53 @@ var convListGoToRye = []Converter{
 	},
 	{
 		Name: "native",
-		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, inVar, outVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
-			cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+		TryConv: func(ctx *Context, cb *CodeBuilder, typ Ident, outVar, inVar string, makeRetArgErr func(allowedTypes ...string) string) bool {
+			isInterface := false
+			if _, ok := ctx.Data.Interfaces[typ.GoName]; ok {
+				cb.Linef(`{`)
+				cb.Indent++
+				cb.Linef(`typ := reflect.TypeOf(%v)`, inVar)
+				cb.Linef(`var typPfx string`)
+				cb.Linef(`if typ.Kind() == reflect.Pointer {`)
+				cb.Indent++
+				cb.Linef(`typPfx = "*"`)
+				cb.Linef(`typ = typ.Elem()`)
+				cb.Indent--
+				cb.Linef(`}`)
+				ctx.UsedImports["reflect"] = struct{}{}
+				cb.Linef(`typRyeName, ok := ryeStructNameLookup[typ.PkgPath() + "." + typPfx + typ.Name()]`)
+				isInterface = true
+			}
+			if underlying, ok := getUnderlyingType(ctx, typ); ok {
+				if _, found := ConvGoToRye(
+					ctx,
+					cb,
+					underlying,
+					outVar,
+					fmt.Sprintf(`%v(%v)`, underlying.GoName, inVar),
+					nil,
+				); !found {
+					return false
+				}
+			} else {
+				if isInterface {
+					cb.Linef(`if ok {`)
+					cb.Indent++
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, typRyeName)`, outVar, inVar)
+					cb.Indent--
+					cb.Linef(`} else {`)
+					cb.Indent++
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+					cb.Indent--
+					cb.Linef(`}`)
+				} else {
+					cb.Linef(`%v = *env.NewNative(ps.Idx, %v, "%v")`, outVar, inVar, typ.RyeName)
+				}
+			}
+			if isInterface {
+				cb.Indent--
+				cb.Linef(`}`)
+			}
 			return true
 		},
 	},

@@ -1,5 +1,5 @@
 # List of working functionality
-List is based on [https://pkg.go.dev/fyne.io/fyne/v2](https://pkg.go.dev/fyne.io/fyne/v2).
+List is ordered based on [https://pkg.go.dev/fyne.io/fyne/v2](https://pkg.go.dev/fyne.io/fyne/v2).
 
 ## Legend
 |Name|Status|
@@ -12,29 +12,29 @@ List is based on [https://pkg.go.dev/fyne.io/fyne/v2](https://pkg.go.dev/fyne.io
 ## Widgets
 |Name|Status|
 |-|-|
-|Accordion|?|
-|Button|✔️|
+|Accordion|✅|
+|Button|✅|
 |Card|?|
-|Check|✔️|
+|Check|✅|
 |CheckGroup|?|
-|Entry|✔️|
-|FileIcon|?|
-|Form|?|
+|Entry|✅|
+|FileIcon|✅|
+|Form|✅|
 |GridWrap|?|
 |Hyperlink|?|
-|Icon|✔️|
-|Label|✔️|
+|Icon|✅|
+|Label|✅|
 |List|🐛|
 |Menu|?|
-|PopUp|?|
+|PopUp|✅|
 |PopUpMenu|?|
-|ProgressBar|?|
+|ProgressBar|✅|
 |RadioGroup|?|
-|RichText|✔️|
-|Select|?|
-|SelectEntry|?|
-|Separator|✔️|
-|Slider|✔️|
+|RichText|✅|
+|Select|✅|
+|SelectEntry|✅|
+|Separator|✅|
+|Slider|✅|
 |Table|?|
 |TextGrid|?|
 |TextSegment|?|
@@ -46,16 +46,16 @@ List is based on [https://pkg.go.dev/fyne.io/fyne/v2](https://pkg.go.dev/fyne.io
 |-|-|
 |AdaptiveGrid|?|
 |Border|✔️|
-|Center|✔️|
-|GridWithColumns|✔️|
-|GridWithRows|✔️|
+|Center|✅|
+|GridWithColumns|✅|
+|GridWithRows|✅|
 |GridWrap|?|
-|HBox|✔️|
-|VBox|✔️|
+|HBox|✅|
+|VBox|✅|
 |Padded|✔️|
 |Stack|✔️|
 |WithoutLayout|?|
-|AppTabs|?|
+|AppTabs|✅|
 |DocTabs|?|
-|Scroll|?|
+|Scroll|✅|
 |Split|✔️|

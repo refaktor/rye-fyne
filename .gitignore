@@ -42,5 +42,7 @@ bin/
 dist/
 tests/*.html
 
+.DS_Store
+
 # Fynegen: source code of libraries for which bindings are generated
 fynegen/_srcrepos

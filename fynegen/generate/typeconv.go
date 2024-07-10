@@ -397,43 +397,66 @@ var convListRyeToGo = []Converter{
 				return false
 			}
 
-			var ryeObj string
-			var ryeObjType string
-			if id.Name == "int" || id.Name == "uint" ||
-				id.Name == "uint8" || id.Name == "uint16" || id.Name == "uint32" || id.Name == "uint64" ||
-				id.Name == "int8" || id.Name == "int16" || id.Name == "int32" || id.Name == "int64" ||
-				id.Name == "bool" {
-				ryeObj = "Integer"
-				ryeObjType = "IntegerType"
-			} else if id.Name == "float32" || id.Name == "float64" {
-				ryeObj = "Decimal"
-				ryeObjType = "DecimalType"
-			} else if id.Name == "string" {
-				ryeObj = "String"
-				ryeObjType = "StringType"
-			} else if id.Name == "error" {
-				ryeObj = "Error"
-				ryeObjType = "ErrorType"
-			} else {
-				return false
-			}
-
-			cb.Linef(`if v, ok := %v.(env.%v); ok {`, inVar, ryeObj)
-			cb.Indent++
-			if id.Name == "bool" {
-				cb.Linef(`%v = v.Value != 0`, outVar)
-			} else if id.Name == "error" {
+			if id.Name == "error" {
+				cb.Linef(`switch v := %v.(type) {`, inVar)
+				cb.Indent++
+				cb.Linef(`case env.String:`)
+				cb.Indent++
+				cb.Linef(`%v = errors.New(v.Value)`, outVar)
+				ctx.UsedImports["errors"] = struct{}{}
+				cb.Indent--
+				cb.Linef(`case env.Error:`)
+				cb.Indent++
 				cb.Linef(`%v = errors.New(v.Print(*ps.Idx))`, outVar)
 				ctx.UsedImports["errors"] = struct{}{}
+				cb.Indent--
+				cb.Linef(`case env.Integer:`)
+				cb.Indent++
+				cb.Linef(`if v.Value != 0 {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("ErrorType", "StringType"))
+				cb.Indent--
+				cb.Linef(`}`)
+				cb.Linef(`%v = nil`, outVar)
+				cb.Indent--
+				cb.Linef(`default:`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr("ErrorType", "StringType"))
+				cb.Indent--
+				cb.Linef(`}`)
 			} else {
-				cb.Linef(`%v = %v(v.Value)`, outVar, id.Name)
+				var ryeObj string
+				var ryeObjType string
+				if id.Name == "int" || id.Name == "uint" ||
+					id.Name == "uint8" || id.Name == "uint16" || id.Name == "uint32" || id.Name == "uint64" ||
+					id.Name == "int8" || id.Name == "int16" || id.Name == "int32" || id.Name == "int64" ||
+					id.Name == "bool" {
+					ryeObj = "Integer"
+					ryeObjType = "IntegerType"
+				} else if id.Name == "float32" || id.Name == "float64" {
+					ryeObj = "Decimal"
+					ryeObjType = "DecimalType"
+				} else if id.Name == "string" {
+					ryeObj = "String"
+					ryeObjType = "StringType"
+				} else {
+					return false
+				}
+
+				cb.Linef(`if v, ok := %v.(env.%v); ok {`, inVar, ryeObj)
+				cb.Indent++
+				if id.Name == "bool" {
+					cb.Linef(`%v = v.Value != 0`, outVar)
+				} else {
+					cb.Linef(`%v = %v(v.Value)`, outVar, id.Name)
+				}
+				cb.Indent--
+				cb.Linef(`} else {`)
+				cb.Indent++
+				cb.Linef(`%v`, makeRetArgErr(ryeObjType))
+				cb.Indent--
+				cb.Linef(`}`)
 			}
-			cb.Indent--
-			cb.Linef(`} else {`)
-			cb.Indent++
-			cb.Linef(`%v`, makeRetArgErr(ryeObjType))
-			cb.Indent--
-			cb.Linef(`}`)
 
 			return true
 		},

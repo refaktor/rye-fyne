@@ -157,11 +157,11 @@ func unzip(dstPath string, data []byte) error {
 			return fmt.Errorf("zip: illegal file path: %v", path)
 		}
 		if f.FileInfo().IsDir() {
-			if err := os.MkdirAll(path, f.Mode()); err != nil {
+			if err := os.MkdirAll(path, os.ModePerm); err != nil {
 				return err
 			}
 		} else {
-			if err := os.MkdirAll(filepath.Dir(path), f.Mode()); err != nil {
+			if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
 				return err
 			}
 			out, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())

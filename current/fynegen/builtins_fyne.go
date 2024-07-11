@@ -16228,9 +16228,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			var arg0Val error
-			if v, ok := arg0.(env.Error); ok {
+			switch v := arg0.(type) {
+			case env.String:
+				arg0Val = errors.New(v.Value)
+			case env.Error:
 				arg0Val = errors.New(v.Print(*ps.Idx))
-			} else {
+			case env.Integer:
+				if v.Value != 0 {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "dialog-error")
+				}
+				arg0Val = nil
+			default:
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.ErrorType}, "dialog-error")
 			}
 			var arg1Val fyne.Window
@@ -16801,9 +16809,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 		Argsn: 2,
 		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
 			var arg0Val error
-			if v, ok := arg0.(env.Error); ok {
+			switch v := arg0.(type) {
+			case env.String:
+				arg0Val = errors.New(v.Value)
+			case env.Error:
 				arg0Val = errors.New(v.Print(*ps.Idx))
-			} else {
+			case env.Integer:
+				if v.Value != 0 {
+					return evaldo.MakeArgError(ps, 0, []env.Type{env.BlockType, env.NativeType}, "dialog-show-error")
+				}
+				arg0Val = nil
+			default:
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.ErrorType}, "dialog-show-error")
 			}
 			var arg1Val fyne.Window
@@ -17153,9 +17169,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 					arg0Val = *env.NewNative(ps.Idx, arg0, "any")
 					evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 					var res error
-					if v, ok := ps.Res.(env.Error); ok {
+					switch v := ps.Res.(type) {
+					case env.String:
+						res = errors.New(v.Value)
+					case env.Error:
 						res = errors.New(v.Print(*ps.Idx))
-					} else {
+					case env.Integer:
+						if v.Value != 0 {
+							// TODO: Invalid type
+						}
+						res = nil
+					default:
 						// TODO: Invalid type
 					}
 					return res
@@ -23078,9 +23102,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.StringType}, "log-error")
 			}
 			var arg1Val error
-			if v, ok := arg1.(env.Error); ok {
+			switch v := arg1.(type) {
+			case env.String:
+				arg1Val = errors.New(v.Value)
+			case env.Error:
 				arg1Val = errors.New(v.Print(*ps.Idx))
-			} else {
+			case env.Integer:
+				if v.Value != 0 {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "log-error")
+				}
+				arg1Val = nil
+			default:
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.ErrorType}, "log-error")
 			}
 			fyne.LogError(arg0Val, arg1Val)
@@ -52092,9 +52124,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-entry//set-validation-error")
 			}
 			var arg1Val error
-			if v, ok := arg1.(env.Error); ok {
+			switch v := arg1.(type) {
+			case env.String:
+				arg1Val = errors.New(v.Value)
+			case env.Error:
 				arg1Val = errors.New(v.Print(*ps.Idx))
-			} else {
+			case env.Integer:
+				if v.Value != 0 {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "ptr-widget-entry//set-validation-error")
+				}
+				arg1Val = nil
+			default:
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.ErrorType}, "ptr-widget-entry//set-validation-error")
 			}
 			arg0Val.SetValidationError(arg1Val)
@@ -52668,9 +52708,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 							arg0Val = *env.NewString(arg0)
 							evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 							var res error
-							if v, ok := ps.Res.(env.Error); ok {
+							switch v := ps.Res.(type) {
+							case env.String:
+								res = errors.New(v.Value)
+							case env.Error:
 								res = errors.New(v.Print(*ps.Idx))
-							} else {
+							case env.Integer:
+								if v.Value != 0 {
+									// TODO: Invalid type
+								}
+								res = nil
+							default:
 								// TODO: Invalid type
 							}
 							return res
@@ -68111,9 +68159,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 				return evaldo.MakeArgError(ps, 0, []env.Type{env.NativeType}, "ptr-widget-select-entry//set-validation-error")
 			}
 			var arg1Val error
-			if v, ok := arg1.(env.Error); ok {
+			switch v := arg1.(type) {
+			case env.String:
+				arg1Val = errors.New(v.Value)
+			case env.Error:
 				arg1Val = errors.New(v.Print(*ps.Idx))
-			} else {
+			case env.Integer:
+				if v.Value != 0 {
+					return evaldo.MakeArgError(ps, 1, []env.Type{env.BlockType, env.NativeType}, "ptr-widget-select-entry//set-validation-error")
+				}
+				arg1Val = nil
+			default:
 				return evaldo.MakeArgError(ps, 1, []env.Type{env.ErrorType}, "ptr-widget-select-entry//set-validation-error")
 			}
 			arg0Val.SetValidationError(arg1Val)
@@ -68687,9 +68743,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 							arg0Val = *env.NewString(arg0)
 							evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 							var res error
-							if v, ok := ps.Res.(env.Error); ok {
+							switch v := ps.Res.(type) {
+							case env.String:
+								res = errors.New(v.Value)
+							case env.Error:
 								res = errors.New(v.Print(*ps.Idx))
-							} else {
+							case env.Integer:
+								if v.Value != 0 {
+									// TODO: Invalid type
+								}
+								res = nil
+							default:
 								// TODO: Invalid type
 							}
 							return res
@@ -84257,9 +84321,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 									arg0Val = *env.NewString(arg0)
 									evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 									var res error
-									if v, ok := ps.Res.(env.Error); ok {
+									switch v := ps.Res.(type) {
+									case env.String:
+										res = errors.New(v.Value)
+									case env.Error:
 										res = errors.New(v.Print(*ps.Idx))
-									} else {
+									case env.Integer:
+										if v.Value != 0 {
+											// TODO: Invalid type
+										}
+										res = nil
+									default:
 										// TODO: Invalid type
 									}
 									return res
@@ -86703,9 +86775,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 							arg0Val = *env.NewString(arg0)
 							evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 							var res error
-							if v, ok := ps.Res.(env.Error); ok {
+							switch v := ps.Res.(type) {
+							case env.String:
+								res = errors.New(v.Value)
+							case env.Error:
 								res = errors.New(v.Print(*ps.Idx))
-							} else {
+							case env.Integer:
+								if v.Value != 0 {
+									// TODO: Invalid type
+								}
+								res = nil
+							default:
 								// TODO: Invalid type
 							}
 							return res
@@ -94456,9 +94536,17 @@ var Builtins_fynegen = map[string]*env.Builtin{
 							arg0Val = *env.NewString(arg0)
 							evaldo.CallFunction(fn, ps, arg0Val, false, ps.Ctx)
 							var res error
-							if v, ok := ps.Res.(env.Error); ok {
+							switch v := ps.Res.(type) {
+							case env.String:
+								res = errors.New(v.Value)
+							case env.Error:
 								res = errors.New(v.Print(*ps.Idx))
-							} else {
+							case env.Integer:
+								if v.Value != 0 {
+									// TODO: Invalid type
+								}
+								res = nil
+							default:
 								// TODO: Invalid type
 							}
 							return res

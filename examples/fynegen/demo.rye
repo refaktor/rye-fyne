@@ -3,14 +3,17 @@ rye .needs { fynegen }
 do\in fynegen {
 	win: app
 	|window "Rye Fyne Demo"
-	|resize size 400.0 400.0
+	|resize size 500.0 500.0
 
 	win
 	|set-content app-tabs [
-	   tab-item "Basic" v-scroll v-box [
-			label "This is a simple label\nBottom Text"
+	   tab-item "Display" v-scroll v-box [
+			label "This is a simple\nmultiline label"
+
+			separator
+
 			rich-text-from-markdown "
-# This is some markdown
+# This is rich-text from markdown
 ## MD List
 - Item 1
 - Item 2
@@ -22,23 +25,7 @@ do\in fynegen {
 [https://ryelang.org/](https://ryelang.org/)
 "
 			separator
-			entry .place-holder! "This is an entry"
-			separator
-			button-with-icon "Click me" download-icon fn { } {
-				show-pop-up label "Button clicked!" win .canvas
-			}
-			separator
-			accordion [
-				accordion-item
-					"Programming languages"
-					rich-text-from-markdown
-						"- Rye\n- Go\n- C\n- C++\n- Python\n- Zig"
-				accordion-item
-					"Operating Sytems"
-					rich-text-from-markdown
-						"- Android\n- Linux\n- FreeBSD\n- MacOS\n- Windows"
-			]
-			separator
+			label "Icons"
 			center [ h-box [
 				icon theme-file-icon
 				icon document-save-icon
@@ -48,16 +35,51 @@ do\in fynegen {
 				icon content-redo-icon
 				file-icon storage-uri "file:///nonexistant/path/image.png"
 			] ]
+
 			separator
-			check "Check me" closure { ok } { }
+			label "Infinite progress bar"			
+			progress-bar-infinite
+		]
+		
+		tab-item "Entry" v-scroll v-box [
+			entry .place-holder! "Text entry"
+			button "Button" fn { } {
+				show-pop-up label "Button clicked!" win .canvas
+			}
 			separator
+			button-with-icon "Button with icon" download-icon fn { } {
+				show-pop-up label "Button clicked!" win .canvas
+			}
+			separator
+			check "Checkbox" closure { ok } { }
+			separator
+			radio-group [ "Radio" "Group" ] closure { ok } { }
+			select [ "Radio" "Group" ] closure { ok } { }
+			separator
+			select-entry [ "Select entry" "Unselect entry" ]
+			|place-holder! "(Select one or type in"
+
+			separator
+
+			progress-bar .value! 0.69 :progbar
+
+			separator
+
+			do {
+				slider 0.0 100.0
+				|value! 69.0
+				|on-changed! fn { x } { progbar .set-value x / 100.0 }
+			}
+
+			separator
+
+			label "A form with email validation"
+			
 			form [
 				form-item "First Name"
 					entry .place-holder! "John"
-				form-item "Last Name"
-					entry .place-holder! "Doe"
 				form-item "Gender" do {
-					select-entry [ "Male" "Female" ]
+					select-entry [ "Male" "Female" "Other" ]
 					|place-holder! "(Select one or type in entry)"
 				}
 				form-item "E-mail" do {
@@ -73,15 +95,29 @@ do\in fynegen {
 					}
 				}
 			]
+		]
+		tab-item "Misc" v-scroll v-box [
+			
+			accordion [
+				accordion-item
+					"Accordion"
+					rich-text-from-markdown
+						"- Rye\n- Go\n- C\n- C++\n- Python\n- Zig"
+				accordion-item
+					"And another one"
+					rich-text-from-markdown
+						"- Android\n- Linux\n- FreeBSD\n- MacOS\n- Windows"
+			]
 			separator
-			progress-bar .value! 0.69 :progbar
-			progress-bar-infinite
+			
+		]
+		tab-item "Layout" v-scroll v-box [
+			
+			h-box [ label "h-box" label "h-box" ]
+			v-box [ label "v-box" label "v-box" ]
+
 			separator
-			do {
-				slider 0.0 100.0
-				|value! 69.0
-				|on-changed! fn { x } { progbar .set-value x / 100.0 }
-			}
+
 		]
 	]
 	|show-and-run

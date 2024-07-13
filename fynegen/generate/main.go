@@ -599,7 +599,15 @@ func main() {
 				return a.Prio - b.Prio
 			}).Mod == file.ModulePath
 			if !(isHighestPrio || (newNameIsPfx && len(prios) == 0)) {
-				newName = strcase.ToKebab(ctx.ModuleNames[file.ModulePath]) + "-" + newName
+				moduleName := ctx.ModuleNames[file.ModulePath]
+				for _, pfx := range ctx.Config.CustomPrefixes {
+					name := pfx[0]
+					path := pfx[1]
+					if path == file.ModulePath {
+						moduleName = name
+					}
+				}
+				newName = strcase.ToKebab(moduleName) + "-" + newName
 			}
 		}
 

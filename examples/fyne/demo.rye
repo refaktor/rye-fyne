@@ -1,6 +1,4 @@
-rye .needs { fynegen }
-
-do\in fynegen {
+do\in fyne {
 	win: app
 	|window "Rye Fyne Demo"
 	|resize size 500.0 500.0

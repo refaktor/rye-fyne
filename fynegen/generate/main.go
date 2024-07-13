@@ -24,16 +24,13 @@ import (
 
 var fset = token.NewFileSet()
 
-func makeMakeRetArgErr(argn int) func(allowedTypes ...string) string {
-	return func(allowedTypes ...string) string {
-		allowedTypesPfx := make([]string, len(allowedTypes))
-		for i := range allowedTypes {
-			allowedTypesPfx[i] = "env." + allowedTypes[i]
-		}
+func makeMakeRetArgErr(argn int) func(inner string) string {
+	return func(inner string) string {
 		return fmt.Sprintf(
-			`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "((RYEGEN:FUNCNAME))")`,
-			argn,
-			strings.Join(allowedTypesPfx, ", "),
+			`ps.FailureFlag = true
+return env.NewError("((RYEGEN:FUNCNAME)): arg %v: %v")`,
+			argn+1,
+			inner,
 		)
 	}
 }

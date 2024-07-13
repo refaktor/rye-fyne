@@ -1,4 +1,4 @@
-; Requires -tags b_fynegen
+; Requires -tags b_fyne
 
 rye .needs { fyne }
 

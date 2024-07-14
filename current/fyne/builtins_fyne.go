@@ -251,6 +251,32 @@ var ryeStructNameLookup = map[string]string{
 	"fyne.io/fyne/v2/widget.ToolbarSeparator":        "widget-toolbar-separator",
 	"fyne.io/fyne/v2/widget.ToolbarSpacer":           "widget-toolbar-spacer",
 	"fyne.io/fyne/v2/widget.Tree":                    "widget-tree",
+	"io.*LimitedReader":                              "ptr-io-limited-reader",
+	"io.*PipeReader":                                 "ptr-io-pipe-reader",
+	"io.*PipeWriter":                                 "ptr-io-pipe-writer",
+	"io.*SectionReader":                              "ptr-io-section-reader",
+	"io.LimitedReader":                               "io-limited-reader",
+	"io.PipeReader":                                  "io-pipe-reader",
+	"io.PipeWriter":                                  "io-pipe-writer",
+	"io.SectionReader":                               "io-section-reader",
+	"io/fs.*PathError":                               "ptr-fs-path-error",
+	"io/fs.PathError":                                "fs-path-error",
+	"sync.*Cond":                                     "ptr-sync-cond",
+	"sync.*Map":                                      "ptr-sync-map",
+	"sync.*Mutex":                                    "ptr-sync-mutex",
+	"sync.*Once":                                     "ptr-sync-once",
+	"sync.*Pool":                                     "ptr-sync-pool",
+	"sync.*RWMutex":                                  "ptr-sync-rw-mutex",
+	"sync.*WaitGroup":                                "ptr-sync-wait-group",
+	"sync.Cond":                                      "sync-cond",
+	"sync.Map":                                       "sync-map",
+	"sync.Mutex":                                     "sync-mutex",
+	"sync.Once":                                      "sync-once",
+	"sync.Pool":                                      "sync-pool",
+	"sync.RWMutex":                                   "sync-rw-mutex",
+	"sync.WaitGroup":                                 "sync-wait-group",
+	"sync/atomic.*Value":                             "ptr-atomic-value",
+	"sync/atomic.Value":                              "atomic-value",
 }
 
 var Builtins_fyne = map[string]*env.Builtin{
@@ -10182,6 +10208,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-list//append: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-list//append: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-list//append: arg 2: expected native")
@@ -10220,7 +10252,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -10264,7 +10309,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.GetValue(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -10305,6 +10363,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-list//prepend: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-list//prepend: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-list//prepend: arg 2: expected native")
@@ -10351,6 +10415,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 							ps.FailureFlag = true
 							return env.NewError("binding-uri-list//set: arg 2: block item: expected native of type fyne.URI")
 						}
+					case env.Integer:
+						if v.Value != 0 {
+							ps.FailureFlag = true
+							return env.NewError("binding-uri-list//set: arg 2: block item: expected integer to be 0 or nil")
+						}
+						arg1Val[i] = nil
 					default:
 						ps.FailureFlag = true
 						return env.NewError("binding-uri-list//set: arg 2: block item: expected native")
@@ -10418,6 +10488,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-list//set-value: arg 3: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-list//set-value: arg 3: expected integer to be 0 or nil")
+				}
+				arg2Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-list//set-value: arg 3: expected native")
@@ -10516,6 +10592,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-tree//append: arg 4: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-tree//append: arg 4: expected integer to be 0 or nil")
+				}
+				arg3Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-tree//append: arg 4: expected native")
@@ -10571,7 +10653,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				data := make(map[string]any, len(res1))
 				for mKey, mVal := range res1 {
 					var dVal env.Object
-					dVal = *env.NewNative(ps.Idx, mVal, "fyne-uri")
+					{
+						typ := reflect.TypeOf(mVal)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							dVal = *env.NewNative(ps.Idx, mVal, typRyeName)
+						} else {
+							dVal = *env.NewNative(ps.Idx, mVal, "fyne-uri")
+						}
+					}
 					data[mKey] = dVal
 				}
 				res1Obj = *env.NewDict(data)
@@ -10617,7 +10712,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.GetValue(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -10672,6 +10780,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-tree//prepend: arg 4: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-tree//prepend: arg 4: expected integer to be 0 or nil")
+				}
+				arg3Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-tree//prepend: arg 4: expected native")
@@ -10829,6 +10943,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 							ps.FailureFlag = true
 							return env.NewError("binding-uri-tree//set: arg 3: map value: expected native of type fyne.URI")
 						}
+					case env.Integer:
+						if v.Value != 0 {
+							ps.FailureFlag = true
+							return env.NewError("binding-uri-tree//set: arg 3: map value: expected integer to be 0 or nil")
+						}
+						mapV = nil
 					default:
 						ps.FailureFlag = true
 						return env.NewError("binding-uri-tree//set: arg 3: map value: expected native")
@@ -10848,6 +10968,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 							ps.FailureFlag = true
 							return env.NewError("binding-uri-tree//set: arg 3: map value: expected native of type fyne.URI")
 						}
+					case env.Integer:
+						if v.Value != 0 {
+							ps.FailureFlag = true
+							return env.NewError("binding-uri-tree//set: arg 3: map value: expected integer to be 0 or nil")
+						}
+						mapV = nil
 					default:
 						ps.FailureFlag = true
 						return env.NewError("binding-uri-tree//set: arg 3: map value: expected native")
@@ -10916,6 +11042,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri-tree//set-value: arg 3: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri-tree//set-value: arg 3: expected integer to be 0 or nil")
+				}
+				arg2Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri-tree//set-value: arg 3: expected native")
@@ -10951,7 +11083,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.Get()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -10992,6 +11137,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("binding-uri//set: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("binding-uri//set: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("binding-uri//set: arg 2: expected native")
@@ -12312,6 +12463,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("canvas-image-from-reader: arg 1: expected native of type io.Reader")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("canvas-image-from-reader: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("canvas-image-from-reader: arg 1: expected native")
@@ -12371,6 +12528,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("canvas-image-from-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("canvas-image-from-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("canvas-image-from-uri: arg 1: expected native")
@@ -16612,6 +16775,68 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"desktop-custom-shortcut//key-name!": {
+		Doc:   "Set desktop.CustomShortcut KeyName value",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var self desktop.CustomShortcut
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				self, ok = v.Value.(desktop.CustomShortcut)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-custom-shortcut//key-name!: arg 1: expected native of type desktop.CustomShortcut")
+				}
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-custom-shortcut//key-name!: arg 1: expected native")
+			}
+			{
+				nat, natOk := arg1.(env.Native)
+				var natValOk bool
+				var natVal fyne.KeyName
+				if natOk {
+					natVal, natValOk = nat.Value.(fyne.KeyName)
+				}
+				if natOk && natValOk {
+					self.KeyName = natVal
+				} else {
+					var u string
+					if v, ok := arg1.(env.String); ok {
+						u = string(v.Value)
+					} else {
+						ps.FailureFlag = true
+						return env.NewError("desktop-custom-shortcut//key-name!: arg 2: expected string")
+					}
+					self.KeyName = fyne.KeyName(u)
+				}
+			}
+			return arg0
+		},
+	},
+	"desktop-custom-shortcut//key-name?": {
+		Doc:   "Get desktop.CustomShortcut KeyName value",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var self desktop.CustomShortcut
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				self, ok = v.Value.(desktop.CustomShortcut)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-custom-shortcut//key-name?: arg 1: expected native of type desktop.CustomShortcut")
+				}
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-custom-shortcut//key-name?: arg 1: expected native")
+			}
+			var resObj env.Object
+			resObj = *env.NewString(string(self.KeyName))
+			return resObj
+		},
+	},
 	"desktop-custom-shortcut//modifier!": {
 		Doc:   "Set desktop.CustomShortcut Modifier value",
 		Argsn: 2,
@@ -16997,6 +17222,98 @@ var Builtins_fyne = map[string]*env.Builtin{
 			var resObj env.Object
 			resObj = *env.NewString(string(desktop.KeySuperRight))
 			return resObj
+		},
+	},
+	"desktop-keyable//key-down": {
+		Doc:   "desktop.Keyable.KeyDown",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val desktop.Keyable
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(desktop.Keyable)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-down: arg 1: expected native of type desktop.Keyable")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-down: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-keyable//key-down: arg 1: expected native")
+			}
+			var arg1Val *fyne.KeyEvent
+			switch v := arg1.(type) {
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-down: arg 2: expected native of type *fyne.KeyEvent")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-down: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-keyable//key-down: arg 2: expected native")
+			}
+			arg0Val.KeyDown(arg1Val)
+			return arg0
+		},
+	},
+	"desktop-keyable//key-up": {
+		Doc:   "desktop.Keyable.KeyUp",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val desktop.Keyable
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(desktop.Keyable)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-up: arg 1: expected native of type desktop.Keyable")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-up: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-keyable//key-up: arg 1: expected native")
+			}
+			var arg1Val *fyne.KeyEvent
+			switch v := arg1.(type) {
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.(*fyne.KeyEvent)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-up: arg 2: expected native of type *fyne.KeyEvent")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("desktop-keyable//key-up: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("desktop-keyable//key-up: arg 2: expected native")
+			}
+			arg0Val.KeyUp(arg1Val)
+			return arg0
 		},
 	},
 	"desktop-left-mouse-button": {
@@ -18096,7 +18413,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.URIReadCloser, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-read-closer")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-read-closer")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -18148,7 +18478,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.URIWriteCloser, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-write-closer")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-write-closer")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -18200,7 +18543,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.ListableURI, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-listable-uri")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-listable-uri")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -18739,7 +19095,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.URIReadCloser, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-read-closer")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-read-closer")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -18789,7 +19158,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.URIWriteCloser, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-write-closer")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-uri-write-closer")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -18839,7 +19221,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				}
 				arg0Val = func(arg0 fyne.ListableURI, arg1 error) {
 					var arg0Val, arg1Val env.Object
-					arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-listable-uri")
+					{
+						typ := reflect.TypeOf(arg0)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							arg0Val = *env.NewNative(ps.Idx, arg0, typRyeName)
+						} else {
+							arg0Val = *env.NewNative(ps.Idx, arg0, "fyne-listable-uri")
+						}
+					}
 					arg1Val = *env.NewError(arg1.Error())
 					evaldo.CallFunctionArgs2(fn, ps, arg0Val, arg1Val, ps.Ctx)
 				}
@@ -19133,6 +19528,35 @@ var Builtins_fyne = map[string]*env.Builtin{
 			res0 := driver_1.RunNative(arg0Val)
 			var res0Obj env.Object
 			res0Obj = *env.NewError(res0.Error())
+			return res0Obj
+		},
+	},
+	"fmt-stringer//string": {
+		Doc:   "fmt.Stringer.String",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fmt.Stringer
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fmt.Stringer)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fmt-stringer//string: arg 1: expected native of type fmt.Stringer")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fmt-stringer//string: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fmt-stringer//string: arg 1: expected native")
+			}
+			res0 := arg0Val.String()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
 			return res0Obj
 		},
 	},
@@ -25548,6 +25972,59 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return arg0
 		},
 	},
+	"fyne-listable-uri//list": {
+		Doc:   "fyne.ListableURI.List",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.ListableURI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.ListableURI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-listable-uri//list: arg 1: expected native of type fyne.ListableURI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-listable-uri//list: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-listable-uri//list: arg 1: expected native")
+			}
+			res0, res1 := arg0Val.List()
+			var res0Obj env.Object
+			{
+				items := make([]env.Object, len(res0))
+				for i, it := range res0 {
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+						}
+					}
+				}
+				res0Obj = *env.NewBlock(*env.NewTSeries(items))
+			}
+			var res1Obj env.Object
+			res1Obj = *env.NewError(res1.Error())
+			return env.NewDict(map[string]any{
+				"1":   res0Obj,
+				"err": res1Obj,
+			})
+		},
+	},
 	"load-resource-from-path": {
 		Doc:   "fyne.LoadResourceFromPath",
 		Argsn: 1,
@@ -30470,7 +30947,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.Create(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -30546,7 +31036,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.Open(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -30616,7 +31119,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0 := arg0Val.RootURI()
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -30652,7 +31168,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.Save(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -31302,6 +31831,322 @@ var Builtins_fyne = map[string]*env.Builtin{
 			res0 := arg0Val.Size(arg1Val)
 			var res0Obj env.Object
 			res0Obj = *env.NewDecimal(float64(res0))
+			return res0Obj
+		},
+	},
+	"fyne-uri-read-closer//uri": {
+		Doc:   "fyne.URIReadCloser.URI",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URIReadCloser
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URIReadCloser)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri-read-closer//uri: arg 1: expected native of type fyne.URIReadCloser")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri-read-closer//uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri-read-closer//uri: arg 1: expected native")
+			}
+			res0 := arg0Val.URI()
+			var res0Obj env.Object
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
+			return res0Obj
+		},
+	},
+	"fyne-uri-write-closer//uri": {
+		Doc:   "fyne.URIWriteCloser.URI",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URIWriteCloser
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URIWriteCloser)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri-write-closer//uri: arg 1: expected native of type fyne.URIWriteCloser")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri-write-closer//uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri-write-closer//uri: arg 1: expected native")
+			}
+			res0 := arg0Val.URI()
+			var res0Obj env.Object
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
+			return res0Obj
+		},
+	},
+	"fyne-uri//authority": {
+		Doc:   "fyne.URI.Authority",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//authority: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//authority: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//authority: arg 1: expected native")
+			}
+			res0 := arg0Val.Authority()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//extension": {
+		Doc:   "fyne.URI.Extension",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//extension: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//extension: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//extension: arg 1: expected native")
+			}
+			res0 := arg0Val.Extension()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//fragment": {
+		Doc:   "fyne.URI.Fragment",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//fragment: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//fragment: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//fragment: arg 1: expected native")
+			}
+			res0 := arg0Val.Fragment()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//mime-type": {
+		Doc:   "fyne.URI.MimeType",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//mime-type: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//mime-type: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//mime-type: arg 1: expected native")
+			}
+			res0 := arg0Val.MimeType()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//name": {
+		Doc:   "fyne.URI.Name",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//name: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//name: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//name: arg 1: expected native")
+			}
+			res0 := arg0Val.Name()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//path": {
+		Doc:   "fyne.URI.Path",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//path: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//path: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//path: arg 1: expected native")
+			}
+			res0 := arg0Val.Path()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//query": {
+		Doc:   "fyne.URI.Query",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//query: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//query: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//query: arg 1: expected native")
+			}
+			res0 := arg0Val.Query()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
+			return res0Obj
+		},
+	},
+	"fyne-uri//scheme": {
+		Doc:   "fyne.URI.Scheme",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val fyne.URI
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(fyne.URI)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//scheme: arg 1: expected native of type fyne.URI")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("fyne-uri//scheme: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("fyne-uri//scheme: arg 1: expected native")
+			}
+			res0 := arg0Val.Scheme()
+			var res0Obj env.Object
+			res0Obj = *env.NewString(res0)
 			return res0Obj
 		},
 	},
@@ -32454,7 +33299,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 					{
 						items := make([]env.Object, len(arg1))
 						for i, it := range arg1 {
-							items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+							{
+								typ := reflect.TypeOf(it)
+								var typPfx string
+								if typ.Kind() == reflect.Pointer {
+									typPfx = "*"
+									typ = typ.Elem()
+								}
+								typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+								if ok {
+									items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+								} else {
+									items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+								}
+							}
 						}
 						arg1Val = *env.NewBlock(*env.NewTSeries(items))
 					}
@@ -32623,6 +33481,173 @@ var Builtins_fyne = map[string]*env.Builtin{
 			var res0Obj env.Object
 			res0Obj = *env.NewString(res0)
 			return res0Obj
+		},
+	},
+	"io-closer//close": {
+		Doc:   "io.Closer.Close",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val io.Closer
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(io.Closer)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("io-closer//close: arg 1: expected native of type io.Closer")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("io-closer//close: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("io-closer//close: arg 1: expected native")
+			}
+			res0 := arg0Val.Close()
+			var res0Obj env.Object
+			res0Obj = *env.NewError(res0.Error())
+			return res0Obj
+		},
+	},
+	"io-reader//read": {
+		Doc:   "io.Reader.Read",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val io.Reader
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(io.Reader)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("io-reader//read: arg 1: expected native of type io.Reader")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("io-reader//read: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("io-reader//read: arg 1: expected native")
+			}
+			var arg1Val []byte
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]byte, len(v.Series.S))
+				for i, it := range v.Series.S {
+					switch v := it.(type) {
+					case env.Native:
+						var ok bool
+						arg1Val[i], ok = v.Value.(byte)
+						if !ok {
+							ps.FailureFlag = true
+							return env.NewError("io-reader//read: arg 2: block item: expected native of type byte")
+						}
+					default:
+						ps.FailureFlag = true
+						return env.NewError("io-reader//read: arg 2: block item: expected native")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]byte)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("io-reader//read: arg 2: expected native of type []byte")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("io-reader//read: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("io-reader//read: arg 2: expected block, native or nil")
+			}
+			res0, res1 := arg0Val.Read(arg1Val)
+			var res0Obj env.Object
+			res0Obj = *env.NewInteger(int64(res0))
+			var res1Obj env.Object
+			res1Obj = *env.NewError(res1.Error())
+			return env.NewDict(map[string]any{
+				"n":   res0Obj,
+				"err": res1Obj,
+			})
+		},
+	},
+	"io-writer//write": {
+		Doc:   "io.Writer.Write",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val io.Writer
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(io.Writer)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("io-writer//write: arg 1: expected native of type io.Writer")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("io-writer//write: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("io-writer//write: arg 1: expected native")
+			}
+			var arg1Val []byte
+			switch v := arg1.(type) {
+			case env.Block:
+				arg1Val = make([]byte, len(v.Series.S))
+				for i, it := range v.Series.S {
+					switch v := it.(type) {
+					case env.Native:
+						var ok bool
+						arg1Val[i], ok = v.Value.(byte)
+						if !ok {
+							ps.FailureFlag = true
+							return env.NewError("io-writer//write: arg 2: block item: expected native of type byte")
+						}
+					default:
+						ps.FailureFlag = true
+						return env.NewError("io-writer//write: arg 2: block item: expected native")
+					}
+				}
+			case env.Native:
+				var ok bool
+				arg1Val, ok = v.Value.([]byte)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("io-writer//write: arg 2: expected native of type []byte")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("io-writer//write: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("io-writer//write: arg 2: expected block, native or nil")
+			}
+			res0, res1 := arg0Val.Write(arg1Val)
+			var res0Obj env.Object
+			res0Obj = *env.NewInteger(int64(res0))
+			var res1Obj env.Object
+			res1Obj = *env.NewError(res1.Error())
+			return env.NewDict(map[string]any{
+				"n":   res0Obj,
+				"err": res1Obj,
+			})
 		},
 	},
 	"layout-adaptive-grid-layout": {
@@ -33363,6 +34388,35 @@ var Builtins_fyne = map[string]*env.Builtin{
 			var resObj env.Object
 			resObj = *env.NewString(string(mobile.KeyBack))
 			return resObj
+		},
+	},
+	"mobile-keyboardable//keyboard": {
+		Doc:   "mobile.Keyboardable.Keyboard",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var arg0Val mobile.Keyboardable
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				arg0Val, ok = v.Value.(mobile.Keyboardable)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("mobile-keyboardable//keyboard: arg 1: expected native of type mobile.Keyboardable")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("mobile-keyboardable//keyboard: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("mobile-keyboardable//keyboard: arg 1: expected native")
+			}
+			res0 := arg0Val.Keyboard()
+			var res0Obj env.Object
+			res0Obj = *env.NewInteger(int64(int32(res0)))
+			return res0Obj
 		},
 	},
 	"mobile-number-keyboard": {
@@ -41967,6 +43021,80 @@ var Builtins_fyne = map[string]*env.Builtin{
 			return res0Obj
 		},
 	},
+	"ptr-desktop-custom-shortcut//key-name!": {
+		Doc:   "Set *desktop.CustomShortcut KeyName value",
+		Argsn: 2,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var self *desktop.CustomShortcut
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				self, ok = v.Value.(*desktop.CustomShortcut)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("ptr-desktop-custom-shortcut//key-name!: arg 1: expected native of type *desktop.CustomShortcut")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-desktop-custom-shortcut//key-name!: arg 1: expected integer to be 0 or nil")
+				}
+				self = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("ptr-desktop-custom-shortcut//key-name!: arg 1: expected native")
+			}
+			{
+				nat, natOk := arg1.(env.Native)
+				var natValOk bool
+				var natVal fyne.KeyName
+				if natOk {
+					natVal, natValOk = nat.Value.(fyne.KeyName)
+				}
+				if natOk && natValOk {
+					self.KeyName = natVal
+				} else {
+					var u string
+					if v, ok := arg1.(env.String); ok {
+						u = string(v.Value)
+					} else {
+						ps.FailureFlag = true
+						return env.NewError("ptr-desktop-custom-shortcut//key-name!: arg 2: expected string")
+					}
+					self.KeyName = fyne.KeyName(u)
+				}
+			}
+			return arg0
+		},
+	},
+	"ptr-desktop-custom-shortcut//key-name?": {
+		Doc:   "Get *desktop.CustomShortcut KeyName value",
+		Argsn: 1,
+		Fn: func(ps *env.ProgramState, arg0 env.Object, arg1 env.Object, arg2 env.Object, arg3 env.Object, arg4 env.Object) env.Object {
+			var self *desktop.CustomShortcut
+			switch v := arg0.(type) {
+			case env.Native:
+				var ok bool
+				self, ok = v.Value.(*desktop.CustomShortcut)
+				if !ok {
+					ps.FailureFlag = true
+					return env.NewError("ptr-desktop-custom-shortcut//key-name?: arg 1: expected native of type *desktop.CustomShortcut")
+				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-desktop-custom-shortcut//key-name?: arg 1: expected integer to be 0 or nil")
+				}
+				self = nil
+			default:
+				ps.FailureFlag = true
+				return env.NewError("ptr-desktop-custom-shortcut//key-name?: arg 1: expected native")
+			}
+			var resObj env.Object
+			resObj = *env.NewString(string(self.KeyName))
+			return resObj
+		},
+	},
 	"ptr-desktop-custom-shortcut//mod": {
 		Doc:   "(*desktop.CustomShortcut).Mod",
 		Argsn: 1,
@@ -43128,6 +44256,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-dialog-file-dialog//set-location: arg 2: expected native of type fyne.ListableURI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-dialog-file-dialog//set-location: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-dialog-file-dialog//set-location: arg 2: expected native")
@@ -49280,6 +50414,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-storage-extension-file-filter//matches: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-storage-extension-file-filter//matches: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-storage-extension-file-filter//matches: arg 2: expected native")
@@ -49322,6 +50462,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-storage-mime-type-file-filter//matches: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-storage-mime-type-file-filter//matches: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-storage-mime-type-file-filter//matches: arg 2: expected native")
@@ -59597,6 +60743,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-widget-file-icon//set-uri: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-widget-file-icon//set-uri: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-widget-file-icon//set-uri: arg 2: expected native")
@@ -59692,6 +60844,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-widget-file-icon//uri!: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-widget-file-icon//uri!: arg 2: expected integer to be 0 or nil")
+				}
+				self.URI = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-widget-file-icon//uri!: arg 2: expected native")
@@ -59723,7 +60881,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				return env.NewError("ptr-widget-file-icon//uri?: arg 1: expected native")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.URI, "fyne-uri")
+			{
+				typ := reflect.TypeOf(self.URI)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.URI, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.URI, "fyne-uri")
+				}
+			}
 			return resObj
 		},
 	},
@@ -64955,6 +66126,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("ptr-widget-image-segment//source!: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("ptr-widget-image-segment//source!: arg 2: expected integer to be 0 or nil")
+				}
+				self.Source = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("ptr-widget-image-segment//source!: arg 2: expected native")
@@ -64986,7 +66163,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				return env.NewError("ptr-widget-image-segment//source?: arg 1: expected native")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Source, "fyne-uri")
+			{
+				typ := reflect.TypeOf(self.Source)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Source, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Source, "fyne-uri")
+				}
+			}
 			return resObj
 		},
 	},
@@ -87698,6 +88888,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-copyable-repository//copy: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-copyable-repository//copy: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-copyable-repository//copy: arg 2: expected native")
@@ -87711,6 +88907,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-copyable-repository//copy: arg 3: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-copyable-repository//copy: arg 3: expected integer to be 0 or nil")
+				}
+				arg2Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-copyable-repository//copy: arg 3: expected native")
@@ -87753,7 +88955,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.ParseURI(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -87810,6 +89025,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-for-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-for-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-for-uri: arg 1: expected native")
@@ -87851,6 +89072,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-child: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-child: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-child: arg 1: expected native")
@@ -87864,7 +89091,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := repository.GenericChild(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -87886,6 +89126,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-copy: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-copy: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-copy: arg 1: expected native")
@@ -87899,6 +89145,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-copy: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-copy: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-copy: arg 2: expected native")
@@ -87922,6 +89174,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-move: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-move: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-move: arg 1: expected native")
@@ -87935,6 +89193,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-move: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-move: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-move: arg 2: expected native")
@@ -87958,13 +89222,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-generic-parent: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-generic-parent: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-generic-parent: arg 1: expected native")
 			}
 			res0, res1 := repository.GenericParent(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88005,6 +89288,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-hierarchical-repository//child: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-hierarchical-repository//child: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-hierarchical-repository//child: arg 2: expected native")
@@ -88018,7 +89307,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := arg0Val.Child(arg1Val, arg2Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88059,13 +89361,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-hierarchical-repository//parent: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-hierarchical-repository//parent: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-hierarchical-repository//parent: arg 2: expected native")
 			}
 			res0, res1 := arg0Val.Parent(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88106,6 +89427,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-listable-repository//can-list: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-listable-repository//can-list: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-listable-repository//can-list: arg 2: expected native")
@@ -88153,6 +89480,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-listable-repository//create-listable: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-listable-repository//create-listable: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-listable-repository//create-listable: arg 2: expected native")
@@ -88195,6 +89528,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-listable-repository//list: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-listable-repository//list: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-listable-repository//list: arg 2: expected native")
@@ -88204,7 +89543,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -88248,6 +89600,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-movable-repository//move: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-movable-repository//move: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-movable-repository//move: arg 2: expected native")
@@ -88261,6 +89619,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-movable-repository//move: arg 3: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-movable-repository//move: arg 3: expected integer to be 0 or nil")
+				}
+				arg2Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-movable-repository//move: arg 3: expected native")
@@ -88284,7 +89648,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0 := repository.NewFileURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -88301,7 +89678,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := repository.ParseURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88376,6 +89766,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-repository//can-read: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-repository//can-read: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-repository//can-read: arg 2: expected native")
@@ -88457,6 +89853,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-repository//exists: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-repository//exists: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-repository//exists: arg 2: expected native")
@@ -88504,13 +89906,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-repository//reader: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-repository//reader: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-repository//reader: arg 2: expected native")
 			}
 			res0, res1 := arg0Val.Reader(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88551,6 +89972,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-writable-repository//can-write: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-writable-repository//can-write: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-writable-repository//can-write: arg 2: expected native")
@@ -88598,6 +90025,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-writable-repository//delete: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-writable-repository//delete: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-writable-repository//delete: arg 2: expected native")
@@ -88640,13 +90073,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("repository-writable-repository//writer: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("repository-writable-repository//writer: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("repository-writable-repository//writer: arg 2: expected native")
 			}
 			res0, res1 := arg0Val.Writer(arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88764,6 +90216,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-can-list: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-can-list: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-can-list: arg 1: expected native")
@@ -88792,6 +90250,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-can-read: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-can-read: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-can-read: arg 1: expected native")
@@ -88820,6 +90284,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-can-write: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-can-write: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-can-write: arg 1: expected native")
@@ -88848,6 +90318,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-child: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-child: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-child: arg 1: expected native")
@@ -88861,7 +90337,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := storage.Child(arg0Val, arg1Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -88883,6 +90372,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-copy: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-copy: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-copy: arg 1: expected native")
@@ -88896,6 +90391,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-copy: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-copy: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-copy: arg 2: expected native")
@@ -88919,6 +90420,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-create-listable: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-create-listable: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-create-listable: arg 1: expected native")
@@ -88942,6 +90449,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-delete: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-delete: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-delete: arg 1: expected native")
@@ -88965,6 +90478,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-exists: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-exists: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-exists: arg 1: expected native")
@@ -89088,6 +90607,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-file-filter//matches: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-file-filter//matches: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-file-filter//matches: arg 2: expected native")
@@ -89111,6 +90636,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-list: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-list: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-list: arg 1: expected native")
@@ -89120,7 +90651,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			{
 				items := make([]env.Object, len(res0))
 				for i, it := range res0 {
-					items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+					{
+						typ := reflect.TypeOf(it)
+						var typPfx string
+						if typ.Kind() == reflect.Pointer {
+							typPfx = "*"
+							typ = typ.Elem()
+						}
+						typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+						if ok {
+							items[i] = *env.NewNative(ps.Idx, it, typRyeName)
+						} else {
+							items[i] = *env.NewNative(ps.Idx, it, "fyne-uri")
+						}
+					}
 				}
 				res0Obj = *env.NewBlock(*env.NewTSeries(items))
 			}
@@ -89145,13 +90689,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-lister-for-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-lister-for-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-lister-for-uri: arg 1: expected native")
 			}
 			res0, res1 := storage.ListerForURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-listable-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-listable-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89173,6 +90736,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-load-resource-from-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-load-resource-from-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-load-resource-from-uri: arg 1: expected native")
@@ -89290,6 +90859,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-move: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-move: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-move: arg 1: expected native")
@@ -89303,6 +90878,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-move: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-move: arg 2: expected integer to be 0 or nil")
+				}
+				arg1Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-move: arg 2: expected native")
@@ -89378,7 +90959,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0 := storage.NewFileURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -89447,7 +91041,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0 := storage.NewURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			return res0Obj
 		},
 	},
@@ -89464,13 +91071,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-open-file-from-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-open-file-from-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-open-file-from-uri: arg 1: expected native")
 			}
 			res0, res1 := storage.OpenFileFromURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89492,13 +91118,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-parent: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-parent: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-parent: arg 1: expected native")
 			}
 			res0, res1 := storage.Parent(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89520,7 +91165,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 			}
 			res0, res1 := storage.ParseURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89542,13 +91200,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-reader: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-reader: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-reader: arg 1: expected native")
 			}
 			res0, res1 := storage.Reader(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-read-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89570,13 +91247,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-save-file-to-uri: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-save-file-to-uri: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-save-file-to-uri: arg 1: expected native")
 			}
 			res0, res1 := storage.SaveFileToURI(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -89598,13 +91294,32 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("storage-writer: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("storage-writer: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("storage-writer: arg 1: expected native")
 			}
 			res0, res1 := storage.Writer(arg0Val)
 			var res0Obj env.Object
-			res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+			{
+				typ := reflect.TypeOf(res0)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					res0Obj = *env.NewNative(ps.Idx, res0, typRyeName)
+				} else {
+					res0Obj = *env.NewNative(ps.Idx, res0, "fyne-uri-write-closer")
+				}
+			}
 			var res1Obj env.Object
 			res1Obj = *env.NewError(res1.Error())
 			return env.NewDict(map[string]any{
@@ -90947,6 +92662,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("from-json-reader: arg 1: expected native of type io.Reader")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("from-json-reader: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("from-json-reader: arg 1: expected native")
@@ -97104,6 +98825,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("widget-file-icon//uri!: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("widget-file-icon//uri!: arg 2: expected integer to be 0 or nil")
+				}
+				self.URI = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("widget-file-icon//uri!: arg 2: expected native")
@@ -97129,7 +98856,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				return env.NewError("widget-file-icon//uri?: arg 1: expected native")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.URI, "fyne-uri")
+			{
+				typ := reflect.TypeOf(self.URI)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.URI, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.URI, "fyne-uri")
+				}
+			}
 			return resObj
 		},
 	},
@@ -98925,6 +100665,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("widget-image-segment//source!: arg 2: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("widget-image-segment//source!: arg 2: expected integer to be 0 or nil")
+				}
+				self.Source = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("widget-image-segment//source!: arg 2: expected native")
@@ -98950,7 +100696,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 				return env.NewError("widget-image-segment//source?: arg 1: expected native")
 			}
 			var resObj env.Object
-			resObj = *env.NewNative(ps.Idx, self.Source, "fyne-uri")
+			{
+				typ := reflect.TypeOf(self.Source)
+				var typPfx string
+				if typ.Kind() == reflect.Pointer {
+					typPfx = "*"
+					typ = typ.Elem()
+				}
+				typRyeName, ok := ryeStructNameLookup[typ.PkgPath()+"."+typPfx+typ.Name()]
+				if ok {
+					resObj = *env.NewNative(ps.Idx, self.Source, typRyeName)
+				} else {
+					resObj = *env.NewNative(ps.Idx, self.Source, "fyne-uri")
+				}
+			}
 			return resObj
 		},
 	},
@@ -100611,6 +102370,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					ps.FailureFlag = true
 					return env.NewError("file-icon: arg 1: expected native of type fyne.URI")
 				}
+			case env.Integer:
+				if v.Value != 0 {
+					ps.FailureFlag = true
+					return env.NewError("file-icon: arg 1: expected integer to be 0 or nil")
+				}
+				arg0Val = nil
 			default:
 				ps.FailureFlag = true
 				return env.NewError("file-icon: arg 1: expected native")

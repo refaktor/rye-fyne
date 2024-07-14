@@ -375,6 +375,7 @@ func main() {
 	}
 
 	moduleNames := make(map[string]string) // module path to name
+	moduleDirPaths := make(map[string]string)
 	{
 		addPkgNames := func(dir, modulePath string) (string, []module.Version, error) {
 			goVer, pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
@@ -383,6 +384,7 @@ func main() {
 			}
 			for mod, name := range pkgNms {
 				moduleNames[mod] = name
+				moduleDirPaths[mod] = filepath.Join(dir, strings.TrimPrefix(mod, modulePath))
 			}
 			return goVer, req, nil
 		}
@@ -427,20 +429,17 @@ func main() {
 
 	startTime := time.Now()
 
-	pkgs, err := ParseDir(fset, srcDir, cfg.Package)
-	if err != nil {
-		fmt.Println("parse source:", err)
-		os.Exit(1)
-	}
-
 	const bindingCodeIndent = 3
 
+	parsedPkgs := make(map[string]struct{})
+	genBindingPkgs := make(map[string]struct{}) // mod paths
 	data := &Data{
-		Funcs:      make(map[string]*Func),
-		Interfaces: make(map[string]*Interface),
-		Structs:    make(map[string]*Struct),
-		Typedefs:   make(map[string]Ident),
-		Values:     make(map[string]NamedIdent),
+		Funcs:        make(map[string]*Func),
+		Interfaces:   make(map[string]*Interface),
+		Structs:      make(map[string]*Struct),
+		Typedefs:     make(map[string]Ident),
+		Values:       make(map[string]NamedIdent),
+		RequiredPkgs: make(map[string]struct{}),
 	}
 	ctx := &Context{
 		Config:      &cfg,
@@ -450,14 +449,36 @@ func main() {
 		UsedTyps:    make(map[string]Ident),
 	}
 
-	for _, pkg := range pkgs {
-		for name, f := range pkg.Files {
-			name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
-			if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames); err != nil {
-				fmt.Printf("%v: %v\n", pkg.Name, err)
+	parseDir := func(dirPath string, modulePath string, genBinding, typeDeclsOnly bool) {
+		pkgs, err := ParseDir(fset, dirPath, modulePath)
+		if err != nil {
+			fmt.Println("parse source:", err)
+			os.Exit(1)
+		}
+
+		for _, pkg := range pkgs {
+			for name, f := range pkg.Files {
+				name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
+				if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames, typeDeclsOnly); err != nil {
+					fmt.Printf("%v: %v\n", pkg.Name, err)
+				}
 			}
+			if genBinding {
+				genBindingPkgs[pkg.Path] = struct{}{}
+			}
+			parsedPkgs[pkg.Path] = struct{}{}
 		}
 	}
+
+	parseDir(srcDir, cfg.Package, true, false)
+
+	for mod := range data.RequiredPkgs {
+		if _, ok := parsedPkgs[mod]; ok {
+			continue
+		}
+		parseDir(moduleDirPaths[mod], mod, false, true)
+	}
+
 	if err := data.ResolveInheritancesAndMethods(ctx); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -466,7 +487,10 @@ func main() {
 	bindingFuncs := make(map[string]*BindingFunc)
 
 	for _, iface := range data.Interfaces {
-		if IdentIsInternal(ctx, iface.Name) {
+		if iface.Name.File == nil || IdentIsInternal(ctx, iface.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[iface.Name.File.ModulePath]; !ok {
 			continue
 		}
 		for _, fn := range iface.Funcs {
@@ -483,6 +507,9 @@ func main() {
 		if IdentIsInternal(ctx, fn.Name) || (fn.Recv != nil && IdentIsInternal(ctx, *fn.Recv)) {
 			continue
 		}
+		if _, ok := genBindingPkgs[fn.File.ModulePath]; !ok {
+			continue
+		}
 		bind, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 		if err != nil {
 			fmt.Println(fn.String()+":", err)
@@ -492,7 +519,10 @@ func main() {
 	}
 
 	for _, struc := range data.Structs {
-		if IdentIsInternal(ctx, struc.Name) {
+		if struc.Name.File == nil || IdentIsInternal(ctx, struc.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[struc.Name.File.ModulePath]; !ok {
 			continue
 		}
 		for _, f := range struc.Fields {
@@ -516,7 +546,10 @@ func main() {
 	}
 
 	for _, value := range data.Values {
-		if IdentIsInternal(ctx, value.Name) {
+		if value.Name.File == nil || IdentIsInternal(ctx, value.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[value.Name.File.ModulePath]; !ok {
 			continue
 		}
 		bind, err := GenerateValue(ctx, value, bindingCodeIndent)

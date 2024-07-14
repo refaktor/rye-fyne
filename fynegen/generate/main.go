@@ -107,6 +107,7 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (*BindingFunc, error) {
 			param.Type,
 			fmt.Sprintf(`arg%vVal`, i),
 			fmt.Sprintf(`arg%v`, i),
+			i,
 			makeMakeRetArgErr(i),
 		); !found {
 			return nil, errors.New("unhandled type conversion (rye to go): " + param.Type.GoName)
@@ -160,6 +161,7 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (*BindingFunc, error) {
 				result.Type,
 				fmt.Sprintf(`res%vObj`, i),
 				fmt.Sprintf(`res%v`, i),
+				-1,
 				nil,
 			); !found {
 				return nil, errors.New("unhandled type conversion (go to rye): " + result.Type.GoName)
@@ -225,6 +227,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 		structName,
 		`self`,
 		`arg0`,
+		0,
 		makeMakeRetArgErr(0),
 	); !found {
 		return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
@@ -237,6 +240,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			field.Type,
 			`self.`+field.Name.GoName,
 			`arg1`,
+			1,
 			makeMakeRetArgErr(1),
 		); !found {
 			return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
@@ -251,6 +255,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			field.Type,
 			`resObj`,
 			`self.`+field.Name.GoName,
+			-1,
 			nil,
 		); !found {
 			return nil, errors.New("unhandled type conversion (go to rye): " + field.Type.GoName)
@@ -279,6 +284,7 @@ func GenerateValue(ctx *Context, value NamedIdent, indent int) (*BindingFunc, er
 		value.Type,
 		`resObj`,
 		value.Name.GoName,
+		-1,
 		nil,
 	); !found {
 		return nil, errors.New("unhandled type conversion (go to rye): " + value.Type.GoName)

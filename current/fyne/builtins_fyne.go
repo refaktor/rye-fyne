@@ -6,6 +6,7 @@ package fyne
 
 import (
 	"errors"
+	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
@@ -12575,10 +12576,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(image.Image)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"canvas-raster: arg 1: callback result: expected native of type image.Image",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"canvas-raster: arg 1: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -12645,10 +12656,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(color.Color)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"canvas-raster-with-pixels: arg 1: callback result: expected native of type color.Color",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"canvas-raster-with-pixels: arg 1: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -13066,10 +13087,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(image.Image)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"canvas-raster//generator!: arg 2: callback result: expected native of type image.Image",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"canvas-raster//generator!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -14134,15 +14165,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(*container.TabItem)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"container-doc-tabs//create-tab!: arg 2: callback result: expected native of type *container.TabItem",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"container-doc-tabs//create-tab!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"container-doc-tabs//create-tab!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -19056,11 +19102,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 						res = errors.New(v.Print(*ps.Idx))
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"driver-1-run-native: arg 1: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"driver-1-run-native: arg 1: callback result: expected error, string or nil",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -19170,7 +19226,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 							if v, ok := ps.Res.(env.Decimal); ok {
 								res = float32(v.Value)
 							} else {
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"fyne-animation//curve!: arg 2: callback result: expected decimal",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -36730,10 +36791,20 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(image.Image)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-canvas-raster//generator!: arg 2: callback result: expected native of type image.Image",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-canvas-raster//generator!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -39589,15 +39660,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(*container.TabItem)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-container-doc-tabs//create-tab!: arg 2: callback result: expected native of type *container.TabItem",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-container-doc-tabs//create-tab!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-container-doc-tabs//create-tab!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -43518,7 +43604,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 							if v, ok := ps.Res.(env.Decimal); ok {
 								res = float32(v.Value)
 							} else {
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"ptr-fyne-animation//curve!: arg 2: callback result: expected decimal",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -58875,11 +58966,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 								res = errors.New(v.Print(*ps.Idx))
 							case env.Integer:
 								if v.Value != 0 {
-									// TODO: Cannot return error from function
+									fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+										"ptr-widget-entry//validator!: arg 2: callback result: expected integer to be 0 or nil",
+										fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+										fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+									)
+									return res
 								}
 								res = nil
 							default:
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"ptr-widget-entry//validator!: arg 2: callback result: expected error, string or nil",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -60948,15 +61049,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-grid-wrap//create-item!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-grid-wrap//create-item!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-grid-wrap//create-item!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -61294,7 +61410,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-grid-wrap//length!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -66540,15 +66661,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-list//create-item!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-list//create-item!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-list//create-item!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -66857,7 +66993,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-list//length!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -72085,7 +72226,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.String); ok {
 						res = string(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-progress-bar//text-formatter!: arg 2: callback result: expected string",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -76921,11 +77067,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 								res = errors.New(v.Print(*ps.Idx))
 							case env.Integer:
 								if v.Value != 0 {
-									// TODO: Cannot return error from function
+									fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+										"ptr-widget-select-entry//validator!: arg 2: callback result: expected integer to be 0 or nil",
+										fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+										fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+									)
+									return res
 								}
 								res = nil
 							default:
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"ptr-widget-select-entry//validator!: arg 2: callback result: expected error, string or nil",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -80637,15 +80793,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-table//create-cell!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-table//create-cell!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-table//create-cell!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -80727,15 +80898,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-table//create-header!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-table//create-header!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-table//create-header!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -85691,7 +85877,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 									if v, ok := it.(env.String); ok {
 										u = string(v.Value)
 									} else {
-										// TODO: Cannot return error from function
+										fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+											"ptr-widget-tree//child-ui-ds!: arg 2: callback result: block item: expected string",
+											fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+											fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+										)
+										return res
 									}
 									res[i] = widget.TreeNodeID(u)
 								}
@@ -85701,15 +85892,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.([]widget.TreeNodeID)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-tree//child-ui-ds!: arg 2: callback result: expected native of type []widget.TreeNodeID",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-tree//child-ui-ds!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-tree//child-ui-ds!: arg 2: callback result: expected block, native or nil",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -85868,15 +86074,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-tree//create-node!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"ptr-widget-tree//create-node!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-tree//create-node!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -86187,7 +86408,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = v.Value != 0
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"ptr-widget-tree//is-branch!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -93903,11 +94129,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 										res = errors.New(v.Print(*ps.Idx))
 									case env.Integer:
 										if v.Value != 0 {
-											// TODO: Cannot return error from function
+											fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+												"validation-all-strings: arg 1: callback result: expected integer to be 0 or nil",
+												fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+												fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+											)
+											return res
 										}
 										res = nil
 									default:
-										// TODO: Cannot return error from function
+										fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+											"validation-all-strings: arg 1: callback result: expected error, string or nil",
+											fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+											fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+										)
+										return res
 									}
 									return res
 								}
@@ -96629,11 +96865,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 								res = errors.New(v.Print(*ps.Idx))
 							case env.Integer:
 								if v.Value != 0 {
-									// TODO: Cannot return error from function
+									fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+										"widget-entry//validator!: arg 2: callback result: expected integer to be 0 or nil",
+										fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+										fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+									)
+									return res
 								}
 								res = nil
 							default:
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"widget-entry//validator!: arg 2: callback result: expected error, string or nil",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -97441,15 +97687,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-grid-wrap//create-item!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-grid-wrap//create-item!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-grid-wrap//create-item!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -97565,7 +97826,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-grid-wrap//length!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -99314,15 +99580,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-list//create-item!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-list//create-item!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-list//create-item!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -99438,7 +99719,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-list//length!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -100439,7 +100725,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"grid-wrap: arg 1: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -100468,15 +100759,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"grid-wrap: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"grid-wrap: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"grid-wrap: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -100570,15 +100876,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"grid-wrap-with-data: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"grid-wrap-with-data: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"grid-wrap-with-data: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -100896,7 +101217,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = int(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"list: arg 1: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -100925,15 +101251,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"list: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"list: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"list: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -101027,15 +101368,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"list-with-data: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"list-with-data: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"list-with-data: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -101743,15 +102099,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"table: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"table: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"table: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -101839,15 +102210,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"table-with-headers: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"table-with-headers: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"table-with-headers: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -102084,7 +102470,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 									if v, ok := it.(env.String); ok {
 										u = string(v.Value)
 									} else {
-										// TODO: Cannot return error from function
+										fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+											"tree: arg 1: callback result: block item: expected string",
+											fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+											fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+										)
+										return res
 									}
 									res[i] = widget.TreeNodeID(u)
 								}
@@ -102094,15 +102485,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.([]widget.TreeNodeID)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree: arg 1: callback result: expected native of type []widget.TreeNodeID",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree: arg 1: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"tree: arg 1: callback result: expected block, native or nil",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -102131,7 +102537,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = v.Value != 0
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"tree: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -102162,15 +102573,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree: arg 3: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree: arg 3: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"tree: arg 3: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -102243,15 +102669,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree-with-data: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"tree-with-data: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"tree-with-data: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -103119,7 +103560,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.String); ok {
 						res = string(v.Value)
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-progress-bar//text-formatter!: arg 2: callback result: expected string",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -105233,11 +105679,21 @@ var Builtins_fyne = map[string]*env.Builtin{
 								res = errors.New(v.Print(*ps.Idx))
 							case env.Integer:
 								if v.Value != 0 {
-									// TODO: Cannot return error from function
+									fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+										"widget-select-entry//validator!: arg 2: callback result: expected integer to be 0 or nil",
+										fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+										fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+									)
+									return res
 								}
 								res = nil
 							default:
-								// TODO: Cannot return error from function
+								fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+									"widget-select-entry//validator!: arg 2: callback result: expected error, string or nil",
+									fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+									fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+								)
+								return res
 							}
 							return res
 						}
@@ -106664,15 +107120,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-table//create-cell!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-table//create-cell!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-table//create-cell!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -106742,15 +107213,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-table//create-header!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-table//create-header!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-table//create-header!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -108494,7 +108980,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 									if v, ok := it.(env.String); ok {
 										u = string(v.Value)
 									} else {
-										// TODO: Cannot return error from function
+										fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+											"widget-tree//child-ui-ds!: arg 2: callback result: block item: expected string",
+											fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+											fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+										)
+										return res
 									}
 									res[i] = widget.TreeNodeID(u)
 								}
@@ -108504,15 +108995,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.([]widget.TreeNodeID)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-tree//child-ui-ds!: arg 2: callback result: expected native of type []widget.TreeNodeID",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-tree//child-ui-ds!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-tree//child-ui-ds!: arg 2: callback result: expected block, native or nil",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -108584,15 +109090,30 @@ var Builtins_fyne = map[string]*env.Builtin{
 						var ok bool
 						res, ok = v.Value.(fyne.CanvasObject)
 						if !ok {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-tree//create-node!: arg 2: callback result: expected native of type fyne.CanvasObject",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 					case env.Integer:
 						if v.Value != 0 {
-							// TODO: Cannot return error from function
+							fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+								"widget-tree//create-node!: arg 2: callback result: expected integer to be 0 or nil",
+								fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+								fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+							)
+							return res
 						}
 						res = nil
 					default:
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-tree//create-node!: arg 2: callback result: expected native",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}
@@ -108710,7 +109231,12 @@ var Builtins_fyne = map[string]*env.Builtin{
 					if v, ok := ps.Res.(env.Integer); ok {
 						res = v.Value != 0
 					} else {
-						// TODO: Cannot return error from function
+						fmt.Printf("\033[31mError: \033[1m%v\033[m\n\033[31mFrom function \033[1m%v %v\033[m\n",
+							"widget-tree//is-branch!: arg 2: callback result: expected integer",
+							fn.Spec.Series.PositionAndSurroundingElements(*ps.Idx),
+							fn.Body.Series.PositionAndSurroundingElements(*ps.Idx),
+						)
+						return res
 					}
 					return res
 				}

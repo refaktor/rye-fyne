@@ -405,6 +405,7 @@ func main() {
 		}
 	}
 	moduleImportNames := make(map[string]string) // module path to name; each name value is unique
+	moduleImportNames["C"] = "C"
 	{
 		moduleNameKeys := make([]string, 0, len(moduleNames))
 		for k := range moduleNames {

@@ -459,7 +459,11 @@ func main() {
 		for _, pkg := range pkgs {
 			for name, f := range pkg.Files {
 				name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
-				if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames, typeDeclsOnly); err != nil {
+				tdo := typeDeclsOnly
+				if ModulePathIsInternal(ctx, pkg.Path) {
+					tdo = true
+				}
+				if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames, tdo); err != nil {
 					fmt.Printf("%v: %v\n", pkg.Name, err)
 				}
 			}

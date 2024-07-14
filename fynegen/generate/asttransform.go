@@ -761,7 +761,7 @@ func (d *Data) ResolveInheritancesAndMethods(ctx *Context) error {
 		}
 		struc, ok := d.Structs[recv.GoName]
 		if !ok {
-			fmt.Println(errors.New("function " + FuncGoIdent(fn) + " has unknown receiver struct " + recv.GoName))
+			fmt.Println(errors.New("function " + FuncGoIdent(fn) + " from " + fn.File.ModulePath + " has unknown receiver struct " + recv.GoName))
 			continue
 			//return
 		}

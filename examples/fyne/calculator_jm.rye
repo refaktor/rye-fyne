@@ -1,8 +1,8 @@
-rye .needs { fynegen } ; experimenting with some language features, doesn't work yet
+rye .needs { fyne } ; experimenting with some language features, doesn't work yet
 
 not_: ?not
 
-do\in fynegen {
+do\in fyne {
 
     win: app .window "Calculator"
 

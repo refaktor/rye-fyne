@@ -48,7 +48,7 @@ func visitDir(fset *token.FileSet, dirPath string, mode parser.Mode, modulePathH
 		modulePath = modulePathHint
 	}
 
-	var requireMap map[string]struct{}
+	requireMap := make(map[string]struct{})
 
 	var doVisitDir func(fsPath, modPath string) error
 	doVisitDir = func(fsPath, modPath string) error {

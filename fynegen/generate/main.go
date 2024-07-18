@@ -24,16 +24,13 @@ import (
 
 var fset = token.NewFileSet()
 
-func makeMakeRetArgErr(argn int) func(allowedTypes ...string) string {
-	return func(allowedTypes ...string) string {
-		allowedTypesPfx := make([]string, len(allowedTypes))
-		for i := range allowedTypes {
-			allowedTypesPfx[i] = "env." + allowedTypes[i]
-		}
+func makeMakeRetArgErr(argn int) func(inner string) string {
+	return func(inner string) string {
 		return fmt.Sprintf(
-			`return evaldo.MakeArgError(ps, %v, []env.Type{%v}, "((RYEGEN:FUNCNAME))")`,
-			argn,
-			strings.Join(allowedTypesPfx, ", "),
+			`ps.FailureFlag = true
+return env.NewError("((RYEGEN:FUNCNAME)): arg %v: %v")`,
+			argn+1,
+			inner,
 		)
 	}
 }
@@ -110,6 +107,7 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (*BindingFunc, error) {
 			param.Type,
 			fmt.Sprintf(`arg%vVal`, i),
 			fmt.Sprintf(`arg%v`, i),
+			i,
 			makeMakeRetArgErr(i),
 		); !found {
 			return nil, errors.New("unhandled type conversion (rye to go): " + param.Type.GoName)
@@ -163,6 +161,7 @@ func GenerateBinding(ctx *Context, fn *Func, indent int) (*BindingFunc, error) {
 				result.Type,
 				fmt.Sprintf(`res%vObj`, i),
 				fmt.Sprintf(`res%v`, i),
+				-1,
 				nil,
 			); !found {
 				return nil, errors.New("unhandled type conversion (go to rye): " + result.Type.GoName)
@@ -228,6 +227,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 		structName,
 		`self`,
 		`arg0`,
+		0,
 		makeMakeRetArgErr(0),
 	); !found {
 		return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
@@ -240,6 +240,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			field.Type,
 			`self.`+field.Name.GoName,
 			`arg1`,
+			1,
 			makeMakeRetArgErr(1),
 		); !found {
 			return nil, errors.New("unhandled type conversion (go to rye): " + structName.GoName)
@@ -254,6 +255,7 @@ func GenerateGetterOrSetter(ctx *Context, field NamedIdent, structName Ident, in
 			field.Type,
 			`resObj`,
 			`self.`+field.Name.GoName,
+			-1,
 			nil,
 		); !found {
 			return nil, errors.New("unhandled type conversion (go to rye): " + field.Type.GoName)
@@ -282,6 +284,7 @@ func GenerateValue(ctx *Context, value NamedIdent, indent int) (*BindingFunc, er
 		value.Type,
 		`resObj`,
 		value.Name.GoName,
+		-1,
 		nil,
 	); !found {
 		return nil, errors.New("unhandled type conversion (go to rye): " + value.Type.GoName)
@@ -331,7 +334,7 @@ func makeCompareModulePaths(preferPkg string) func(a, b string) int {
 }
 
 func main() {
-	outFile := "../current/fynegen/builtins_fyne.go"
+	outFile := "../current/fyne/builtins_fyne.go"
 
 	configPath := "config.toml"
 	if _, err := os.Stat(configPath); err != nil {
@@ -372,6 +375,7 @@ func main() {
 	}
 
 	moduleNames := make(map[string]string) // module path to name
+	moduleDirPaths := make(map[string]string)
 	{
 		addPkgNames := func(dir, modulePath string) (string, []module.Version, error) {
 			goVer, pkgNms, req, err := ParseDirModules(fset, dir, modulePath)
@@ -380,6 +384,7 @@ func main() {
 			}
 			for mod, name := range pkgNms {
 				moduleNames[mod] = name
+				moduleDirPaths[mod] = filepath.Join(dir, strings.TrimPrefix(mod, modulePath))
 			}
 			return goVer, req, nil
 		}
@@ -402,6 +407,7 @@ func main() {
 		}
 	}
 	moduleImportNames := make(map[string]string) // module path to name; each name value is unique
+	moduleImportNames["C"] = "C"
 	{
 		moduleNameKeys := make([]string, 0, len(moduleNames))
 		for k := range moduleNames {
@@ -423,20 +429,17 @@ func main() {
 
 	startTime := time.Now()
 
-	pkgs, err := ParseDir(fset, srcDir, cfg.Package)
-	if err != nil {
-		fmt.Println("parse source:", err)
-		os.Exit(1)
-	}
-
 	const bindingCodeIndent = 3
 
+	parsedPkgs := make(map[string]struct{})
+	genBindingPkgs := make(map[string]struct{}) // mod paths
 	data := &Data{
-		Funcs:      make(map[string]*Func),
-		Interfaces: make(map[string]*Interface),
-		Structs:    make(map[string]*Struct),
-		Typedefs:   make(map[string]Ident),
-		Values:     make(map[string]NamedIdent),
+		Funcs:        make(map[string]*Func),
+		Interfaces:   make(map[string]*Interface),
+		Structs:      make(map[string]*Struct),
+		Typedefs:     make(map[string]Ident),
+		Values:       make(map[string]NamedIdent),
+		RequiredPkgs: make(map[string]struct{}),
 	}
 	ctx := &Context{
 		Config:      &cfg,
@@ -446,14 +449,40 @@ func main() {
 		UsedTyps:    make(map[string]Ident),
 	}
 
-	for _, pkg := range pkgs {
-		for name, f := range pkg.Files {
-			name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
-			if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames); err != nil {
-				fmt.Printf("%v: %v\n", pkg.Name, err)
+	parseDir := func(dirPath string, modulePath string, genBinding, typeDeclsOnly bool) {
+		pkgs, err := ParseDir(fset, dirPath, modulePath)
+		if err != nil {
+			fmt.Println("parse source:", err)
+			os.Exit(1)
+		}
+
+		for _, pkg := range pkgs {
+			for name, f := range pkg.Files {
+				name = strings.TrimPrefix(name, dstPath+string(filepath.Separator))
+				tdo := typeDeclsOnly
+				if ModulePathIsInternal(ctx, pkg.Path) {
+					tdo = true
+				}
+				if err := data.AddFile(ctx, f, name, pkg.Path, moduleNames, tdo); err != nil {
+					fmt.Printf("%v: %v\n", pkg.Name, err)
+				}
 			}
+			if genBinding {
+				genBindingPkgs[pkg.Path] = struct{}{}
+			}
+			parsedPkgs[pkg.Path] = struct{}{}
 		}
 	}
+
+	parseDir(srcDir, cfg.Package, true, false)
+
+	for mod := range data.RequiredPkgs {
+		if _, ok := parsedPkgs[mod]; ok {
+			continue
+		}
+		parseDir(moduleDirPaths[mod], mod, false, true)
+	}
+
 	if err := data.ResolveInheritancesAndMethods(ctx); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -462,7 +491,10 @@ func main() {
 	bindingFuncs := make(map[string]*BindingFunc)
 
 	for _, iface := range data.Interfaces {
-		if IdentIsInternal(ctx, iface.Name) {
+		if iface.Name.File == nil || IdentIsInternal(ctx, iface.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[iface.Name.File.ModulePath]; !ok {
 			continue
 		}
 		for _, fn := range iface.Funcs {
@@ -479,6 +511,9 @@ func main() {
 		if IdentIsInternal(ctx, fn.Name) || (fn.Recv != nil && IdentIsInternal(ctx, *fn.Recv)) {
 			continue
 		}
+		if _, ok := genBindingPkgs[fn.File.ModulePath]; !ok {
+			continue
+		}
 		bind, err := GenerateBinding(ctx, fn, bindingCodeIndent)
 		if err != nil {
 			fmt.Println(fn.String()+":", err)
@@ -488,7 +523,10 @@ func main() {
 	}
 
 	for _, struc := range data.Structs {
-		if IdentIsInternal(ctx, struc.Name) {
+		if struc.Name.File == nil || IdentIsInternal(ctx, struc.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[struc.Name.File.ModulePath]; !ok {
 			continue
 		}
 		for _, f := range struc.Fields {
@@ -512,7 +550,10 @@ func main() {
 	}
 
 	for _, value := range data.Values {
-		if IdentIsInternal(ctx, value.Name) {
+		if value.Name.File == nil || IdentIsInternal(ctx, value.Name) {
+			continue
+		}
+		if _, ok := genBindingPkgs[value.Name.File.ModulePath]; !ok {
 			continue
 		}
 		bind, err := GenerateValue(ctx, value, bindingCodeIndent)
@@ -599,7 +640,15 @@ func main() {
 				return a.Prio - b.Prio
 			}).Mod == file.ModulePath
 			if !(isHighestPrio || (newNameIsPfx && len(prios) == 0)) {
-				newName = strcase.ToKebab(ctx.ModuleNames[file.ModulePath]) + "-" + newName
+				moduleName := ctx.ModuleNames[file.ModulePath]
+				for _, pfx := range ctx.Config.CustomPrefixes {
+					name := pfx[0]
+					path := pfx[1]
+					if path == file.ModulePath {
+						moduleName = name
+					}
+				}
+				newName = strcase.ToKebab(moduleName) + "-" + newName
 			}
 		}
 
@@ -610,11 +659,11 @@ func main() {
 	ctx.UsedImports["github.com/refaktor/rye/evaldo"] = struct{}{}
 
 	var cb CodeBuilder
-	cb.Linef(`//go:build b_fynegen`)
+	cb.Linef(`//go:build b_fyne`)
 	cb.Linef(``)
 	cb.Linef(`// Code generated by generator/generate. DO NOT EDIT.`)
 	cb.Linef(``)
-	cb.Linef(`package fynegen`)
+	cb.Linef(`package fyne`)
 	cb.Linef(``)
 	cb.Linef(`import (`)
 	cb.Indent++
@@ -694,7 +743,7 @@ func main() {
 	cb.Linef(`}`)
 	cb.Linef(``)
 
-	cb.Linef(`var Builtins_fynegen = map[string]*env.Builtin{`)
+	cb.Linef(`var Builtins_fyne = map[string]*env.Builtin{`)
 	cb.Indent++
 
 	cb.Linef(`"nil": {`)

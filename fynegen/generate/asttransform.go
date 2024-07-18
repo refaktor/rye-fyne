@@ -284,6 +284,19 @@ func NewIdent(ctx *Context, file *File, expr ast.Expr) (Ident, error) {
 	}, nil
 }
 
+// Returns *SelectorExpr referenced *File, true. If id is not *SelectorExpr, returns nil, false.
+func (id *Ident) GetReferencedPackage(ctx *Context, file *File) (*File, bool) {
+	se, ok := id.Expr.(*ast.SelectorExpr)
+	if !ok {
+		return nil, false
+	}
+	x, ok := se.X.(*ast.Ident)
+	if !ok {
+		return nil, false
+	}
+	return file.ImportsByName[x.Name], true
+}
+
 type Func struct {
 	Name    Ident
 	Recv    *Ident // non-nil for methods
@@ -528,7 +541,7 @@ func NewInterface(ctx *Context, file *File, name *ast.Ident, ifaceTyp *ast.Inter
 				continue
 			}
 			res.Funcs = append(res.Funcs, fn)
-		case *ast.Ident:
+		case *ast.Ident, *ast.SelectorExpr:
 			id, err := NewIdent(ctx, file, ft)
 			if err != nil {
 				return nil, err
@@ -557,14 +570,15 @@ func FuncGoIdent(fn *Func) string {
 }
 
 type Data struct {
-	Funcs      map[string]*Func
-	Interfaces map[string]*Interface
-	Structs    map[string]*Struct
-	Typedefs   map[string]Ident
-	Values     map[string]NamedIdent // consts and vars
+	Funcs        map[string]*Func
+	Interfaces   map[string]*Interface
+	Structs      map[string]*Struct
+	Typedefs     map[string]Ident
+	Values       map[string]NamedIdent // consts and vars
+	RequiredPkgs map[string]struct{}   // packages needed for interface/struct inheritance resolution
 }
 
-func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath string, moduleNames map[string]string) error {
+func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath string, moduleNames map[string]string, typeDeclsOnly bool) error {
 	file := &File{
 		Name:          fName,
 		ModuleName:    f.Name.Name,
@@ -608,6 +622,9 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath strin
 	for _, decl := range f.Decls {
 		switch decl := decl.(type) {
 		case *ast.FuncDecl:
+			if typeDeclsOnly {
+				continue
+			}
 			if !decl.Name.IsExported() {
 				continue
 			}
@@ -626,6 +643,9 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath strin
 			d.Funcs[FuncGoIdent(fn)] = fn
 		case *ast.GenDecl:
 			if decl.Tok == token.CONST || decl.Tok == token.VAR {
+				if typeDeclsOnly {
+					continue
+				}
 				var typ *Ident
 				for _, spec := range decl.Specs {
 					if valSpec, ok := spec.(*ast.ValueSpec); ok {
@@ -666,12 +686,22 @@ func (d *Data) AddFile(ctx *Context, f *ast.File, fName string, modulePath strin
 							return err
 						}
 						d.Interfaces[iface.Name.GoName] = iface
+						for _, id := range iface.Inherits {
+							if refF, ok := id.GetReferencedPackage(ctx, iface.Name.File); ok {
+								d.RequiredPkgs[refF.ModulePath] = struct{}{}
+							}
+						}
 					case *ast.StructType:
 						struc, err := NewStruct(ctx, file, typeSpec.Name, typ)
 						if err != nil {
 							return err
 						}
 						d.Structs[struc.Name.GoName] = struc
+						for _, id := range struc.Inherits {
+							if refF, ok := id.GetReferencedPackage(ctx, struc.Name.File); ok {
+								d.RequiredPkgs[refF.ModulePath] = struct{}{}
+							}
+						}
 					default:
 						name, err := NewIdent(ctx, file, typeSpec.Name)
 						if err != nil {
@@ -731,7 +761,7 @@ func (d *Data) ResolveInheritancesAndMethods(ctx *Context) error {
 		}
 		struc, ok := d.Structs[recv.GoName]
 		if !ok {
-			fmt.Println(errors.New("function " + FuncGoIdent(fn) + " has unknown receiver struct " + recv.GoName))
+			fmt.Println(errors.New("function " + FuncGoIdent(fn) + " from " + fn.File.ModulePath + " has unknown receiver struct " + recv.GoName))
 			continue
 			//return
 		}
@@ -741,38 +771,53 @@ func (d *Data) ResolveInheritancesAndMethods(ctx *Context) error {
 	var resolveInheritedStructs func(struc *Struct) error
 	resolveInheritedStructs = func(struc *Struct) error {
 		for _, inh := range struc.Inherits {
-			inhStruc, exists := d.Structs[inh.GoName]
-			if !exists {
+			if inhStruc, exists := d.Structs[inh.GoName]; exists {
+				if err := resolveInheritedStructs(inhStruc); err != nil {
+					return err
+				}
+				struc.Fields = append(struc.Fields, inhStruc.Fields...)
+				for name, meth := range inhStruc.Methods {
+					if _, exists := struc.Methods[name]; !exists {
+						m := &Func{
+							Name:    meth.Name,
+							Recv:    &struc.Name,
+							Params:  slices.Clone(meth.Params),
+							Results: slices.Clone(meth.Results),
+							File:    struc.Name.File,
+						}
+
+						if _, ok := meth.Recv.Expr.(*ast.StarExpr); ok {
+							recv, err := NewIdent(ctx, struc.Name.File, &ast.StarExpr{X: struc.Name.Expr})
+							if err != nil {
+								panic(err)
+							}
+							m.Recv = &recv
+						} else {
+							m.Recv = &struc.Name
+						}
+						struc.Methods[name] = m
+
+						d.Funcs[FuncGoIdent(m)] = m
+					}
+				}
+			} else if _, exists := d.Typedefs[inh.GoName]; exists {
+				var fieldName string
+				if id, ok := inh.Expr.(*ast.Ident); ok {
+					fieldName = id.Name
+				} else if se, ok := inh.Expr.(*ast.SelectorExpr); ok {
+					fieldName = se.Sel.Name
+				}
+				name, err := NewIdent(ctx, nil, &ast.Ident{Name: fieldName})
+				if err != nil {
+					return err
+				}
+				struc.Fields = append(struc.Fields, NamedIdent{
+					Name: name,
+					Type: inh,
+				})
+			} else {
 				fmt.Println(errors.New("cannot resolve struct inheritance " + inh.GoName + " in " + struc.Name.GoName + ": does not exist"))
 				continue
-				//return
-			}
-			if err := resolveInheritedStructs(inhStruc); err != nil {
-				return err
-			}
-			struc.Fields = append(struc.Fields, inhStruc.Fields...)
-			for name, meth := range inhStruc.Methods {
-				if _, exists := struc.Methods[name]; !exists {
-					m := &Func{
-						Name:    meth.Name,
-						Recv:    &struc.Name,
-						Params:  slices.Clone(meth.Params),
-						Results: slices.Clone(meth.Results),
-					}
-
-					if _, ok := meth.Recv.Expr.(*ast.StarExpr); ok {
-						recv, err := NewIdent(ctx, struc.Name.File, &ast.StarExpr{X: struc.Name.Expr})
-						if err != nil {
-							panic(err)
-						}
-						m.Recv = &recv
-					} else {
-						m.Recv = &struc.Name
-					}
-					struc.Methods[name] = m
-
-					d.Funcs[FuncGoIdent(m)] = m
-				}
 			}
 			struc.Inherits = nil
 		}

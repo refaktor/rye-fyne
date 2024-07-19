@@ -1,0 +1,16 @@
+rye .needs { fyne }
+
+; I was looking some into the error ... it looks to be caused by an infinite loop ... like calling a function that causes update in the update callback for example
+; I minimized the code into this example ... if you check the checkbox it's already caused
+
+do\in fyne {
+	win: app
+	|window "Rye Fyne Gallery"
+	|resize size 500.0 500.0
+
+	win
+	|set-content v-box [
+			check "Checkbox" closure { ok } { print "check" }
+	]
+	|show-and-run
+}

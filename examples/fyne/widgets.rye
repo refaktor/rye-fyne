@@ -56,10 +56,10 @@ do\in fyne {
 				show-pop-up label "Button clicked!" win .canvas
 			}
 			separator
-			check "Checkbox" closure { ok } { }
+			check "Checkbox" fn\par { ok } current { }
 			separator
-			radio-group [ "Radio" "Group" ] closure { ok } { }
-			select [ "select 1" "select 2" ] closure { ok } { }
+			radio-group [ "Radio" "Group" ] fn\par { ok } current { }
+			select [ "select 1" "select 2" ] fn\par { ok } current { }
 			separator
 			select-entry [ "one" "type in" ]
 			|place-holder! "(Select one or type in)"

@@ -2,6 +2,10 @@ rye .needs { fyne }
 
 ; I was looking some into the error ... it looks to be caused by an infinite loop ... like calling a function that causes update in the update callback for example
 ; I minimized the code into this example ... if you check the checkbox it's already caused
+; ...
+; It seems the closure function is creating problems ... closure should be the same as fn\par { } current { } ... but it seems there is some bug. fn\par and fn\in work OK
+; but closure doesn't
+; I will try to figure it out ... for now we could change closure { } to fn\par { } current and see if there are still any problems
 
 do\in fyne {
 	win: app
@@ -10,7 +14,9 @@ do\in fyne {
 
 	win
 	|set-content v-box [
-			check "Checkbox" closure { ok } { print "check" }
+			check "Closure" closure { ok } { print "check" }
+			check "Fn\par" fn\par { ok } current { print "check" }
+			check "Fn\in" fn\in { ok } current { print "check" }
 	]
 	|show-and-run
 }

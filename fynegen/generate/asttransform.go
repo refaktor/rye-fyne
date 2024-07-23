@@ -106,6 +106,9 @@ func identExprToRyeName(ctx *Context, file *File, expr ast.Expr) (string, error)
 		}
 		return identExprToRyeName(ctx, f, expr.Sel)
 	case *ast.ArrayType:
+		if expr.Len != nil {
+			return "", errors.New("invalid array length type " + reflect.TypeOf(expr.Len).String())
+		}
 		res, err := identExprToRyeName(ctx, file, expr.Elt)
 		return "arr-" + res, err
 	case *ast.Ellipsis:
@@ -199,6 +202,9 @@ func identExprToGoName(ctx *Context, file *File, expr ast.Expr) (ident string, u
 		res, imps, err := identExprToGoName(ctx, f, expr.Sel)
 		return res, imps, err
 	case *ast.ArrayType:
+		if expr.Len != nil {
+			return "", nil, errors.New("invalid array length type " + reflect.TypeOf(expr.Len).String())
+		}
 		res, imps, err := identExprToGoName(ctx, file, expr.Elt)
 		return "[]" + res, imps, err
 	case *ast.Ellipsis:
@@ -535,6 +541,12 @@ func NewInterface(ctx *Context, file *File, name *ast.Ident, ifaceTyp *ast.Inter
 	for _, f := range ifaceTyp.Methods.List {
 		switch ft := f.Type.(type) {
 		case *ast.FuncType:
+			if len(f.Names) != 1 {
+				panic("expected interface method to have 1 name")
+			}
+			if !f.Names[0].IsExported() {
+				continue
+			}
 			fn, err := funcFromInterfaceField(ctx, file, res.Name, f)
 			if err != nil {
 				fmt.Println("i2fs:", res.Name.GoName+":", err)

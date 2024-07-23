@@ -273,6 +273,8 @@ func GenerateValue(ctx *Context, value NamedIdent, indent int) (*BindingFunc, er
 	res.Doc = fmt.Sprintf("Get %v value", value.Name.GoName)
 	res.Argsn = 0
 
+	ctx.MarkUsed(value.Name)
+
 	var cb CodeBuilder
 	cb.Indent = indent
 
@@ -802,13 +804,14 @@ func main() {
 	cb.Indent--
 	cb.Linef(`},`)
 
+	numWrittenBindings := 0
 	bindingFuncKeys := make([]string, 0, len(bindingFuncs))
 	for k := range bindingFuncs {
 		bindingFuncKeys = append(bindingFuncKeys, k)
 	}
 	slices.Sort(bindingFuncKeys)
 	for _, k := range bindingFuncKeys {
-		if !bindingList.Enabled[k] {
+		if enabled, ok := bindingList.Enabled[k]; ok && !enabled {
 			continue
 		}
 		bind := bindingFuncs[k]
@@ -824,12 +827,13 @@ func main() {
 		cb.Linef(`},`)
 		cb.Indent--
 		cb.Linef(`},`)
+		numWrittenBindings++
 	}
 
 	cb.Indent--
 	cb.Linef(`}`)
 
-	log.Printf("Generated bindings containing %v functions in %v", len(bindingFuncs), time.Since(startTime))
+	log.Printf("Generated bindings containing %v/%v functions in %v", numWrittenBindings, len(bindingFuncs), time.Since(startTime))
 	if err := cb.SaveToFile(outFile, true); err != nil {
 		fmt.Println("save bindings:", err)
 		os.Exit(1)

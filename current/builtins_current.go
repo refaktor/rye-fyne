@@ -13,6 +13,6 @@ var Builtins_current = map[string]*env.Builtin{}
 func RegisterBuiltins(ps *env.ProgramState) {
 	evaldo.RegisterBuiltins2(Builtins_current, ps, "current")
 	evaldo.RegisterBuiltinsInContext(ebitengine.Builtins_ebitengine, ps, "ebitengine")
-	evaldo.RegisterBuiltinsInContext(fyne.Builtins_fyne, ps, "fyne")
+	evaldo.RegisterBuiltinsInContext(fyne.Builtins, ps, "fyne")
 	evaldo.RegisterBuiltinsInContext(webview.Builtins_webview, ps, "webview")
 }

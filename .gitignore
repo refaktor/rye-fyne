@@ -44,5 +44,5 @@ tests/*.html
 
 .DS_Store
 
-# Fynegen: source code of libraries for which bindings are generated
-fynegen/_srcrepos
+# Ryegen: source code of libraries for which bindings are generated
+_srcrepos

@@ -2,21 +2,22 @@ module github.com/refaktor/rye-front
 
 go 1.21.5
 
-replace github.com/refaktor/rye v0.0.21-0.20240613091039-01d356399f23 => ../rye
+replace github.com/refaktor/rye => ../rye
+
+replace github.com/refaktor/ryegen => ../ryegen
 
 require (
 	fyne.io/fyne/v2 v2.4.4
-	github.com/BurntSushi/toml v1.3.2
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/iancoleman/strcase v0.3.0
 	github.com/refaktor/rye v0.0.21-0.20240613091039-01d356399f23
+	github.com/refaktor/ryegen v0.0.0-00010101000000-000000000000
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
-	golang.org/x/mod v0.12.0
 )
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e // indirect
+	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/RoaringBitmap/roaring v1.2.3 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be // indirect
 	github.com/aws/aws-sdk-go-v2 v1.27.2 // indirect
@@ -80,6 +81,7 @@ require (
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/gorilla/sessions v1.2.2 // indirect
+	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/itchyny/gojq v0.12.13 // indirect
 	github.com/itchyny/timefmt-go v0.1.5 // indirect
 	github.com/jezek/xgb v1.1.0 // indirect
@@ -127,6 +129,7 @@ require (
 	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
+	golang.org/x/mod v0.19.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect

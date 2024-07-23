@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"go/format"
+	"os"
 	"strings"
 )
 
@@ -25,4 +27,34 @@ func (w *CodeBuilder) Linef(format string, args ...any) {
 
 func (w *CodeBuilder) String() string {
 	return w.b.String()
+}
+
+func (w *CodeBuilder) FmtString() (string, error) {
+	code := []byte(w.String())
+	code, err := format.Source(code)
+	if err != nil {
+		return "", err
+	}
+	return string(code), nil
+}
+
+func (w *CodeBuilder) Reset() {
+	w.b.Reset()
+}
+
+func (w *CodeBuilder) SaveToFile(outFile string, goFmt bool) error {
+	var code string
+	if goFmt {
+		var err error
+		code, err = w.FmtString()
+		if err != nil {
+			return err
+		}
+	} else {
+		code = w.String()
+	}
+	if err := os.WriteFile(outFile, []byte(code), 0666); err != nil {
+		return err
+	}
+	return nil
 }

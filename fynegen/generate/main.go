@@ -562,6 +562,29 @@ func main() {
 		bindingFuncs[bind.FullName()] = bind
 	}
 
+	bindingListPath := "bindings.txt"
+	var bindingList *BindingList
+	if _, err := os.Stat(bindingListPath); err == nil {
+		var err error
+		bindingList, err = LoadBindingListFromFile(bindingListPath)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	} else {
+		bindingList = NewBindingList()
+	}
+	{
+		bindingFuncsToDocstrs := make(map[string]string, len(bindingFuncs))
+		for name, binding := range bindingFuncs {
+			bindingFuncsToDocstrs[name] = binding.Doc
+		}
+		if err := bindingList.SaveToFile(bindingListPath, bindingFuncsToDocstrs); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	}
+
 	// rye ident to list of modules with priority
 	bindingFuncPrios := make(map[string][]struct {
 		Mod  string
@@ -785,6 +808,9 @@ func main() {
 	}
 	slices.Sort(bindingFuncKeys)
 	for _, k := range bindingFuncKeys {
+		if !bindingList.Enabled[k] {
+			continue
+		}
 		bind := bindingFuncs[k]
 		cb.Linef(`"%v": {`, bind.FullName())
 		cb.Indent++

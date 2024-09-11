@@ -1,0 +1,15 @@
+
+rye .needs { fyne }
+
+; TODO --- copied from console from live.rye ... add the static part
+
+players: { { "WildJane" 5210 } { "MadBob" 4991 } { "GreeNoob" 12 } }
+
+lst: list does { length? players } ⏎
+           does { h-box [ label "name" label "score" ] } ⏎
+           fn { i box } { set! box .objects? { name score } ⏎
+                          name .set-text 0 <- i <- players ⏎
+                          score .set-text to-string 1 <- i <- players }
+
+win .set-content lst
+win .set-title "Gastown games players"

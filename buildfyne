@@ -1,1 +1,0 @@
-go build -tags "b_fyne" -o bin/fyne/rye

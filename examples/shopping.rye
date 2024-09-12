@@ -1,0 +1,59 @@
+
+rye .needs { fyne }
+
+Data: context {
+
+	add!: fn { task } { change! tasks .add-row task 'tasks }
+	remove!: fn { idx } { print "Delete row: " + idx } ; tasks .remove-row! idx }
+	check!: fn { idx val } { print "Check row: " + idx } ; tasks .update-row idx [ 'done val ] } }
+	
+	tasks: spreadsheet { 'done 'text } {
+		0 "Goat cheese"
+		0 "Eggs"
+		0 "Oats"
+		0 "Anchovies"
+		0 "Bread"
+		0 "A4 paper" }
+}
+
+do\par fyne { 
+
+	win: app .window "Shopping List"
+
+	lst: list
+	does { length? Data/tasks }
+	does {
+		idx: hide label "idx"
+		h-box [
+			check "" fn\par { v } current { print "Check row: " + idx .text? }
+			label ""
+			idx
+			layout-spacer
+			button-with-icon "" delete-icon fn\par { } current { Data/remove! to-integer idx .text? }
+		]
+	}
+	fn { i box } { 
+		set! box .objects? { chk lbl hdn xo btn }
+		chk .set-checked 0 <- i <- Data/tasks
+		lbl .set-text 1 <- i <- Data/tasks
+		hdn .set-text to-string i
+		; btn .on-tapped! 
+	}
+
+	input: entry
+	|place-holder! "Add to list here ..."
+	|on-submitted! fn { x } {
+		Data/add! [ 0 x ]
+		input .set-text ""
+		lst .refresh
+	}
+
+	cont: border nil input nil nil [ lst ]
+	
+	with win {
+		.resize size 300.0 300.0 ,
+		.set-content cont ,
+		.show-and-run
+	}
+}
+

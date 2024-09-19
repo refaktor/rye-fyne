@@ -11,9 +11,14 @@
 
 ## Current status
 
-Currently main focus is on testing an idea of autogenerating bindings to Fyne.
+Most widgets and functions work.
 
-## Quick demo
+## A Cookbook
+
+I'm writing a Cookbook page full of simple GUI example. See them here:
+https://ryelang.org/cookbook/rye-fyne/examples/
+
+## Live use video
 
 https://www.youtube.com/watch?v=YmYQRPvkSpM
 
@@ -33,43 +38,28 @@ we have great emphasis on **interactive use** (Rye shell) where we will explore 
 
 **[Rye language repository](https://github.com/refaktor/rye)** | **[Rye website](https://ryelang.org/)** | **[Reddit group](https://reddit.com/r/ryelang/)**
 
-## What is Rye-Front
-
-Rye-Front is an external extension of Rye language focused on frontend technologies like: GUI, Game engine, Graphics, Browsers ...
-
 ### Why a separate repository
 
  * So Rye remains lighter on dependencies, easier to build, focused on backend and interactive shell
  * So that "frontend" related development is separated from language development
  * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for hot-code optimization
 
-## Status
-
-Rye-front is in early development. We are focusing on Fyne GUI at first.
-
-## Modules
-
-### Fyne - GUI ⭐⭐
-
-Fyne is crossplatform GUI framework with it's own OpenGL renderer inspired by material design.
-
-
 #### Build and test
 
-In **rye-front** directory run:
+In **rye-fyne** directory run:
 
 ```
 # build rye with fyne in bin/fyne/rye
-./buildfyne
+./build
 
 # Try the hello example
-bin/fyne/rye examples/fyne/button.rye
+bin/rye examples/fyne/button.rye
 
 # Try the feedback example
-bin/fyne/rye examples/fyne/feedback.rye
+bin/rye examples/fyne/feedback.rye
 
 # Try the Live GUI demo
-bin/fyne/rye examples/fyne/live.rye
+bin/rye examples/fyne/live.rye
 ```
 
 #### Example
@@ -90,7 +80,6 @@ do\in fyne {
 	app .new-window "Feedback"
 	|set-content cont
 	|show-and-run
-
 }
 ```
 
@@ -98,27 +87,4 @@ do\in fyne {
 #### More about Fyne
 
 [Fyne website](https://fyne.io)
-
-#### Implemented widgets
-
-
-* Window
-* Container
-* Label
-* Entry
-* Button
-* Password entry
-* Multiline entry
-* Select box
-* Radio group
-* Check box
-
-### Ebitengine
-
-[Ebitengine website](https://ebitengine.org)
-
-### Webview
-
-[Webview github page](https://github.com/webview/webview)
-
 

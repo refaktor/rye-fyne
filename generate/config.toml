@@ -6,17 +6,19 @@ package = "fyne.io/fyne/v2"
 version = "v2.4.4"
 # Auto-remove "New" part of functions (e.g. widget.NewLabel => widget-label, app.New => app).
 cut-new = true
-# Build flag used to enable binding. * is replaced by package name.
-build-flag = "b_*"
+
+## Require a build flag to enable binding (optional).
+#build-flag = "b_mygolib"
 
 # Descending priority. Packages not listed will always be prefixed.
 # In case of conflicting function names, only the function from the
 # package with the highest priority is not prefixed.
 no-prefix = [
-  "fyne.io/fyne/v2",
-  "fyne.io/fyne/v2/widget",
-  "fyne.io/fyne/v2/container",
-  "fyne.io/fyne/v2/theme",
+    "fyne.io/fyne/v2",
+    "fyne.io/fyne/v2/app",
+    "fyne.io/fyne/v2/container",
+    "fyne.io/fyne/v2/theme",
+    "fyne.io/fyne/v2/widget",
 ]
 
 ## Set custom prefix for all symbols in the package (if applicable: see "no-prefix").

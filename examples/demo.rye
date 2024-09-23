@@ -25,20 +25,20 @@ do\in fyne {
 			separator
 			label "Icons"
 			center [ h-box [
-				icon theme-file-icon
+				icon file-icon
 				icon document-save-icon
 				icon document-create-icon
 				icon delete-icon
 				icon content-undo-icon
 				icon content-redo-icon
-				file-icon storage-uri "file:///nonexistant/path/image.png"
+				;file-icon storage-uri "file:///nonexistant/path/image.png"
 			] ]
 
 			separator
-			label "Infinite progress bar"			
+			label "Infinite progress bar"
 			progress-bar-infinite
 		]
-		
+
 		tab-item "Entry" v-scroll v-box [
 			entry .place-holder! "Text entry"
 			button "Button" fn { } {
@@ -72,7 +72,7 @@ do\in fyne {
 			separator
 
 			label "A form with email validation"
-			
+
 			form [
 				form-item "First Name"
 					entry .place-holder! "John"
@@ -95,7 +95,7 @@ do\in fyne {
 			]
 		]
 		tab-item "Misc" v-scroll v-box [
-			
+
 			accordion [
 				accordion-item
 					"Accordion"
@@ -107,10 +107,10 @@ do\in fyne {
 						"- Android\n- Linux\n- FreeBSD\n- MacOS\n- Windows"
 			]
 			separator
-			
+
 		]
 		tab-item "Layout" v-scroll v-box [
-			
+
 			h-box [ label "h-box" label "h-box" ]
 			v-box [ label "v-box" label "v-box" ]
 

@@ -11,7 +11,8 @@
 
 ## Current status
 
-Most widgets and functions work.
+Most widgets work. We just created a (CookBook with plenty of examples](https://ryelang.org/cookbook/rye-fyne/examples/). Next step will be to update this 
+README and repository in general. To provide prebuild binaries, etc ... stay tuned.
 
 ## A Cookbook
 
@@ -45,6 +46,8 @@ we have great emphasis on **interactive use** (Rye shell) where we will explore 
  * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for hot-code optimization
 
 #### Build and test
+
+You need [Go](https://go.dev/) installed. Please follow Go's installation instructions for your opearating system. 
 
 In **rye-fyne** directory run:
 
@@ -82,7 +85,6 @@ do\in fyne {
 	|show-and-run
 }
 ```
-
 
 #### More about Fyne
 

@@ -33,14 +33,6 @@ do\in fyne {
 	ent1 .multi-line! true
 	ent1 .wrapping! text-wrap-word
 
-	lst1: list
-		fn { } { 10 }
-		fn { } { label "PLACEHOLDER" }
-		fn { id lab } {
-			print lab
-			lab .set-text id .to-string
-		}
-
 	a
 	|set-content v-box [
 		lab1
@@ -50,7 +42,6 @@ do\in fyne {
 		ent1
 		btn1
 		chk1
-		lst1
 	]
 	|show-and-run
 }

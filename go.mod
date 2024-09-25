@@ -1,6 +1,8 @@
 module github.com/refaktor/rye-front
 
-go 1.21.5
+go 1.22.0
+
+toolchain go1.23.0
 
 replace github.com/refaktor/rye => ../rye
 
@@ -104,10 +106,12 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/mrz1836/postmark v1.6.5 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
+	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/pkg/term v1.2.0-beta.2.0.20211217091447-1a4a3b719465 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/refaktor/go-peg v0.0.0-20220116201714-31e3dfa8dc7d // indirect
+	github.com/refaktor/liner v1.2.10 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/sashabaranov/go-openai v1.29.0 // indirect
 	github.com/shirou/gopsutil/v3 v3.24.5 // indirect
@@ -130,7 +134,7 @@ require (
 	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
-	golang.org/x/mod v0.19.0 // indirect
+	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect

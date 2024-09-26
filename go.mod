@@ -12,7 +12,7 @@ go 1.22
 require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/refaktor/rye v0.0.21-0.20240613091039-01d356399f23
+	github.com/refaktor/rye v0.0.23
 	github.com/refaktor/ryegen v0.1.0
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
 )

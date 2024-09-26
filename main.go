@@ -7,6 +7,7 @@ import (
 	"github.com/refaktor/rye-front/current"
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/runner"
+	"github.com/jwalton/go-supportscolor"
 )
 
 /* type TagType int
@@ -31,6 +32,7 @@ type node struct {
 
 func main() {
 
+	supportscolor.Stdout()
 	runner.DoMain(func(ps *env.ProgramState) {
 		current.RegisterBuiltins(ps)
 	})

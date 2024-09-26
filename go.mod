@@ -2,11 +2,11 @@ module github.com/refaktor/rye-front
 
 go 1.22
 
-toolchain go1.23.0
+// toolchain go1.23.0
 
-replace github.com/refaktor/rye => ../rye
+// replace github.com/refaktor/rye => ../rye
 
-replace github.com/refaktor/ryegen => ../ryegen
+// replace github.com/refaktor/ryegen => ../ryegen
 
 require (
 	fyne.io/fyne/v2 v2.4.4

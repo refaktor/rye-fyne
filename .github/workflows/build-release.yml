@@ -25,7 +25,7 @@ jobs:
           cache: true
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
-      - run: fyne package --release
+      - run: go build -o rye-fyne.exe
       - uses: actions/upload-artifact@v4
         with:
           name: rye-fyne

@@ -2,6 +2,7 @@ module github.com/refaktor/rye-front
 
 go 1.22
 
+
 // toolchain go1.23.0
 
 // replace github.com/refaktor/rye => ../rye

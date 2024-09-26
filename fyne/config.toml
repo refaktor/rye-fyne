@@ -1,0 +1,31 @@
+# Output directory (relative).
+out-dir = "../current"
+# Go name of package.
+package = "fyne.io/fyne/v2"
+# Go semantic version of package.
+version = "v2.4.4"
+# Auto-remove "New" part of functions (e.g. widget.NewLabel => widget-label, app.New => app).
+cut-new = true
+
+# Add a build flag to exclude the binding (optional).
+dont-build-flag = "b_no_fyne"
+
+# Descending priority. Packages not listed will always be prefixed.
+# In case of conflicting function names, only the function from the
+# package with the highest priority is not prefixed.
+no-prefix = [
+    "fyne.io/fyne/v2",
+    "fyne.io/fyne/v2/app",
+    "fyne.io/fyne/v2/container",
+    "fyne.io/fyne/v2/theme",
+    "fyne.io/fyne/v2/widget",
+]
+
+## Set custom prefix for all symbols in the package (if applicable: see "no-prefix").
+#custom-prefixes = [
+#  ["my-fyne", "fyne.io/fyne/v2"],
+#  ["my-widget", "fyne.io/fyne/v2/widget"],
+#]
+
+## Generate bindings for selected parts of the go standard library.
+#include-std-libs = ["image"]

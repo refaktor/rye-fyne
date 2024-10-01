@@ -28,7 +28,7 @@ jobs:
       - run: go build -o rye-fyne.exe
       - uses: actions/upload-artifact@v4
         with:
-          name: rye-fyne
+          name: rye-fyne-windows-amd64
           path: rye-fyne.exe
 
   build-linux:
@@ -100,8 +100,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./rye-fyne-windows-amd64.exe
-          asset_name: rye-fyne-windows-amd64.exe
+          asset_path: ./rye-fyne.exe
+          asset_name: rye-fyne.exe
           asset_content_type: application/vnd.microsoft.portable-executable
 
       - uses: actions/upload-release-asset@v1
@@ -109,8 +109,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./rye-fyne-linux-amd64.tar.xz
-          asset_name: rye-fyne-linux-amd64.tar.xz
+          asset_path: ./rye-fyne-linux-amd64.tar.gz
+          asset_name: rye-fyne-linux-amd64.tar.gz
           asset_content_type: application/x-gtar
 
       - uses: actions/upload-release-asset@v1

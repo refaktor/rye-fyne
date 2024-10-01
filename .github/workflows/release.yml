@@ -22,15 +22,15 @@ jobs:
   
       - uses: actions/download-artifact@v4
         with:
-          name: southpark-downloader-ui-linux-amd64
+          name: rye-fyne-linux-amd64
 
       - uses: actions/download-artifact@v4
         with:
-          name: southpark-downloader-ui-windows-amd64
+          name: rye-fyne-windows-amd64
 
       - uses: actions/download-artifact@v4
         with:
-          name: southpark-downloader-ui-macos-amd64
+          name: rye-fyne-macos-amd64
 
       - uses: actions/create-release@v1
         id: create-new-release

@@ -5,7 +5,7 @@ on:
     # branches:
     #  - 'main'
     tags:
-      - 'test-b-r*'
+      - 'v.*'
   # pull_request:
 
 permissions:

@@ -74,9 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-macos, build-windows, build-linux]
     steps:
-      - uses: ./.github/workflows/build.yml
-      - name: Create GitHub Release
-  
+    
       - uses: actions/download-artifact@v4
         with:
           name: rye-fyne-linux-amd64

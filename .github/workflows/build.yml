@@ -2,11 +2,11 @@ name: build
 
 on:
   push:
-    branches:
-      - 'main'
+    # branches:
+    #  - 'main'
     tags:
       - 'testbuild*'
-  pull_request:
+  # pull_request:
 
 permissions:
     contents: write

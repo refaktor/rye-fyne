@@ -39,30 +39,46 @@ we have great emphasis on **interactive use** (Rye shell) where we will explore 
 
 **[Rye language repository](https://github.com/refaktor/rye)** | **[Rye website](https://ryelang.org/)** | **[Reddit group](https://reddit.com/r/ryelang/)**
 
-### Why a separate repository
+## Download Rye-Fyne
 
- * So Rye remains lighter on dependencies, easier to build, focused on backend and interactive shell
- * So that "frontend" related development is separated from language development
- * So that we test and improve on how users of Rye can externally extend it, add their own (private) bindings and write their own Go (private) builtin functions for hot-code optimization
+Download the binary: 
+* Linux: [rye-fyne-linux-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne-linux-amd64.tar.gz)
+* MacOS: [rye-fyne-macos-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne-macos-amd64.tar.gz)
+* Windows: [rye-fyne.exe](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne.exe)
 
-#### Build and test
+This includes just the binary (executable), to download examples you should still need to download ZIP from the github. In future
+we will make the binary download all required things itself if raw with `rye install`.
+
+## Building Rye-Fyne
 
 You need [Go](https://go.dev/) installed. Please follow Go's installation instructions for your opearating system. 
 
-In **rye-fyne** directory run:
-
 ```
+# To get rye-fyne use "Download ZIP" from "<> Code" button
+# on the github page: https://github.com/refaktor/rye-fyne
+# or use Git:
+git clone https://github.com/refaktor/rye-fyne.git
+
+# enter directory
+cd rye-fyne
+
 # build rye with fyne in bin/fyne/rye
 ./build
 
 # Try the hello example
-bin/rye examples/fyne/button.rye
+bin/rye-fyne examples/fyne/button.rye
 
 # Try the feedback example
-bin/rye examples/fyne/feedback.rye
+bin/rye-fyne examples/fyne/feedback.rye
 
 # Try the Live GUI demo
-bin/rye examples/fyne/live.rye
+bin/rye-fyne examples/fyne/live.rye
+
+# Or enter the Rye console
+bin/rye-fyne
+x> cc fyne
+x> app .window "Hello" |set-content label "world" |show-and-run
+(Ctrl-c to exit)
 ```
 
 #### Example

@@ -1,0 +1,68 @@
+name: build
+
+on:
+  push:
+    # branches:
+    #  - 'main'
+    tags:
+      - 'testrelease*'
+  # pull_request:
+
+permissions:
+    contents: write
+    packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # needs: [build-windows, build-linux, build-macos]
+    steps:
+      - uses: ./.github/workflows/build.yml
+      - name: Create GitHub Release
+  
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-linux-amd64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-windows-amd64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-macos-amd64
+
+      - uses: actions/create-release@v1
+        id: create-new-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne-windows-amd64.exe
+          asset_name: rye-fyne-windows-amd64.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne-linux-amd64.tar.xz
+          asset_name: rye-fyne-linux-amd64.tar.xz
+          asset_content_type: application/x-gtar
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne-macos-amd64.tar.gz
+          asset_name: rye-fyne-macos-amd64.tar.gz
+          asset_content_type: application/x-gtar

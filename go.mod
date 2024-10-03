@@ -1,19 +1,18 @@
 module github.com/refaktor/rye-front
 
-go 1.22
-
+go 1.22.0
 
 // toolchain go1.23.0
 
-// replace github.com/refaktor/rye => ../rye
+replace github.com/refaktor/rye => ../rye
 
 // replace github.com/refaktor/ryegen => ../ryegen
 
 require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/refaktor/rye v0.0.21-0.20240613091039-01d356399f23
-	github.com/refaktor/ryegen v0.0.0-00010101000000-000000000000
+	github.com/refaktor/rye v0.0.23
+	github.com/refaktor/ryegen v0.1.0
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
 )
 
@@ -37,7 +36,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.26.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.30.7 // indirect
 	github.com/aws/smithy-go v1.20.4 // indirect
-	github.com/bitfield/script v0.22.1 // indirect
+	github.com/bitfield/script v0.23.0 // indirect
 	github.com/bits-and-blooms/bitset v1.12.0 // indirect
 	github.com/blevesearch/bleve/v2 v2.4.2 // indirect
 	github.com/blevesearch/bleve_index_api v1.1.11 // indirect
@@ -112,7 +111,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/refaktor/go-peg v0.0.0-20220116201714-31e3dfa8dc7d // indirect
-	github.com/refaktor/liner v1.2.10 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/sashabaranov/go-openai v1.29.0 // indirect
 	github.com/shirou/gopsutil/v3 v3.24.5 // indirect

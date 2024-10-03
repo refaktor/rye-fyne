@@ -37,7 +37,7 @@ do\in fyne {
 	|set-content v-box [
 		lab1
 		separator
-		lab2
+		labela
 		sld1
 		ent1
 		btn1

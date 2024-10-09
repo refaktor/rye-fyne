@@ -1,0 +1,123 @@
+name: build-release
+
+on:
+  push:
+    # branches:
+    #  - 'main'
+    tags:
+      - 'v*'
+  # pull_request:
+
+permissions:
+    contents: write
+    packages: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne-windows-amd64
+          path: rye-fyne.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: sudo apt update && sudo apt install gcc libegl1-mesa-dev xorg-dev
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne
+      - run: tar czf rye-fyne-linux-amd64.tar.gz rye-fyne
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne-linux-amd64
+          path: rye-fyne-linux-amd64.tar.gz
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne
+      - run: tar czf rye-fyne-macos-amd64.tar.gz rye-fyne
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne-macos-amd64
+          path: rye-fyne-macos-amd64.tar.gz
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-macos, build-windows, build-linux]
+    steps:
+    
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-linux-amd64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-windows-amd64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rye-fyne-macos-amd64
+
+      - uses: actions/create-release@v1
+        id: create-new-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne.exe
+          asset_name: rye-fyne.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne-linux-amd64.tar.gz
+          asset_name: rye-fyne-linux-amd64.tar.gz
+          asset_content_type: application/x-gtar
+
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: ./rye-fyne-macos-amd64.tar.gz
+          asset_name: rye-fyne-macos-amd64.tar.gz
+          asset_content_type: application/x-gtar

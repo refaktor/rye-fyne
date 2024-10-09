@@ -1,0 +1,72 @@
+name: build
+
+on:
+  push:
+    # branches:
+    #  - 'main'
+    tags:
+      - 'testbuild*'
+  # pull_request:
+
+permissions:
+    contents: write
+    packages: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne
+          path: rye-fyne.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: sudo apt update && sudo apt install gcc libegl1-mesa-dev xorg-dev
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne
+      - run: tar czf rye-fyne-linux-amd64.tar.gz rye-fyne
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne-linux-amd64
+          path: rye-fyne-linux-amd64.tar.xz
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.0
+          cache: true
+      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
+      - run: go mod tidy
+      - run: go build -o rye-fyne
+      - run: tar czf rye-fyne-macos-amd64.tar.gz rye-fyne
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rye-fyne-macos-amd64
+          path: rye-fyne-macos-amd64.tar.xz
+

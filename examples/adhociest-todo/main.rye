@@ -6,19 +6,16 @@ Data: context {
 	add!: fn { task } { tasks .add-rows! task }
 	remove!: fn { idx } { tasks .remove-row! idx + 1 }
 	check!: fn { idx val } { tasks .update-row! idx + 1 dict [ "done" val ] }
+	make-spreadsheet!: fn { texts } { .map { ::x [ 0 x ] } |unpack |spreadsheet* { "done" "text" } |ref |change! 'tasks }
 	
-	tasks: ref spreadsheet { "done" "text" } {
-		0 "Goat cheese"
-		0 "Eggs"
-		0 "Oats"
-		0 "Anchovies"
-		0 "Bread"
-		0 "A4 paper" }
+	tasks: ref spreadsheet { "done" "text" } { }
 }
+
+rye .args\raw .split "," |Data/make-spreadsheet!
 
 do\par fyne { 
 
-	win: app .window "Shopping List"
+	win: app .window "Adhocest TODO app"
 
 	lst: list
 	does { length? deref Data/tasks }

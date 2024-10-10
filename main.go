@@ -4,10 +4,10 @@
 package main
 
 import (
-	"github.com/refaktor/rye-front/current"
+	"github.com/jwalton/go-supportscolor"
+	"github.com/refaktor/rye-fyne/current"
 	"github.com/refaktor/rye/env"
 	"github.com/refaktor/rye/runner"
-	"github.com/jwalton/go-supportscolor"
 )
 
 /* type TagType int

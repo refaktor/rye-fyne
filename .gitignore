@@ -46,3 +46,4 @@ tests/*.html
 
 # Ryegen: source code of libraries for which bindings are generated
 _srcrepos
+rye-fyne

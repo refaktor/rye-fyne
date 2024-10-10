@@ -1,16 +1,16 @@
-module github.com/refaktor/rye-front
+module github.com/refaktor/rye-fyne
 
 go 1.23.0
 
 // toolchain go1.23.0
 
-// replace github.com/refaktor/rye => ../rye
+replace github.com/refaktor/rye => ../rye
 
 // replace github.com/refaktor/ryegen => ../ryegen
 
 require (
 	fyne.io/fyne/v2 v2.4.4
-	github.com/hajimehoshi/ebiten/v2 v2.6.3
+	github.com/jwalton/go-supportscolor v1.2.0
 	github.com/refaktor/rye v0.0.25-0.20241008135859-3e401118b002
 	github.com/refaktor/ryegen v0.1.1-0.20241009014844-8c047bebf475
 	github.com/webview/webview_go v0.0.0-20230901181450-5a14030a9070
@@ -58,7 +58,6 @@ require (
 	github.com/blevesearch/zapx/v16 v16.1.5 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/drewlanenga/govector v0.0.0-20220726163947-b958ac08bc93 // indirect
-	github.com/ebitengine/purego v0.6.0-alpha.1.0.20231122024802-192c5e846faa // indirect
 	github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203 // indirect
 	github.com/fredbi/uri v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
@@ -87,7 +86,6 @@ require (
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/itchyny/gojq v0.12.13 // indirect
 	github.com/itchyny/timefmt-go v0.1.5 // indirect
-	github.com/jezek/xgb v1.1.0 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
@@ -130,7 +128,6 @@ require (
 	go.etcd.io/bbolt v1.3.7 // indirect
 	go.mongodb.org/mongo-driver v1.17.0 // indirect
 	golang.org/x/crypto v0.27.0 // indirect
-	golang.org/x/exp/shiny v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/mobile v0.0.0-20230922142353-e2f452493d57 // indirect
 	golang.org/x/mod v0.21.0 // indirect

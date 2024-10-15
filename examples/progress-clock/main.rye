@@ -1,123 +1,42 @@
 
 rye .needs { fyne }
 
-
-Data: context {
-
-	current-progress?: fn { } { ( now - current-start ) / current-minutes .minutes } 
-	start!: fn { mins title } { change! true 'started , change! now 'current-start , change! mins 'current-minutes change! title 'current-title }
-	stop!: fn { } { change! false 'started , change! now 'current-start , change! 0 'current-minutes change! "" 'current-title }
-	
-	Work: context {
-		from: 8
-		to: 15
-		current-title: ""
-		current-start: now
-		current-minutes: 0
-		started: false
-	}
-	
-	Leisure: context {
-		from: 15
-		to: 23
-		current-title: ""
-		current-start: now
-		current-minutes: 0
-		started: false
-	}
-}
-
+import\live %data-ctx.rye
 
 do\par fyne {
 
 	; GUI functions
 
-	show-add-work-form: fn { hb } { .objects! [ v-box [
-				h-box [
-					label "Add "
-					minw: entry .set-text "45"
-					label "minute session"
-				]
-				border
-				nil
-				nil
-				label "named"
-				button "Add" closure { } {  Data/Work/start! to-integer minw .text? titlw .text? , hb .show-stop-form }
-				[ titlw: entry ]
-			]
-		] }
-
-	
-	show-stop-form: fn { hb } { .objects! [ 
-			button "Stop session" closure { } { Data/Work/stop! }
-		] }
+	import\live %work-tab.rye
+	import %time-tab.rye
+	import %leisure-tab.rye
 	
 	; GUI
 	
 	app .window "Percentage Clock" :win
 	
-	
-	time-cont: v-box [
-		label "This Year [days]" :ly
-		progress-bar :py
-		label "This month [days]"
-		progress-bar :pM
-		label "Today [hours]"
-		progress-bar :ph
-		label "This hour [minutes]"
-		progress-bar :pm
-		label "This minute [seconds]"
-		progress-bar :ps
-	]
-
-	work-cont: v-box [
-		label "Today [hours]"
-		progress-bar :ph2
-		label "" :lw
-		progress-bar :pw
-		hbw: h-box [ button "Start session" does { hbw .show-add-work-form } ]
-	]
-
-	leisure-cont: v-box [
-		label "Today [hours]"
-		progress-bar :ph3
-		label "" :ll
-		progress-bar :pl
-		hbw+l: h-box [ button "Start session" does { hbl .show-add-work-form } ]
-	]
-
 	cont: app-tabs [
 		tab-item "Time" time-cont 
 		tab-item "Work" work-cont	
 		tab-item "Leisure" leisure-cont
 	]
 	
-	m-of: ?multiple-of
-	is-leap-year: fn { y } { all { y .m-of 4  not y .m-of 100  not y .m-of 400 } }
-	days-in: fn { y } { .is-leap-year .either { 366 } { 365 } }
-
 	go fn\par { } current {
 		forever {
-			with n:: now {
-				.year? ::y |concat* "Year " |set-text* ly ,
-				.year-day? / days-in y  |set-value* py ,
-				.day? / days-in-month? n |set-value* pM ,
-				.hour?     / 24 |with { .set-value* ph , .set-value* ph2 , .set-value* ph3 } ,
-				.minute?   / 60 |set-value* pm ,
-				.second?   / 60 |set-value* ps
-				sleep 500
-			}
-
-			;			enter-console "GOGO"
-			if Data/Work/started {
-				Data/Work/current-progress? |set-value* pw
-				lw .set-text Data/Work/current-title
-			}
-			if Data/Leisure/started {
-				Data/Leisure/current-progress? |set-value* pl
-				ll .set-text Data/Leisure/current-title
-			}
+			update-time-tab Data
+			update-work-tab Data
+			update-leisure-tab Data
 		}
 	}
 	win |resize size 300.0 200.0 |set-content cont |show-and-run
 }
+
+; this is experiment of direct import do load % ...
+; TODO - rename current import to import\direct OR
+; or maybe there will be a import\as %file 'subctx or subctx: import\context %file
+; that will make the global namespace much cleaner and files will be separate namespaces, but it could complicate
+; the referencing ... or make it cleaner ... we will test this next
+
+
+; TODO --- make console save history again
+; TODO --- make import\live work again if possible

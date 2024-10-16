@@ -4,7 +4,7 @@ go 1.23.0
 
 // toolchain go1.23.0
 
-replace github.com/refaktor/rye => ../rye
+// replace github.com/refaktor/rye => ../rye
 
 // replace github.com/refaktor/ryegen => ../ryegen
 

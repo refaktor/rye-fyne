@@ -9,15 +9,26 @@ show-add-work-form: fn { hb } { .objects! [ v-box [
 			nil
 			nil
 			label "named"
-			button "Add" closure { } {  Data/Work/start! to-integer minw .text? titlw .text? , hb .show-stop-form , Data/add-sessions! }
+			button "Add" closure { } {  Data/Work/start! to-integer minw .text? titlw .text? , hb .show-stop-form }
 			[ titlw: entry ]
 		]
 	] }
 
 
 show-stop-form: fn { hb } { .objects! [ 
-		button "Stop session" closure { } { Data/Work/stop! }
+		button "Stop session" closure { } { Data/add-current-work-session! , Data/save-all , Data/Work/stop! , hbw .show-toolbar , work-list .refresh }
 	] }
+
+show-toolbar: fn { hb } { .objects! [ 
+		button "Start session" does { hbw .show-add-work-form }
+	] }
+
+work-list: list does { length? Data/work-sessions? }
+does { h-box [ label "title" label "minutes" label "percent" ] }
+fn { i box } { set! box .objects? { title minutes percent }
+	minutes .set-text to-string 1 <- i <- Data/work-sessions?
+	title .set-text  2 <- i <- Data/work-sessions?
+	percent .set-text concat to-string 3 <- i <- Data/work-sessions? "%" }
 
 work-cont: border
 v-box [
@@ -29,15 +40,10 @@ v-box [
 ]
 nil nil nil
 [
-		wrk-lst: list does { length? Data/work-sessions? }
-	does { h-box [ label "title" label "minutes" ] }
-	fn { i box } { set! box .objects? { title minutes }
-		minutes .set-text to-string 1 <- i <- Data/work-sessions?
-		title .set-text  2 <- i <- Data/work-sessions? }
+	work-list
 ]
 
 update-work-tab: fn { Data } {
-	;			enter-console "GOGO"
 	if Data/Work/started {
 		Data/Work/current-progress? |set-value* pw
 		lw .set-text Data/Work/current-title

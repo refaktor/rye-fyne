@@ -3,7 +3,7 @@ out-dir = "../current"
 # Go name of package.
 package = "fyne.io/fyne/v2"
 # Go semantic version of package.
-version = "v2.4.4"
+version = "v2.5.2"
 # Auto-remove "New" part of functions (e.g. widget.NewLabel => widget-label, app.New => app).
 cut-new = true
 

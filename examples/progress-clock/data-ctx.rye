@@ -14,16 +14,14 @@ Data: context {
 		started: false
 	}
 
-	sessions: ref spreadsheet { "type" "minutes" "title" "percentage" }
+	sessions: ref spreadsheet { "type" "minutes" "title" }
 	{
-;		"work" 45 "spravi mobi na play" 70
+		"work" 45 "spravi mobi na play"
+		"work" 25 "reši bug uporabnici @popsi!!!"
 	}
 
 	work-sessions?: does { sessions |deref |where-equal "type" "work" }
-	add-current-work-session!: does { sessions .add-rows! [ "work" Work/current-minutes Work/current-title to-integer 100 * Work/current-progress? ] }
-
-	save-all: does { sessions .to-bson |write* %sessions.spr.bson }
-	load-all: does { read\bytes %sessions.spr.bson |^fix { save-all } |from-bson |ref |change! 'sessions }
+	add-sessions!: does { sessions .add-rows! { "work" 34 "this is magic" } }
 	
 	Leisure: context {
 		from: 15
@@ -33,6 +31,4 @@ Data: context {
 		current-minutes: 0
 		started: false
 	}
-
-	load-all
 }

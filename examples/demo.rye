@@ -25,18 +25,18 @@ do\in fyne {
 			separator
 			label "Icons"
 			center [ h-box [
-				icon file-icon
-				icon document-save-icon
-				icon document-create-icon
-				icon delete-icon
-				icon content-undo-icon
-				icon content-redo-icon
+				widget-icon file-icon
+				widget-icon document-save-icon
+				widget-icon document-create-icon
+				widget-icon delete-icon
+				widget-icon content-undo-icon
+				widget-icon content-redo-icon
 				;file-icon storage-uri "file:///nonexistant/path/image.png"
 			] ]
 
 			separator
 			label "Infinite progress bar"
-			progress-bar-infinite
+			progress-bar-infinite |start
 		]
 
 		tab-item "Entry" v-scroll v-box [
@@ -94,6 +94,7 @@ do\in fyne {
 				}
 			]
 		]
+
 		tab-item "Misc" v-scroll v-box [
 
 			accordion [

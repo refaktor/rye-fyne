@@ -16,7 +16,6 @@ do\in fyne {
 	with win {
 		.set-content lst ,
 		.set-title "Gastown games players" ,
-		.resize size 200.0 180.0 ,
 		.show-and-run
 	}
 }

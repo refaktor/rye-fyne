@@ -1,7 +1,9 @@
 
 rye .needs { fyne }
 
-do\in fyne {
+curr-ctx: ?current
+
+do\par fyne {
 	
 	app .window "Percentage Clock" :win
 	
@@ -18,12 +20,12 @@ do\in fyne {
 		progress-bar :ps
 	]
 	
-	m-of: ?multiple-of
+	m-of: ?is-multiple-of
 	is-leap-year: fn { y } { all { y .m-of 4  not y .m-of 100  not y .m-of 400 } }
 	days-in: fn { y } { .is-leap-year .either { 366 } { 365 } }
 
 
-	go fn\par { } current {
+	go fn\par { } curr-ctx {
 		forever {
 			with n:: now {
 				.year? ::y |concat* "Year " |set-text* ly ,

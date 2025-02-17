@@ -1,4 +1,6 @@
 
+; TODO -- some changes due to update in Fyne required (like list .refresh)
+
 rye .needs { fyne }
 
 Data: context {
@@ -7,7 +9,7 @@ Data: context {
 	remove!: fn { idx } { tasks .remove-row! idx + 1 }
 	check!: fn { idx val } { tasks .update-row! idx + 1 dict [ "done" val ] }
 	
-	tasks: ref spreadsheet { "done" "text" } {
+	tasks: ref table { "done" "text" } {
 		0 "Goat cheese"
 		0 "Eggs"
 		0 "Oats"
@@ -16,6 +18,8 @@ Data: context {
 		0 "A4 paper" }
 }
 
+curr-ctx: ?current
+
 do\par fyne { 
 
 	win: app .window "Shopping List"
@@ -23,14 +27,14 @@ do\par fyne {
 	lst: list
 	does { length? deref Data/tasks }
 	does {
-		idx: hide label "idx"
+		idx: label "idx"
 		h-box [
-			check "" fn\par { v } current
+			check "" fn\par { v } probe curr-ctx
 			{ Data/check! to-integer idx .text? v , lst .refresh }
 			label ""
 			idx
 			layout-spacer
-			button-with-icon "" delete-icon fn\par { } current
+			button-with-icon "" delete-icon fn\par { } curr-ctx
 			{ Data/remove! to-integer idx .text? , lst .refresh }
 		]
 	}

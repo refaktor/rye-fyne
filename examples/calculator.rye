@@ -14,7 +14,7 @@ do\in fyne {
     text-a: ""
     text-b: ""
     text-res: ""
-    current: 0
+    current:: 0
 
     format-decimal: fn { x } {
         x-str: math/round\to x 4 |to-string

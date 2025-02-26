@@ -1,0 +1,45 @@
+
+hello: does { print "Hello world!" }
+
+my-ip: fn { } {                     
+	get https://api.ipify.org?format=json
+	|parse-json -> "ip" |print
+}
+
+joke: does {
+	get https://official-joke-api.appspot.com/random_joke
+	|parse-json
+	|with { -> "setup" |print , -> "punchline" |print }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; job: "Mining"
+
+; eat: fn { } { print "Jum..." }
+
+; work: fn { } { print "Ugh... " + job } 
+
+; sleep: fn { } { print "Zzzz..." }

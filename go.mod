@@ -8,7 +8,7 @@ toolchain go1.23.4
 
 replace github.com/refaktor/rye => ../rye
 
-// replace github.com/refaktor/ryegen => ../ryegen
+replace github.com/refaktor/ryegen => ../ryegen
 
 require (
 	fyne.io/fyne/v2 v2.5.2

@@ -1,5 +1,5 @@
 
-m-of: ?multiple-of
+m-of: ?is-multiple-of
 is-leap-year: fn { y } { all { y .m-of 4  not y .m-of 100  not y .m-of 400 } }
 days-in: fn { y } { .is-leap-year .either { 366 } { 365 } }
 

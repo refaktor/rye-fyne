@@ -33,8 +33,9 @@ type node struct {
 func main() {
 
 	supportscolor.Stdout()
-	runner.DoMain(func(ps *env.ProgramState) {
+	runner.DoMain(func(ps *env.ProgramState) error {
 		current.RegisterBuiltins(ps)
+		return nil
 	})
 
 }

@@ -1,9 +1,7 @@
 
 rye .needs { fyne }
 
-myctx: context { do load %buttons_my.rye }
-
-current-ctx: ?current
+myctx: context { do load to-file first rye .args }
 
 do\par fyne { 
 
@@ -13,11 +11,11 @@ do\par fyne {
 	spl .offset! 0.6
 	
 	for lc\data\ myctx { ::w
-		extends myctx {
-			fnc: ?w
-			gw .add button to-string w
-			  fn\par { } current-ctx
-			    { set-text lbl capture-stdout [ fnc ] }
+		extends myctx {                   ; we evaluate this in local contect
+			fnc: ?w                       ; to prevent captured variables problem
+			gw .add button to-string w    ; and make it's parent myctx
+			  closure { }
+			  { set-text lbl capture-stdout [ fnc ] }
 		}
 	}
 	

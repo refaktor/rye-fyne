@@ -14,7 +14,7 @@ Data: context {
 		started: false
 	}
 
-	sessions: ref spreadsheet { "type" "minutes" "title" }
+	sessions: ref table { "type" "minutes" "title" }
 	{
 		"work" 45 "spravi mobi na play"
 		"work" 25 "reši bug uporabnici @popsi!!!"

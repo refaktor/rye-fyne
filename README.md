@@ -1,108 +1,190 @@
-- [Quick demo](#quick-demo)
-- [What is Rye language 🌾](#what-is-rye-language)
-- [What is Rye-Front](#what-is-rye-front)
-- [Modules](#modules)
-  - [Fyne - GUI](#fyne---gui-)
-    - [Build and test](#build-and-test)
-    - [Example](#example)
-    - [More about Fyne](#more-about-fyne)
-  - [Ebitengine - Game engine](Ebitengine-game-engine)
-  - [Webview](Webview)
+# Rye-Fyne: GUI Programming with Rye Language
 
-## Current status
+![Rye-Fyne](https://ryelang.org/rye-fyne-2.png)
 
-Most widgets work. We just created a (CookBook with plenty of examples](https://ryelang.org/cookbook/rye-fyne/examples/). Next step will be to update this 
-README and repository in general. To provide prebuild binaries, etc ... stay tuned.
+Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 
-## A Cookbook
+## Quick Start
 
-I'm writing a Cookbook page full of simple GUI example. See them here:
-https://ryelang.org/cookbook/rye-fyne/examples/
+### Download Pre-built Binaries
 
-## Live use video
+Download the latest release for your platform:
+* **Linux**: [rye-fyne-linux-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
+* **macOS**: [rye-fyne-macos-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
+* **Windows**: [rye-fyne.exe](https://github.com/refaktor/rye-fyne/releases/latest)
 
-https://www.youtube.com/watch?v=YmYQRPvkSpM
+### Building from Source
 
-[![Live GUI over console demo](http://img.youtube.com/vi/YmYQRPvkSpM/0.jpg)](http://www.youtube.com/watch?v=QtK8hUPjo5Y "Video Title")
+You need [Go](https://go.dev/) installed on your system.
 
-## What is Rye language
-
-Rye is a high level, dynamic **programming language** based on ideas from **Rebol**, flavored by
-Factor, Linux shells and Golang. It's still an experiment in language design, but it should slowly become more and
-more useful in real world.
-
-It features a Golang based interpreter and console and could also be seen as (modest) **Go's scripting companion** as
-Go's libraries are quite easy to integrate, and Rye can be embedded into Go programs as a scripting or config language.
-
-I believe that as language becomes higher level it starts touching the user interface boundary, besides being a language
-we have great emphasis on **interactive use** (Rye shell) where we will explore that.
-
-**[Rye language repository](https://github.com/refaktor/rye)** | **[Rye website](https://ryelang.org/)** | **[Reddit group](https://reddit.com/r/ryelang/)**
-
-## Download Rye-Fyne
-
-Download the binary: 
-* Linux: [rye-fyne-linux-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne-linux-amd64.tar.gz)
-* MacOS: [rye-fyne-macos-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne-macos-amd64.tar.gz)
-* Windows: [rye-fyne.exe](https://github.com/refaktor/rye-fyne/releases/download/23/rye-fyne.exe)
-
-This includes just the binary (executable), to download examples you should still need to download ZIP from the github. In future
-we will make the binary download all required things itself if raw with `rye install`.
-
-## Building Rye-Fyne
-
-You need [Go](https://go.dev/) installed. Please follow Go's installation instructions for your opearating system. 
-
-```
-# To get rye-fyne use "Download ZIP" from "<> Code" button
-# on the github page: https://github.com/refaktor/rye-fyne
-# or use Git:
+```bash
+# Clone the repository
 git clone https://github.com/refaktor/rye-fyne.git
-
-# enter directory
 cd rye-fyne
 
-# build rye with fyne in bin/fyne/rye
-./build
+# Build the project
+go build -o rye-fyne
 
-# Try the hello example
-bin/rye-fyne examples/fyne/button.rye
-
-# Try the feedback example
-bin/rye-fyne examples/fyne/feedback.rye
-
-# Try the Live GUI demo
-bin/rye-fyne examples/fyne/live.rye
-
-# Or enter the Rye console
-bin/rye-fyne
-x> cc fyne
-x> app .window "Hello" |set-content label "world" |show-and-run
-(Ctrl-c to exit)
+# Run the example
+./rye-fyne example.rye
 ```
 
-#### Example
+## Example Application
 
-![Fyne Feedback example](https://ryelang.org/rye-fyne-2.png)
+The `example.rye` file demonstrates a comprehensive GUI application with various widgets:
 
-```
-rye .needs { fyne }
+```rye
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+dialog: import\go "fyne/dialog"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
 
-do\in fyne {
+a: app/new
+w: a .window "Hello, world!"
 
-	cont: container 'vbox vals {
-		label "Send us feedback:"
-		multiline-entry :ent
-		button "Send" { ent .get-text |printv "Sending: {}" }
-	}
-	
-	app .new-window "Feedback"
-	|set-content cont
-	|show-and-run
+; Menu system with file operations and settings
+w .set-main-menu fyne/main-menu [
+    fyne/menu "File" [
+        fyne/menu-item "Open" does {
+            dialog/show-file-open fn { r err } {
+                either r .is-nil {
+                    if not err .is-nil { print err }
+                } {
+                    print "Opened file: " ++ r .uri .string
+                    r .close
+                }
+            } w
+        } |icon! theme/file-icon
+    ]
+    fyne/menu "Settings" [
+        fyne/menu-item "Preferences" does { }
+            |icon! theme/settings-icon
+    ]
+]
+
+; Live clock that updates every second
+clock: widget/label ""
+go does {
+    forever {
+        fyne/do does { clock .set-text now .to-string }
+        sleep 1 .seconds
+    }
 }
+
+; Main application layout with various widgets
+w .set-content container/border
+    container/vbox [
+        widget/label "Hello!"
+        do {
+            se: widget/select-entry [ "A" "B" ]
+            se .set-text "A"
+            se
+        }
+        do {
+            p: widget/progress-bar-infinite
+            p .start
+            p
+        }
+        widget/button "Say hi" does {
+            dialog/show-information "Hello!" "You clicked the button" w
+        }
+        clock
+    ]
+    nil nil nil
+    [ widget/list
+        does { 1000 }
+        does { widget/label "Hi" }
+        fn { id lab } { lab .set-text "Entry no. " ++ id .to-string }
+    ]
+
+w .show-and-run
 ```
 
-#### More about Fyne
+This example showcases:
+- **Menu System**: File and Settings menus with icons
+- **Dialogs**: File open dialog and information dialogs
+- **Widgets**: Labels, buttons, select entries, progress bars, lists
+- **Layouts**: Border and VBox container layouts
+- **Live Updates**: A clock that updates in real-time
+- **Event Handling**: Button clicks and menu interactions
 
-[Fyne website](https://fyne.io)
+## Features
 
+### Available Widgets
+- Labels, buttons, entries, and text areas
+- Progress bars (determinate and indeterminate)
+- Lists, tables, and trees
+- Select entries and combo boxes
+- Sliders, check boxes, and radio buttons
+- And many more Fyne widgets
+
+### Layout Containers
+- Border, VBox, HBox layouts
+- Grid and form layouts
+- Split containers and accordions
+- Tabs and scroll containers
+
+### Dialogs and Menus
+- File dialogs (open, save)
+- Information, confirmation, and error dialogs
+- Menu bars with icons and shortcuts
+- Context menus
+
+## More Examples
+
+Explore additional examples in the `archive/examples/` directory:
+- **Calculator**: Full-featured calculator application
+- **Todo App**: Task management with persistence
+- **Shopping List**: Dynamic list management
+- **Live Demo**: Interactive widget playground
+
+## Interactive Development
+
+Start the Rye console for interactive GUI development:
+
+```bash
+./rye-fyne
+```
+
+```rye
+; Quick GUI creation in the console
+rye> fyne: import\go "fyne"
+rye> app: import\go "fyne/app" 
+rye> widget: import\go "fyne/widget"
+rye> container: import\go "fyne/container"
+
+rye> a: app/new
+rye> w: a .window "Quick Demo"
+rye> w .set-content widget/button "Click me!" does { print "Hello from Rye!" }
+rye> w .show-and-run
+```
+
+## Resources
+
+- **[Rye Language](https://github.com/refaktor/rye)** - The core Rye language
+- **[Rye Website](https://ryelang.org/)** - Documentation and tutorials  
+- **[Rye Cookbook](https://ryelang.org/cookbook/rye-fyne/examples/)** - GUI examples and recipes
+- **[Fyne Documentation](https://fyne.io/)** - Fyne GUI toolkit documentation
+- **[Reddit Community](https://reddit.com/r/ryelang/)** - Join the discussion
+
+## What is Rye?
+
+Rye is a high-level, dynamic programming language inspired by Rebol, Factor, and Go. It emphasizes:
+- **Expressive Syntax**: Clean, readable code that's easy to write and understand
+- **Interactive Development**: REPL-driven programming with live feedback
+- **Go Integration**: Easy access to Go libraries and embedding in Go applications
+- **Cross-platform**: Build applications that run on Windows, macOS, and Linux
+
+## Current Status
+
+Rye-Fyne supports most Fyne widgets and layouts. The project is actively developed with regular updates and improvements. Pre-built binaries are available for major platforms, and the codebase is stable for production use.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests on GitHub.
+
+## License
+
+This project is open source. See the [LICENSE](LICENSE) file for details.

@@ -1,5 +1,0 @@
-echo "# Running go mod tidy"
-go mod tidy
-
-echo "# Running go build"
-go build

@@ -1,10 +1,10 @@
-module github.com/refaktor/ryegen/v2/examples/fyne
+module github.com/refaktor/rye-fyne
 
 go 1.24.0
 
 // replace github.com/refaktor/ryegen/v2 => ../../
 
-tool github.com/refaktor/ryegen/v2
+tool github.com/refaktor/ryegen
 
 require (
 	fyne.io/fyne/v2 v2.6.1
@@ -141,7 +141,7 @@ require (
 	github.com/ncruces/go-strftime v0.1.9 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.5.1 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/pjbgf/sha1cd v0.4.0 // indirect
 	github.com/pkg/term v1.2.0-beta.2.0.20211217091447-1a4a3b719465 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
@@ -152,7 +152,7 @@ require (
 	github.com/prometheus/procfs v0.17.0 // indirect
 	github.com/refaktor/go-peg v0.0.0-20250317092442-5acc59396305 // indirect
 	github.com/refaktor/keyboard v0.0.0-20250327232248-edb0b31909c4 // indirect
-	github.com/refaktor/ryegen/v2 v2.0.0-00010101000000-000000000000 // indirect
+	github.com/refaktor/ryegen v0.1.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
@@ -188,7 +188,6 @@ require (
 	golang.org/x/sys v0.34.0 // indirect
 	golang.org/x/term v0.33.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
-	golang.org/x/tools v0.35.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect

@@ -1,6 +1,6 @@
 # Rye-Fyne: GUI Programming with Rye Language
 
-![Rye-Fyne](https://github.com/refaktor/ryelang/blob/main/image.png?raw=true)
+![Rye-Fyne](https://github.com/refaktor/rye-fyne/blob/main/image.png?raw=true)
 
 Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 

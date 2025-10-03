@@ -1,6 +1,6 @@
 # Rye-Fyne: GUI Programming with Rye Language
 
-![Rye-Fyne](https://ryelang.org/rye-fyne-2.png)
+![Rye-Fyne](https://github.com/refaktor/ryelang/blob/main/image.png?raw=true)
 
 Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 
@@ -8,10 +8,12 @@ Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye pro
 
 ### Download Pre-built Binaries
 
-Download the latest release for your platform:
+Precimpiled downloads are comming.
+<!-- Download the latest release for your platform:
 * **Linux**: [rye-fyne-linux-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
 * **macOS**: [rye-fyne-macos-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
 * **Windows**: [rye-fyne.exe](https://github.com/refaktor/rye-fyne/releases/latest)
+-->
 
 ### Building from Source
 

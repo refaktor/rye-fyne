@@ -1,0 +1,15 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+
+a: app/new
+w: a .window "Layouts"
+w .set-content container/vbox [
+    container/hbox [
+        widget/label "Don't look RIGHT"
+        widget/label "Don't look LEFT"
+    ]
+    widget/label "Don't look UP"
+]
+w .show-and-run

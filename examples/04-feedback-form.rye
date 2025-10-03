@@ -1,0 +1,26 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+dialog: import\go "fyne/dialog"
+
+a: app/new
+w: a .window "Feedback"
+
+ent: widget/entry
+ent .set-multiline true
+sel: widget/select [ "Happy" "Normal" "Confused" ]
+sel .set-place-holder "How do you feel ..."
+
+cont: container/vbox [
+    widget/label "Send us feedback:"
+    ent
+    sel
+    widget/button "Send" does {
+        msg: ent .get-text
+        dialog/show-information "Sending" "Sending: " ++ msg w
+    }
+]
+
+w .set-content cont
+w .show-and-run

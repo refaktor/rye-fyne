@@ -1,0 +1,23 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+
+players: [ [ "WildJane" 5210 ] [ "MadBob" 4991 ] [ "GreeNoob" 12 ] ]
+
+lst: widget/list
+    does { players .length? }
+    does { container/hbox [ widget/label "name" widget/label "score" ] }
+    fn { i box } { 
+        player: players -> i
+        ; name-label: box .objects? -> 0
+        score-label: ( box .objects? ) |probe -> 0
+        ; name-label .set-text player -> 0
+        score-label .set-text to-string player -> 1
+    }
+
+a: app/new
+w: a .window "Gastown bingo players"
+w .resize fyne/size 220.0 200.0
+w .set-content lst
+w .show-and-run

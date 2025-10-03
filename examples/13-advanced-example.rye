@@ -1,0 +1,73 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+dialog: import\go "fyne/dialog"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
+
+a: app/new
+w: a .window "Advanced Example"
+
+; Set up menu system
+w .set-main-menu fyne/main-menu [
+    fyne/menu "File" [
+        fyne/menu-item "Open" does {
+            dialog/show-file-open fn { r err } {
+                either r .is-nil {
+                    if not err .is-nil {
+                        print err
+                    }
+                } {
+                    print "Opened file: " ++ r .uri .string
+                    r .close
+                }
+            } w
+        } |icon! theme/file-icon
+    ]
+    fyne/menu "Settings" [
+        fyne/menu-item "Preferences" does { }
+            |icon! theme/settings-icon
+    ]
+]
+
+; Live clock
+clock: widget/label ""
+go does {
+    forever {
+        fyne/do does {
+            clock .set-text now .to-string
+        }
+        sleep 1 .seconds
+    }
+}
+
+; Select entry widget
+se: widget/select-entry [ "Option A" "Option B" "Option C" ]
+se .set-text "Option A"
+
+; Progress bar
+p: widget/progress-bar-infinite
+p .start
+
+; Main content layout
+w .set-content container/border
+    container/vbox [
+        widget/label "Welcome to Advanced Example!"
+        se
+        p
+        widget/button "Say Hello" does {
+            dialog/show-information "Hello!" "You clicked the button" w
+        }
+        clock
+    ]
+    nil
+    nil
+    nil
+    [
+        widget/list
+            does { 50 }
+            does { widget/label "Item" }
+            fn { id lab } { lab .set-text "List entry no. " ++ id .to-string }
+    ]
+
+w .show-and-run

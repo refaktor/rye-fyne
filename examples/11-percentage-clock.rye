@@ -1,0 +1,50 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+
+ly: widget/label "Year:"
+py: widget/progress-bar
+ph: widget/progress-bar
+pm: widget/progress-bar
+ps: widget/progress-bar
+
+cont: container/vbox [
+    ly
+    py
+    widget/label "Today's hours:"
+    ph
+    widget/label "Minutes:"
+    pm
+    widget/label "Seconds:"
+    ps
+]
+
+leap-year: fn { y } { 
+    all [ y .mod 4 .equals 0  not y .mod 100 .equals 0  y .mod 400 .equals 0 ]
+}
+
+days-in: fn { y } { 
+    either leap-year y { 366 } { 365 }
+}
+
+go does {
+    forever {
+        n: now
+        year: n .year
+        fyne/do does {
+            ly .set-text "Year " ++ year .to-string
+            py .set-value n .year-day / days-in year
+            ph .set-value n .hour / 24.0
+            pm .set-value n .minute / 60.0
+            ps .set-value n .second / 60.0
+        }
+        sleep 500 .milliseconds
+    }
+}
+
+a: app/new
+w: a .window "Percentage Clock"
+w .resize fyne/size 300.0 200.0
+w .set-content cont
+w .show-and-run

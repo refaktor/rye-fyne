@@ -1,0 +1,31 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+dialog: import\go "fyne/dialog"
+
+a: app/new
+w: a .window "Form"
+
+btn: widget/button "Sign up" does {
+    dialog/show-information "Success" "You rock!" w
+}
+btn .disable
+
+chk: widget/check "I fully agree" fn { v } {
+    either v {
+        btn .enable
+    } {
+        btn .disable
+    }
+}
+
+cont: container/form [
+    "Username" widget/entry
+    "Password" widget/password-entry
+    "Terms" chk
+    "" btn
+]
+
+w .set-content cont
+w .show-and-run

@@ -1,0 +1,19 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+layout: import\go "fyne/layout"
+
+lab: widget/label "I'm Waiting ..."
+btn: widget/button "Click here" does { lab .set-text "Finally ..." }
+box: container/vbox [
+    lab
+    layout/spacer
+    btn
+]
+
+a: app/new
+w: a .window "Button"
+w .resize fyne/size 200.0 100.0
+w .set-content box
+w .show-and-run

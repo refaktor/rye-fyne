@@ -1,0 +1,68 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
+layout: import\go "fyne/layout"
+
+; Simple data management
+tasks: ref [
+    [ false "Goat cheese" ]
+    [ false "Eggs" ]
+    [ false "Oats" ]
+    [ false "Anchovies" ]
+    [ false "Bread" ]
+    [ false "A4 paper" ]
+]
+
+Data: context {
+    add!: fn { task } { 
+        new-task: [ false task ]
+        tasks .add! new-task
+    }
+    remove!: fn { idx } { tasks .remove-at! idx }
+    check!: fn { idx val } { 
+        task: tasks .get idx
+        task .set! 0 val
+    }
+}
+
+lst: widget/list
+    does { deref tasks .length }
+    does {
+        container/hbox [
+            widget/check "" fn { v } { }  ; will be updated with proper callback
+            widget/label ""
+            layout/spacer
+            widget/button-with-icon "" theme/delete-icon fn { } { }  ; will be updated
+        ]
+    }
+    fn { i box } {
+        task: deref tasks .get i
+        chk: box .objects .get 0
+        lbl: box .objects .get 1
+        btn: box .objects .get 3
+        
+        chk .set-checked task .get 0
+        lbl .set-text task .get 1
+        
+        ; Update callbacks with current index
+        chk .set-on-changed fn { v } { Data/check! i v }
+        btn .set-on-tapped fn { } { Data/remove! i , lst .refresh }
+    }
+
+input: widget/entry
+input .set-place-holder "Add to list here ..."
+input .set-on-submitted fn { x } {
+    Data/add! x
+    input .set-text ""
+    lst .refresh
+}
+
+cont: container/border nil input nil nil [ lst ]
+
+a: app/new
+w: a .window "Shopping List"
+w .resize fyne/size 300.0 300.0
+w .set-content cont
+w .show-and-run

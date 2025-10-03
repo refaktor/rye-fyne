@@ -1,0 +1,18 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+
+tab: widget/table
+    does { [ 10 10 ] }
+    does { widget/label "..." }
+    fn { i o } {
+        r: 1 + i .row
+        c: 1 + i .col
+        o .set-text r * c .to-string
+    }
+
+a: app/new
+w: a .window "Multiplication table"
+w .resize fyne/size 330.0 400.0
+w .set-content tab
+w .show-and-run

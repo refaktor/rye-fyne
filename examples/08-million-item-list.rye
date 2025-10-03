@@ -1,0 +1,14 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+
+lst: widget/list
+    does { 1000000 }
+    does { widget/label "num" }
+    fn { i item } { item .set-text i + 1 .to-string }
+
+a: app/new
+w: a .window "1 million list"
+w .resize fyne/size 220.0 200.0
+w .set-content lst
+w .show-and-run

@@ -1,0 +1,19 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+
+lab: widget/label "<date & time>"
+
+go does {
+    forever {
+        fyne/do does {
+            lab .set-text now .to-string
+        }
+        sleep 100 .milliseconds
+    }
+}
+
+a: app/new
+w: a .window "Date & Time"
+w .set-content lab
+w .show-and-run

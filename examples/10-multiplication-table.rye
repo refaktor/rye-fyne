@@ -6,13 +6,12 @@ tab: widget/table
     does { [ 10 10 ] }
     does { widget/label "..." }
     fn { i o } {
-        r: 1 + i .row
-        c: 1 + i .col
-        o .set-text r * c .to-string
+        r: 1 + i .row?
+        c: 1 + i .col?
+        o .set-text to-string r * c
     }
 
-a: app/new
-w: a .window "Multiplication table"
+w: app/new .window "Multiplication table"
 w .resize fyne/size 330.0 400.0
 w .set-content tab
 w .show-and-run

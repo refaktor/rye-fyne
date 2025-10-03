@@ -9,11 +9,10 @@ go does {
         fyne/do does {
             lab .set-text now .to-string
         }
-        sleep 100 .milliseconds
+        sleep 500
     }
 }
 
-a: app/new
-w: a .window "Date & Time"
+w: app/new .window "Date & Time"
 w .set-content lab
 w .show-and-run

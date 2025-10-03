@@ -4,8 +4,7 @@ widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 dialog: import\go "fyne/dialog"
 
-a: app/new
-w: a .window "Form"
+w: app/new .window "Form"
 
 btn: widget/button "Sign up" does {
     dialog/show-information "Success" "You rock!" w
@@ -20,11 +19,11 @@ chk: widget/check "I fully agree" fn { v } {
     }
 }
 
-cont: container/form [
-    "Username" widget/entry
-    "Password" widget/password-entry
-    "Terms" chk
-    "" btn
+cont: widget/form [
+    widget/form-item "Username" widget/entry
+    widget/form-item "Password" widget/password-entry
+    widget/form-item "Terms" chk
+    widget/form-item "" btn
 ]
 
 w .set-content cont

@@ -6,25 +6,24 @@ canvas: import\go "fyne/canvas"
 
 Sensors: context {
     ; dummy sensor
-    get-temperature: does { sleep 300 .milliseconds , 20 + random-integer 12 }
+    get-temperature: does { sleep 300 , 20 + random\integer 12 }
 }
 
 temp: widget/label "Reading ..."
 img: canvas/image-from-file "home.png"
-img .set-fill-mode 0  ; original size
+img .fill-mode! 2  ; original size
 
 go does {
-    sleep 3 .seconds  ; waiting for sensors to wake up
+    sleep 3000  ; waiting for sensors to wake up
     forever {
-        temp-val: Sensors/get-temperature .to-string ++ " °C"
+        temp-val:: Sensors/get-temperature .to-string ++ " °C"
         fyne/do does {
             temp .set-text "Outside temp: " ++ temp-val
         }
-        sleep 1 .seconds
+        sleep 1000
     }
 }
 
-a: app/new
-w: a .window "My Home"
+w: app/new .window "My Home"
 w .set-content container/vbox [ img temp ]
 w .show-and-run

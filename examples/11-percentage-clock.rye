@@ -21,7 +21,7 @@ cont: container/vbox [
 ]
 
 leap-year: fn { y } { 
-    all [ y .mod 4 = 0  not y .mod 100 = 0  y .mod 400 = 0 ]
+    all [ ( y .mod 4 ) = 0  not ( y .mod 100 ) = 0  ( y .mod 400 ) = 0 ]
 }
 
 days-in: fn { y } { 
@@ -30,14 +30,14 @@ days-in: fn { y } {
 
 go does {
     forever {
-        n: now
-        year: n .year
+        n:: now
+        year:: n .year?
         fyne/do does {
             ly .set-text "Year " ++ year .to-string
-            py .value! n .year-day / days-in year
-            ph .value! n .hour / 24.0
-            pm .value! n .minute / 60.0
-            ps .value! n .second / 60.0
+            py .set-value n .yearday? / days-in year
+            ph .set-value n .hour? / 24.0
+            pm .set-value n .minute? / 60.0
+            ps .set-value n .second? / 60.0
         }
         sleep 500
     }

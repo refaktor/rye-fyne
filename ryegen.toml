@@ -39,6 +39,10 @@ select = { package = 'fyne/container', name = 'new-([vh])-(.*)' }
 action.rename = 'new-\1\2'
 
 [[rule]]
+select = { package = 'fyne(/.*|)', name = '(.*)-i-ds' }
+action.rename = '\2-ids'
+
+[[rule]]
 select.package = 'fyne(/app|/canvas|/container|/data/binding|/data/validation|/dialog|/lang|/layout|/storage|/storage/repository|/theme|/widget|)'
 select.name = 'new-(.*)'
 action.rename = '\2'

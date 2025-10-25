@@ -1,0 +1,76 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+dialog: import\go "fyne/dialog"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
+
+a: app/new
+w: a .window "Hello, world!"
+
+w .set-main-menu fyne/main-menu [
+    fyne/menu "File" [
+        fyne/menu-item "Open" does {
+            dialog/show-file-open fn { r err } {
+                either r .is-nil {
+                    if not err .is-nil {
+                        print err
+                    }
+                } {
+                    print "Opened file: " ++ r .uri .string
+                    r .close
+                }
+            } w
+        }
+            |icon! theme/file-icon
+    ]
+    fyne/menu "Settings" [
+        fyne/menu-item "Preferences" does { }
+            |icon! theme/settings-icon
+    ]
+]
+
+clock: widget/label ""
+go does {
+    forever {
+        fyne/do does {
+            clock .set-text now .to-string
+        }
+
+        sleep 1 .seconds
+    }
+}
+
+w .set-content container/border
+    container/vbox [
+        do {
+            lab: widget/label "Hi"
+            lab .set-text "Hello!"
+            lab
+        }
+        do {
+            se: widget/select-entry [ "A" "B" ]
+            se .set-text "A"
+            se
+        }
+        do {
+            p: widget/progress-bar-infinite
+            p .start
+            p
+        }
+        widget/button "Say hi" does {
+            dialog/show-information "Hello!" "You clicked the button" w
+        }
+        clock
+    ]
+    nil
+    nil
+    nil
+    [
+        widget/list
+            does { 1000 }
+            does { widget/label "Hi" }
+            fn { id lab } { lab .set-text "Entry no. " ++ id .to-string }
+    ]
+
+w .show-and-run

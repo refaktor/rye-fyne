@@ -15,20 +15,22 @@ tasks: ref [
     [ false "A4 paper" ]
 ]
 
+; Rye is mostly immutable, we are working
+; on state management solution
 Data: context {
-    add!: fn { task } { 
-        new-task: [ false task ]
-        tasks .add! new-task
+    add!: fn { task } {
+        print "* Adding" probe task 
     }
-    remove!: fn { idx } { tasks .remove-at! idx }
+    remove!: fn { idx } { 
+        print "* Removing" probe idx 
+    }
     check!: fn { idx val } { 
-        task: tasks .get idx
-        task .set! 0 val
+        print "* Checking" probe [ idx val ]
     }
 }
 
 lst: widget/list
-    does { deref tasks .length }
+    does { tasks .deref .length? }
     does {
         container/hbox [
             widget/check "" fn { v } { }  ; will be updated with proper callback
@@ -38,22 +40,22 @@ lst: widget/list
         ]
     }
     fn { i box } {
-        task: deref tasks .get i
-        chk: box .objects .get 0
-        lbl: box .objects .get 1
-        btn: box .objects .get 3
+        tasks .deref -> i :task 
+        box .objects? -> 0 :chk
+        box .objects? -> 1 :lbl
+        box .objects? -> 3 :btn
         
-        chk .set-checked task .get 0
-        lbl .set-text task .get 1
+        chk .set-checked 0 <- task
+        lbl .set-text 1 <- task
         
         ; Update callbacks with current index
-        chk .set-on-changed fn { v } { Data/check! i v }
-        btn .set-on-tapped fn { } { Data/remove! i , lst .refresh }
+        chk .on-changed! fn { v } { Data/check! i v }
+        btn .on-tapped! fn { } { Data/remove! i , lst .refresh }
     }
 
 input: widget/entry
 input .set-place-holder "Add to list here ..."
-input .set-on-submitted fn { x } {
+input .on-submitted! fn { x } {
     Data/add! x
     input .set-text ""
     lst .refresh

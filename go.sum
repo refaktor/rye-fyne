@@ -360,8 +360,6 @@ github.com/olekukonko/tablewriter v0.0.5 h1:P2Ga83D34wi1o9J6Wh1mRuqd4mF/x/lgBS7N
 github.com/olekukonko/tablewriter v0.0.5/go.mod h1:hPp6KlRPjbx+hW8ykQs1w3UBbZlj6HuIJcUGPhkA7kY=
 github.com/openai/openai-go v1.12.0 h1:NBQCnXzqOTv5wsgNC36PrFEiskGfO5wccfCWDo9S1U0=
 github.com/openai/openai-go v1.12.0/go.mod h1:g461MYGXEXBVdV5SaR/5tNzNbSfwTBBefwc+LlDCK0Y=
-github.com/pelletier/go-toml/v2 v2.2.4 h1:mye9XuhQ6gvn5h28+VilKrrPoQVanw5PMw/TB0t5Ec4=
-github.com/pelletier/go-toml/v2 v2.2.4/go.mod h1:2gIqNv+qfxSVS7cM2xJQKtLSTLUE9V8t9Stt+h56mCY=
 github.com/pjbgf/sha1cd v0.4.0 h1:NXzbL1RvjTUi6kgYZCX3fPwwl27Q1LJndxtUDVfJGRY=
 github.com/pjbgf/sha1cd v0.4.0/go.mod h1:zQWigSxVmsHEZow5qaLtPYxpcKMMQpa09ixqBxuCS6A=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
@@ -392,6 +390,8 @@ github.com/refaktor/keyboard v0.0.0-20250327232248-edb0b31909c4 h1:hNN6Jy+4lzf4k
 github.com/refaktor/keyboard v0.0.0-20250327232248-edb0b31909c4/go.mod h1:GwFCpZSiID9sqQ9Zm0tCmw8eeI9hThLQ7pv1wcTp0I0=
 github.com/refaktor/rye v0.0.86 h1:Cj2otMwvP5gL63h3+qVqwhbCcwG/dqRGm5pGATuVvlI=
 github.com/refaktor/rye v0.0.86/go.mod h1:wV9bgWWeE2XTlkCB1vYrqfqV2jkLf8GERyk/XUJaMCQ=
+github.com/refaktor/ryegen/v2 v2.0.0-20251012122240-87fb603cd71c h1:DbVFAsXqHBU0J54TqqP4AU8UdvprCfG1sFW9X+CqTQY=
+github.com/refaktor/ryegen/v2 v2.0.0-20251012122240-87fb603cd71c/go.mod h1:LZLHD9L9ympNPZCQesh+zOnYz+2jbBGQb6K9iGnEV8E=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec h1:W09IVJc94icq4NjY3clb7Lk8O1qJ8BdBEF8z0ibU0rE=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec/go.mod h1:qqbHyh8v60DhA7CoWK5oRCqLrMHRGoxYCSS9EjAz6Eo=
 github.com/richardlehane/mscfb v1.0.4 h1:WULscsljNPConisD5hR0+OyZjwK46Pfyr6mPu5ZawpM=
@@ -470,6 +470,8 @@ github.com/xuri/excelize/v2 v2.9.1 h1:VdSGk+rraGmgLHGFaGG9/9IWu1nj4ufjJ7uwMDtj8Q
 github.com/xuri/excelize/v2 v2.9.1/go.mod h1:x7L6pKz2dvo9ejrRuD8Lnl98z4JLt0TGAwjhW+EiP8s=
 github.com/xuri/nfp v0.0.1 h1:MDamSGatIvp8uOmDP8FnmjuQpu90NzdJxo7242ANR9Q=
 github.com/xuri/nfp v0.0.1/go.mod h1:WwHg+CVyzlv/TX9xqBFXEZAuxOPxn2k1GNHwG41IIUQ=
+github.com/xypwn/go-toml/v2 v2.0.0 h1:rR57T1ZxqPzQ7SusOhYBzxOD9uE32XBTX5SoeX8DmaA=
+github.com/xypwn/go-toml/v2 v2.0.0/go.mod h1:2gIqNv+qfxSVS7cM2xJQKtLSTLUE9V8t9Stt+h56mCY=
 github.com/yhirose/go-peg v0.0.0-20210804202551-de25d6753cf1 h1:7iTmQ0lZwTtfm4XMgP5ezzWMDCjo7GTS0ZgCj6jpVzM=
 github.com/yhirose/go-peg v0.0.0-20210804202551-de25d6753cf1/go.mod h1:q2QWLflHsZxT6ixYcXveTYicEvxGh5Uv6CnI7f7BfjQ=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=

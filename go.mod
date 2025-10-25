@@ -3,12 +3,28 @@ module github.com/refaktor/rye-fyne
 go 1.25.0
 
 // replace github.com/refaktor/ryegen/v2 => ../ryegen/
+replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
 
 tool github.com/refaktor/ryegen/v2
 
 require (
 	fyne.io/fyne/v2 v2.7.0
+	github.com/davecgh/go-spew v1.1.1
+	github.com/fredbi/uri v1.1.1
+	github.com/fsnotify/fsnotify v1.9.0
+	github.com/go-text/typesetting v0.3.0
+	github.com/godbus/dbus/v5 v5.1.0
+	github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade
+	github.com/nicksnyder/go-i18n/v2 v2.5.1
+	github.com/pmezard/go-difflib v1.0.0
 	github.com/refaktor/rye v0.0.86
+	github.com/rymdport/portal v0.4.2
+	github.com/stretchr/testify v1.11.1
+	github.com/yuin/goldmark v1.7.13
+	golang.org/x/image v0.32.0
+	golang.org/x/sys v0.37.0
+	golang.org/x/text v0.30.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -74,15 +90,12 @@ require (
 	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/cyphar/filepath-securejoin v0.4.1 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgraph-io/badger/v4 v4.8.0 // indirect
 	github.com/dgraph-io/ristretto/v2 v2.2.0 // indirect
 	github.com/drewlanenga/govector v0.0.0-20220726163947-b958ac08bc93 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/elastic/go-seccomp-bpf v1.6.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
-	github.com/fredbi/uri v1.1.1 // indirect
-	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fxtlabs/primes v0.0.0-20150821004651-dad82d10a449 // indirect
 	github.com/fyne-io/gl-js v0.2.0 // indirect
 	github.com/fyne-io/glfw-js v0.3.0 // indirect
@@ -111,13 +124,11 @@ require (
 	github.com/go-sql-driver/mysql v1.9.3 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible // indirect
 	github.com/go-text/render v0.2.0 // indirect
-	github.com/go-text/typesetting v0.3.0 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
 	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/gobwas/ws v1.4.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/goccy/go-yaml v1.18.0 // indirect
-	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -135,7 +146,6 @@ require (
 	github.com/itchyny/gojq v0.12.17 // indirect
 	github.com/itchyny/timefmt-go v0.1.6 // indirect
 	github.com/jaytaylor/html2text v0.0.0-20230321000545-74c2419ad056 // indirect
-	github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade // indirect
 	github.com/jhillyerd/enmime v1.3.0 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -166,14 +176,12 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
-	github.com/nicksnyder/go-i18n/v2 v2.5.1 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/openai/openai-go v1.12.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pjbgf/sha1cd v0.4.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.2.0-beta.2.0.20211217091447-1a4a3b719465 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
@@ -188,7 +196,6 @@ require (
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
 	github.com/rs/xid v1.6.0 // indirect
-	github.com/rymdport/portal v0.4.2 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/shirou/gopsutil/v3 v3.24.5 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
@@ -196,7 +203,6 @@ require (
 	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
 	github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf // indirect
-	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/thomasberger/parsemail v1.2.7 // indirect
 	github.com/tidwall/gjson v1.14.4 // indirect
@@ -213,7 +219,6 @@ require (
 	github.com/xuri/efp v0.0.1 // indirect
 	github.com/xuri/excelize/v2 v2.9.1 // indirect
 	github.com/xuri/nfp v0.0.1 // indirect
-	github.com/yuin/goldmark v1.7.13 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	go.etcd.io/bbolt v1.4.2 // indirect
 	go.mongodb.org/mongo-driver v1.17.4 // indirect
@@ -226,19 +231,15 @@ require (
 	golang.org/x/arch v0.20.0 // indirect
 	golang.org/x/crypto v0.43.0 // indirect
 	golang.org/x/exp v0.0.0-20250718183923-645b1fa84792 // indirect
-	golang.org/x/image v0.32.0 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/net v0.46.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
-	golang.org/x/sys v0.37.0 // indirect
 	golang.org/x/term v0.36.0 // indirect
-	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
 	google.golang.org/protobuf v1.36.9 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/gorm v1.30.0 // indirect
 	kernel.org/pub/linux/libs/security/libcap/psx v1.2.76 // indirect
 	modernc.org/libc v1.66.3 // indirect

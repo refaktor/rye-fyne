@@ -6,14 +6,46 @@ Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye pro
 
 ## Quick Start
 
-### Download Pre-built Binaries
+### Easy Installation
 
-Precimpiled downloads are comming.
-<!-- Download the latest release for your platform:
-* **Linux**: [rye-fyne-linux-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
-* **macOS**: [rye-fyne-macos-amd64.tar.gz](https://github.com/refaktor/rye-fyne/releases/latest)
-* **Windows**: [rye-fyne.exe](https://github.com/refaktor/rye-fyne/releases/latest)
--->
+**Linux:**
+```bash
+curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-linux.sh | bash
+```
+
+**macOS:**
+```bash
+curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-macos.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+iwr -useb https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-windows.ps1 | iex
+```
+
+### Uninstall
+
+**Linux:**
+```bash
+curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-linux.sh | bash
+```
+
+**macOS:**
+```bash
+curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-macos.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+iwr -useb https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-windows.ps1 | iex
+```
+
+### Manual Download
+
+Download pre-built binaries from [GitHub Releases](https://github.com/refaktor/rye-fyne/releases/latest):
+* **Linux**: `rye-fyne-linux-amd64.tar.gz`
+* **macOS**: `rye-fyne-macos-amd64.tar.gz`
+* **Windows**: `rye-fyne.exe`
 
 ### Building from Source
 

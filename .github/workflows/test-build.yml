@@ -25,6 +25,7 @@ jobs:
           cache: true
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
+      - run: go tool ryegen
       - run: go build -o rye-fyne.exe
       - uses: actions/upload-artifact@v4
         with:
@@ -44,6 +45,7 @@ jobs:
       - run: sudo apt update && sudo apt install gcc libegl1-mesa-dev xorg-dev
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
+      - run: go tool ryegen
       - run: go build -o rye-fyne
       - run: tar czf rye-fyne-linux-amd64.tar.gz rye-fyne
       - uses: actions/upload-artifact@v4
@@ -63,6 +65,7 @@ jobs:
           cache: true
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
+      - run: go tool ryegen
       - run: go build -o rye-fyne
       - run: tar czf rye-fyne-macos-amd64.tar.gz rye-fyne
       - uses: actions/upload-artifact@v4

@@ -90,37 +90,12 @@ jobs:
         with:
           name: rye-fyne-macos
 
-      - uses: actions/create-release@v1
-        id: create-new-release
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            rye-fyne.exe
+            rye-fyne-linux-amd64.tar.gz
+            rye-fyne-macos-amd64.tar.gz
+          name: Release ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./rye-fyne.exe
-          asset_name: rye-fyne.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./rye-fyne-linux-amd64.tar.gz
-          asset_name: rye-fyne-linux-amd64.tar.gz
-          asset_content_type: application/x-gtar
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./rye-fyne-macos-amd64.tar.gz
-          asset_name: rye-fyne-macos-amd64.tar.gz
-          asset_content_type: application/x-gtar

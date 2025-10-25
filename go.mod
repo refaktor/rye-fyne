@@ -2,7 +2,7 @@ module github.com/refaktor/rye-fyne
 
 go 1.25.0
 
-replace github.com/refaktor/ryegen/v2 => ../ryegen/
+// replace github.com/refaktor/ryegen/v2 => ../ryegen/
 
 tool github.com/refaktor/ryegen/v2
 

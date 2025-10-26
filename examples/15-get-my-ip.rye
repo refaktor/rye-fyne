@@ -1,0 +1,30 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+
+w: app/new .window "Get my IP"
+lab: widget/label "retrieving ..."
+btn: widget/button "Copy" fn { } {
+	w .clipboard .set-content lab .text?
+}
+get-ip: does {
+	Get https://ifconfig.me
+	|^fix { "can't load ifconfig.me" }
+	|html->markdown
+    |^fix { "can't parse html" }
+	|Submatch?* regexp "IP Address \*\*([0-9.]+)\*\*"
+	|^fix { "couln't find the IP pattern" }
+}
+
+go does {
+    forever {
+        fyne/do does {
+			lab .set-text get-ip
+        }
+        sleep 1 .minutes
+    }
+}
+
+w .set-content container/hbox [ lab btn ]
+w .show-and-run

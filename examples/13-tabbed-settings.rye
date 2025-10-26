@@ -1,0 +1,56 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
+
+a: app/new
+w: a .window "Settings Panel"
+
+; General settings tab content
+private {
+	volume-slider: widget/slider 0.0 100.0
+	volume-slider .set-value 75.0
+	volume-label: widget/label "Volume: 75%"
+
+	volume-slider .on-changed! closure { v } {
+		volume-label .set-text "Volume: " ++ v ++ "%"
+	}
+
+	notifications-check: widget/check "Enable notifications" fn { v } { 
+		print "Notifications:" v 
+	}
+	notifications-check .set-checked true
+
+	auto-save-check: widget/check "Auto-save documents" fn { v } {
+		print "Auto-save:" v
+	}
+
+	container/vbox [
+		widget/label "Audio Settings"
+		volume-slider
+		volume-label
+		widget/separator
+		widget/label "Application Settings"
+		notifications-check
+		auto-save-check
+	]
+} :general-content
+
+; About tab content
+about-content: container/vbox [
+    widget/icon theme/info-icon
+    widget/label "Tabbed Settings Demo"
+    widget/separator
+    widget/label "Version 1.0.0"
+]
+
+; Create tab container
+tabs: container/app-tabs [
+    container/tab-item "General" general-content
+    container/tab-item "About" about-content
+]
+
+w .set-content tabs
+w .resize fyne/size 400.0 350.0
+w .show-and-run

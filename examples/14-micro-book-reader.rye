@@ -1,0 +1,50 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+theme: import\go "fyne/theme"
+
+a: app/new
+w: a .window "Micro book reader"
+
+; Create rich text widget
+rich-text: widget/rich-text-from-markdown "loading ..."
+rich-text .wrapping! 3
+
+page-label: widget/label "page unknown ..."
+
+var 'page 1
+next-page: closure { } { if page < 3 { change! inc page 'page } }
+back-page: closure { } { if page > 1 { change! decr page 'page } }
+load-page: closure { } {
+	rich-text .parse-markdown Read to-file join [ "page" page ".md" ]
+	page-label .set-text join [ "Page: " page ]
+}
+
+load-page
+
+; Create toolbar
+toolbar: container/hbox [
+    widget/button-with-icon "Previous" theme/navigate-back-icon does {
+		back-page
+		load-page
+    }
+    widget/button-with-icon "Next" theme/navigate-next-icon does {
+		next-page
+		load-page
+    }
+]
+
+; Main layout using border container
+main-content: container/border 
+  toolbar          ; top
+  container/hbox [ ; bottom
+	page-label
+  ]
+  nil              ; left
+  nil              ; right
+  [ rich-text ]    ; center (as list for multiple items)
+
+w .set-content main-content
+w .resize fyne/size 500.0 500.0
+w .show-and-run

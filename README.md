@@ -4,7 +4,7 @@
 
 Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 
-### Manual Download
+### Download
 
 Download pre-built binaries from [GitHub Releases](https://github.com/refaktor/rye-fyne/releases/latest):
 * **Linux**: `rye-fyne-linux-amd64.tar.gz`
@@ -20,11 +20,14 @@ You need [Go](https://go.dev/) installed on your system.
 git clone https://github.com/refaktor/rye-fyne.git
 cd rye-fyne
 
+# for mac and windows
+go tool ryegen
+
 # Build the project
-go build -o rye-fyne
+go build
 
 # Run the example
-./rye-fyne example.rye
+./rye-fyne examples/01-hello-world.rye
 ```
 
 ## Example Application
@@ -130,13 +133,8 @@ This example showcases:
 - Menu bars with icons and shortcuts
 - Context menus
 
-## More Examples
+## Examples
 
-Explore additional examples in the `archive/examples/` directory:
-- **Calculator**: Full-featured calculator application
-- **Todo App**: Task management with persistence
-- **Shopping List**: Dynamic list management
-- **Live Demo**: Interactive widget playground
 
 ## Interactive Development
 
@@ -174,10 +172,6 @@ Rye is a high-level, dynamic programming language inspired by Rebol, Factor, and
 - **Interactive Development**: REPL-driven programming with live feedback
 - **Go Integration**: Easy access to Go libraries and embedding in Go applications
 - **Cross-platform**: Build applications that run on Windows, macOS, and Linux
-
-## Current Status
-
-Rye-Fyne supports most Fyne widgets and layouts. The project is actively developed with regular updates and improvements. Pre-built binaries are available for major platforms, and the codebase is stable for production use.
 
 ## Contributing
 

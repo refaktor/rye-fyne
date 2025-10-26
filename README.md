@@ -4,42 +4,6 @@
 
 Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 
-## Quick Start
-
-### Easy Installation
-
-**Linux:**
-```bash
-curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-linux.sh | bash
-```
-
-**macOS:**
-```bash
-curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-macos.sh | bash
-```
-
-**Windows (PowerShell):**
-```powershell
-iwr -useb https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/install-windows.ps1 | iex
-```
-
-### Uninstall
-
-**Linux:**
-```bash
-curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-linux.sh | bash
-```
-
-**macOS:**
-```bash
-curl -sSL https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-macos.sh | bash
-```
-
-**Windows (PowerShell):**
-```powershell
-iwr -useb https://raw.githubusercontent.com/refaktor/rye-fyne/main/scripts/uninstall-windows.ps1 | iex
-```
-
 ### Manual Download
 
 Download pre-built binaries from [GitHub Releases](https://github.com/refaktor/rye-fyne/releases/latest):

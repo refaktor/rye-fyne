@@ -133,9 +133,6 @@ This example showcases:
 - Menu bars with icons and shortcuts
 - Context menus
 
-## Examples
-
-
 ## Interactive Development
 
 Start the Rye console for interactive GUI development:
@@ -156,6 +153,27 @@ rye> w: a .window "Quick Demo"
 rye> w .set-content widget/button "Click me!" does { print "Hello from Rye!" }
 rye> w .show-and-run
 ```
+
+## Cross generation
+
+With ryegen bindings have to be generated per OS and Arch. If you don't have access to all of them you can cross-generate to some.
+
+### Android
+
+```
+# generate bindings
+../ryegen/ryegen -goarch arm64 -goos android
+
+# build
+GOOS=android GOARCH=arm64 go build
+
+# fyne package APK
+fyne package -os android/arm64 -appID com.refaktorlabs.ryefynehello -icon Icon.png -appVersion 0.0.1 -tags "embed_main"
+
+# rye-asist (this whole interface will change)
+ryec build\\fyne\\apk
+```
+
 
 ## Resources
 

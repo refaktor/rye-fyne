@@ -4,6 +4,8 @@
 
 Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
 
+See 15 increasingly involved but compact **examples with screenshots** on [**Rye Cookbook**](https://ryelang.org/cookbook/rye-fyne/examples-2/).
+
 ### Download
 
 Download pre-built binaries from [GitHub Releases](https://github.com/refaktor/rye-fyne/releases/latest):

@@ -3,7 +3,7 @@ module github.com/refaktor/rye-fyne
 go 1.25.0
 
 // replace github.com/refaktor/ryegen/v2 => ../ryegen/
-replace github.com/refaktor/rye => ../rye/
+// replace github.com/refaktor/rye => ../rye/
 
 replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
 

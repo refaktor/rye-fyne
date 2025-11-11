@@ -7,7 +7,7 @@ w: app/new .window "Get my IP"
 
 url: https://ifconfig.me
 lab: widget/label "retrieving ..."
-btn: widget/button "Copy" closure { } {
+btn: widget/button "Copy" fn { } {
     w .clipboard .set-content lab .text?
 }
 

@@ -79,7 +79,7 @@ w .show-and-run
 ;
 ;    create table if not exists movies (
 ;        id integer primary key autoincrement ,
-;        name varchar(100) not null ,
+    ;        name varchar(100) not null ,
 ;        score integer not null
 ;    );
 ;

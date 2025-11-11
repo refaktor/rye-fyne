@@ -13,7 +13,8 @@ private {
 	volume-slider .set-value 75.0
 	volume-label: widget/label "Volume: 75%"
 
-	volume-slider .on-changed! closure { v } {
+	volume-slider .on-changed! fn { v } {
+		print v
 		volume-label .set-text "Volume: " ++ v ++ "%"
 	}
 

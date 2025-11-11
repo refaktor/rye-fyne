@@ -1,0 +1,89 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+container: import\go "fyne/container"
+
+; State
+Movies: context {
+
+    var 'movies { } ; |on-change { update-entries }
+    var 'index 0    ; |on-change { update-entries }
+    db: Open sqlite://movies.db
+	
+    current?: closure { } { movies -> index |fix { dict { name: "" score: 0 } } }
+    current-id?: closure { } { current? -> 0 }
+	clamp-index!: closure { i } { .clamp 0 movies .max-idx? |modify! 'index }
+	next!: closure { } { clamp-index! inc index }
+    prev!: closure { } { clamp-index! decr index }
+	new-index!: closure { } { movies .length? |modify! 'index }
+    is-new: closure { } { index > ( max-idx? movies ) }
+	
+    insert!: closure { name score } {
+		db .Exec { insert into movies ( name , score )
+			       values ( ?name , ?score ) } }
+    update!: closure { id name score } {
+		db .Exec { update movies set name = ?name ,
+			       score = ?score where id = ?id } }
+    delete!: closure { id } {
+		db .Exec { delete from movies where id = ?id } }
+    reload!: closure { } {
+        db .Query { select id , name , score
+			        from movies order by id }
+		|change! 'movies
+		clamp-index! index } }
+
+; GUI
+a: app/new
+w: a .window "My Movie Database [MYMDb]"
+w .resize fyne/size 300.0 250.0
+
+name-entry: widget/entry
+score-entry: widget/entry
+
+update-entries: does {
+	name-entry .set-text "name" <- Movies/current?
+	score-entry .set-text to-string "score" <- Movies/current? }
+
+do\inside Movies { ; seems cleaner this way
+    'movies .on-change { update-entries } 
+    'index  .on-change { update-entries } }
+
+prev-btn: widget/button "Previous" does { Movies/prev! }
+next-btn: widget/button "Next" does { Movies/next! }
+new-btn: widget/button "New" does { Movies/new-index! }
+
+save-btn: widget/button "Save" does {
+	name: name-entry .text? 
+	score: score-entry .text? .to-integer
+    do\in Movies {
+	    either is-new { insert! name score } 
+                      { update! current-id? name score }
+        reload! } }
+
+delete-btn: widget/button "Delete" does {
+	do\in Movies { delete! current-id? , reload! } }
+
+w .set-content container/vbox [
+    container/hbox [ prev-btn next-btn ]
+    widget/label "Name:"
+    name-entry
+    widget/label "Score:"
+    score-entry
+    container/hbox [ new-btn save-btn delete-btn ] ]
+
+Movies/reload!
+
+w .show-and-run
+
+; Prerequisites movies.db
+;
+;    create table if not exists movies (
+;        id integer primary key autoincrement ,
+;        name varchar(100) not null ,
+;        score integer not null
+;    );
+;
+;
+;    insert into movies ( name , score ) values 
+;		( "Stalker" , 9 ) , ( "Gattaca" , 8 ) , 
+;       ( "Starship troopers" , 7 );

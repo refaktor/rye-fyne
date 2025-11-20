@@ -11,7 +11,7 @@ tool github.com/refaktor/ryegen/v2
 
 require (
 	fyne.io/fyne/v2 v2.7.0
-	github.com/refaktor/rye v0.0.86
+	github.com/refaktor/rye v0.0.89
 )
 
 require (

@@ -111,9 +111,8 @@ jobs:
           mkdir ./rye-fyne-tgz/
           mv ./AppDir ./rye-fyne-tgz/
           ln -sfT ./AppDir/AppRun ./rye-fyne-tgz/rye-fyne
-          tar --owner=0 --group=0 \
-              -czf rye-fyne-${{ steps.meta.outputs.version }}${{ steps.meta.outputs.suffix }}-portable-amd64.tgz \
-              rye-fyne-tgz
+          tar -czf \
+          ./rye-fyne-${{ steps.meta.outputs.version }}${{ steps.meta.outputs.suffix }}-portable-amd64.tgz ./rye-fyne-tgz
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4

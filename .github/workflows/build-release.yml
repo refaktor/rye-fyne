@@ -2,15 +2,13 @@ name: build-release
 
 on:
   push:
-    # branches:
-    #  - 'main'
     tags:
       - 'v*'
-  # pull_request:
+  workflow_dispatch:
 
 permissions:
-    contents: write
-    packages: write
+  contents: write
+  packages: write
 
 jobs:
   build-windows:
@@ -22,11 +20,10 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 1.25.0
-          cache: true
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
       - run: go tool ryegen
-      - run: go build -o rye-fyne.exe
+      - run: go build -o rye-fyne.exe -ldflags="-s -w"
       - uses: actions/upload-artifact@v4
         with:
           name: rye-fyne-windows
@@ -34,24 +31,98 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    container:
+      image: alpine:edge
     steps:
+      - name: Install build dependencies
+        run: |
+          apk add --no-cache \
+            go gcc \
+            libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev \
+            linux-headers mesa-dev libxkbcommon-dev wayland-dev \
+            git wget curl file
+
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.25.0
-          cache: true
-      - run: sudo apt update && sudo apt install gcc libegl1-mesa-dev xorg-dev
-      - run: go install fyne.io/fyne/v2/cmd/fyne@latest
-      - run: go mod tidy
-      - run: go tool ryegen
-      - run: go build -o rye-fyne
-      - run: tar czf rye-fyne-linux-amd64.tar.gz rye-fyne
-      - uses: actions/upload-artifact@v4
+
+      - name: Determine version and IDs
+        id: meta
+        shell: sh
+        run: |
+          set -e
+          git config --global --add safe.directory '*'
+          
+          DATE=$(date +%Y%m%d)
+          SHORT=$(git rev-parse --short=7 HEAD | cut -c1-4 | tr '[:lower:]' '[:upper:]')
+          
+          if printf '%s\n' "$GITHUB_REF" | grep -q '^refs/tags/v'; then
+            # Proper tagged release
+            TAG="${GITHUB_REF#refs/tags/}"
+            VERSION="${TAG#v}"
+            SUFFIX=""
+          else
+            # Nightly / manual dispatch
+            VERSION="${SHORT}"
+            SUFFIX="-nightly"
+          fi
+          
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "short=$SHORT" >> "$GITHUB_OUTPUT"
+          echo "suffix=$SUFFIX" >> "$GITHUB_OUTPUT"
+          
+          # As [https://pelf.xplshn.com.ar/docs/appbundleid/] mandates
+          # Type III AppBundle ID
+          echo "appbundle_id=rye-fyne#xplshn:${VERSION}@${DATE}" >> "$GITHUB_OUTPUT"
+          # Type-I filename
+          echo "output_name=rye-fyne-${VERSION}${SUFFIX}-${DATE}-amd64.dwfs.AppBundle" >> "$GITHUB_OUTPUT"
+
+      - name: Build rye-fyne
+        run: |
+          go install fyne.io/fyne/v2/cmd/fyne@latest
+          go mod tidy
+          go tool ryegen
+          go build -trimpath -ldflags="-s -w" -o rye-fyne
+          strip --strip-unneeded ./rye-fyne
+
+      - name: Build .dwfs.AppBundle
+        run: |
+          # Fetch quick-sharun
+          wget -qO /tmp/quick-sharun https://raw.githubusercontent.com/pkgforge-dev/Anylinux-AppImages/refs/heads/main/useful-tools/quick-sharun.sh
+          chmod +x /tmp/quick-sharun
+
+          cp ./rye-fyne ./rye
+
+          DESKTOP="./rye.desktop" ICON="./rye.png" \
+          DEPLOY_LOCALE="0" \
+          /tmp/quick-sharun ./rye
+
+          wget -qO ./pelf "https://github.com/xplshn/pelf/releases/latest/download/pelf_$(uname -m)"
+          chmod +x ./pelf
+
+          # Package the AppDir into .dwfs.AppBundle
+          # Read: https://pelf.xplshn.com.ar/docs/tooling/#:~:text=%E2%80%93disable%2Duse%2Drandom,fallback%20if%20%E2%89%A4%20350MB).
+          ./pelf --add-appdir "./AppDir" \
+                 --output-to "${{ steps.meta.outputs.output_name }}" \
+                 --appbundle-id "${{ steps.meta.outputs.appbundle_id }}" \
+                 --run-behavior 3 --disable-use-random-workdir
+
+      - name: Build portable rye-fyne.tgz
+        run: |
+          mkdir ./rye-fyne-tgz/
+          mv ./AppDir ./rye-fyne-tgz/
+          ln -sfT ./AppDir/AppRun ./rye-fyne-tgz/rye-fyne
+          tar --sort=name \
+              --owner=0 --group=0 --mtime="2025-01-01 00:00Z" \
+              -czf rye-fyne-${{ steps.meta.outputs.version }}${{ steps.meta.outputs.suffix }}-portable-amd64.tgz \
+              rye-fyne-tgz
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: rye-fyne-linux
-          path: rye-fyne-linux-amd64.tar.gz
+          path: |
+            rye-fyne-*.tgz
+            rye-fyne-*.dwfs.AppBundle
 
   build-macos:
     runs-on: macos-latest
@@ -62,40 +133,44 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 1.25.0
-          cache: true
       - run: go install fyne.io/fyne/v2/cmd/fyne@latest
       - run: go mod tidy
       - run: go tool ryegen
-      - run: go build -o rye-fyne
+      - run: go build -o rye-fyne -ldflags="-s -w"
       - run: tar czf rye-fyne-macos-amd64.tar.gz rye-fyne
       - uses: actions/upload-artifact@v4
         with:
           name: rye-fyne-macos
           path: rye-fyne-macos-amd64.tar.gz
-
+ 
   release:
-    runs-on: ubuntu-latest
-    needs: [build-macos, build-windows, build-linux]
-    steps:
-    
-      - uses: actions/download-artifact@v4
-        with:
-          name: rye-fyne-linux
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: rye-fyne-windows
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: rye-fyne-macos
-
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            rye-fyne.exe
-            rye-fyne-linux-amd64.tar.gz
-            rye-fyne-macos-amd64.tar.gz
-          name: Release ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      needs: [build-linux, build-windows, build-macos]
+      runs-on: ubuntu-latest
+      # Only run the release job when we actually have a tag OR when manually triggered on main/master
+      if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+      steps:
+        - uses: actions/download-artifact@v4
+          with:
+            path: artifacts
+            
+        - name: Flatten artifacts for release
+          run: |
+            mv artifacts/rye-fyne-linux/* .
+            mv artifacts/rye-fyne-windows/* .
+            mv artifacts/rye-fyne-macos/* .
+            
+        - name: Create release
+          uses: softprops/action-gh-release@v2
+          with:
+            files: |
+              rye-fyne-*.dwfs.AppBundle
+              rye-fyne-*-portable-amd64.tgz
+              rye-fyne-macos-amd64.tar.gz
+              rye-fyne.exe
+            tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('nightly-{0}', github.run_id) }}
+            name: ${{ github.ref_type == 'tag' && github.ref_name || format('Nightly Build {0}', github.run_id) }}
+            draft: false
+            prerelease: ${{ github.ref_type != 'tag' }}
+            generate_release_notes: true
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

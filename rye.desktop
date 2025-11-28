@@ -1,0 +1,35 @@
+[Desktop Entry]
+Name=Rye (+fyne)
+GenericName=Programming language interpreter
+Comment=Rye; a flexible high-level programming language (+fyne)
+TryExec=rye
+Exec=rye %F
+Icon=rye
+Type=Application
+Terminal=true
+Categories=Development;Programming;Interpreter;
+Keywords=scripting;REPL;language;rye;go;fyne;
+StartupNotify=true
+MimeType=text/x-rye;
+Actions=REPL;OpenScript;Docs;Website;
+StartupWMClass=rye
+
+[Desktop Action REPL]
+Name=Start Rye REPL
+Exec=rye repl
+Icon=rye
+
+[Desktop Action OpenScript]
+Name=Run Rye script
+Exec=rye %f
+Icon=rye
+
+[Desktop Action Docs]
+Name=Rye Documentation
+Exec=xdg-open /usr/share/doc/rye/index.html || xdg-open https://ryelang.org
+Icon=documentation
+
+[Desktop Action Website]
+Name=Rye Website & Releases
+Exec=xdg-open https://ryelang.org
+Icon=network

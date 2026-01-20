@@ -15,7 +15,7 @@ page-label: widget/label "page unknown ..."
 
 var 'page 1
 next-page: closure { } { if page < 3 { change! inc page 'page } }
-back-page: closure { } { if page > 1 { change! decr page 'page } }
+back-page: closure { } { if page > 1 { change! dec page 'page } }
 load-page: closure { } {
 	rich-text .parse-markdown Read to-file join [ "page" page ".md" ]
 	page-label .set-text join [ "Page: " page ]

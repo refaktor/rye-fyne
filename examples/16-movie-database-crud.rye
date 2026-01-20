@@ -3,10 +3,13 @@ app: import\go "fyne/app"
 widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 
+movies:: 123
+
 ; State
 Movies: context {
 
-    var 'movies { } ; |on-change { update-entries }
+	
+    var 'movies table { "a" } { 1 } ; |on-change { update-entries }
     var 'index 0    ; |on-change { update-entries }
     db: Open sqlite://movies.db
 	
@@ -14,7 +17,7 @@ Movies: context {
     current-id?: closure { } { current? -> 0 }
 	clamp-index!: closure { i } { .clamp 0 movies .max-idx? |modify! 'index }
 	next!: closure { } { clamp-index! inc index }
-    prev!: closure { } { clamp-index! decr index }
+    prev!: closure { } { clamp-index! dec index }
 	new-index!: closure { } { movies .length? |modify! 'index }
     is-new: closure { } { index > ( max-idx? movies ) }
 	

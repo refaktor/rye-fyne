@@ -1,0 +1,28 @@
+fyne: import\go "fyne"
+app: import\go "fyne/app"
+widget: import\go "fyne/widget"
+
+; ideas
+; add menu and file picker to open csv or xlsx file
+; add input line to enter code ... code creates a new table in most cases ... show new table imediately
+; v2; add back fwd buttons at the top to come to previous versions of tables, have ability to use previous versions, show history, allow user to use it, branch of it
+; v3: if we define a table to a word display it as a tab or as word in right sidepanel where we also show other words in context, simpler values, functions
+
+
+data: table { "name" "score" } { "Jim" 231 "Jane" 433 "Bea" 261 }
+
+tab: widget/table
+does { [ 3 2 ] }
+does { widget/label "........." }
+fn { i o } {
+	r: i .row?
+	c: i .col?
+
+	data -> r -> c :val
+	o .set-text to-string val
+}
+
+w: app/new .window "Rye table - table"
+w .resize fyne/size 330.0 400.0
+w .set-content tab
+w .show-and-run

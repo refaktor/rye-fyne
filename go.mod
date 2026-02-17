@@ -5,6 +5,7 @@ go 1.25.0
 // replace github.com/refaktor/ryegen/v2 => ../ryegen/
 
 replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
+replace github.com/jaytaylor/go-find => github.com/refaktor/go-find v0.0.0-20260208134259-020cb144f5ba
 
 // replace github.com/refaktor/rye => /home/jimez/Work/rye
 

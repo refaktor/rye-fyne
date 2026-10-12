@@ -41,30 +41,30 @@ lst: widget/list
     }
     fn { i box } {
         tasks .deref -> i :task 
-        box .objects? -> 0 :chk
-        box .objects? -> 1 :lbl
-        box .objects? -> 3 :btn
+        box .Objects? -> 0 :chk
+        box .Objects? -> 1 :lbl
+        box .Objects? -> 3 :btn
         
-        chk .set-checked 0 <- task
-        lbl .set-text 1 <- task
+        chk .Set-checked 0 <- task
+        lbl .Set-text 1 <- task
         
         ; Update callbacks with current index
-        chk .on-changed! fn { v } { Data/check! i v }
-        btn .on-tapped! fn { } { Data/remove! i , lst .refresh }
+        chk .On-changed! fn { v } { Data/check! i v }
+        btn .On-tapped! fn { } { Data/remove! i , lst .Refresh }
     }
 
 input: widget/entry
-input .set-place-holder "Add to list here ..."
-input .on-submitted! fn { x } {
+input .Set-place-holder "Add to list here ..."
+input .On-submitted! fn { x } {
     Data/add! x
-    input .set-text ""
-    lst .refresh
+    input .Set-text ""
+    lst .Refresh
 }
 
 cont: container/border nil input nil nil [ lst ]
 
 a: app/new
-w: a .window "Shopping List"
-w .resize fyne/size 300.0 300.0
-w .set-content cont
-w .show-and-run
+w: a .Window "Shopping List"
+w .Resize fyne/size 300.0 300.0
+w .Set-content cont
+w .Show-and-run

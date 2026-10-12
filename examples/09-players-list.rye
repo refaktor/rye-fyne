@@ -10,14 +10,14 @@ lst: widget/list
     does { container/hbox [ widget/label "name" widget/label "score" ] }
     fn { i box } { 
         player: players -> i
-        name-label: 0 <- box .objects?
-        score-label: 1 <- box .objects?
-        name-label .set-text 0 <- player
-        score-label .set-text to-string 1 <- player
+        name-label: 0 <- box .Objects?
+        score-label: 1 <- box .Objects?
+        name-label .Set-text 0 <- player
+        score-label .Set-text string 1 <- player
     }
 
 a: app/new
-w: a .window "Gastown bingo players"
-w .resize fyne/size 220.0 200.0
-w .set-content lst
-w .show-and-run
+w: a .Window "Gastown bingo players"
+w .Resize fyne/size 220.0 200.0
+w .Set-content lst
+w .Show-and-run

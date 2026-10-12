@@ -6,19 +6,19 @@ container: import\go "fyne/container"
 theme: import\go "fyne/theme"
 
 a: app/new
-w: a .window "Hello, world!"
+w: a .Window "Hello, world!"
 
-w .set-main-menu fyne/main-menu [
+w .Set-main-menu fyne/main-menu [
     fyne/menu "File" [
         fyne/menu-item "Open" does {
             dialog/show-file-open fn { r err } {
-                either r .is-nil {
-                    if not err .is-nil {
+                either r .Is-nil {
+                    if not err .Is-nil {
                         print err
                     }
                 } {
-                    print "Opened file: " ++ r .uri .string
-                    r .close
+                    print "Opened file: " ++ r .Uri .String
+                    r .Close
                 }
             } w
         }
@@ -34,28 +34,28 @@ clock: widget/label ""
 go does {
     forever {
         fyne/do does {
-            clock .set-text now .to-string
+            clock .Set-text now .string
         }
 
-        sleep 1 .seconds
+        sleep 1 .Seconds
     }
 }
 
-w .set-content container/border
+w .Set-content container/border
     container/vbox [
         do {
             lab: widget/label "Hi"
-            lab .set-text "Hello!"
+            lab .Set-text "Hello!"
             lab
         }
         do {
             se: widget/select-entry [ "A" "B" ]
-            se .set-text "A"
+            se .Set-text "A"
             se
         }
         do {
             p: widget/progress-bar-infinite
-            p .start
+            p .Start
             p
         }
         widget/button "Say hi" does {
@@ -70,7 +70,7 @@ w .set-content container/border
         widget/list
             does { 1000 }
             does { widget/label "Hi" }
-            fn { id lab } { lab .set-text "Entry no. " ++ id .to-string }
+            fn { id lab } { lab .Set-text "Entry no. " ++ id .string }
     ]
 
-w .show-and-run
+w .Show-and-run

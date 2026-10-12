@@ -4,22 +4,22 @@ widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 dialog: import\go "fyne/dialog"
 
-w: app/new .window "Feedback"
+w: app/new .Window "Feedback"
 
 ent: widget/entry 
-ent .multi-line! true 
+ent .Multi-line! true 
 sel: widget/select [ "Happy" "Normal" "Confused" ] fn { x } { } 
-sel .place-holder! "How do you feel ..." 
+sel .Place-holder! "How do you feel ..." 
 
 cont: container/vbox [
     widget/label "Send us feedback:"
     ent
     sel
     widget/button "Send" does {
-        msg: ent .text?
+        msg: ent .Text?
         dialog/show-information "Sending" "Sending: " ++ msg w
     }
 ]
 
-w .set-content cont
-w .show-and-run
+w .Set-content cont
+w .Show-and-run

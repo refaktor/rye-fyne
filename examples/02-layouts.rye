@@ -4,12 +4,12 @@ widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 
 a: app/new
-w: a .window "Layouts"
-w .set-content container/vbox [
+w: a .Window "Layouts"
+w .Set-content container/vbox [
     container/hbox [
         widget/label "Don't look RIGHT"
         widget/label "Don't look LEFT"
     ]
     widget/label "Don't look UP"
 ]
-w .show-and-run
+w .Show-and-run

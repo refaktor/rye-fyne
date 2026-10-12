@@ -5,7 +5,7 @@ container: import\go "fyne/container"
 layout: import\go "fyne/layout"
 
 lab: widget/label "I'm Waiting ..."
-btn: widget/button "Click here" does { lab .set-text "Finally ..." }
+btn: widget/button "Click here" does { lab .Set-text "Finally ..." }
 box: container/vbox [
     lab
     layout/spacer
@@ -13,7 +13,7 @@ box: container/vbox [
 ]
 
 a: app/new
-w: a .window "Button"
-w .resize fyne/size 200.0 100.0
-w .set-content box
-w .show-and-run
+w: a .Window "Button"
+w .Resize fyne/size 200.0 100.0
+w .Set-content box
+w .Show-and-run

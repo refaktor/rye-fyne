@@ -10,20 +10,20 @@ Sensors: context {
 }
 
 temp: widget/label "Reading ..."
-img: canvas/image-from-file "home.png"
-img .fill-mode! 2  ; original size
+img: canvas/image-from-file "home.Png"
+img .Fill-mode! 2  ; original size
 
 go does {
     sleep 3000  ; waiting for sensors to wake up
     forever {
-        temp-val:: Sensors/get-temperature .to-string ++ " °C"
+        temp-val:: Sensors/get-temperature .string ++ " °C"
         fyne/do does {
-            temp .set-text "Outside temp: " ++ temp-val
+            temp .Set-text "Outside temp: " ++ temp-val
         }
         sleep 1000
     }
 }
 
-w: app/new .window "My Home"
-w .set-content container/vbox [ img temp ]
-w .show-and-run
+w: app/new .Window "My Home"
+w .Set-content container/vbox [ img temp ]
+w .Show-and-run

@@ -5,9 +5,9 @@ widget: import\go "fyne/widget"
 lst: widget/list
     does { 1000000 }
     does { widget/label "num" }
-    fn { i item } { item .set-text to-string i + 1 }
+    fn { i item } { item .Set-text string i + 1 }
 
-w: app/new .window "1 million list"
-w .resize fyne/size 220.0 200.0
-w .set-content lst
-w .show-and-run
+w: app/new .Window "1 million list"
+w .Resize fyne/size 220.0 200.0
+w .Set-content lst
+w .Show-and-run

@@ -11,11 +11,11 @@ Movies: context {
 	
     var 'movies table { "a" } { 1 } ; |on-change { update-entries }
     var 'index 0    ; |on-change { update-entries }
-    db: Open sqlite://movies.db
+    db: Open sqlite://movies.Db
 	
     current?: closure { } { movies -> index |fix { dict { name: "" score: 0 } } }
     current-id?: closure { } { current? -> 0 }
-	clamp-index!: closure { i } { .clamp 0 movies .max-idx? |modify! 'index }
+	clamp-index!: closure { i } { .Clamp 0 movies .Max-idx? |modify! 'index }
 	next!: closure { } { clamp-index! inc index }
     prev!: closure { } { clamp-index! dec index }
 	new-index!: closure { } { movies .length? |modify! 'index }
@@ -37,27 +37,27 @@ Movies: context {
 
 ; GUI
 a: app/new
-w: a .window "My Movie Database [MYMDb]"
-w .resize fyne/size 300.0 250.0
+w: a .Window "My Movie Database [MYMDb]"
+w .Resize fyne/size 300.0 250.0
 
 name-entry: widget/entry
 score-entry: widget/entry
 
 update-entries: does {
-	name-entry .set-text "name" <- Movies/current?
-	score-entry .set-text to-string "score" <- Movies/current? }
+	name-entry .Set-text "name" <- Movies/current?
+	score-entry .Set-text string "score" <- Movies/current? }
 
 do\inside Movies { ; seems cleaner this way
-    'movies .on-change { update-entries } 
-    'index  .on-change { update-entries } }
+    'movies .On-change { update-entries } 
+    'index  .On-change { update-entries } }
 
 prev-btn: widget/button "Previous" does { Movies/prev! }
 next-btn: widget/button "Next" does { Movies/next! }
 new-btn: widget/button "New" does { Movies/new-index! }
 
 save-btn: widget/button "Save" does {
-	name: name-entry .text? 
-	score: score-entry .text? .to-integer
+	name: name-entry .Text? 
+	score: score-entry .Text? .integer
     do\in Movies {
 	    either is-new { insert! name score } 
                       { update! current-id? name score }
@@ -66,7 +66,7 @@ save-btn: widget/button "Save" does {
 delete-btn: widget/button "Delete" does {
 	do\in Movies { delete! current-id? , reload! } }
 
-w .set-content container/vbox [
+w .Set-content container/vbox [
     container/hbox [ prev-btn next-btn ]
     widget/label "Name:"
     name-entry
@@ -76,9 +76,9 @@ w .set-content container/vbox [
 
 Movies/reload!
 
-w .show-and-run
+w .Show-and-run
 
-; Prerequisites movies.db
+; Prerequisites movies.Db
 ;
 ;    create table if not exists movies (
 ;        id integer primary key autoincrement ,

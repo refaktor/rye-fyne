@@ -4,18 +4,18 @@ widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 dialog: import\go "fyne/dialog"
 
-w: app/new .window "Form"
+w: app/new .Window "Form"
 
 btn: widget/button "Sign up" does {
     dialog/show-information "Success" "You rock!" w
 }
-btn .disable
+btn .Disable
 
 chk: widget/check "I fully agree" fn { v } {
     either v {
-        btn .enable
+        btn .Enable
     } {
-        btn .disable
+        btn .Disable
     }
 }
 
@@ -26,5 +26,5 @@ cont: widget/form [
     widget/form-item "" btn
 ]
 
-w .set-content cont
-w .show-and-run
+w .Set-content cont
+w .Show-and-run

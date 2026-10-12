@@ -15,10 +15,10 @@ import (
 	fyne_io_fyne_v2_driver "fyne.io/fyne/v2/driver"
 	fyne_io_fyne_v2_driver_desktop "fyne.io/fyne/v2/driver/desktop"
 	fyne_io_fyne_v2_driver_mobile "fyne.io/fyne/v2/driver/mobile"
+	fyne_io_fyne_v2_driver_software "fyne.io/fyne/v2/driver/software"
 	fyne_io_fyne_v2_layout "fyne.io/fyne/v2/layout"
 	fyne_io_fyne_v2_storage "fyne.io/fyne/v2/storage"
 	fyne_io_fyne_v2_storage_repository "fyne.io/fyne/v2/storage/repository"
-	fyne_io_fyne_v2_test "fyne.io/fyne/v2/test"
 	fyne_io_fyne_v2_theme "fyne.io/fyne/v2/theme"
 	fyne_io_fyne_v2_widget "fyne.io/fyne/v2/widget"
 	image "image"
@@ -117,38 +117,40 @@ func isNil(obj _env.Object) bool {
 
 type struct_01aeb5fe90bdd9c7 = struct{Items []*fyne_io_fyne_v2.Menu}
 type struct_0249dde01e9fd0f8 = struct{Line0 uint32; Col0 uint16; Line1 uint32; Col1 uint16; Stmts uint16}
+type struct_024db3814965373c = struct{Position1 fyne_io_fyne_v2.Position; Position2 fyne_io_fyne_v2.Position; Hidden bool; FillColor image_color.Color; StrokeColor image_color.Color; StrokeWidth float32; Shadow fyne_io_fyne_v2_canvas.Shadow}
 type struct_03c0ae5f81927f2c = struct{X int; Y int}
 type struct_06b5d8477d7cbd26 = struct{ThemeName string "json:\"theme\""; Scale float32 "json:\"scale\""; PrimaryColor string "json:\"primary_color\""; CloudName string "json:\"cloud_name\""; CloudConfig string "json:\"cloud_config\""; DisableAnimations bool "json:\"no_animations\""}
 type struct_089635cb5b3ca1ae = struct{Name fyne_io_fyne_v2.KeyName; Physical fyne_io_fyne_v2.HardwareKey}
 type struct_09f9e1c9c27676d0 = struct{WindowHandle uintptr}
 type struct_0bc1cff2acef5f0f = struct{R uint8; G uint8; B uint8; A uint8}
 type struct_0c78fea044f83f13 = struct{Row int; Col int}
-type struct_1e64ccbb3469eda1 = struct{Scheme string; Opaque string; User *net_url.Userinfo; Host string; Path string; RawPath string; OmitHost bool; ForceQuery bool; RawQuery string; Fragment string; RawFragment string}
+type struct_113df3b9ee47d4ed = struct{Scheme string; Opaque string; User *net_url.Userinfo; Host string; Path string; Fragment string; RawQuery string; RawPath string; RawFragment string; ForceQuery bool; OmitHost bool}
 type struct_26905b7d9f7ff817 = struct{fyne_io_fyne_v2.PointEvent; Dragged fyne_io_fyne_v2.Delta}
 type struct_2837ae3a2a7dc6af = struct{A uint8}
 type struct_2ce3942643f7df4f = struct{Texts []fyne_io_fyne_v2_widget.RichTextSegment}
+type struct_2e973b51a7fcd6d9 = struct{Headers [][]fyne_io_fyne_v2_widget.RichTextSegment; Rows [][][]fyne_io_fyne_v2_widget.RichTextSegment; Alignments []fyne_io_fyne_v2.TextAlign}
 type struct_3727c3898db0c6d8 = struct{X float32; Y float32}
 type struct_37fa7b4335f08ced = struct{Pix []uint8; Stride int; Rect image.Rectangle}
-type struct_380b395ae7edc9e0 = struct{fyne_io_fyne_v2.PointEvent}
 type struct_3e377c1c8ef737c7 = struct{R uint16; G uint16; B uint16; A uint16}
 type struct_4139548b9ceb10a1 = struct{Title string; Detail fyne_io_fyne_v2.CanvasObject; Open bool}
+type struct_47aedfd96bc83ac3 = struct{Bold bool; Italic bool; Monospace bool; Symbol bool; TabWidth int; Underline bool; Strikethrough bool}
 type struct_47b4880de49f951e = struct{TextStyle fyne_io_fyne_v2.TextStyle; FGColor image_color.Color; BGColor image_color.Color}
 type struct_5215f8a73f85e7db = struct{VM uintptr; Env uintptr; Ctx uintptr}
 type struct_5262d3586be3509f = struct{NSWindow uintptr}
 type struct_53d860c49dfc08d0 = struct{StaticName string; StaticContent []byte}
 type struct_5a45d9eab691588e = struct{Y uint16}
 type struct_5c244a7c55f59a75 = struct{fyne_io_fyne_v2_widget.BaseWidget; Title string; Subtitle string; Image *fyne_io_fyne_v2_canvas.Image; Content fyne_io_fyne_v2.CanvasObject}
+type struct_5c46e3f222ea7f46 = struct{Checked bool; Text string}
 type struct_5e26b3df752e1ee2 = struct{Title string; Content string}
 type struct_6b78a7286fcf184d = struct{C image_color.Color}
 type struct_723979ccaa848985 = struct{N int; T time.Duration; Bytes int64; MemAllocs uint64; MemBytes uint64; Extra map[string]float64}
 type struct_7295a638e8cd6bf0 = struct{AutoReverse bool; Curve fyne_io_fyne_v2.AnimationCurve; Duration time.Duration; RepeatCount int; Tick func(float32)}
 type struct_745be38726a0c3dc = struct{Name string; F func(); Output string; Unordered bool}
+type struct_748144ccb4e2b04e = struct{Color image_color.Color; BlurRadius float32; Spread float32; Offset fyne_io_fyne_v2.Position; Variant fyne_io_fyne_v2_canvas.ShadowVariant}
 type struct_79b22f0263aede9b = struct{Op string; Path string; Err error}
 type struct_7a839f9f0db88ff6 = struct{Cells []fyne_io_fyne_v2_widget.TextGridCell; Style fyne_io_fyne_v2_widget.TextGridStyle}
 type struct_7bdd5866e69a7b7b = struct{ScanCode int}
-type struct_7e36ba97f6d13f96 = struct{Position1 fyne_io_fyne_v2.Position; Position2 fyne_io_fyne_v2.Position; Hidden bool; FillColor image_color.Color; StrokeColor image_color.Color; StrokeWidth float32}
 type struct_7fe4c87e7ab9dbc7 = struct{Y uint8}
-type struct_8054143693d87be0 = struct{Clipboard fyne_io_fyne_v2.Clipboard}
 type struct_8173626fe14ed07b = struct{R io.Reader; N int64}
 type struct_8624be8fc4223a54 = struct{fyne_io_fyne_v2.PointEvent; Button fyne_io_fyne_v2_driver_desktop.MouseButton; Modifier fyne_io_fyne_v2.KeyModifier}
 type struct_87a52d59e409a977 = struct{HWND uintptr}
@@ -171,10 +173,10 @@ type struct_bf5f7010c23ee404 = struct{AbsolutePosition fyne_io_fyne_v2.Position;
 type struct_c15f975f5e271e53 = struct{fyne_io_fyne_v2_driver.AndroidContext; NativeWindow uintptr}
 type struct_c25d54c700923a9e = struct{TopPadding float32; BottomPadding float32; LeftPadding float32; RightPadding float32}
 type struct_c79cfaf812824e24 = struct{DX float32; DY float32}
+type struct_c8cba2a6cc3ee2bd = struct{fyne_io_fyne_v2.PointEvent; ID int}
 type struct_c9a7be0e0ab334d2 = struct{Name string; F func(b *testing.B)}
 type struct_ca7e2e2deb0bc6da = struct{fyne_io_fyne_v2.KeyName; Modifier fyne_io_fyne_v2.KeyModifier}
 type struct_ce312a55a76367f9 = struct{fyne_io_fyne_v2.PointEvent; Scrolled fyne_io_fyne_v2.Delta}
-type struct_d3d12bcda55a8389 = struct{Bold bool; Italic bool; Monospace bool; Symbol bool; TabWidth int; Underline bool}
 type struct_d4d58e2449e0db3b = struct{ColorModel image_color.Model; Width int; Height int}
 type struct_d58a2a87242044a1 = struct{Y []uint8; Cb []uint8; Cr []uint8; YStride int; CStride int; SubsampleRatio image.YCbCrSubsampleRatio; Rect image.Rectangle}
 type struct_d7437e917f611b26 = struct{fyne_io_fyne_v2_widget.BaseWidget; Items []fyne_io_fyne_v2_widget.ToolbarItem}
@@ -182,7 +184,7 @@ type struct_d88f7373629b363e = struct{image_color.YCbCr; A uint8}
 type struct_da99d3d9132ae031 = struct{Position1 fyne_io_fyne_v2.Position; Position2 fyne_io_fyne_v2.Position; Hidden bool; StrokeColor image_color.Color; StrokeWidth float32}
 type struct_dde9a3ba21a262a1 = struct{C uint8; M uint8; Y uint8; K uint8}
 type struct_df092ee1291f0793 = struct{fyne_io_fyne_v2_widget.BaseWidget; Items []*fyne_io_fyne_v2_widget.AccordionItem; MultiOpen bool}
-type struct_ed755f6805d1ea46 = struct{Alignment fyne_io_fyne_v2.TextAlign; Text string; URL *net_url.URL; OnTapped func() "json:\"-\""}
+type struct_f858b9ecfa82b65f = struct{Clipboard fyne_io_fyne_v2.Clipboard; Secondary bool}
 type struct_f8eab5a9769e0901 = struct{WaylandSurface uintptr}
 type struct_f97a4dab60697d3c = struct{Name string; Fn func(f *testing.F)}
 type struct_fbc6a1b2c72328a3 = struct{Y uint8; Cb uint8; Cr uint8}
@@ -203,10 +205,10 @@ func init() {
 	pkgLookup["fyne.io/fyne/v2/driver"] = "fyne_io_fyne_v2_driver"
 	pkgLookup["fyne.io/fyne/v2/driver/desktop"] = "fyne_io_fyne_v2_driver_desktop"
 	pkgLookup["fyne.io/fyne/v2/driver/mobile"] = "fyne_io_fyne_v2_driver_mobile"
+	pkgLookup["fyne.io/fyne/v2/driver/software"] = "fyne_io_fyne_v2_driver_software"
 	pkgLookup["fyne.io/fyne/v2/layout"] = "fyne_io_fyne_v2_layout"
 	pkgLookup["fyne.io/fyne/v2/storage"] = "fyne_io_fyne_v2_storage"
 	pkgLookup["fyne.io/fyne/v2/storage/repository"] = "fyne_io_fyne_v2_storage_repository"
-	pkgLookup["fyne.io/fyne/v2/test"] = "fyne_io_fyne_v2_test"
 	pkgLookup["fyne.io/fyne/v2/theme"] = "fyne_io_fyne_v2_theme"
 	pkgLookup["fyne.io/fyne/v2/widget"] = "fyne_io_fyne_v2_widget"
 	pkgLookup["image"] = "image"
@@ -312,6 +314,13 @@ func conv_ptr_fyne_io_fyne_v2_Position_toRye(ps *_env.ProgramState, ctx *_env.Ry
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2.Position" + ")"), nil
 }
 
+func conv_ptr_fyne_io_fyne_v2_ScheduledNotification_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2.ScheduledNotification) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2.ScheduledNotification" + ")"), nil
+}
+
 func conv_ptr_fyne_io_fyne_v2_ScrollEvent_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2.ScrollEvent) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
@@ -368,6 +377,13 @@ func conv_ptr_fyne_io_fyne_v2_app_SettingsSchema_toRye(ps *_env.ProgramState, ct
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_app.SettingsSchema" + ")"), nil
 }
 
+func conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.ArbitraryPolygon" + ")"), nil
+}
+
 func conv_ptr_fyne_io_fyne_v2_canvas_Arc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Arc) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
@@ -375,11 +391,32 @@ func conv_ptr_fyne_io_fyne_v2_canvas_Arc_toRye(ps *_env.ProgramState, ctx *_env.
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Arc" + ")"), nil
 }
 
+func conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.BezierCurve) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.BezierCurve" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Blur_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Blur) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Blur" + ")"), nil
+}
+
 func conv_ptr_fyne_io_fyne_v2_canvas_Circle_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Circle) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
 	}
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Circle" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Ellipse) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Ellipse" + ")"), nil
 }
 
 func conv_ptr_fyne_io_fyne_v2_canvas_Image_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Image) (_env.Object, error) {
@@ -403,13 +440,6 @@ func conv_ptr_fyne_io_fyne_v2_canvas_LinearGradient_toRye(ps *_env.ProgramState,
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.LinearGradient" + ")"), nil
 }
 
-func conv_ptr_fyne_io_fyne_v2_canvas_Polygon_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Polygon) (_env.Object, error) {
-	if s == nil {
-		return *_env.NewVoid(), nil
-	}
-	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Polygon" + ")"), nil
-}
-
 func conv_ptr_fyne_io_fyne_v2_canvas_RadialGradient_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.RadialGradient) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
@@ -429,6 +459,27 @@ func conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_toRye(ps *_env.ProgramState, ctx 
 		return *_env.NewVoid(), nil
 	}
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Rectangle" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.RegularPolygon) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.RegularPolygon" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Shader_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Shader) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Shader" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Shadow) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_canvas.Shadow" + ")"), nil
 }
 
 func conv_ptr_fyne_io_fyne_v2_canvas_Text_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_canvas.Text) (_env.Object, error) {
@@ -739,11 +790,25 @@ func conv_ptr_fyne_io_fyne_v2_widget_Check_toRye(ps *_env.ProgramState, ctx *_en
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.Check" + ")"), nil
 }
 
+func conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.CheckBoxSegment) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.CheckBoxSegment" + ")"), nil
+}
+
 func conv_ptr_fyne_io_fyne_v2_widget_CheckGroup_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.CheckGroup) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
 	}
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.CheckGroup" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.CodeBlockSegment) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.CodeBlockSegment" + ")"), nil
 }
 
 func conv_ptr_fyne_io_fyne_v2_widget_CustomTextGridStyle_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.CustomTextGridStyle) (_env.Object, error) {
@@ -954,6 +1019,13 @@ func conv_ptr_fyne_io_fyne_v2_widget_TableCellID_toRye(ps *_env.ProgramState, ct
 		return *_env.NewVoid(), nil
 	}
 	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.TableCellID" + ")"), nil
+}
+
+func conv_ptr_fyne_io_fyne_v2_widget_TableSegment_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.TableSegment) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(" + "*fyne_io_fyne_v2_widget.TableSegment" + ")"), nil
 }
 
 func conv_ptr_fyne_io_fyne_v2_widget_TextGrid_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s *fyne_io_fyne_v2_widget.TextGrid) (_env.Object, error) {
@@ -1577,6 +1649,30 @@ func conv_slice_ptr_fyne_io_fyne_v2_widget_FormItem_toRye(ps *_env.ProgramState,
 	return *_env.NewBlock(*_env.NewTSeries(items)), nil
 }
 
+func conv_slice_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a [][][]fyne_io_fyne_v2_widget.RichTextSegment) (_env.Block, error) {
+	items := make([]_env.Object, len(a))
+	for i := range a {
+		var err error
+		items[i], err = conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps, ctx, a[i])
+		if err != nil {
+			return _env.Block{}, err
+		}
+	}
+	return *_env.NewBlock(*_env.NewTSeries(items)), nil
+}
+
+func conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a [][]fyne_io_fyne_v2_widget.RichTextSegment) (_env.Block, error) {
+	items := make([]_env.Object, len(a))
+	for i := range a {
+		var err error
+		items[i], err = conv_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps, ctx, a[i])
+		if err != nil {
+			return _env.Block{}, err
+		}
+	}
+	return *_env.NewBlock(*_env.NewTSeries(items)), nil
+}
+
 func conv_slice_any_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []any) (_env.Block, error) {
 	items := make([]_env.Object, len(a))
 	for i := range a {
@@ -1613,6 +1709,18 @@ func conv_slice_byte_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []byte) (_
 	return *_env.NewBlock(*_env.NewTSeries(items)), nil
 }
 
+func conv_slice_float32_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []float32) (_env.Block, error) {
+	items := make([]_env.Object, len(a))
+	for i := range a {
+		var err error
+		items[i], err = conv_float32_toRye(ps, ctx, a[i])
+		if err != nil {
+			return _env.Block{}, err
+		}
+	}
+	return *_env.NewBlock(*_env.NewTSeries(items)), nil
+}
+
 func conv_slice_float64_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []float64) (_env.Block, error) {
 	items := make([]_env.Object, len(a))
 	for i := range a {
@@ -1642,6 +1750,30 @@ func conv_slice_fyne_io_fyne_v2_CanvasObject_toRye(ps *_env.ProgramState, ctx *_
 	for i := range a {
 		var err error
 		items[i], err = conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, a[i])
+		if err != nil {
+			return _env.Block{}, err
+		}
+	}
+	return *_env.NewBlock(*_env.NewTSeries(items)), nil
+}
+
+func conv_slice_fyne_io_fyne_v2_Position_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []fyne_io_fyne_v2.Position) (_env.Block, error) {
+	items := make([]_env.Object, len(a))
+	for i := range a {
+		var err error
+		items[i], err = conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, a[i])
+		if err != nil {
+			return _env.Block{}, err
+		}
+	}
+	return *_env.NewBlock(*_env.NewTSeries(items)), nil
+}
+
+func conv_slice_fyne_io_fyne_v2_TextAlign_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, a []fyne_io_fyne_v2.TextAlign) (_env.Block, error) {
+	items := make([]_env.Object, len(a))
+	for i := range a {
+		var err error
+		items[i], err = conv_fyne_io_fyne_v2_TextAlign_toRye(ps, ctx, a[i])
 		if err != nil {
 			return _env.Block{}, err
 		}
@@ -3141,10 +3273,10 @@ func conv_func_b51582e95429f0b3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
-func conv_func_8c285c53fd7e0321_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func() (_ fyne_io_fyne_v2_test.WindowlessCanvas)) (_env.VarBuiltin, error) {
+func conv_func_7c60eaa69d67230d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func() (_ fyne_io_fyne_v2_driver_software.WindowlessCanvas)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		res0 := fn()
-		outRes0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_toRye(ps, ctx, res0)
+		outRes0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -3673,6 +3805,29 @@ func conv_func_41d6b2d428f38387_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_ae40ed975035352d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func() fyne_io_fyne_v2.AccessibleRole) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		res0 := fn()
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 0,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_768e412d51eee251_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func() fyne_io_fyne_v2.BuildType) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		res0 := fn()
@@ -3999,6 +4154,29 @@ func conv_func_0cc000cd37387693_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		res0 := fn()
 		outRes0, err := conv_fyne_io_fyne_v2_canvas_ImageScale_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 0,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_7d2992fb991ed2a7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func() fyne_io_fyne_v2_canvas.ShadowVariant) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		res0 := fn()
+		outRes0, err := conv_fyne_io_fyne_v2_canvas_ShadowVariant_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -5526,6 +5704,33 @@ func conv_func_b13ac15974fc477a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_1bba9843a4ac4255_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.Container) (_ fyne_io_fyne_v2.AccessibleRole)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_Container_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_481d425d9ba036a6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.Container) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_Container_fromRye(ps, ctx, args[0])
@@ -5561,6 +5766,33 @@ func conv_func_2ee523254c926a20_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_04e31dc18d551d7d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.Container) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_Container_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -7304,6 +7536,175 @@ func conv_func_bacc74e6957dfe56_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_e20f4cb31096c23f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification) (_ error)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		if res0 != nil {
+			return *_env.NewVoid(), res0
+		}
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2d06121f6579e55e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0ffe6e9dd939693b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification) *fyne_io_fyne_v2.Notification) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_Notification_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_aad62c5a00d15239_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification) *time.Time) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_time_Time_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_48cb4720ec85fb92_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification, *fyne_io_fyne_v2.Notification) *fyne_io_fyne_v2.ScheduledNotification) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_ptr_fyne_io_fyne_v2_Notification_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_70544d6d0bcd0460_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScheduledNotification, time.Time) *fyne_io_fyne_v2.ScheduledNotification) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_time_Time_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_67527f4f2be549c1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ScrollEvent) *fyne_io_fyne_v2.Delta) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_ScrollEvent_fromRye(ps, ctx, args[0])
@@ -7501,6 +7902,33 @@ func conv_func_e147ebb532e59c65_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_3bce6028ee3b03b4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCopy) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCopy_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_f8c6166227f26b33_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCopy) fyne_io_fyne_v2.Clipboard) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCopy_fromRye(ps, ctx, args[0])
@@ -7517,6 +7945,37 @@ func conv_func_f8c6166227f26b33_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2d8710b0848d5ebe_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCopy, bool) *fyne_io_fyne_v2.ShortcutCopy) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCopy_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCopy_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -7640,6 +8099,33 @@ func conv_func_b39b22cb06c1630c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_5b31d1671435b619_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCut) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCut_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_3b2ca4d27cefea4c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCut) fyne_io_fyne_v2.Clipboard) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCut_fromRye(ps, ctx, args[0])
@@ -7656,6 +8142,37 @@ func conv_func_3b2ca4d27cefea4c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_86868f8606460708_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutCut, bool) *fyne_io_fyne_v2.ShortcutCut) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCut_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ShortcutCut_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -7837,6 +8354,33 @@ func conv_func_2bf09e55cef6f9df_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_bd490130913be996_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutPaste) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutPaste_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_c3803ce7a4e44801_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutPaste) fyne_io_fyne_v2.Clipboard) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutPaste_fromRye(ps, ctx, args[0])
@@ -7853,6 +8397,37 @@ func conv_func_c3803ce7a4e44801_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d0421f3f1965d8e0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2.ShortcutPaste, bool) *fyne_io_fyne_v2.ShortcutPaste) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_ShortcutPaste_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ShortcutPaste_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -8834,6 +9409,454 @@ func conv_func_e1b21053912fba3b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_9c5aef0afb8688f8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1ac1fcb2ca095d9e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_8022839bd8fcb1e2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0e9f638a42028b74_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1006236933a1e57f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) []float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_855bcc4850db5498_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) []fyne_io_fyne_v2.Position) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ffe13e5d4551f238_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_df86c11b5c162313_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ddccd223c9f7c0b0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon) image_color.Color) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_879d9ded19e7250d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, []float32) *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d264e4e45aae87d8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, []fyne_io_fyne_v2.Position) *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4a216ba810959a04_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, bool) *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c49aba9cfe74604d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, float32) *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_bac1a2a897d470a0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d67cf0520e307ef2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a95bbda0851629b2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.ArbitraryPolygon, image_color.Color) *fyne_io_fyne_v2_canvas.ArbitraryPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_5879db38e724606a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Arc)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Arc_fromRye(ps, ctx, args[0])
@@ -9108,6 +10131,612 @@ func conv_func_c3bfaadc2ec55460_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_c0cced5e725ddcac_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_88cf494a2a3557ca_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d3db9dd648f983f6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_858ccd99e234ec10_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_996bb0ea685d148a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) *fyne_io_fyne_v2.Position) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c699b80fd8c74bec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) []fyne_io_fyne_v2.Position) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_7ba761e3c77309b7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4e45c04491d801ec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve) image_color.Color) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_333b20cc921675e6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, []fyne_io_fyne_v2.Position) *fyne_io_fyne_v2_canvas.BezierCurve) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_fce8d39755f1214d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, float32) *fyne_io_fyne_v2_canvas.BezierCurve) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_36d0037f8f8ff84c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_106a15090179935e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, fyne_io_fyne_v2.Position) *fyne_io_fyne_v2_canvas.BezierCurve) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e2b2d089d870f196_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ce7f677340e821ac_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.BezierCurve, image_color.Color) *fyne_io_fyne_v2_canvas.BezierCurve) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_45693b49dfd0efbf_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_73197981ab68644b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_3707e1a0c3136d2f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0c5817f501c407ad_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_b54bf27b712bd228_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_19c3c3c79af79e7b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur, float32) *fyne_io_fyne_v2_canvas.Blur) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e4ebcba7d6ccdf0f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_57a8e0cd3a10fc8d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Blur, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_f90bda5d21726c0c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Circle)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps, ctx, args[0])
@@ -9220,6 +10849,33 @@ func conv_func_373f0ca75c6e776a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_ptr_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_3717af50fdb521ec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Circle) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -9467,6 +11123,37 @@ func conv_func_881bf77456214bf6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_f0c3fa9c9d5a4d70_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Circle, fyne_io_fyne_v2_canvas.Shadow) *fyne_io_fyne_v2_canvas.Circle) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_192b47ca0d9e7d92_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Circle, image_color.Color) *fyne_io_fyne_v2_canvas.Circle) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps, ctx, args[0])
@@ -9479,6 +11166,338 @@ func conv_func_192b47ca0d9e7d92_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0, arg1)
 		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_24eea50bef83904c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_312078b467ef7daa_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_6ec5da3b3c47f4d6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_6a0ec6f89513d9f0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ee604d607686fc2c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_6eefab99a2c3c8d7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_98e4d1306133bd8c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse) image_color.Color) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_f197fa300bb64fcd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse, float32) *fyne_io_fyne_v2_canvas.Ellipse) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e1cef7e681dc41ec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_68c9f2102a61be36_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_293083d5a3edf962_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse, fyne_io_fyne_v2_canvas.Shadow) *fyne_io_fyne_v2_canvas.Ellipse) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d070c6c8f3159560_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Ellipse, image_color.Color) *fyne_io_fyne_v2_canvas.Ellipse) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -10815,338 +12834,6 @@ func conv_func_47a67a3f81a745ab_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
-func conv_func_4f5c6be9aa7ab48c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_b439f048b2a756ea_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) (_ bool)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_bool_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_68064df918055116_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_45e778faebdc4230_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_ed4aa8936b7a9b97_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) float32) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_float32_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_83cfbb6043a866cc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) image_color.Color) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_454062a2982df66c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon) uint) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_uint_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_b4f6b246c63447cd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon, float32) *fyne_io_fyne_v2_canvas.Polygon) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0, arg1)
-		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_c00eabe2301ba02c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_84e062a266419076_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_b873f92e751fed7c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon, image_color.Color) *fyne_io_fyne_v2_canvas.Polygon) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0, arg1)
-		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_13b449bdd9c45ede_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Polygon, uint) *fyne_io_fyne_v2_canvas.Polygon) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_uint_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0, arg1)
-		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
 func conv_func_02d2182e0601434d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RadialGradient)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RadialGradient_fromRye(ps, ctx, args[0])
@@ -11919,6 +13606,33 @@ func conv_func_5a067fda4b8e58ab_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_454742112c16d85b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Rectangle) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_7360331e569cd462_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Rectangle) float32) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps, ctx, args[0])
@@ -12058,6 +13772,37 @@ func conv_func_7eb639d0f06bfd3b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_256844b12113a36e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Rectangle, fyne_io_fyne_v2_canvas.Shadow) *fyne_io_fyne_v2_canvas.Rectangle) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_1181194a22d30ccc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Rectangle, image_color.Color) *fyne_io_fyne_v2_canvas.Rectangle) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps, ctx, args[0])
@@ -12070,6 +13815,925 @@ func conv_func_1181194a22d30ccc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0, arg1)
 		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_28be36371cd57fde_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_9109640c5e93d908_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_fc938224db76f3a4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ef247ddfd6bc7a1e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_8787cda8849afe29_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4af575987c9900ea_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) image_color.Color) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2b3964145e9937a6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon) uint) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_uint_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_35062373d5a415bd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon, float32) *fyne_io_fyne_v2_canvas.RegularPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_344e2c1dd5237572_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_87ebcb184ee825e4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_09a2b8a261612466_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon, image_color.Color) *fyne_io_fyne_v2_canvas.RegularPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_670268b441651cfc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.RegularPolygon, uint) *fyne_io_fyne_v2_canvas.RegularPolygon) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_uint_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c46c97a58387219f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_42db7e8a4bb94768_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) (_ *fyne_io_fyne_v2.Animation)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_Animation_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4ca30c1ca99b2deb_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_5c4f600b776085cf_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_5631dd72aa77074d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) (_ fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ed761a7acc0ca237_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) []byte) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_byte_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e5a5c7e42457ff55_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) map[string]float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_map_string_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_fed63a9453f960bc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) map[string]image.Image) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_map_string_image_Image_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_10a1624068202180_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader) string) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_217d622911bcbf22_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader, []byte) *fyne_io_fyne_v2_canvas.Shader) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_byte_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_34714652c1338eef_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_72dcbbe6f8b5346d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_d895e446d36786cd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shader, string) *fyne_io_fyne_v2_canvas.Shader) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_f8be67a1758006ea_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow) *fyne_io_fyne_v2.Position) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4c976711b749e697_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c1a652148aafb5b7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow) fyne_io_fyne_v2_canvas.ShadowVariant) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_canvas_ShadowVariant_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_fd5a789dd9bac9cc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow) image_color.Color) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_color_Color_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a091bdd4f174094d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow, float32) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_b65b94d5043ad94c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow, fyne_io_fyne_v2.Position) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2641827c271ec41b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow, fyne_io_fyne_v2_canvas.ShadowVariant) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_canvas_ShadowVariant_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0567055c6ed5f1b2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_canvas.Shadow, image_color.Color) *fyne_io_fyne_v2_canvas.Shadow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shadow_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -14316,6 +16980,33 @@ func conv_func_66c314e3fe651851_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_ca1cfab61d6b9e47_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.InnerWindow) *fyne_io_fyne_v2.Container) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_Container_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_9a41a7c43d8e0c56_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.InnerWindow) *fyne_io_fyne_v2_widget.BaseWidget) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_fromRye(ps, ctx, args[0])
@@ -14440,6 +17131,64 @@ func conv_func_14e69c5ab49d16f4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_eea5fd4b16dd9fe6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.InnerWindow) string) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_926bb3edafb4f430_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.InnerWindow, *fyne_io_fyne_v2.Container) *fyne_io_fyne_v2_container.InnerWindow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_ptr_fyne_io_fyne_v2_Container_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -14768,6 +17517,37 @@ func conv_func_a84bc3ca1387cef2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_317fce7360fe341d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.InnerWindow, string) *fyne_io_fyne_v2_container.InnerWindow) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_9dbbe54bae0407b2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.MultipleWindows)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_container_MultipleWindows_fromRye(ps, ctx, args[0])
@@ -14776,6 +17556,33 @@ func conv_func_9dbbe54bae0407b2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		fn(arg0)
 		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_211b1ad6a78751e1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_container.MultipleWindows) (_ *fyne_io_fyne_v2_container.InnerWindow)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_container_MultipleWindows_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_container_InnerWindow_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
 	}
 
 	return _env.VarBuiltin{
@@ -19087,6 +21894,33 @@ func conv_func_b19b817fea2e8af3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_1282425205565515_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_driver_mobile.TouchEvent) int) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_int_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_fc6d8f8028a378dd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_driver_mobile.TouchEvent, fyne_io_fyne_v2.PointEvent) *fyne_io_fyne_v2_driver_mobile.TouchEvent) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps, ctx, args[0])
@@ -19094,6 +21928,37 @@ func conv_func_fc6d8f8028a378dd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_fyne_io_fyne_v2_PointEvent_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_7381b41267115573_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_driver_mobile.TouchEvent, int) *fyne_io_fyne_v2_driver_mobile.TouchEvent) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_int_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -21461,6 +24326,33 @@ func conv_func_7a72b84a06d1ad9e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_d090ba217140fbe1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Button) (_ fyne_io_fyne_v2.AccessibleRole)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Button_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_219e8a1b8e0601e2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Button) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Button_fromRye(ps, ctx, args[0])
@@ -21577,6 +24469,33 @@ func conv_func_e68c7ed8600bf509_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_driver_desktop_Cursor_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_7443f42f01aafdb1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Button) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Button_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -23812,6 +26731,284 @@ func conv_func_20022f3a84293edd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_961723b109a16e70_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4cc055ce268de866_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_8b78388117719c7a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment) (_ fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_73156be10c7ecca9_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_256b2033eac88fd0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_3b87de25dbe62b59_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment) string) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0330ebfdb4fe7192_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment, bool) *fyne_io_fyne_v2_widget.CheckBoxSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a6fe2478e88909b8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment, fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c4d2b1f80ea26360_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_691e3f984cc38d25_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckBoxSegment, string) *fyne_io_fyne_v2_widget.CheckBoxSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_7e01143e0eb64a15_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CheckGroup)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CheckGroup_fromRye(ps, ctx, args[0])
@@ -24349,6 +27546,226 @@ func conv_func_48dc5ccda4b85e70_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0, arg1)
 		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_5d009075bbe4a325_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_01ea7fabccaf122d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_712054a65fe5cb75_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment) (_ fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1a770b750286c82e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_edc50d5713f4d7ea_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment) string) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_72cb94ebf012d5dd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment, fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2ce1c7f9afbccc45_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_9ae75f3326ce34e1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.CodeBlockSegment, string) *fyne_io_fyne_v2_widget.CodeBlockSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -25147,6 +28564,33 @@ func conv_func_d6848fd5de80524f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a2451025d220cf19_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.DateEntry, func(bool))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_DateEntry_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_c805af5229d885c4_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
 	}
 
 	return _env.VarBuiltin{
@@ -26573,6 +30017,33 @@ func conv_func_6513c24654e3b829_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_1a7df6ac1546c1c5_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Entry, func(bool))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Entry_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_c805af5229d885c4_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_b6c4e1cebad70329_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Entry, func(error))) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Entry_fromRye(ps, ctx, args[0])
@@ -27885,6 +31356,33 @@ func conv_func_a993fcfbe64ddecb_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_edd0257c1f1745b5_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Form) func() error) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Form_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_func_ff3225443cebc182_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_7ce380212f6a39d6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Form) fyne_io_fyne_v2_widget.Orientation) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Form_fromRye(ps, ctx, args[0])
@@ -27973,6 +31471,37 @@ func conv_func_933ebbb3b4542305_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_slice_ptr_fyne_io_fyne_v2_widget_FormItem_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_Form_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_620d0a53f991c337_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Form, func() error) *fyne_io_fyne_v2_widget.Form) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Form_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_ff3225443cebc182_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -28260,6 +31789,33 @@ func conv_func_20dcaee724c45205_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_d06c5ca3dc5099a1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.FormItem) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_FormItem_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_66587adf3fc36cad_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.FormItem) fyne_io_fyne_v2.CanvasObject) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_FormItem_fromRye(ps, ctx, args[0])
@@ -28303,6 +31859,37 @@ func conv_func_da7e527e996dad1c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_b0f8706fb8261f58_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.FormItem, bool) *fyne_io_fyne_v2_widget.FormItem) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_FormItem_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_FormItem_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -29117,6 +32704,33 @@ func conv_func_4c9a4218d166353a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_e2816ba35299e815_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Hyperlink) (_ fyne_io_fyne_v2.AccessibleRole)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Hyperlink_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_3bdea508d5647a66_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Hyperlink) (_ fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Hyperlink_fromRye(ps, ctx, args[0])
@@ -29233,6 +32847,33 @@ func conv_func_34f73aed8fc3bced_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_driver_desktop_Cursor_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e8f056fe33537b3d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Hyperlink) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Hyperlink_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -30151,6 +33792,33 @@ func conv_func_2a2bc16f79b7e4ce_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_a6bb29d1ad62d2d4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.HyperlinkSegment) *fyne_io_fyne_v2.TextStyle) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_TextStyle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_4bbda1e722fc2ab3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.HyperlinkSegment) *net_url.URL) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps, ctx, args[0])
@@ -30213,6 +33881,33 @@ func conv_func_19fa25fc7d4b79f8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_TextAlign_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_75b68ec19496da43_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.HyperlinkSegment) fyne_io_fyne_v2.ThemeSizeName) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_ThemeSizeName_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -30386,6 +34081,68 @@ func conv_func_53b08a29b93ce871_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_fyne_io_fyne_v2_TextAlign_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_2141e2ec65e2581d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.HyperlinkSegment, fyne_io_fyne_v2.TextStyle) *fyne_io_fyne_v2_widget.HyperlinkSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_TextStyle_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_fce4c59080809c92_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.HyperlinkSegment, fyne_io_fyne_v2.ThemeSizeName) *fyne_io_fyne_v2_widget.HyperlinkSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_ThemeSizeName_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -31190,6 +34947,33 @@ func conv_func_4054ff550b8a7c8a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_85eaa5e2a8fe6765_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Label) (_ fyne_io_fyne_v2.AccessibleRole)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Label_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -32627,6 +36411,37 @@ func conv_func_21bf16b6a368de11_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_919d06f2893accaa_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.List, fyne_io_fyne_v2_data_binding.DataList, func(di fyne_io_fyne_v2_data_binding.DataItem, o fyne_io_fyne_v2.CanvasObject))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_List_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_func_2ed2acc8b79b5b35_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -34526,6 +38341,33 @@ func conv_func_dfa93043cb860e41_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_8d0e1486ae8ffe74_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.PopUpMenu, fyne_io_fyne_v2.Canvas)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_PopUpMenu_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Canvas_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
 	}
 
 	return _env.VarBuiltin{
@@ -36718,6 +40560,33 @@ func conv_func_183fed219e21185e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_a13eaf8631f9d545_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.RichTextStyle) int) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_RichTextStyle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_int_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_a1acaa7e97b5cfd2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.RichTextStyle, bool) *fyne_io_fyne_v2_widget.RichTextStyle) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_RichTextStyle_fromRye(ps, ctx, args[0])
@@ -36849,6 +40718,37 @@ func conv_func_e1daa59ba335adc2_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_fyne_io_fyne_v2_ThemeSizeName_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_RichTextStyle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_b9d7c25f78e8ac37_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.RichTextStyle, int) *fyne_io_fyne_v2_widget.RichTextStyle) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_RichTextStyle_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_int_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -38133,6 +42033,33 @@ func conv_func_3a87c0a09f6ee982_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_error_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_77259f283a9f308d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.SelectEntry, func(bool))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_SelectEntry_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_c805af5229d885c4_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -40523,6 +44450,342 @@ func conv_func_a112ddca0b16c4e3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_f852320653106a9b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e4459ee7a82ba6df_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) (_ bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0da3f1b7f03d314f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) (_ fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a1473acb56154e74_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) (_ string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a2ecb3c2b6a5d86d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) [][][]fyne_io_fyne_v2_widget.RichTextSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_f48a61f069bf7595_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) [][]fyne_io_fyne_v2_widget.RichTextSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_5dfd573c7f6a5092_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment) []fyne_io_fyne_v2.TextAlign) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_slice_fyne_io_fyne_v2_TextAlign_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_132bd8818b34ee44_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment, [][][]fyne_io_fyne_v2_widget.RichTextSegment) *fyne_io_fyne_v2_widget.TableSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_dfa403bedd9c63a8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment, [][]fyne_io_fyne_v2_widget.RichTextSegment) *fyne_io_fyne_v2_widget.TableSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_747bca77b01791dd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment, []fyne_io_fyne_v2.TextAlign) *fyne_io_fyne_v2_widget.TableSegment) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_fyne_io_fyne_v2_TextAlign_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_f9e79d258af8c6c7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment, fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_efd31cf1f1b78a4b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TableSegment, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_e9eb8d6ffc476f0d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.TextGrid)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_TextGrid_fromRye(ps, ctx, args[0])
@@ -42853,6 +47116,33 @@ func conv_func_835f9447206d32a5_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_0dd0f2a392efa36f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Tree) func(id string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Tree_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_func_a195a3a774c4ddf8_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_f84b633bab623fe4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Tree) func(uid string)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Tree_fromRye(ps, ctx, args[0])
@@ -43080,6 +47370,37 @@ func conv_func_1678c6ddd6d48241_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_func_c8db3a4f19eb68bc_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_widget_Tree_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_e28ff91f0907d3bd_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(*fyne_io_fyne_v2_widget.Tree, func(id string)) *fyne_io_fyne_v2_widget.Tree) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_ptr_fyne_io_fyne_v2_widget_Tree_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_a195a3a774c4ddf8_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -60444,6 +64765,37 @@ func conv_func_fd3125ed2f27124f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_8d899056f7e2d160_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func([]fyne_io_fyne_v2.Position, image_color.Color) (_ *fyne_io_fyne_v2_canvas.ArbitraryPolygon)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_slice_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_image_color_Color_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_2ae34277e2d1d75b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func([]string)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_slice_string_fromRye(ps, ctx, args[0])
@@ -61593,6 +65945,33 @@ func conv_func_b9d030a2abfdd0e3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		fn(arg0)
 		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a55957cd642d7980_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(float32) (_ *fyne_io_fyne_v2_canvas.Blur)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_float32_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Blur_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
 	}
 
 	return _env.VarBuiltin{
@@ -63597,6 +67976,60 @@ func conv_func_f659775a18913008_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_dc753bcf80d35e84_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Accessible) fyne_io_fyne_v2.AccessibleRole) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Accessible_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_302daaf3bdeba31c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Accessible) string) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Accessible_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_string_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_5a0c2809284705dc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
@@ -63628,6 +68061,33 @@ func conv_func_23b31bc9cf4dd7e3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_AppMetadata_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_6161f2fca97fc8a7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App) fyne_io_fyne_v2.Cache) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Cache_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -63917,6 +68377,44 @@ func conv_func_1f49b32746c82e28_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_c1c11d633e45480c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App, *fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_ptr_fyne_io_fyne_v2_Notification_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_time_Time_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0, res1 := fn(arg0, arg1, arg2)
+		if res1 != nil {
+			return *_env.NewVoid(), res1
+		}
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_5304feaed6b6fa7a_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App, *net_url.URL) error) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
@@ -64001,6 +68499,36 @@ func conv_func_587e8a70f1e37c59_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_6d6d7bd104940fd1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App, string) error) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		if res0 != nil {
+			return *_env.NewVoid(), res0
+		}
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_ca3d807ab65faf02_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.App, string) fyne_io_fyne_v2.Window) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_App_fromRye(ps, ctx, args[0])
@@ -64044,6 +68572,162 @@ func conv_func_3181277a6fd63153_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a2c697f4c8683d90_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Cache) fyne_io_fyne_v2.URI) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_URI_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_014e562ff800e821_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Cache, string) (io.ReadCloser, error)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0, res1 := fn(arg0, arg1)
+		if res1 != nil {
+			return *_env.NewVoid(), res1
+		}
+		outRes0, err := conv_io_ReadCloser_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_cdddd93acf54e2a6_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Cache, string) (io.WriteCloser, error)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0, res1 := fn(arg0, arg1)
+		if res1 != nil {
+			return *_env.NewVoid(), res1
+		}
+		outRes0, err := conv_io_WriteCloser_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a697d05d2b8add38_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Cache, string) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_9054d88f7876e26e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Cache, string) error) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_string_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		if res0 != nil {
+			return *_env.NewVoid(), res0
+		}
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -66773,6 +71457,123 @@ func conv_func_84810033b8d3b94b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_1e1de79b5c8cd9ec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, image_color.Color) (_ *fyne_io_fyne_v2_canvas.BezierCurve)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg3, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[3])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg4, err := conv_image_color_Color_fromRye(ps, ctx, args[4])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1, arg2, arg3, arg4)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 5,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1bcfe14a62e10ea4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, image_color.Color) (_ *fyne_io_fyne_v2_canvas.BezierCurve)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg3, err := conv_image_color_Color_fromRye(ps, ctx, args[3])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1, arg2, arg3)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 4,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1c47a2f0815f96fc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, image_color.Color) (_ *fyne_io_fyne_v2_canvas.BezierCurve)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_image_color_Color_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1, arg2)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_fc696e09686cfd17_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Position, time.Duration, func(fyne_io_fyne_v2.Position)) (_ *fyne_io_fyne_v2.Animation)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[0])
@@ -67658,6 +72459,60 @@ func conv_func_4bd2fb1dcfba6e5c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_bb29ab16498c8fd8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Requireable) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Requireable_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c103ec9e774b8207_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2.Requireable, func(bool))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_Requireable_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_c805af5229d885c4_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -72070,6 +76925,91 @@ func conv_func_2b83f9c0af51c045_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_cb5bdeae7c73db72_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver.Painter) (_ fyne_io_fyne_v2.Driver)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_Painter_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Driver_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_5778a9d0296a5b02_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver.Painter) (_ fyne_io_fyne_v2_driver_software.WindowlessCanvas)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_Painter_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ed7c0ab730c4f0ee_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver.Painter, fyne_io_fyne_v2.Canvas) image.Image) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_Painter_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Canvas_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1)
+		outRes0, err := conv_image_Image_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_7b989d0e318fe8e4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_desktop.App, *fyne_io_fyne_v2.Menu)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_driver_desktop_App_fromRye(ps, ctx, args[0])
@@ -72248,6 +77188,33 @@ func conv_func_68eb32dab32f9fe4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_fyne_io_fyne_v2_driver_desktop_Cursor_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_f00233d79861ae49_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_desktop.Driver) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -72475,6 +77442,60 @@ func conv_func_22dd2e6f8a3bdd56_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_318732b552c22349_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_desktop.Window)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_desktop_Window_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_bb05ea93579c8e9f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_desktop.Window, int, int)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_desktop_Window_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_int_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_int_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_44a837502b430b61_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_mobile.Device)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_driver_mobile_Device_fromRye(ps, ctx, args[0])
@@ -72652,6 +77673,33 @@ func conv_func_7c12aa3062c49808_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_f2ad493ab8deb3fb_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_mobile.Movable, *fyne_io_fyne_v2_driver_mobile.TouchEvent)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_mobile_Movable_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_3e69d9ac2e234002_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_mobile.Touchable, *fyne_io_fyne_v2_driver_mobile.TouchEvent)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps, ctx, args[0])
@@ -72659,6 +77707,585 @@ func conv_func_3e69d9ac2e234002_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		arg1, err := conv_ptr_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_837a21c29ecce72f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_119648b1273ed300_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0, res1 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		outRes1, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res1)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return *_env.NewBlock(*_env.NewTSeries([]_env.Object{outRes0, outRes1})), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_53d42178a13ce285_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) bool) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_bool_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c0e4872edc9d54b8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) float32) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_float32_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_ceea6714ee9249aa_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) func(*fyne_io_fyne_v2.KeyEvent)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_func_a2bd8734b5c1e612_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_3f239c61d584ec7c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) func(rune)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_func_bf24af2cfd7be744_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_eeb30e6c2b53e901_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) fyne_io_fyne_v2.CanvasObject) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_c858cd1e23d1fb7e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) fyne_io_fyne_v2.Focusable) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Focusable_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0fddfcabf9790c6e_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) fyne_io_fyne_v2.OverlayStack) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_OverlayStack_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_0f8ebe38f1e3a7f7_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) fyne_io_fyne_v2.Size) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1226f8e6d82a78b1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas) image.Image) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_image_Image_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_696b61e2c5f0215b_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, bool)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_049fedfc84b3d386_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, float32)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_47c3b69877c49c98_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, func(*fyne_io_fyne_v2.KeyEvent))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_a2bd8734b5c1e612_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_29d512f28d034550_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, func(rune))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_func_bf24af2cfd7be744_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_1cbcbd92da4c95bb_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_9e638c717ce5b708_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.Focusable)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Focusable_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_58da33bd9e66b0c4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.Position) (int, int)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0, res1 := fn(arg0, arg1)
+		outRes0, err := conv_int_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		outRes1, err := conv_int_toRye(ps, ctx, res1)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return *_env.NewBlock(*_env.NewTSeries([]_env.Object{outRes0, outRes1})), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_8b13e11f6aa1441c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.Shortcut)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Shortcut_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_301420206d39a756_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Shortcut_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_func_fda50f262c8d98d7_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0, arg1, arg2)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_b1a020a10002359d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_driver_software.WindowlessCanvas, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -74022,670 +79649,6 @@ func conv_func_76363bb4de1edab1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
-func conv_func_52cf3fe7a9bfc387_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.SoftwarePainter) (_ fyne_io_fyne_v2.Driver)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_SoftwarePainter_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Driver_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_c867f70acfb0a283_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.SoftwarePainter) (_ fyne_io_fyne_v2_test.WindowlessCanvas)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_SoftwarePainter_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_30a268580e2f936d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.SoftwarePainter, fyne_io_fyne_v2.Canvas) image.Image) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_SoftwarePainter_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Canvas_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0, arg1)
-		outRes0, err := conv_image_Image_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_ccd6bdd275127697_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_569584c0caf7ae98_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0, res1 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Position_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		outRes1, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res1)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return *_env.NewBlock(*_env.NewTSeries([]_env.Object{outRes0, outRes1})), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_fda84a7f300fb44d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) bool) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_bool_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_6a91a88880d3e280_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) float32) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_float32_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_cf648019eb4b0062_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) func(*fyne_io_fyne_v2.KeyEvent)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_func_a2bd8734b5c1e612_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_5b6e4e6c96e7b3b4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) func(rune)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_func_bf24af2cfd7be744_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_f41124c692c56a29_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) fyne_io_fyne_v2.CanvasObject) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_7143d3894c338f66_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) fyne_io_fyne_v2.Focusable) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Focusable_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_8d33405d44921746_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) fyne_io_fyne_v2.OverlayStack) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_OverlayStack_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_ab0804fb07b4438f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) fyne_io_fyne_v2.Size) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_fyne_io_fyne_v2_Size_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_5cbfa4e186f72dc9_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas) image.Image) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0 := fn(arg0)
-		outRes0, err := conv_image_Image_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return outRes0, nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 1,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_3b2faeffc12ae003_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, bool)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_bool_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_a227c2c473c190ae_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, float32)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_float32_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_60cff609d9b7cfb0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, func(*fyne_io_fyne_v2.KeyEvent))) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_func_a2bd8734b5c1e612_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_1deae471c1b28fe8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, func(rune))) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_func_bf24af2cfd7be744_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_165060af0267d3e3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.CanvasObject)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_b452d0f82fff0bd0_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.Focusable)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Focusable_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_48350b12dd24c2cc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.Position) (int, int)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		res0, res1 := fn(arg0, arg1)
-		outRes0, err := conv_int_toRye(ps, ctx, res0)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		outRes1, err := conv_int_toRye(ps, ctx, res1)
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		return *_env.NewBlock(*_env.NewTSeries([]_env.Object{outRes0, outRes1})), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_b257c58a72b2fcf4_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.Shortcut)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Shortcut_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_3272aa13f58709de_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Shortcut_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg2, err := conv_func_fda50f262c8d98d7_fromRye(ps, ctx, args[2])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1, arg2)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 3,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
-func conv_func_08cd4b8f154ceb35_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_test.WindowlessCanvas, fyne_io_fyne_v2.Size)) (_env.VarBuiltin, error) {
-	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
-		arg0, err := conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps, ctx, args[0])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		arg1, err := conv_fyne_io_fyne_v2_Size_fromRye(ps, ctx, args[1])
-		if err != nil {
-			return *_env.NewVoid(), err
-		}
-		fn(arg0, arg1)
-		return *_env.NewVoid(), nil
-	}
-
-	return _env.VarBuiltin{
-		Argsn: 2,
-		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
-			res, err := outfnErrable(ps, ps.Ctx, args...)
-			if err != nil {
-				ps.FailureFlag = true
-				return _env.NewError(err.Error())
-			}
-			return res
-		},
-	}, nil
-}
-
 func conv_func_267a68ced441314c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(fyne_io_fyne_v2_widget.RichTextBlock) []fyne_io_fyne_v2_widget.RichTextSegment) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_fyne_io_fyne_v2_widget_RichTextBlock_fromRye(ps, ctx, args[0])
@@ -75091,6 +80054,29 @@ func conv_func_7ceb2162ba95ceb5_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_a195a3a774c4ddf8_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(id string)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_string_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		fn(arg0)
+		return *_env.NewVoid(), nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -77148,6 +82134,33 @@ func conv_func_a47943355818246c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 		}
 		res0 := fn(arg0)
 		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Circle_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 1,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_15906c70cb1c482c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(image_color.Color) (_ *fyne_io_fyne_v2_canvas.Ellipse)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_image_color_Color_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -83722,14 +88735,14 @@ func conv_func_d940ca448e417142_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
-func conv_func_e57ba1ee628ce6e1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(net_url.URL) struct_1e64ccbb3469eda1) (_env.VarBuiltin, error) {
+func conv_func_7013c244c6968da3_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(net_url.URL) struct_113df3b9ee47d4ed) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_net_url_URL_fromRye(ps, ctx, args[0])
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
 		res0 := fn(arg0)
-		outRes0, err := conv_struct_1e64ccbb3469eda1_toRye(ps, ctx, res0)
+		outRes0, err := conv_struct_113df3b9ee47d4ed_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -84527,6 +89540,41 @@ func conv_func_acbe8ea2a7c58cbf_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_func_274ba349e943481c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(string, *fyne_io_fyne_v2.Notification, time.Time) (_ *fyne_io_fyne_v2.ScheduledNotification)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_string_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_ptr_fyne_io_fyne_v2_Notification_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_time_Time_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1, arg2)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
 func conv_func_501f0d0971572b15_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(string, *net_url.URL) (_ *fyne_io_fyne_v2_widget.Hyperlink)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_string_fromRye(ps, ctx, args[0])
@@ -84842,6 +89890,41 @@ func conv_func_319d15eda2ddabec_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 
 	return _env.VarBuiltin{
 		Argsn: 2,
+		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
+			res, err := outfnErrable(ps, ps.Ctx, args...)
+			if err != nil {
+				ps.FailureFlag = true
+				return _env.NewError(err.Error())
+			}
+			return res
+		},
+	}, nil
+}
+
+func conv_func_4777f71c8a9c72dc_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(string, []byte, []byte) (_ *fyne_io_fyne_v2_canvas.Shader)) (_env.VarBuiltin, error) {
+	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
+		arg0, err := conv_string_fromRye(ps, ctx, args[0])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg1, err := conv_slice_byte_fromRye(ps, ctx, args[1])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		arg2, err := conv_slice_byte_fromRye(ps, ctx, args[2])
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		res0 := fn(arg0, arg1, arg2)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Shader_toRye(ps, ctx, res0)
+		if err != nil {
+			return *_env.NewVoid(), err
+		}
+		return outRes0, nil
+	}
+
+	return _env.VarBuiltin{
+		Argsn: 3,
 		Fn: func(ps *_env.ProgramState, args ..._env.Object) _env.Object {
 			res, err := outfnErrable(ps, ps.Ctx, args...)
 			if err != nil {
@@ -88431,7 +93514,7 @@ func conv_func_0040c21d5a7b7455_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
-func conv_func_cc89b16651d8208c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(uint, image_color.Color) (_ *fyne_io_fyne_v2_canvas.Polygon)) (_env.VarBuiltin, error) {
+func conv_func_cb6ba250f058e3de_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, fn func(uint, image_color.Color) (_ *fyne_io_fyne_v2_canvas.RegularPolygon)) (_env.VarBuiltin, error) {
 	outfnErrable := func(ps *_env.ProgramState, ctx *_env.RyeCtx, args ..._env.Object) (_env.Object, error) {
 		arg0, err := conv_uint_fromRye(ps, ctx, args[0])
 		if err != nil {
@@ -88442,7 +93525,7 @@ func conv_func_cc89b16651d8208c_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 			return *_env.NewVoid(), err
 		}
 		res0 := fn(arg0, arg1)
-		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_Polygon_toRye(ps, ctx, res0)
+		outRes0, err := conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_toRye(ps, ctx, res0)
 		if err != nil {
 			return *_env.NewVoid(), err
 		}
@@ -88630,6 +93713,10 @@ func conv_func_3df62f4ae948eb7d_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, f
 	}, nil
 }
 
+func conv_fyne_io_fyne_v2_AccessibleRole_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2.AccessibleRole) (_env.Object, error) {
+	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2.AccessibleRole)"), nil
+}
+
 func conv_fyne_io_fyne_v2_AnimationCurve_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2.AnimationCurve) (_env.Object, error) {
 	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2.AnimationCurve)"), nil
 }
@@ -88650,6 +93737,16 @@ func conv_fyne_io_fyne_v2_AppMetadata_toRye(ps *_env.ProgramState, ctx *_env.Rye
 
 func conv_fyne_io_fyne_v2_BuildType_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2.BuildType) (_env.Object, error) {
 	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2.BuildType)"), nil
+}
+
+func conv_fyne_io_fyne_v2_Cache_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2.Cache) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	if nat, ok := autoToNative(ps, s); ok {
+		return nat, nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(fyne_io_fyne_v2.Cache)"), nil
 }
 
 func conv_fyne_io_fyne_v2_Canvas_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2.Canvas) (_env.Object, error) {
@@ -88946,6 +94043,10 @@ func conv_fyne_io_fyne_v2_canvas_ImageFill_toRye(ps *_env.ProgramState, ctx *_en
 
 func conv_fyne_io_fyne_v2_canvas_ImageScale_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_canvas.ImageScale) (_env.Object, error) {
 	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2_canvas.ImageScale)"), nil
+}
+
+func conv_fyne_io_fyne_v2_canvas_ShadowVariant_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_canvas.ShadowVariant) (_env.Object, error) {
+	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2_canvas.ShadowVariant)"), nil
 }
 
 func conv_fyne_io_fyne_v2_container_TabLocation_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_container.TabLocation) (_env.Object, error) {
@@ -89428,6 +94529,16 @@ func conv_fyne_io_fyne_v2_driver_mobile_KeyboardType_toRye(ps *_env.ProgramState
 	return *_env.NewNative(ps.Idx, &s, "go(*fyne_io_fyne_v2_driver_mobile.KeyboardType)"), nil
 }
 
+func conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_driver_software.WindowlessCanvas) (_env.Object, error) {
+	if s == nil {
+		return *_env.NewVoid(), nil
+	}
+	if nat, ok := autoToNative(ps, s); ok {
+		return nat, nil
+	}
+	return *_env.NewNative(ps.Idx, s, "go(fyne_io_fyne_v2_driver_software.WindowlessCanvas)"), nil
+}
+
 func conv_fyne_io_fyne_v2_storage_FileFilter_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_storage.FileFilter) (_env.Object, error) {
 	if s == nil {
 		return *_env.NewVoid(), nil
@@ -89446,16 +94557,6 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_toRye(ps *_env.ProgramSt
 		return nat, nil
 	}
 	return *_env.NewNative(ps.Idx, s, "go(fyne_io_fyne_v2_storage_repository.Repository)"), nil
-}
-
-func conv_fyne_io_fyne_v2_test_WindowlessCanvas_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_test.WindowlessCanvas) (_env.Object, error) {
-	if s == nil {
-		return *_env.NewVoid(), nil
-	}
-	if nat, ok := autoToNative(ps, s); ok {
-		return nat, nil
-	}
-	return *_env.NewNative(ps.Idx, s, "go(fyne_io_fyne_v2_test.WindowlessCanvas)"), nil
 }
 
 func conv_fyne_io_fyne_v2_widget_ButtonAlign_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s fyne_io_fyne_v2_widget.ButtonAlign) (_env.Object, error) {
@@ -90564,6 +95665,18 @@ func conv_map_string_bool_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, m map[s
 	return *_env.NewDict(data), nil
 }
 
+func conv_map_string_float32_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, m map[string]float32) (_env.Dict, error) {
+	data := make(map[string]any, len(m))
+	for k, v := range m {
+		v1, err := conv_float32_toRye(ps, ctx, v)
+		if err != nil {
+			return _env.Dict{}, err
+		}
+		data[k] = v1
+	}
+	return *_env.NewDict(data), nil
+}
+
 func conv_map_string_float64_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, m map[string]float64) (_env.Dict, error) {
 	data := make(map[string]any, len(m))
 	for k, v := range m {
@@ -90580,6 +95693,18 @@ func conv_map_string_fyne_io_fyne_v2_ThemeVariant_toRye(ps *_env.ProgramState, c
 	data := make(map[string]any, len(m))
 	for k, v := range m {
 		v1, err := conv_fyne_io_fyne_v2_ThemeVariant_toRye(ps, ctx, v)
+		if err != nil {
+			return _env.Dict{}, err
+		}
+		data[k] = v1
+	}
+	return *_env.NewDict(data), nil
+}
+
+func conv_map_string_image_Image_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, m map[string]image.Image) (_env.Dict, error) {
+	data := make(map[string]any, len(m))
+	for k, v := range m {
+		v1, err := conv_image_Image_toRye(ps, ctx, v)
 		if err != nil {
 			return _env.Dict{}, err
 		}
@@ -90644,8 +95769,8 @@ func conv_struct_0bc1cff2acef5f0f_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return *_env.NewNative(ps.Idx, &s, "go(*struct_0bc1cff2acef5f0f)"), nil
 }
 
-func conv_struct_1e64ccbb3469eda1_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s struct_1e64ccbb3469eda1) (_env.Object, error) {
-	return *_env.NewNative(ps.Idx, &s, "go(*struct_1e64ccbb3469eda1)"), nil
+func conv_struct_113df3b9ee47d4ed_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s struct_113df3b9ee47d4ed) (_env.Object, error) {
+	return *_env.NewNative(ps.Idx, &s, "go(*struct_113df3b9ee47d4ed)"), nil
 }
 
 func conv_struct_2837ae3a2a7dc6af_toRye(ps *_env.ProgramState, ctx *_env.RyeCtx, s struct_2837ae3a2a7dc6af) (_env.Object, error) {
@@ -91316,6 +96441,21 @@ func conv_ptr_fyne_io_fyne_v2_Position_fromRye(ps *_env.ProgramState, ctx *_env.
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2.Position" + ", or any element type, but got " + objectType(ps, obj))
 }
 
+func conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2.ScheduledNotification, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2.ScheduledNotification); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2.ScheduledNotification" + ", or any element type, but got " + objectType(ps, obj))
+}
+
 func conv_ptr_fyne_io_fyne_v2_ScrollEvent_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2.ScrollEvent, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -91511,6 +96651,21 @@ func conv_ptr_fyne_io_fyne_v2_app_SettingsSchema_fromRye(ps *_env.ProgramState, 
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_app.SettingsSchema" + ", or any element type, but got " + objectType(ps, obj))
 }
 
+func conv_ptr_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.ArbitraryPolygon, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.ArbitraryPolygon); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.ArbitraryPolygon" + ", or any element type, but got " + objectType(ps, obj))
+}
+
 func conv_ptr_fyne_io_fyne_v2_canvas_Arc_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Arc, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -91526,6 +96681,36 @@ func conv_ptr_fyne_io_fyne_v2_canvas_Arc_fromRye(ps *_env.ProgramState, ctx *_en
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Arc" + ", or any element type, but got " + objectType(ps, obj))
 }
 
+func conv_ptr_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.BezierCurve, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.BezierCurve); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.BezierCurve" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Blur_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Blur, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Blur); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_Blur_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Blur" + ", or any element type, but got " + objectType(ps, obj))
+}
+
 func conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Circle, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -91539,6 +96724,21 @@ func conv_ptr_fyne_io_fyne_v2_canvas_Circle_fromRye(ps *_env.ProgramState, ctx *
 		return &x, nil
 	}
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Circle" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Ellipse, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Ellipse); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Ellipse" + ", or any element type, but got " + objectType(ps, obj))
 }
 
 func conv_ptr_fyne_io_fyne_v2_canvas_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Image, error) {
@@ -91586,21 +96786,6 @@ func conv_ptr_fyne_io_fyne_v2_canvas_LinearGradient_fromRye(ps *_env.ProgramStat
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.LinearGradient" + ", or any element type, but got " + objectType(ps, obj))
 }
 
-func conv_ptr_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Polygon, error) {
-	if isNil(obj) {
-		return nil, nil
-	}
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Polygon); ok {
-			return v, nil
-		}
-	}
-	if x, err := conv_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps, ctx, obj); err == nil {
-		return &x, nil
-	}
-	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Polygon" + ", or any element type, but got " + objectType(ps, obj))
-}
-
 func conv_ptr_fyne_io_fyne_v2_canvas_RadialGradient_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.RadialGradient, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -91644,6 +96829,51 @@ func conv_ptr_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps *_env.ProgramState, ct
 		return &x, nil
 	}
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Rectangle" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.RegularPolygon, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.RegularPolygon); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.RegularPolygon" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Shader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Shader, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Shader); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_Shader_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Shader" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Shadow, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Shadow); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_canvas.Shadow" + ", or any element type, but got " + objectType(ps, obj))
 }
 
 func conv_ptr_fyne_io_fyne_v2_canvas_Text_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_canvas.Text, error) {
@@ -92321,6 +97551,21 @@ func conv_ptr_fyne_io_fyne_v2_widget_Check_fromRye(ps *_env.ProgramState, ctx *_
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.Check" + ", or any element type, but got " + objectType(ps, obj))
 }
 
+func conv_ptr_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.CheckBoxSegment, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.CheckBoxSegment); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.CheckBoxSegment" + ", or any element type, but got " + objectType(ps, obj))
+}
+
 func conv_ptr_fyne_io_fyne_v2_widget_CheckGroup_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.CheckGroup, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -92334,6 +97579,21 @@ func conv_ptr_fyne_io_fyne_v2_widget_CheckGroup_fromRye(ps *_env.ProgramState, c
 		return &x, nil
 	}
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.CheckGroup" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.CodeBlockSegment, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.CodeBlockSegment); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.CodeBlockSegment" + ", or any element type, but got " + objectType(ps, obj))
 }
 
 func conv_ptr_fyne_io_fyne_v2_widget_CustomTextGridStyle_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.CustomTextGridStyle, error) {
@@ -92799,6 +98059,21 @@ func conv_ptr_fyne_io_fyne_v2_widget_TableCellID_fromRye(ps *_env.ProgramState, 
 		return &x, nil
 	}
 	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.TableCellID" + ", or any element type, but got " + objectType(ps, obj))
+}
+
+func conv_ptr_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.TableSegment, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.TableSegment); ok {
+			return v, nil
+		}
+	}
+	if x, err := conv_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps, ctx, obj); err == nil {
+		return &x, nil
+	}
+	return nil, _errors.New("expected Native of type " + "*fyne_io_fyne_v2_widget.TableSegment" + ", or any element type, but got " + objectType(ps, obj))
 }
 
 func conv_ptr_fyne_io_fyne_v2_widget_TextGrid_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (*fyne_io_fyne_v2_widget.TextGrid, error) {
@@ -94445,6 +99720,26 @@ func conv_slice_ptr_fyne_io_fyne_v2_widget_FormItem_fromRye(ps *_env.ProgramStat
 	return nil, _errors.New("expected block of type " + "*fyne_io_fyne_v2_widget.FormItem" + ", but got " + objectType(ps, obj))
 }
 
+func conv_slice_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([][][]fyne_io_fyne_v2_widget.RichTextSegment, error) {
+	if blk, ok := obj.(_env.Block); ok {
+		items := make([][][]fyne_io_fyne_v2_widget.RichTextSegment, len(blk.Series.S))
+		for i, v := range blk.Series.S {
+			var err error
+			items[i], err = conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return items, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.([][][]fyne_io_fyne_v2_widget.RichTextSegment); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected block of type " + "[][]fyne_io_fyne_v2_widget.RichTextSegment" + ", but got " + objectType(ps, obj))
+}
+
 func conv_slice_slice_byte_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([][]byte, error) {
 	if blk, ok := obj.(_env.Block); ok {
 		items := make([][]byte, len(blk.Series.S))
@@ -94463,6 +99758,26 @@ func conv_slice_slice_byte_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		}
 	}
 	return nil, _errors.New("expected block of type " + "[]byte" + ", but got " + objectType(ps, obj))
+}
+
+func conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([][]fyne_io_fyne_v2_widget.RichTextSegment, error) {
+	if blk, ok := obj.(_env.Block); ok {
+		items := make([][]fyne_io_fyne_v2_widget.RichTextSegment, len(blk.Series.S))
+		for i, v := range blk.Series.S {
+			var err error
+			items[i], err = conv_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return items, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.([][]fyne_io_fyne_v2_widget.RichTextSegment); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected block of type " + "[]fyne_io_fyne_v2_widget.RichTextSegment" + ", but got " + objectType(ps, obj))
 }
 
 func conv_slice_any_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]any, error) {
@@ -94528,6 +99843,26 @@ func conv_slice_byte_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.O
 	return nil, _errors.New("expected block of type " + "byte" + ", but got " + objectType(ps, obj))
 }
 
+func conv_slice_float32_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]float32, error) {
+	if blk, ok := obj.(_env.Block); ok {
+		items := make([]float32, len(blk.Series.S))
+		for i, v := range blk.Series.S {
+			var err error
+			items[i], err = conv_float32_fromRye(ps, ctx, v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return items, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.([]float32); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected block of type " + "float32" + ", but got " + objectType(ps, obj))
+}
+
 func conv_slice_float64_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]float64, error) {
 	if blk, ok := obj.(_env.Block); ok {
 		items := make([]float64, len(blk.Series.S))
@@ -94588,6 +99923,26 @@ func conv_slice_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx 
 	return nil, _errors.New("expected block of type " + "fyne_io_fyne_v2.CanvasObject" + ", but got " + objectType(ps, obj))
 }
 
+func conv_slice_fyne_io_fyne_v2_Position_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]fyne_io_fyne_v2.Position, error) {
+	if blk, ok := obj.(_env.Block); ok {
+		items := make([]fyne_io_fyne_v2.Position, len(blk.Series.S))
+		for i, v := range blk.Series.S {
+			var err error
+			items[i], err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return items, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.([]fyne_io_fyne_v2.Position); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected block of type " + "fyne_io_fyne_v2.Position" + ", but got " + objectType(ps, obj))
+}
+
 func conv_slice_fyne_io_fyne_v2_StringValidator_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]fyne_io_fyne_v2.StringValidator, error) {
 	if blk, ok := obj.(_env.Block); ok {
 		items := make([]fyne_io_fyne_v2.StringValidator, len(blk.Series.S))
@@ -94606,6 +99961,26 @@ func conv_slice_fyne_io_fyne_v2_StringValidator_fromRye(ps *_env.ProgramState, c
 		}
 	}
 	return nil, _errors.New("expected block of type " + "fyne_io_fyne_v2.StringValidator" + ", but got " + objectType(ps, obj))
+}
+
+func conv_slice_fyne_io_fyne_v2_TextAlign_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]fyne_io_fyne_v2.TextAlign, error) {
+	if blk, ok := obj.(_env.Block); ok {
+		items := make([]fyne_io_fyne_v2.TextAlign, len(blk.Series.S))
+		for i, v := range blk.Series.S {
+			var err error
+			items[i], err = conv_fyne_io_fyne_v2_TextAlign_fromRye(ps, ctx, v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return items, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.([]fyne_io_fyne_v2.TextAlign); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected block of type " + "fyne_io_fyne_v2.TextAlign" + ", but got " + objectType(ps, obj))
 }
 
 func conv_slice_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) ([]fyne_io_fyne_v2.URI, error) {
@@ -95000,7 +100375,7 @@ func conv_any_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) 
 		return v.Value, nil
 	case _env.Email:
 		return v.Address, nil
-	case _env.Error:
+	case *_env.Error:
 		return _errors.New(v.Print(*ps.Idx)), nil
 	case _env.Integer:
 		return v.Value, nil
@@ -95188,7 +100563,7 @@ func conv_context_Context_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Deadline, Done, Err, Value" + ", but got " + objectType(ps, obj))
 	}
@@ -95202,7 +100577,7 @@ func conv_context_Context_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a122d8b6fc998f5f_fromRye(ps, &c, m)
+			fn, err := conv_func_a122d8b6fc998f5f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95217,7 +100592,7 @@ func conv_context_Context_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fba3b16420a3cc55_fromRye(ps, &c, m)
+			fn, err := conv_func_fba3b16420a3cc55_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95232,7 +100607,7 @@ func conv_context_Context_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95247,7 +100622,7 @@ func conv_context_Context_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_65798759a0bae5f6_fromRye(ps, &c, m)
+			fn, err := conv_func_65798759a0bae5f6_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95296,7 +100671,7 @@ func conv_error_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Error" + ", but got " + objectType(ps, obj))
 	}
@@ -95310,7 +100685,7 @@ func conv_error_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95368,7 +100743,7 @@ func conv_fmt_Formatter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Format" + ", but got " + objectType(ps, obj))
 	}
@@ -95382,7 +100757,7 @@ func conv_fmt_Formatter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_4482c17c6d0f1756_fromRye(ps, &c, m)
+			fn, err := conv_func_4482c17c6d0f1756_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95416,7 +100791,7 @@ func conv_fmt_GoStringer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "GoString" + ", but got " + objectType(ps, obj))
 	}
@@ -95430,7 +100805,7 @@ func conv_fmt_GoStringer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95499,7 +100874,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Read, ReadRune, SkipSpace, Token, UnreadRune, Width" + ", but got " + objectType(ps, obj))
 	}
@@ -95513,7 +100888,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95528,7 +100903,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1dac827fef874f78_fromRye(ps, &c, m)
+			fn, err := conv_func_1dac827fef874f78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95543,7 +100918,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95558,7 +100933,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_789775e65ce754d4_fromRye(ps, &c, m)
+			fn, err := conv_func_789775e65ce754d4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95573,7 +100948,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95588,7 +100963,7 @@ func conv_fmt_ScanState_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, &c, m)
+			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95622,7 +100997,7 @@ func conv_fmt_Scanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Scan" + ", but got " + objectType(ps, obj))
 	}
@@ -95636,7 +101011,7 @@ func conv_fmt_Scanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b2a4e14f8b52e1e1_fromRye(ps, &c, m)
+			fn, err := conv_func_b2a4e14f8b52e1e1_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95691,7 +101066,7 @@ func conv_fmt_State_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Flag, Precision, Width, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -95705,7 +101080,7 @@ func conv_fmt_State_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_20c03b4b96091b33_fromRye(ps, &c, m)
+			fn, err := conv_func_20c03b4b96091b33_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95720,7 +101095,7 @@ func conv_fmt_State_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, &c, m)
+			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95735,7 +101110,7 @@ func conv_fmt_State_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, &c, m)
+			fn, err := conv_func_3f2ba29399b6ee30_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95750,7 +101125,7 @@ func conv_fmt_State_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -95784,7 +101159,7 @@ func conv_fmt_Stringer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "String" + ", but got " + objectType(ps, obj))
 	}
@@ -95798,7 +101173,7 @@ func conv_fmt_Stringer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -97009,6 +102384,36 @@ func conv_func_e9f9e8ed0a0608ed_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return nil, _errors.New("expected function or native of type go(" + "func() func(rune)" + "), but got " + objectType(ps, obj))
 }
 
+func conv_func_ae40ed975035352d_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func() fyne_io_fyne_v2.AccessibleRole, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 0 {
+			return nil, _errors.New("expected function with 0 args, but got " + objectType(ps, obj))
+		}
+		return func() (_ fyne_io_fyne_v2.AccessibleRole) {
+			_evaldo.CallFunctionArgsN(fn, ps, ctx)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+			res, err := conv_fyne_io_fyne_v2_AccessibleRole_fromRye(ps, ctx, ps.Res)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			return res
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func() fyne_io_fyne_v2.AccessibleRole); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func() fyne_io_fyne_v2.AccessibleRole" + "), but got " + objectType(ps, obj))
+}
+
 func conv_func_ef0905965d07e203_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func() fyne_io_fyne_v2.AppMetadata, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -97067,6 +102472,36 @@ func conv_func_768e412d51eee251_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		}
 	}
 	return nil, _errors.New("expected function or native of type go(" + "func() fyne_io_fyne_v2.BuildType" + "), but got " + objectType(ps, obj))
+}
+
+func conv_func_8b6feaedde394187_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func() fyne_io_fyne_v2.Cache, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 0 {
+			return nil, _errors.New("expected function with 0 args, but got " + objectType(ps, obj))
+		}
+		return func() (_ fyne_io_fyne_v2.Cache) {
+			_evaldo.CallFunctionArgsN(fn, ps, ctx)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+			res, err := conv_fyne_io_fyne_v2_Cache_fromRye(ps, ctx, ps.Res)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			return res
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func() fyne_io_fyne_v2.Cache); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func() fyne_io_fyne_v2.Cache" + "), but got " + objectType(ps, obj))
 }
 
 func conv_func_435db69c680a367f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func() fyne_io_fyne_v2.Canvas, error) {
@@ -98383,6 +103818,60 @@ func conv_func_8c95536b95ac0fe4_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return nil, _errors.New("expected function or native of type go(" + "func(*fyne_io_fyne_v2.Notification)" + "), but got " + objectType(ps, obj))
 }
 
+func conv_func_b56c9f6bd0f693a0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(*fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 2 {
+			return nil, _errors.New("expected function with 2 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 *fyne_io_fyne_v2.Notification, inArg1 time.Time) (_ *fyne_io_fyne_v2.ScheduledNotification, _ error) {
+			arg0, err := conv_ptr_fyne_io_fyne_v2_Notification_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			arg1, err := conv_time_Time_toRye(ps, ctx, inArg1)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0, arg1)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+			blk, ok := ps.Res.(_env.Block)
+			if !ok {
+				showFunctionError(ps, fn, _errors.New("expected block with results, but got " +  objectType(ps, ps.Res)))
+				return
+			}
+			if len(blk.Series.S) != 2 {
+				showFunctionError(ps, fn, _fmt.Errorf("expected 2 results, but got %v", len(blk.Series.S)))
+				return
+			}
+			res0, err := conv_ptr_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps, ctx, blk.Series.S[0])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			res1, err := conv_error_fromRye(ps, ctx, blk.Series.S[1])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			return res0, res1
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(*fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(*fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error)" + "), but got " + objectType(ps, obj))
+}
+
 func conv_func_9da56024568270d3_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(*fyne_io_fyne_v2.PointEvent), error) {
 	if isNil(obj) {
 		return nil, nil
@@ -99289,6 +104778,40 @@ func conv_func_fe04bcea5238faad_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return nil, _errors.New("expected function or native of type go(" + "func(context any)" + "), but got " + objectType(ps, obj))
 }
 
+func conv_func_2ed2acc8b79b5b35_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(di fyne_io_fyne_v2_data_binding.DataItem, o fyne_io_fyne_v2.CanvasObject), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 2 {
+			return nil, _errors.New("expected function with 2 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 fyne_io_fyne_v2_data_binding.DataItem, inArg1 fyne_io_fyne_v2.CanvasObject) {
+			arg0, err := conv_fyne_io_fyne_v2_data_binding_DataItem_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			arg1, err := conv_fyne_io_fyne_v2_CanvasObject_toRye(ps, ctx, inArg1)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0, arg1)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(di fyne_io_fyne_v2_data_binding.DataItem, o fyne_io_fyne_v2.CanvasObject)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(di fyne_io_fyne_v2_data_binding.DataItem, o fyne_io_fyne_v2.CanvasObject)" + "), but got " + objectType(ps, obj))
+}
+
 func conv_func_09a848d9b549c3e0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(error), error) {
 	if isNil(obj) {
 		return nil, nil
@@ -99674,6 +105197,35 @@ func conv_func_fe4335e0b2467819_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		}
 	}
 	return nil, _errors.New("expected function or native of type go(" + "func(func(*fyne_io_fyne_v2.KeyEvent))" + "), but got " + objectType(ps, obj))
+}
+
+func conv_func_ff6aefd2695534cf_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(func(bool)), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 1 {
+			return nil, _errors.New("expected function with 1 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 func(bool)) {
+			arg0, err := conv_func_c805af5229d885c4_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(func(bool))); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(func(bool))" + "), but got " + objectType(ps, obj))
 }
 
 func conv_func_440962728d9cb3b4_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(func(context any)), error) {
@@ -101415,6 +106967,35 @@ func conv_func_7ceb2162ba95ceb5_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return nil, _errors.New("expected function or native of type go(" + "func(id int, item fyne_io_fyne_v2.CanvasObject)" + "), but got " + objectType(ps, obj))
 }
 
+func conv_func_a195a3a774c4ddf8_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(id string), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 1 {
+			return nil, _errors.New("expected function with 1 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 string) {
+			arg0, err := conv_string_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(id string)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(id string)" + "), but got " + objectType(ps, obj))
+}
+
 func conv_func_2383f421e3205142_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(image_color.Color), error) {
 	if isNil(obj) {
 		return nil, nil
@@ -101679,6 +107260,40 @@ func conv_func_71b8458e5b705995_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		}
 	}
 	return nil, _errors.New("expected function or native of type go(" + "func(int, fyne_io_fyne_v2.CanvasObject)" + "), but got " + objectType(ps, obj))
+}
+
+func conv_func_1cca506427df37be_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(int, int), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 2 {
+			return nil, _errors.New("expected function with 2 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 int, inArg1 int) {
+			arg0, err := conv_int_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			arg1, err := conv_int_toRye(ps, ctx, inArg1)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0, arg1)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(int, int)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(int, int)" + "), but got " + objectType(ps, obj))
 }
 
 func conv_func_9b2c08b3b7ae2eca_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(int, int) image_color.Color, error) {
@@ -102785,6 +108400,104 @@ func conv_func_d3cada6af991d125_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		}
 	}
 	return nil, _errors.New("expected function or native of type go(" + "func(string) (int, error)" + "), but got " + objectType(ps, obj))
+}
+
+func conv_func_57db678a062ae0e8_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(string) (io.ReadCloser, error), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 1 {
+			return nil, _errors.New("expected function with 1 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 string) (_ io.ReadCloser, _ error) {
+			arg0, err := conv_string_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+			blk, ok := ps.Res.(_env.Block)
+			if !ok {
+				showFunctionError(ps, fn, _errors.New("expected block with results, but got " +  objectType(ps, ps.Res)))
+				return
+			}
+			if len(blk.Series.S) != 2 {
+				showFunctionError(ps, fn, _fmt.Errorf("expected 2 results, but got %v", len(blk.Series.S)))
+				return
+			}
+			res0, err := conv_io_ReadCloser_fromRye(ps, ctx, blk.Series.S[0])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			res1, err := conv_error_fromRye(ps, ctx, blk.Series.S[1])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			return res0, res1
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(string) (io.ReadCloser, error)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(string) (io.ReadCloser, error)" + "), but got " + objectType(ps, obj))
+}
+
+func conv_func_44004573ce1826e5_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(string) (io.WriteCloser, error), error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if fn, ok := obj.(_env.Function); ok {
+		if fn.Argsn != 1 {
+			return nil, _errors.New("expected function with 1 args, but got " + objectType(ps, obj))
+		}
+		return func(inArg0 string) (_ io.WriteCloser, _ error) {
+			arg0, err := conv_string_toRye(ps, ctx, inArg0)
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			_evaldo.CallFunctionArgsN(fn, ps, ctx, arg0)
+			if e, ok := ps.Res.(*_env.Error); ok {
+				showFunctionError(ps, fn, _errors.New(e.Message))
+				return
+			}
+			blk, ok := ps.Res.(_env.Block)
+			if !ok {
+				showFunctionError(ps, fn, _errors.New("expected block with results, but got " +  objectType(ps, ps.Res)))
+				return
+			}
+			if len(blk.Series.S) != 2 {
+				showFunctionError(ps, fn, _fmt.Errorf("expected 2 results, but got %v", len(blk.Series.S)))
+				return
+			}
+			res0, err := conv_io_WriteCloser_fromRye(ps, ctx, blk.Series.S[0])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			res1, err := conv_error_fromRye(ps, ctx, blk.Series.S[1])
+			if err != nil {
+				showFunctionError(ps, fn, err)
+				return
+			}
+			return res0, res1
+		}, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(func(string) (io.WriteCloser, error)); ok {
+			return v, nil
+		}
+	}
+	return nil, _errors.New("expected function or native of type go(" + "func(string) (io.WriteCloser, error)" + "), but got " + objectType(ps, obj))
 }
 
 func conv_func_5ca4126b7e80d35d_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (func(string) (io_fs.FS, error), error) {
@@ -104568,6 +110281,94 @@ func conv_func_ac8d428475dbbac4_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 	return nil, _errors.New("expected function or native of type go(" + "func(x int, y int, w int, h int) image_color.Color" + "), but got " + objectType(ps, obj))
 }
 
+// fyne_io_fyne_v2.Accessible
+type interface_c5b050c949d2b578 struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_AccessibilityLabel func() string
+	fn_AccessibilityRole func() fyne_io_fyne_v2.AccessibleRole
+}
+func (i *interface_c5b050c949d2b578) AccessibilityLabel() (_ string) {
+	if i.fn_AccessibilityLabel == nil {
+		return
+	}
+	return i.fn_AccessibilityLabel()
+}
+func (i *interface_c5b050c949d2b578) AccessibilityRole() (_ fyne_io_fyne_v2.AccessibleRole) {
+	if i.fn_AccessibilityRole == nil {
+		return
+	}
+	return i.fn_AccessibilityRole()
+}
+func conv_fyne_io_fyne_v2_Accessible_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.Accessible, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2.Accessible); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "AccessibilityLabel, AccessibilityRole" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_c5b050c949d2b578{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("AccessibilityLabel")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_AccessibilityLabel = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method AccessibilityLabel() (string)")
+	}
+	idx, ok = ps.Idx.GetIndex("AccessibilityRole")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_ae40ed975035352d_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_AccessibilityRole = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method AccessibilityRole() (fyne_io_fyne_v2.AccessibleRole)")
+	}
+	return i, nil
+}
+
+func conv_fyne_io_fyne_v2_AccessibleRole_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.AccessibleRole, error) {
+	if ul, err := conv_string_fromRye(ps, ctx, obj); err == nil {
+		return (fyne_io_fyne_v2.AccessibleRole)(ul), nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2.AccessibleRole); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2.AccessibleRole); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2.AccessibleRole
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2.AccessibleRole" + " or underlying, but got " + objectType(ps, obj))
+}
+
 func conv_fyne_io_fyne_v2_Animation_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.Animation, error) {
 	if ul, err := conv_struct_7295a638e8cd6bf0_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2.Animation)(ul), nil
@@ -104608,6 +110409,8 @@ func conv_fyne_io_fyne_v2_AnimationCurve_fromRye(ps *_env.ProgramState, ctx *_en
 type interface_a834e114b2ac7395 struct {
 	ps *_env.ProgramState
 	ctx *_env.RyeCtx
+	fn_Cache func() fyne_io_fyne_v2.Cache
+	fn_CancelScheduledNotification func(string) error
 	fn_Clipboard func() fyne_io_fyne_v2.Clipboard
 	fn_CloudProvider func() fyne_io_fyne_v2.CloudProvider
 	fn_Driver func() fyne_io_fyne_v2.Driver
@@ -104619,12 +110422,25 @@ type interface_a834e114b2ac7395 struct {
 	fn_Preferences func() fyne_io_fyne_v2.Preferences
 	fn_Quit func()
 	fn_Run func()
+	fn_ScheduleNotification func(*fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error)
 	fn_SendNotification func(*fyne_io_fyne_v2.Notification)
 	fn_SetCloudProvider func(fyne_io_fyne_v2.CloudProvider)
 	fn_SetIcon func(fyne_io_fyne_v2.Resource)
 	fn_Settings func() fyne_io_fyne_v2.Settings
 	fn_Storage func() fyne_io_fyne_v2.Storage
 	fn_UniqueID func() string
+}
+func (i *interface_a834e114b2ac7395) Cache() (_ fyne_io_fyne_v2.Cache) {
+	if i.fn_Cache == nil {
+		return
+	}
+	return i.fn_Cache()
+}
+func (i *interface_a834e114b2ac7395) CancelScheduledNotification(arg0 string) (_ error) {
+	if i.fn_CancelScheduledNotification == nil {
+		return
+	}
+	return i.fn_CancelScheduledNotification(arg0)
 }
 func (i *interface_a834e114b2ac7395) Clipboard() (_ fyne_io_fyne_v2.Clipboard) {
 	if i.fn_Clipboard == nil {
@@ -104692,6 +110508,12 @@ func (i *interface_a834e114b2ac7395) Run() {
 	}
 	i.fn_Run()
 }
+func (i *interface_a834e114b2ac7395) ScheduleNotification(arg0 *fyne_io_fyne_v2.Notification, arg1 time.Time) (_ *fyne_io_fyne_v2.ScheduledNotification, _ error) {
+	if i.fn_ScheduleNotification == nil {
+		return
+	}
+	return i.fn_ScheduleNotification(arg0, arg1)
+}
 func (i *interface_a834e114b2ac7395) SendNotification(arg0 *fyne_io_fyne_v2.Notification) {
 	if i.fn_SendNotification == nil {
 		return
@@ -104737,21 +110559,51 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
-		return nil, _errors.New("expected native interface or context with methods " + "Clipboard, CloudProvider, Driver, Icon, Lifecycle, Metadata, NewWindow, OpenURL, Preferences, Quit, Run, SendNotification, SetCloudProvider, SetIcon, Settings, Storage, UniqueID" + ", but got " + objectType(ps, obj))
+		return nil, _errors.New("expected native interface or context with methods " + "Cache, CancelScheduledNotification, Clipboard, CloudProvider, Driver, Icon, Lifecycle, Metadata, NewWindow, OpenURL, Preferences, Quit, Run, ScheduleNotification, SendNotification, SetCloudProvider, SetIcon, Settings, Storage, UniqueID" + ", but got " + objectType(ps, obj))
 	}
 	i := &interface_a834e114b2ac7395{
 		ps: ps,
 		ctx: ctx,
 	}
 	var idx int
+	idx, ok = ps.Idx.GetIndex("Cache")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_8b6feaedde394187_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Cache = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Cache() (fyne_io_fyne_v2.Cache)")
+	}
+	idx, ok = ps.Idx.GetIndex("CancelScheduledNotification")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_CancelScheduledNotification = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method CancelScheduledNotification(string) (error)")
+	}
 	idx, ok = ps.Idx.GetIndex("Clipboard")
 	if ok {
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea6cda56fb28d1fb_fromRye(ps, &c, m)
+			fn, err := conv_func_ea6cda56fb28d1fb_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104766,7 +110618,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_147ea4f825df4605_fromRye(ps, &c, m)
+			fn, err := conv_func_147ea4f825df4605_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104781,7 +110633,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b9e6d01dac8a7fc1_fromRye(ps, &c, m)
+			fn, err := conv_func_b9e6d01dac8a7fc1_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104796,7 +110648,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104811,7 +110663,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_41c4cb19e7f44755_fromRye(ps, &c, m)
+			fn, err := conv_func_41c4cb19e7f44755_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104826,7 +110678,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ef0905965d07e203_fromRye(ps, &c, m)
+			fn, err := conv_func_ef0905965d07e203_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104841,7 +110693,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_706afe29b664ee66_fromRye(ps, &c, m)
+			fn, err := conv_func_706afe29b664ee66_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104856,7 +110708,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_40bb533a4fef7ade_fromRye(ps, &c, m)
+			fn, err := conv_func_40bb533a4fef7ade_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104871,7 +110723,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_137ac43fcae15cdf_fromRye(ps, &c, m)
+			fn, err := conv_func_137ac43fcae15cdf_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104886,7 +110738,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104901,7 +110753,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104911,12 +110763,27 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 	if !ok {
 		return nil, _errors.New("expected context with method Run()")
 	}
+	idx, ok = ps.Idx.GetIndex("ScheduleNotification")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_b56c9f6bd0f693a0_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_ScheduleNotification = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method ScheduleNotification(*fyne_io_fyne_v2.Notification, time.Time) (*fyne_io_fyne_v2.ScheduledNotification, error)")
+	}
 	idx, ok = ps.Idx.GetIndex("SendNotification")
 	if ok {
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8c95536b95ac0fe4_fromRye(ps, &c, m)
+			fn, err := conv_func_8c95536b95ac0fe4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104931,7 +110798,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_86e6cd1991c21641_fromRye(ps, &c, m)
+			fn, err := conv_func_86e6cd1991c21641_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104946,7 +110813,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_345780c1420acec5_fromRye(ps, &c, m)
+			fn, err := conv_func_345780c1420acec5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104961,7 +110828,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b225afe84e32dc3e_fromRye(ps, &c, m)
+			fn, err := conv_func_b225afe84e32dc3e_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104976,7 +110843,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_18d60753fe6a3860_fromRye(ps, &c, m)
+			fn, err := conv_func_18d60753fe6a3860_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -104991,7 +110858,7 @@ func conv_fyne_io_fyne_v2_App_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105035,6 +110902,142 @@ func conv_fyne_io_fyne_v2_BuildType_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 	}
 	var zero fyne_io_fyne_v2.BuildType
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2.BuildType" + " or underlying, but got " + objectType(ps, obj))
+}
+
+// fyne_io_fyne_v2.Cache
+type interface_5ae8dd1fd9405f3c struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_Exists func(string) bool
+	fn_Read func(string) (io.ReadCloser, error)
+	fn_Remove func(string) error
+	fn_RootURI func() fyne_io_fyne_v2.URI
+	fn_Write func(string) (io.WriteCloser, error)
+}
+func (i *interface_5ae8dd1fd9405f3c) Exists(arg0 string) (_ bool) {
+	if i.fn_Exists == nil {
+		return
+	}
+	return i.fn_Exists(arg0)
+}
+func (i *interface_5ae8dd1fd9405f3c) Read(arg0 string) (_ io.ReadCloser, _ error) {
+	if i.fn_Read == nil {
+		return
+	}
+	return i.fn_Read(arg0)
+}
+func (i *interface_5ae8dd1fd9405f3c) Remove(arg0 string) (_ error) {
+	if i.fn_Remove == nil {
+		return
+	}
+	return i.fn_Remove(arg0)
+}
+func (i *interface_5ae8dd1fd9405f3c) RootURI() (_ fyne_io_fyne_v2.URI) {
+	if i.fn_RootURI == nil {
+		return
+	}
+	return i.fn_RootURI()
+}
+func (i *interface_5ae8dd1fd9405f3c) Write(arg0 string) (_ io.WriteCloser, _ error) {
+	if i.fn_Write == nil {
+		return
+	}
+	return i.fn_Write(arg0)
+}
+func conv_fyne_io_fyne_v2_Cache_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.Cache, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2.Cache); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "Exists, Read, Remove, RootURI, Write" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_5ae8dd1fd9405f3c{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("Exists")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_c9564f217532ec81_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Exists = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Exists(string) (bool)")
+	}
+	idx, ok = ps.Idx.GetIndex("Read")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_57db678a062ae0e8_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Read = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Read(string) (io.ReadCloser, error)")
+	}
+	idx, ok = ps.Idx.GetIndex("Remove")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Remove = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Remove(string) (error)")
+	}
+	idx, ok = ps.Idx.GetIndex("RootURI")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_RootURI = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method RootURI() (fyne_io_fyne_v2.URI)")
+	}
+	idx, ok = ps.Idx.GetIndex("Write")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_44004573ce1826e5_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Write = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Write(string) (io.WriteCloser, error)")
+	}
+	return i, nil
 }
 
 // fyne_io_fyne_v2.Canvas
@@ -105191,7 +111194,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddShortcut, Capture, Content, Focus, FocusNext, FocusPrevious, Focused, InteractiveArea, OnTypedKey, OnTypedRune, Overlays, PixelCoordinateForPosition, Refresh, RemoveShortcut, Scale, SetContent, SetOnTypedKey, SetOnTypedRune, Size, Unfocus" + ", but got " + objectType(ps, obj))
 	}
@@ -105205,7 +111208,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5fa20c920511900f_fromRye(ps, &c, m)
+			fn, err := conv_func_5fa20c920511900f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105220,7 +111223,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d14f46fcdc868582_fromRye(ps, &c, m)
+			fn, err := conv_func_d14f46fcdc868582_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105235,7 +111238,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105250,7 +111253,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_05d897820b321755_fromRye(ps, &c, m)
+			fn, err := conv_func_05d897820b321755_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105265,7 +111268,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105280,7 +111283,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105295,7 +111298,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_56a4a2977ff33d45_fromRye(ps, &c, m)
+			fn, err := conv_func_56a4a2977ff33d45_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105310,7 +111313,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_51691f193cbe29f9_fromRye(ps, &c, m)
+			fn, err := conv_func_51691f193cbe29f9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105325,7 +111328,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9582f002b9626e55_fromRye(ps, &c, m)
+			fn, err := conv_func_9582f002b9626e55_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105340,7 +111343,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e9f9e8ed0a0608ed_fromRye(ps, &c, m)
+			fn, err := conv_func_e9f9e8ed0a0608ed_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105355,7 +111358,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7ee3d3a51b2e0e4b_fromRye(ps, &c, m)
+			fn, err := conv_func_7ee3d3a51b2e0e4b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105370,7 +111373,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_4e59245145ac2fd5_fromRye(ps, &c, m)
+			fn, err := conv_func_4e59245145ac2fd5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105385,7 +111388,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105400,7 +111403,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, &c, m)
+			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105415,7 +111418,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, &c, m)
+			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105430,7 +111433,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105445,7 +111448,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, &c, m)
+			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105460,7 +111463,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cd9499c5da41f3ef_fromRye(ps, &c, m)
+			fn, err := conv_func_cd9499c5da41f3ef_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105475,7 +111478,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105490,7 +111493,7 @@ func conv_fyne_io_fyne_v2_Canvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105580,7 +111583,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Hide, MinSize, Move, Position, Refresh, Resize, Show, Size, Visible" + ", but got " + objectType(ps, obj))
 	}
@@ -105594,7 +111597,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105609,7 +111612,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105624,7 +111627,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a0f4743a5107d778_fromRye(ps, &c, m)
+			fn, err := conv_func_a0f4743a5107d778_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105639,7 +111642,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_df08f40674f245c0_fromRye(ps, &c, m)
+			fn, err := conv_func_df08f40674f245c0_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105654,7 +111657,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105669,7 +111672,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105684,7 +111687,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105699,7 +111702,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105714,7 +111717,7 @@ func conv_fyne_io_fyne_v2_CanvasObject_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105755,7 +111758,7 @@ func conv_fyne_io_fyne_v2_Clipboard_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Content, SetContent" + ", but got " + objectType(ps, obj))
 	}
@@ -105769,7 +111772,7 @@ func conv_fyne_io_fyne_v2_Clipboard_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105784,7 +111787,7 @@ func conv_fyne_io_fyne_v2_Clipboard_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105846,7 +111849,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Cleanup, ProviderDescription, ProviderIcon, ProviderName, Setup" + ", but got " + objectType(ps, obj))
 	}
@@ -105860,7 +111863,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5a0c2809284705dc_fromRye(ps, &c, m)
+			fn, err := conv_func_5a0c2809284705dc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105875,7 +111878,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105890,7 +111893,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105905,7 +111908,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105920,7 +111923,7 @@ func conv_fyne_io_fyne_v2_CloudProvider_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_0a4c8d20667aa5a2_fromRye(ps, &c, m)
+			fn, err := conv_func_0a4c8d20667aa5a2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -105954,7 +111957,7 @@ func conv_fyne_io_fyne_v2_CloudProviderPreferences_fromRye(ps *_env.ProgramState
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CloudPreferences" + ", but got " + objectType(ps, obj))
 	}
@@ -105968,7 +111971,7 @@ func conv_fyne_io_fyne_v2_CloudProviderPreferences_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_935ad2f7ebaba9ff_fromRye(ps, &c, m)
+			fn, err := conv_func_935ad2f7ebaba9ff_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106002,7 +112005,7 @@ func conv_fyne_io_fyne_v2_CloudProviderStorage_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CloudStorage" + ", but got " + objectType(ps, obj))
 	}
@@ -106016,7 +112019,7 @@ func conv_fyne_io_fyne_v2_CloudProviderStorage_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_72f1a913e2dd6980_fromRye(ps, &c, m)
+			fn, err := conv_func_72f1a913e2dd6980_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106118,7 +112121,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "HasKeyboard, IsBrowser, IsMobile, Locale, Orientation, SystemScaleForWindow" + ", but got " + objectType(ps, obj))
 	}
@@ -106132,7 +112135,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106147,7 +112150,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106162,7 +112165,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106177,7 +112180,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ee1cc63b7d745265_fromRye(ps, &c, m)
+			fn, err := conv_func_ee1cc63b7d745265_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106192,7 +112195,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e42edc62f088ec05_fromRye(ps, &c, m)
+			fn, err := conv_func_e42edc62f088ec05_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106207,7 +112210,7 @@ func conv_fyne_io_fyne_v2_Device_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_728b3810d4c9d052_fromRye(ps, &c, m)
+			fn, err := conv_func_728b3810d4c9d052_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106273,7 +112276,7 @@ func conv_fyne_io_fyne_v2_Disableable_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Disable, Disabled, Enable" + ", but got " + objectType(ps, obj))
 	}
@@ -106287,7 +112290,7 @@ func conv_fyne_io_fyne_v2_Disableable_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106302,7 +112305,7 @@ func conv_fyne_io_fyne_v2_Disableable_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106317,7 +112320,7 @@ func conv_fyne_io_fyne_v2_Disableable_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106351,7 +112354,7 @@ func conv_fyne_io_fyne_v2_DoubleTappable_fromRye(ps *_env.ProgramState, ctx *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "DoubleTapped" + ", but got " + objectType(ps, obj))
 	}
@@ -106365,7 +112368,7 @@ func conv_fyne_io_fyne_v2_DoubleTappable_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9da56024568270d3_fromRye(ps, &c, m)
+			fn, err := conv_func_9da56024568270d3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106424,7 +112427,7 @@ func conv_fyne_io_fyne_v2_Draggable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "DragEnd, Dragged" + ", but got " + objectType(ps, obj))
 	}
@@ -106438,7 +112441,7 @@ func conv_fyne_io_fyne_v2_Draggable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106453,7 +112456,7 @@ func conv_fyne_io_fyne_v2_Draggable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fea87b8a9862b31b_fromRye(ps, &c, m)
+			fn, err := conv_func_fea87b8a9862b31b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106571,7 +112574,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AbsolutePositionForObject, AllWindows, CanvasForObject, CreateWindow, Device, DoFromGoroutine, DoubleTapDelay, Quit, RenderedTextSize, Run, SetDisableScreenBlanking, StartAnimation, StopAnimation" + ", but got " + objectType(ps, obj))
 	}
@@ -106585,7 +112588,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_baa0817ebd327914_fromRye(ps, &c, m)
+			fn, err := conv_func_baa0817ebd327914_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106600,7 +112603,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9bdd6403ad44eb1f_fromRye(ps, &c, m)
+			fn, err := conv_func_9bdd6403ad44eb1f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106615,7 +112618,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bb1011527ff44cc3_fromRye(ps, &c, m)
+			fn, err := conv_func_bb1011527ff44cc3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106630,7 +112633,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_706afe29b664ee66_fromRye(ps, &c, m)
+			fn, err := conv_func_706afe29b664ee66_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106645,7 +112648,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5f5500395dde39f9_fromRye(ps, &c, m)
+			fn, err := conv_func_5f5500395dde39f9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106660,7 +112663,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e195828f47a60ca3_fromRye(ps, &c, m)
+			fn, err := conv_func_e195828f47a60ca3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106675,7 +112678,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8eda3be7b8df80f1_fromRye(ps, &c, m)
+			fn, err := conv_func_8eda3be7b8df80f1_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106690,7 +112693,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106705,7 +112708,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_33c6c0a9cfa33256_fromRye(ps, &c, m)
+			fn, err := conv_func_33c6c0a9cfa33256_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106720,7 +112723,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106735,7 +112738,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c805af5229d885c4_fromRye(ps, &c, m)
+			fn, err := conv_func_c805af5229d885c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106750,7 +112753,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_159afff43a6baf8f_fromRye(ps, &c, m)
+			fn, err := conv_func_159afff43a6baf8f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106765,7 +112768,7 @@ func conv_fyne_io_fyne_v2_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_159afff43a6baf8f_fromRye(ps, &c, m)
+			fn, err := conv_func_159afff43a6baf8f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106820,7 +112823,7 @@ func conv_fyne_io_fyne_v2_Focusable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "FocusGained, FocusLost, TypedKey, TypedRune" + ", but got " + objectType(ps, obj))
 	}
@@ -106834,7 +112837,7 @@ func conv_fyne_io_fyne_v2_Focusable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106849,7 +112852,7 @@ func conv_fyne_io_fyne_v2_Focusable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106864,7 +112867,7 @@ func conv_fyne_io_fyne_v2_Focusable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, &c, m)
+			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106879,7 +112882,7 @@ func conv_fyne_io_fyne_v2_Focusable_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, &c, m)
+			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -106999,7 +113002,7 @@ func conv_fyne_io_fyne_v2_KeyboardShortcut_fromRye(ps *_env.ProgramState, ctx *_
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Key, Mod, ShortcutName" + ", but got " + objectType(ps, obj))
 	}
@@ -107013,7 +113016,7 @@ func conv_fyne_io_fyne_v2_KeyboardShortcut_fromRye(ps *_env.ProgramState, ctx *_
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5eff61a9fc0375b1_fromRye(ps, &c, m)
+			fn, err := conv_func_5eff61a9fc0375b1_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107028,7 +113031,7 @@ func conv_fyne_io_fyne_v2_KeyboardShortcut_fromRye(ps *_env.ProgramState, ctx *_
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_544cca95424f2567_fromRye(ps, &c, m)
+			fn, err := conv_func_544cca95424f2567_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107043,7 +113046,7 @@ func conv_fyne_io_fyne_v2_KeyboardShortcut_fromRye(ps *_env.ProgramState, ctx *_
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107084,7 +113087,7 @@ func conv_fyne_io_fyne_v2_Layout_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Layout, MinSize" + ", but got " + objectType(ps, obj))
 	}
@@ -107098,7 +113101,7 @@ func conv_fyne_io_fyne_v2_Layout_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5232705e84440932_fromRye(ps, &c, m)
+			fn, err := conv_func_5232705e84440932_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107113,7 +113116,7 @@ func conv_fyne_io_fyne_v2_Layout_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2417df439fff43fe_fromRye(ps, &c, m)
+			fn, err := conv_func_2417df439fff43fe_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107287,7 +113290,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "BackgroundColor, ButtonColor, DisabledButtonColor, DisabledTextColor, FocusColor, HoverColor, IconInlineSize, Padding, PlaceHolderColor, PrimaryColor, ScrollBarColor, ScrollBarSize, ScrollBarSmallSize, ShadowColor, TextBoldFont, TextBoldItalicFont, TextColor, TextFont, TextItalicFont, TextMonospaceFont, TextSize" + ", but got " + objectType(ps, obj))
 	}
@@ -107301,7 +113304,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107316,7 +113319,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107331,7 +113334,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107346,7 +113349,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107361,7 +113364,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107376,7 +113379,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107391,7 +113394,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107406,7 +113409,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107421,7 +113424,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107436,7 +113439,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107451,7 +113454,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107466,7 +113469,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107481,7 +113484,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107496,7 +113499,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107511,7 +113514,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107526,7 +113529,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107541,7 +113544,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107556,7 +113559,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107571,7 +113574,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107586,7 +113589,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107601,7 +113604,7 @@ func conv_fyne_io_fyne_v2_LegacyTheme_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107656,7 +113659,7 @@ func conv_fyne_io_fyne_v2_Lifecycle_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "SetOnEnteredForeground, SetOnExitedForeground, SetOnStarted, SetOnStopped" + ", but got " + objectType(ps, obj))
 	}
@@ -107670,7 +113673,7 @@ func conv_fyne_io_fyne_v2_Lifecycle_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107685,7 +113688,7 @@ func conv_fyne_io_fyne_v2_Lifecycle_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107700,7 +113703,7 @@ func conv_fyne_io_fyne_v2_Lifecycle_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107715,7 +113718,7 @@ func conv_fyne_io_fyne_v2_Lifecycle_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107812,7 +113815,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Authority, Extension, Fragment, List, MimeType, Name, Path, Query, Scheme, String" + ", but got " + objectType(ps, obj))
 	}
@@ -107826,7 +113829,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107841,7 +113844,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107856,7 +113859,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107871,7 +113874,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f32ce73f7c730cf6_fromRye(ps, &c, m)
+			fn, err := conv_func_f32ce73f7c730cf6_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107886,7 +113889,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107901,7 +113904,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107916,7 +113919,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107931,7 +113934,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107946,7 +113949,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -107961,7 +113964,7 @@ func conv_fyne_io_fyne_v2_ListableURI_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108106,7 +114109,7 @@ func conv_fyne_io_fyne_v2_OverlayStack_fromRye(ps *_env.ProgramState, ctx *_env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Add, List, Remove, Top" + ", but got " + objectType(ps, obj))
 	}
@@ -108120,7 +114123,7 @@ func conv_fyne_io_fyne_v2_OverlayStack_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108135,7 +114138,7 @@ func conv_fyne_io_fyne_v2_OverlayStack_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_14957bffb7f9c720_fromRye(ps, &c, m)
+			fn, err := conv_func_14957bffb7f9c720_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108150,7 +114153,7 @@ func conv_fyne_io_fyne_v2_OverlayStack_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108165,7 +114168,7 @@ func conv_fyne_io_fyne_v2_OverlayStack_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108417,7 +114420,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddChangeListener, Bool, BoolList, BoolListWithFallback, BoolWithFallback, ChangeListeners, Float, FloatList, FloatListWithFallback, FloatWithFallback, Int, IntList, IntListWithFallback, IntWithFallback, RemoveValue, SetBool, SetBoolList, SetFloat, SetFloatList, SetInt, SetIntList, SetString, SetStringList, String, StringList, StringListWithFallback, StringWithFallback" + ", but got " + objectType(ps, obj))
 	}
@@ -108431,7 +114434,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108446,7 +114449,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c9564f217532ec81_fromRye(ps, &c, m)
+			fn, err := conv_func_c9564f217532ec81_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108461,7 +114464,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8a9c12798f100299_fromRye(ps, &c, m)
+			fn, err := conv_func_8a9c12798f100299_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108476,7 +114479,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d56138e504a04dc1_fromRye(ps, &c, m)
+			fn, err := conv_func_d56138e504a04dc1_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108491,7 +114494,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bb281b397d06cd6d_fromRye(ps, &c, m)
+			fn, err := conv_func_bb281b397d06cd6d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108506,7 +114509,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d195e810b5fea9_fromRye(ps, &c, m)
+			fn, err := conv_func_28d195e810b5fea9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108521,7 +114524,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_eb6c79b9920e482b_fromRye(ps, &c, m)
+			fn, err := conv_func_eb6c79b9920e482b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108536,7 +114539,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fea8e0d899e8c4a3_fromRye(ps, &c, m)
+			fn, err := conv_func_fea8e0d899e8c4a3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108551,7 +114554,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6d211bae3f5f12fb_fromRye(ps, &c, m)
+			fn, err := conv_func_6d211bae3f5f12fb_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108566,7 +114569,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_506d355e74eff1f7_fromRye(ps, &c, m)
+			fn, err := conv_func_506d355e74eff1f7_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108581,7 +114584,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2cea72bc7e9fa262_fromRye(ps, &c, m)
+			fn, err := conv_func_2cea72bc7e9fa262_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108596,7 +114599,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2dd3f3d3eefd59fa_fromRye(ps, &c, m)
+			fn, err := conv_func_2dd3f3d3eefd59fa_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108611,7 +114614,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2038b23eaa57482d_fromRye(ps, &c, m)
+			fn, err := conv_func_2038b23eaa57482d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108626,7 +114629,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_74a208f5a7edc875_fromRye(ps, &c, m)
+			fn, err := conv_func_74a208f5a7edc875_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108641,7 +114644,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108656,7 +114659,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8134950f9160fa37_fromRye(ps, &c, m)
+			fn, err := conv_func_8134950f9160fa37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108671,7 +114674,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_20866c8b8105e623_fromRye(ps, &c, m)
+			fn, err := conv_func_20866c8b8105e623_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108686,7 +114689,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea61371a78a27897_fromRye(ps, &c, m)
+			fn, err := conv_func_ea61371a78a27897_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108701,7 +114704,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a1c1518b70cd9393_fromRye(ps, &c, m)
+			fn, err := conv_func_a1c1518b70cd9393_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108716,7 +114719,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8a0c32bc939f0824_fromRye(ps, &c, m)
+			fn, err := conv_func_8a0c32bc939f0824_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108731,7 +114734,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b7cae8b95badbda0_fromRye(ps, &c, m)
+			fn, err := conv_func_b7cae8b95badbda0_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108746,7 +114749,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_243bb691b35d881c_fromRye(ps, &c, m)
+			fn, err := conv_func_243bb691b35d881c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108761,7 +114764,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5809eba2613a1f88_fromRye(ps, &c, m)
+			fn, err := conv_func_5809eba2613a1f88_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108776,7 +114779,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8bf9b8ec83a26bfc_fromRye(ps, &c, m)
+			fn, err := conv_func_8bf9b8ec83a26bfc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108791,7 +114794,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1b5153bbf4014544_fromRye(ps, &c, m)
+			fn, err := conv_func_1b5153bbf4014544_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108806,7 +114809,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_3cff9b568bb1c6ad_fromRye(ps, &c, m)
+			fn, err := conv_func_3cff9b568bb1c6ad_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108821,7 +114824,7 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a6b0a803af1d2b55_fromRye(ps, &c, m)
+			fn, err := conv_func_a6b0a803af1d2b55_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108830,6 +114833,76 @@ func conv_fyne_io_fyne_v2_Preferences_fromRye(ps *_env.ProgramState, ctx *_env.R
 	}
 	if !ok {
 		return nil, _errors.New("expected context with method StringWithFallback(string, string) (string)")
+	}
+	return i, nil
+}
+
+// fyne_io_fyne_v2.Requireable
+type interface_cee36876ee09ed19 struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_HasValue func() bool
+	fn_SetOnRequiredChanged func(func(bool))
+}
+func (i *interface_cee36876ee09ed19) HasValue() (_ bool) {
+	if i.fn_HasValue == nil {
+		return
+	}
+	return i.fn_HasValue()
+}
+func (i *interface_cee36876ee09ed19) SetOnRequiredChanged(arg0 func(bool)) {
+	if i.fn_SetOnRequiredChanged == nil {
+		return
+	}
+	i.fn_SetOnRequiredChanged(arg0)
+}
+func conv_fyne_io_fyne_v2_Requireable_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.Requireable, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2.Requireable); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "HasValue, SetOnRequiredChanged" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_cee36876ee09ed19{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("HasValue")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_HasValue = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method HasValue() (bool)")
+	}
+	idx, ok = ps.Idx.GetIndex("SetOnRequiredChanged")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_ff6aefd2695534cf_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetOnRequiredChanged = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetOnRequiredChanged(func(bool))")
 	}
 	return i, nil
 }
@@ -108862,7 +114935,7 @@ func conv_fyne_io_fyne_v2_Resource_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Content, Name" + ", but got " + objectType(ps, obj))
 	}
@@ -108876,7 +114949,7 @@ func conv_fyne_io_fyne_v2_Resource_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_69ed9542ae89467a_fromRye(ps, &c, m)
+			fn, err := conv_func_69ed9542ae89467a_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108891,7 +114964,7 @@ func conv_fyne_io_fyne_v2_Resource_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -108902,6 +114975,21 @@ func conv_fyne_io_fyne_v2_Resource_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		return nil, _errors.New("expected context with method Name() (string)")
 	}
 	return i, nil
+}
+
+func conv_fyne_io_fyne_v2_ScheduledNotification_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.ScheduledNotification, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2.ScheduledNotification); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2.ScheduledNotification); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2.ScheduledNotification
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2.ScheduledNotification" + " or underlying, but got " + objectType(ps, obj))
 }
 
 func conv_fyne_io_fyne_v2_ScrollDirection_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.ScrollDirection, error) {
@@ -108961,7 +115049,7 @@ func conv_fyne_io_fyne_v2_Scrollable_fromRye(ps *_env.ProgramState, ctx *_env.Ry
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Scrolled" + ", but got " + objectType(ps, obj))
 	}
@@ -108975,7 +115063,7 @@ func conv_fyne_io_fyne_v2_Scrollable_fromRye(ps *_env.ProgramState, ctx *_env.Ry
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b20245b01e53af6c_fromRye(ps, &c, m)
+			fn, err := conv_func_b20245b01e53af6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109009,7 +115097,7 @@ func conv_fyne_io_fyne_v2_SecondaryTappable_fromRye(ps *_env.ProgramState, ctx *
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "TappedSecondary" + ", but got " + objectType(ps, obj))
 	}
@@ -109023,7 +115111,7 @@ func conv_fyne_io_fyne_v2_SecondaryTappable_fromRye(ps *_env.ProgramState, ctx *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9da56024568270d3_fromRye(ps, &c, m)
+			fn, err := conv_func_9da56024568270d3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109113,7 +115201,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddChangeListener, AddListener, BuildType, PrimaryColor, Scale, SetTheme, ShowAnimations, Theme, ThemeVariant" + ", but got " + objectType(ps, obj))
 	}
@@ -109127,7 +115215,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff91be9795dfe114_fromRye(ps, &c, m)
+			fn, err := conv_func_ff91be9795dfe114_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109142,7 +115230,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53fc352641162a5d_fromRye(ps, &c, m)
+			fn, err := conv_func_53fc352641162a5d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109157,7 +115245,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_768e412d51eee251_fromRye(ps, &c, m)
+			fn, err := conv_func_768e412d51eee251_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109172,7 +115260,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109187,7 +115275,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, &c, m)
+			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109202,7 +115290,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_4cdff62f636540d2_fromRye(ps, &c, m)
+			fn, err := conv_func_4cdff62f636540d2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109217,7 +115305,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109232,7 +115320,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8cef3cd61ac0bccc_fromRye(ps, &c, m)
+			fn, err := conv_func_8cef3cd61ac0bccc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109247,7 +115335,7 @@ func conv_fyne_io_fyne_v2_Settings_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_77b151f5081bedad_fromRye(ps, &c, m)
+			fn, err := conv_func_77b151f5081bedad_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109281,7 +115369,7 @@ func conv_fyne_io_fyne_v2_Shortcut_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ShortcutName" + ", but got " + objectType(ps, obj))
 	}
@@ -109295,7 +115383,7 @@ func conv_fyne_io_fyne_v2_Shortcut_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109309,7 +115397,7 @@ func conv_fyne_io_fyne_v2_Shortcut_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 }
 
 func conv_fyne_io_fyne_v2_ShortcutCopy_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.ShortcutCopy, error) {
-	if ul, err := conv_struct_8054143693d87be0_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_f858b9ecfa82b65f_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2.ShortcutCopy)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -109327,7 +115415,7 @@ func conv_fyne_io_fyne_v2_ShortcutCopy_fromRye(ps *_env.ProgramState, ctx *_env.
 }
 
 func conv_fyne_io_fyne_v2_ShortcutCut_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.ShortcutCut, error) {
-	if ul, err := conv_struct_8054143693d87be0_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_f858b9ecfa82b65f_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2.ShortcutCut)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -109360,7 +115448,7 @@ func conv_fyne_io_fyne_v2_ShortcutHandler_fromRye(ps *_env.ProgramState, ctx *_e
 }
 
 func conv_fyne_io_fyne_v2_ShortcutPaste_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.ShortcutPaste, error) {
-	if ul, err := conv_struct_8054143693d87be0_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_f858b9ecfa82b65f_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2.ShortcutPaste)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -109452,7 +115540,7 @@ func conv_fyne_io_fyne_v2_Shortcutable_fromRye(ps *_env.ProgramState, ctx *_env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "TypedShortcut" + ", but got " + objectType(ps, obj))
 	}
@@ -109466,7 +115554,7 @@ func conv_fyne_io_fyne_v2_Shortcutable_fromRye(ps *_env.ProgramState, ctx *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, &c, m)
+			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109571,7 +115659,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Create, List, Open, Remove, RootURI, Save" + ", but got " + objectType(ps, obj))
 	}
@@ -109585,7 +115673,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_47ca20c55cf479ea_fromRye(ps, &c, m)
+			fn, err := conv_func_47ca20c55cf479ea_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109600,7 +115688,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, &c, m)
+			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109615,7 +115703,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_191c9ab3fbe2ec75_fromRye(ps, &c, m)
+			fn, err := conv_func_191c9ab3fbe2ec75_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109630,7 +115718,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, &c, m)
+			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109645,7 +115733,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, &c, m)
+			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109660,7 +115748,7 @@ func conv_fyne_io_fyne_v2_Storage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_47ca20c55cf479ea_fromRye(ps, &c, m)
+			fn, err := conv_func_47ca20c55cf479ea_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109712,7 +115800,7 @@ func conv_fyne_io_fyne_v2_Tabbable_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AcceptsTab" + ", but got " + objectType(ps, obj))
 	}
@@ -109726,7 +115814,7 @@ func conv_fyne_io_fyne_v2_Tabbable_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109760,7 +115848,7 @@ func conv_fyne_io_fyne_v2_Tappable_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Tapped" + ", but got " + objectType(ps, obj))
 	}
@@ -109774,7 +115862,7 @@ func conv_fyne_io_fyne_v2_Tappable_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9da56024568270d3_fromRye(ps, &c, m)
+			fn, err := conv_func_9da56024568270d3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109806,7 +115894,7 @@ func conv_fyne_io_fyne_v2_TextAlign_fromRye(ps *_env.ProgramState, ctx *_env.Rye
 }
 
 func conv_fyne_io_fyne_v2_TextStyle_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2.TextStyle, error) {
-	if ul, err := conv_struct_d3d12bcda55a8389_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_47aedfd96bc83ac3_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2.TextStyle)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -109901,7 +115989,7 @@ func conv_fyne_io_fyne_v2_Theme_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Color, Font, Icon, Size" + ", but got " + objectType(ps, obj))
 	}
@@ -109915,7 +116003,7 @@ func conv_fyne_io_fyne_v2_Theme_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_77caef9dd1b02387_fromRye(ps, &c, m)
+			fn, err := conv_func_77caef9dd1b02387_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109930,7 +116018,7 @@ func conv_fyne_io_fyne_v2_Theme_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_57afc532d0dadc20_fromRye(ps, &c, m)
+			fn, err := conv_func_57afc532d0dadc20_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109945,7 +116033,7 @@ func conv_fyne_io_fyne_v2_Theme_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b1eeaa14f755e4df_fromRye(ps, &c, m)
+			fn, err := conv_func_b1eeaa14f755e4df_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -109960,7 +116048,7 @@ func conv_fyne_io_fyne_v2_Theme_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_880d34e1c0c68e2f_fromRye(ps, &c, m)
+			fn, err := conv_func_880d34e1c0c68e2f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110080,7 +116168,7 @@ func conv_fyne_io_fyne_v2_ThemedResource_fromRye(ps *_env.ProgramState, ctx *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Content, Name, ThemeColorName" + ", but got " + objectType(ps, obj))
 	}
@@ -110094,7 +116182,7 @@ func conv_fyne_io_fyne_v2_ThemedResource_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_69ed9542ae89467a_fromRye(ps, &c, m)
+			fn, err := conv_func_69ed9542ae89467a_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110109,7 +116197,7 @@ func conv_fyne_io_fyne_v2_ThemedResource_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110124,7 +116212,7 @@ func conv_fyne_io_fyne_v2_ThemedResource_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fe4a90fc3aef3b78_fromRye(ps, &c, m)
+			fn, err := conv_func_fe4a90fc3aef3b78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110214,7 +116302,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Authority, Extension, Fragment, MimeType, Name, Path, Query, Scheme, String" + ", but got " + objectType(ps, obj))
 	}
@@ -110228,7 +116316,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110243,7 +116331,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110258,7 +116346,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110273,7 +116361,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110288,7 +116376,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110303,7 +116391,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110318,7 +116406,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110333,7 +116421,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110348,7 +116436,7 @@ func conv_fyne_io_fyne_v2_URI_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110396,7 +116484,7 @@ func conv_fyne_io_fyne_v2_URIReadCloser_fromRye(ps *_env.ProgramState, ctx *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read, URI" + ", but got " + objectType(ps, obj))
 	}
@@ -110410,7 +116498,7 @@ func conv_fyne_io_fyne_v2_URIReadCloser_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110425,7 +116513,7 @@ func conv_fyne_io_fyne_v2_URIReadCloser_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110440,7 +116528,7 @@ func conv_fyne_io_fyne_v2_URIReadCloser_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, &c, m)
+			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110537,7 +116625,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Authority, Extension, Fragment, Icon, MimeType, Name, Path, Query, Scheme, String" + ", but got " + objectType(ps, obj))
 	}
@@ -110551,7 +116639,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110566,7 +116654,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110581,7 +116669,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110596,7 +116684,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110611,7 +116699,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110626,7 +116714,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110641,7 +116729,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110656,7 +116744,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110671,7 +116759,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110686,7 +116774,7 @@ func conv_fyne_io_fyne_v2_URIWithIcon_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110734,7 +116822,7 @@ func conv_fyne_io_fyne_v2_URIWriteCloser_fromRye(ps *_env.ProgramState, ctx *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, URI, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -110748,7 +116836,7 @@ func conv_fyne_io_fyne_v2_URIWriteCloser_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110763,7 +116851,7 @@ func conv_fyne_io_fyne_v2_URIWriteCloser_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, &c, m)
+			fn, err := conv_func_81c5607b959e0b2b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110778,7 +116866,7 @@ func conv_fyne_io_fyne_v2_URIWriteCloser_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110819,7 +116907,7 @@ func conv_fyne_io_fyne_v2_Validatable_fromRye(ps *_env.ProgramState, ctx *_env.R
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "SetOnValidationChanged, Validate" + ", but got " + objectType(ps, obj))
 	}
@@ -110833,7 +116921,7 @@ func conv_fyne_io_fyne_v2_Validatable_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f61d1cc24b5a1eb3_fromRye(ps, &c, m)
+			fn, err := conv_func_f61d1cc24b5a1eb3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110848,7 +116936,7 @@ func conv_fyne_io_fyne_v2_Validatable_fromRye(ps *_env.ProgramState, ctx *_env.R
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110889,7 +116977,7 @@ func conv_fyne_io_fyne_v2_Vector2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Components, IsZero" + ", but got " + objectType(ps, obj))
 	}
@@ -110903,7 +116991,7 @@ func conv_fyne_io_fyne_v2_Vector2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c456d7d6002b91b9_fromRye(ps, &c, m)
+			fn, err := conv_func_c456d7d6002b91b9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -110918,7 +117006,7 @@ func conv_fyne_io_fyne_v2_Vector2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111015,7 +117103,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CreateRenderer, Hide, MinSize, Move, Position, Refresh, Resize, Show, Size, Visible" + ", but got " + objectType(ps, obj))
 	}
@@ -111029,7 +117117,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbcc23cebd7b760c_fromRye(ps, &c, m)
+			fn, err := conv_func_bbcc23cebd7b760c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111044,7 +117132,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111059,7 +117147,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111074,7 +117162,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a0f4743a5107d778_fromRye(ps, &c, m)
+			fn, err := conv_func_a0f4743a5107d778_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111089,7 +117177,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_df08f40674f245c0_fromRye(ps, &c, m)
+			fn, err := conv_func_df08f40674f245c0_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111104,7 +117192,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111119,7 +117207,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111134,7 +117222,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111149,7 +117237,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111164,7 +117252,7 @@ func conv_fyne_io_fyne_v2_Widget_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111226,7 +117314,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Destroy, Layout, MinSize, Objects, Refresh" + ", but got " + objectType(ps, obj))
 	}
@@ -111240,7 +117328,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111255,7 +117343,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111270,7 +117358,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111285,7 +117373,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_14957bffb7f9c720_fromRye(ps, &c, m)
+			fn, err := conv_func_14957bffb7f9c720_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111300,7 +117388,7 @@ func conv_fyne_io_fyne_v2_WidgetRenderer_fromRye(ps *_env.ProgramState, ctx *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111516,7 +117604,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Canvas, CenterOnScreen, Clipboard, Close, Content, FixedSize, FullScreen, Hide, Icon, MainMenu, Padded, RequestFocus, Resize, SetCloseIntercept, SetContent, SetFixedSize, SetFullScreen, SetIcon, SetMainMenu, SetMaster, SetOnClosed, SetOnDropped, SetPadded, SetTitle, Show, ShowAndRun, Title" + ", but got " + objectType(ps, obj))
 	}
@@ -111530,7 +117618,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_435db69c680a367f_fromRye(ps, &c, m)
+			fn, err := conv_func_435db69c680a367f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111545,7 +117633,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111560,7 +117648,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea6cda56fb28d1fb_fromRye(ps, &c, m)
+			fn, err := conv_func_ea6cda56fb28d1fb_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111575,7 +117663,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111590,7 +117678,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111605,7 +117693,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111620,7 +117708,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111635,7 +117723,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111650,7 +117738,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, &c, m)
+			fn, err := conv_func_e081fc94bbd8711f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111665,7 +117753,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c41c669f13e3085f_fromRye(ps, &c, m)
+			fn, err := conv_func_c41c669f13e3085f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111680,7 +117768,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111695,7 +117783,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111710,7 +117798,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111725,7 +117813,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111740,7 +117828,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111755,7 +117843,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c805af5229d885c4_fromRye(ps, &c, m)
+			fn, err := conv_func_c805af5229d885c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111770,7 +117858,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c805af5229d885c4_fromRye(ps, &c, m)
+			fn, err := conv_func_c805af5229d885c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111785,7 +117873,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_345780c1420acec5_fromRye(ps, &c, m)
+			fn, err := conv_func_345780c1420acec5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111800,7 +117888,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f324500f29ac3c43_fromRye(ps, &c, m)
+			fn, err := conv_func_f324500f29ac3c43_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111815,7 +117903,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111830,7 +117918,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111845,7 +117933,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_40293846d0f0772e_fromRye(ps, &c, m)
+			fn, err := conv_func_40293846d0f0772e_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111860,7 +117948,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c805af5229d885c4_fromRye(ps, &c, m)
+			fn, err := conv_func_c805af5229d885c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111875,7 +117963,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111890,7 +117978,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111905,7 +117993,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111920,7 +118008,7 @@ func conv_fyne_io_fyne_v2_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -111951,6 +118039,21 @@ func conv_fyne_io_fyne_v2_app_SettingsSchema_fromRye(ps *_env.ProgramState, ctx 
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_app.SettingsSchema" + " or underlying, but got " + objectType(ps, obj))
 }
 
+func conv_fyne_io_fyne_v2_canvas_ArbitraryPolygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.ArbitraryPolygon, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.ArbitraryPolygon); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.ArbitraryPolygon); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.ArbitraryPolygon
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.ArbitraryPolygon" + " or underlying, but got " + objectType(ps, obj))
+}
+
 func conv_fyne_io_fyne_v2_canvas_Arc_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Arc, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Arc); ok {
@@ -111966,8 +118069,38 @@ func conv_fyne_io_fyne_v2_canvas_Arc_fromRye(ps *_env.ProgramState, ctx *_env.Ry
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Arc" + " or underlying, but got " + objectType(ps, obj))
 }
 
+func conv_fyne_io_fyne_v2_canvas_BezierCurve_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.BezierCurve, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.BezierCurve); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.BezierCurve); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.BezierCurve
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.BezierCurve" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_Blur_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Blur, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Blur); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.Blur); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.Blur
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Blur" + " or underlying, but got " + objectType(ps, obj))
+}
+
 func conv_fyne_io_fyne_v2_canvas_Circle_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Circle, error) {
-	if ul, err := conv_struct_7e36ba97f6d13f96_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_024db3814965373c_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2_canvas.Circle)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -111982,6 +118115,21 @@ func conv_fyne_io_fyne_v2_canvas_Circle_fromRye(ps *_env.ProgramState, ctx *_env
 	}
 	var zero fyne_io_fyne_v2_canvas.Circle
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Circle" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_Ellipse_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Ellipse, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Ellipse); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.Ellipse); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.Ellipse
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Ellipse" + " or underlying, but got " + objectType(ps, obj))
 }
 
 func conv_fyne_io_fyne_v2_canvas_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Image, error) {
@@ -112068,21 +118216,6 @@ func conv_fyne_io_fyne_v2_canvas_LinearGradient_fromRye(ps *_env.ProgramState, c
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.LinearGradient" + " or underlying, but got " + objectType(ps, obj))
 }
 
-func conv_fyne_io_fyne_v2_canvas_Polygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Polygon, error) {
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Polygon); ok {
-			return *v, nil
-		}
-	}
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.Polygon); ok {
-			return v, nil
-		}
-	}
-	var zero fyne_io_fyne_v2_canvas.Polygon
-	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Polygon" + " or underlying, but got " + objectType(ps, obj))
-}
-
 func conv_fyne_io_fyne_v2_canvas_RadialGradient_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.RadialGradient, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.RadialGradient); ok {
@@ -112126,6 +118259,72 @@ func conv_fyne_io_fyne_v2_canvas_Rectangle_fromRye(ps *_env.ProgramState, ctx *_
 	}
 	var zero fyne_io_fyne_v2_canvas.Rectangle
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Rectangle" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_RegularPolygon_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.RegularPolygon, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.RegularPolygon); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.RegularPolygon); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.RegularPolygon
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.RegularPolygon" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_Shader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Shader, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Shader); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.Shader); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.Shader
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Shader" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Shadow, error) {
+	if ul, err := conv_struct_748144ccb4e2b04e_fromRye(ps, ctx, obj); err == nil {
+		return (fyne_io_fyne_v2_canvas.Shadow)(ul), nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.Shadow); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.Shadow); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.Shadow
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.Shadow" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_canvas_ShadowVariant_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.ShadowVariant, error) {
+	if ul, err := conv_int_fromRye(ps, ctx, obj); err == nil {
+		return (fyne_io_fyne_v2_canvas.ShadowVariant)(ul), nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_canvas.ShadowVariant); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_canvas.ShadowVariant); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_canvas.ShadowVariant
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_canvas.ShadowVariant" + " or underlying, but got " + objectType(ps, obj))
 }
 
 func conv_fyne_io_fyne_v2_canvas_Text_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_canvas.Text, error) {
@@ -112327,7 +118526,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataItem_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, RemoveListener" + ", but got " + objectType(ps, obj))
 	}
@@ -112341,7 +118540,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataItem_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112356,7 +118555,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataItem_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112411,7 +118610,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, GetItem, Length, RemoveListener" + ", but got " + objectType(ps, obj))
 	}
@@ -112425,7 +118624,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112440,7 +118639,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c944d31482da51dd_fromRye(ps, &c, m)
+			fn, err := conv_func_c944d31482da51dd_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112455,7 +118654,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, &c, m)
+			fn, err := conv_func_a5346c65977fc28d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112470,7 +118669,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataList_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112504,7 +118703,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataListener_fromRye(ps *_env.ProgramStat
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "DataChanged" + ", but got " + objectType(ps, obj))
 	}
@@ -112518,7 +118717,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataListener_fromRye(ps *_env.ProgramStat
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112573,7 +118772,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataMap_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, GetItem, Keys, RemoveListener" + ", but got " + objectType(ps, obj))
 	}
@@ -112587,7 +118786,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataMap_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112602,7 +118801,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataMap_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_312d93400c5f349b_fromRye(ps, &c, m)
+			fn, err := conv_func_312d93400c5f349b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112617,7 +118816,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataMap_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, &c, m)
+			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112632,7 +118831,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataMap_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112687,7 +118886,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataTree_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, ChildIDs, GetItem, RemoveListener" + ", but got " + objectType(ps, obj))
 	}
@@ -112701,7 +118900,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataTree_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112716,7 +118915,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataTree_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1b5153bbf4014544_fromRye(ps, &c, m)
+			fn, err := conv_func_1b5153bbf4014544_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112731,7 +118930,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataTree_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_312d93400c5f349b_fromRye(ps, &c, m)
+			fn, err := conv_func_312d93400c5f349b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112746,7 +118945,7 @@ func conv_fyne_io_fyne_v2_data_binding_DataTree_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112801,7 +119000,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_f05debaa65b741a0_fromRye(ps *_env.Pr
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, Get, RemoveListener, Set" + ", but got " + objectType(ps, obj))
 	}
@@ -112815,7 +119014,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_f05debaa65b741a0_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112830,7 +119029,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_f05debaa65b741a0_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_115d581aaf053c3d_fromRye(ps, &c, m)
+			fn, err := conv_func_115d581aaf053c3d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112845,7 +119044,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_f05debaa65b741a0_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112860,7 +119059,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_f05debaa65b741a0_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_581d14f56de3f49a_fromRye(ps, &c, m)
+			fn, err := conv_func_581d14f56de3f49a_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112915,7 +119114,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_96487864b92830ce_fromRye(ps *_env.Pr
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, Get, RemoveListener, Set" + ", but got " + objectType(ps, obj))
 	}
@@ -112929,7 +119128,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_96487864b92830ce_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112944,7 +119143,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_96487864b92830ce_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_aa614c8aa7ab15bd_fromRye(ps, &c, m)
+			fn, err := conv_func_aa614c8aa7ab15bd_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112959,7 +119158,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_96487864b92830ce_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -112974,7 +119173,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_96487864b92830ce_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c0ddb88d9d1eb840_fromRye(ps, &c, m)
+			fn, err := conv_func_c0ddb88d9d1eb840_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113029,7 +119228,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_2075cc56a075ee37_fromRye(ps *_env.Pr
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, Get, RemoveListener, Set" + ", but got " + objectType(ps, obj))
 	}
@@ -113043,7 +119242,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_2075cc56a075ee37_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113058,7 +119257,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_2075cc56a075ee37_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d7e8bbc6107723d2_fromRye(ps, &c, m)
+			fn, err := conv_func_d7e8bbc6107723d2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113073,7 +119272,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_2075cc56a075ee37_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113088,7 +119287,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_2075cc56a075ee37_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113143,7 +119342,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_4a90bf91abdf1339_fromRye(ps *_env.Pr
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, Get, RemoveListener, Set" + ", but got " + objectType(ps, obj))
 	}
@@ -113157,7 +119356,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_4a90bf91abdf1339_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113172,7 +119371,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_4a90bf91abdf1339_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f5a7f4dbcd1e45ec_fromRye(ps, &c, m)
+			fn, err := conv_func_f5a7f4dbcd1e45ec_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113187,7 +119386,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_4a90bf91abdf1339_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113202,7 +119401,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_4a90bf91abdf1339_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5a1970df3c26d177_fromRye(ps, &c, m)
+			fn, err := conv_func_5a1970df3c26d177_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113257,7 +119456,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_bad03b35835f6d7f_fromRye(ps *_env.Pr
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, Get, RemoveListener, Set" + ", but got " + objectType(ps, obj))
 	}
@@ -113271,7 +119470,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_bad03b35835f6d7f_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113286,7 +119485,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_bad03b35835f6d7f_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e2cfa6537a62ff24_fromRye(ps, &c, m)
+			fn, err := conv_func_e2cfa6537a62ff24_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113301,7 +119500,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_bad03b35835f6d7f_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113316,7 +119515,7 @@ func conv_fyne_io_fyne_v2_data_binding_Item_bad03b35835f6d7f_fromRye(ps *_env.Pr
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, &c, m)
+			fn, err := conv_func_d1f01fe0b454c6e5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113392,7 +119591,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "AddListener, GetItem, GetValue, Keys, Reload, RemoveListener, SetValue" + ", but got " + objectType(ps, obj))
 	}
@@ -113406,7 +119605,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113421,7 +119620,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_312d93400c5f349b_fromRye(ps, &c, m)
+			fn, err := conv_func_312d93400c5f349b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113436,7 +119635,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_032ce8595ffc4fd2_fromRye(ps, &c, m)
+			fn, err := conv_func_032ce8595ffc4fd2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113451,7 +119650,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, &c, m)
+			fn, err := conv_func_105732c3cd5d5669_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113466,7 +119665,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113481,7 +119680,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_179a59924a641bae_fromRye(ps, &c, m)
+			fn, err := conv_func_179a59924a641bae_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113496,7 +119695,7 @@ func conv_fyne_io_fyne_v2_data_binding_Struct_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53b783158ec6d6c7_fromRye(ps, &c, m)
+			fn, err := conv_func_53b783158ec6d6c7_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113624,7 +119823,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Dismiss, Hide, MinSize, Refresh, Resize, SetDismissText, SetOnClosed, Show" + ", but got " + objectType(ps, obj))
 	}
@@ -113638,7 +119837,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113653,7 +119852,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113668,7 +119867,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113683,7 +119882,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113698,7 +119897,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113713,7 +119912,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113728,7 +119927,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, &c, m)
+			fn, err := conv_func_23f274fe14b19d37_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113743,7 +119942,7 @@ func conv_fyne_io_fyne_v2_dialog_Dialog_fromRye(ps *_env.ProgramState, ctx *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113924,7 +120123,7 @@ func conv_fyne_io_fyne_v2_driver_NativeWindow_fromRye(ps *_env.ProgramState, ctx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "RunNative" + ", but got " + objectType(ps, obj))
 	}
@@ -113938,7 +120137,7 @@ func conv_fyne_io_fyne_v2_driver_NativeWindow_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_440962728d9cb3b4_fromRye(ps, &c, m)
+			fn, err := conv_func_440962728d9cb3b4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -113947,6 +120146,54 @@ func conv_fyne_io_fyne_v2_driver_NativeWindow_fromRye(ps *_env.ProgramState, ctx
 	}
 	if !ok {
 		return nil, _errors.New("expected context with method RunNative(func(context any))")
+	}
+	return i, nil
+}
+
+// fyne_io_fyne_v2_driver.Painter
+type interface_67cd3fb621565656 struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_Paint func(fyne_io_fyne_v2.Canvas) image.Image
+}
+func (i *interface_67cd3fb621565656) Paint(arg0 fyne_io_fyne_v2.Canvas) (_ image.Image) {
+	if i.fn_Paint == nil {
+		return
+	}
+	return i.fn_Paint(arg0)
+}
+func conv_fyne_io_fyne_v2_driver_Painter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver.Painter, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_driver.Painter); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "Paint" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_67cd3fb621565656{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("Paint")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_4118e960d98cbdbf_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Paint = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Paint(fyne_io_fyne_v2.Canvas) (image.Image)")
 	}
 	return i, nil
 }
@@ -114040,7 +120287,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_App_fromRye(ps *_env.ProgramState, ctx 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "SetSystemTrayIcon, SetSystemTrayMenu, SetSystemTrayWindow" + ", but got " + objectType(ps, obj))
 	}
@@ -114054,7 +120301,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_App_fromRye(ps *_env.ProgramState, ctx 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_345780c1420acec5_fromRye(ps, &c, m)
+			fn, err := conv_func_345780c1420acec5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114069,7 +120316,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_App_fromRye(ps *_env.ProgramState, ctx 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_23d819e79da8ea18_fromRye(ps, &c, m)
+			fn, err := conv_func_23d819e79da8ea18_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114084,7 +120331,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_App_fromRye(ps *_env.ProgramState, ctx 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_37d2bb2ddfdecc59_fromRye(ps, &c, m)
+			fn, err := conv_func_37d2bb2ddfdecc59_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114139,7 +120386,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Canvas_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "OnKeyDown, OnKeyUp, SetOnKeyDown, SetOnKeyUp" + ", but got " + objectType(ps, obj))
 	}
@@ -114153,7 +120400,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Canvas_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9582f002b9626e55_fromRye(ps, &c, m)
+			fn, err := conv_func_9582f002b9626e55_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114168,7 +120415,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Canvas_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9582f002b9626e55_fromRye(ps, &c, m)
+			fn, err := conv_func_9582f002b9626e55_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114183,7 +120430,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Canvas_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, &c, m)
+			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114198,7 +120445,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Canvas_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, &c, m)
+			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114232,7 +120479,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Cursor_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Image" + ", but got " + objectType(ps, obj))
 	}
@@ -114246,7 +120493,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Cursor_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a98bdd14a8075cc7_fromRye(ps, &c, m)
+			fn, err := conv_func_a98bdd14a8075cc7_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114280,7 +120527,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Cursorable_fromRye(ps *_env.ProgramStat
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Cursor" + ", but got " + objectType(ps, obj))
 	}
@@ -114294,7 +120541,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Cursorable_fromRye(ps *_env.ProgramStat
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_94a2d505a4452f27_fromRye(ps, &c, m)
+			fn, err := conv_func_94a2d505a4452f27_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114331,6 +120578,7 @@ type interface_06c3255d17681c50 struct {
 	ctx *_env.RyeCtx
 	fn_CreateSplashWindow func() fyne_io_fyne_v2.Window
 	fn_CurrentKeyModifiers func() fyne_io_fyne_v2.KeyModifier
+	fn_HasSecondaryDisplay func() bool
 }
 func (i *interface_06c3255d17681c50) CreateSplashWindow() (_ fyne_io_fyne_v2.Window) {
 	if i.fn_CreateSplashWindow == nil {
@@ -114344,6 +120592,12 @@ func (i *interface_06c3255d17681c50) CurrentKeyModifiers() (_ fyne_io_fyne_v2.Ke
 	}
 	return i.fn_CurrentKeyModifiers()
 }
+func (i *interface_06c3255d17681c50) HasSecondaryDisplay() (_ bool) {
+	if i.fn_HasSecondaryDisplay == nil {
+		return
+	}
+	return i.fn_HasSecondaryDisplay()
+}
 func conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver_desktop.Driver, error) {
 	if isNil(obj) {
 		return nil, nil
@@ -114353,9 +120607,9 @@ func conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps *_env.ProgramState, c
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
-		return nil, _errors.New("expected native interface or context with methods " + "CreateSplashWindow, CurrentKeyModifiers" + ", but got " + objectType(ps, obj))
+		return nil, _errors.New("expected native interface or context with methods " + "CreateSplashWindow, CurrentKeyModifiers, HasSecondaryDisplay" + ", but got " + objectType(ps, obj))
 	}
 	i := &interface_06c3255d17681c50{
 		ps: ps,
@@ -114367,7 +120621,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e983ce3c6621266b_fromRye(ps, &c, m)
+			fn, err := conv_func_e983ce3c6621266b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114382,7 +120636,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps *_env.ProgramState, c
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_544cca95424f2567_fromRye(ps, &c, m)
+			fn, err := conv_func_544cca95424f2567_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114391,6 +120645,21 @@ func conv_fyne_io_fyne_v2_driver_desktop_Driver_fromRye(ps *_env.ProgramState, c
 	}
 	if !ok {
 		return nil, _errors.New("expected context with method CurrentKeyModifiers() (fyne_io_fyne_v2.KeyModifier)")
+	}
+	idx, ok = ps.Idx.GetIndex("HasSecondaryDisplay")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_HasSecondaryDisplay = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method HasSecondaryDisplay() (bool)")
 	}
 	return i, nil
 }
@@ -114430,7 +120699,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Hoverable_fromRye(ps *_env.ProgramState
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "MouseIn, MouseMoved, MouseOut" + ", but got " + objectType(ps, obj))
 	}
@@ -114444,7 +120713,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Hoverable_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, &c, m)
+			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114459,7 +120728,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Hoverable_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, &c, m)
+			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114474,7 +120743,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Hoverable_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114543,7 +120812,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "FocusGained, FocusLost, KeyDown, KeyUp, TypedKey, TypedRune" + ", but got " + objectType(ps, obj))
 	}
@@ -114557,7 +120826,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114572,7 +120841,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114587,7 +120856,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, &c, m)
+			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114602,7 +120871,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, &c, m)
+			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114617,7 +120886,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, &c, m)
+			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114632,7 +120901,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Keyable_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, &c, m)
+			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114709,7 +120978,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Mouseable_fromRye(ps *_env.ProgramState
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "MouseDown, MouseUp" + ", but got " + objectType(ps, obj))
 	}
@@ -114723,7 +120992,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Mouseable_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, &c, m)
+			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114738,7 +121007,7 @@ func conv_fyne_io_fyne_v2_driver_desktop_Mouseable_fromRye(ps *_env.ProgramState
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, &c, m)
+			fn, err := conv_func_62ec64c818a46e62_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114767,6 +121036,98 @@ func conv_fyne_io_fyne_v2_driver_desktop_StandardCursor_fromRye(ps *_env.Program
 	}
 	var zero fyne_io_fyne_v2_driver_desktop.StandardCursor
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_driver_desktop.StandardCursor" + " or underlying, but got " + objectType(ps, obj))
+}
+
+// fyne_io_fyne_v2_driver_desktop.Window
+type interface_11fbc789405704b2 struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_RequestAlwaysOnTop func()
+	fn_RequestFullScreenSecondary func()
+	fn_RequestPosition func(int, int)
+}
+func (i *interface_11fbc789405704b2) RequestAlwaysOnTop() {
+	if i.fn_RequestAlwaysOnTop == nil {
+		return
+	}
+	i.fn_RequestAlwaysOnTop()
+}
+func (i *interface_11fbc789405704b2) RequestFullScreenSecondary() {
+	if i.fn_RequestFullScreenSecondary == nil {
+		return
+	}
+	i.fn_RequestFullScreenSecondary()
+}
+func (i *interface_11fbc789405704b2) RequestPosition(arg0 int, arg1 int) {
+	if i.fn_RequestPosition == nil {
+		return
+	}
+	i.fn_RequestPosition(arg0, arg1)
+}
+func conv_fyne_io_fyne_v2_driver_desktop_Window_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver_desktop.Window, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_driver_desktop.Window); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "RequestAlwaysOnTop, RequestFullScreenSecondary, RequestPosition" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_11fbc789405704b2{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("RequestAlwaysOnTop")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_RequestAlwaysOnTop = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method RequestAlwaysOnTop()")
+	}
+	idx, ok = ps.Idx.GetIndex("RequestFullScreenSecondary")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_RequestFullScreenSecondary = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method RequestFullScreenSecondary()")
+	}
+	idx, ok = ps.Idx.GetIndex("RequestPosition")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1cca506427df37be_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_RequestPosition = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method RequestPosition(int, int)")
+	}
+	return i, nil
 }
 
 // fyne_io_fyne_v2_driver_mobile.Device
@@ -114804,7 +121165,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Device_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "HideVirtualKeyboard, ShowVirtualKeyboard, ShowVirtualKeyboardType" + ", but got " + objectType(ps, obj))
 	}
@@ -114818,7 +121179,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Device_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114833,7 +121194,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Device_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114848,7 +121209,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Device_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5ba439c02f9d018c_fromRye(ps, &c, m)
+			fn, err := conv_func_5ba439c02f9d018c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114882,7 +121243,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Driver_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "GoBack" + ", but got " + objectType(ps, obj))
 	}
@@ -114896,7 +121257,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Driver_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -114976,7 +121337,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "FocusGained, FocusLost, Keyboard, TypedKey, TypedRune" + ", but got " + objectType(ps, obj))
 	}
@@ -114990,7 +121351,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115005,7 +121366,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115020,7 +121381,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6914bdd153f26a00_fromRye(ps, &c, m)
+			fn, err := conv_func_6914bdd153f26a00_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115035,7 +121396,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, &c, m)
+			fn, err := conv_func_a2bd8734b5c1e612_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115050,7 +121411,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, &c, m)
+			fn, err := conv_func_bf24af2cfd7be744_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115063,8 +121424,56 @@ func conv_fyne_io_fyne_v2_driver_mobile_Keyboardable_fromRye(ps *_env.ProgramSta
 	return i, nil
 }
 
+// fyne_io_fyne_v2_driver_mobile.Movable
+type interface_44cdd18725f3636e struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_TouchMoved func(*fyne_io_fyne_v2_driver_mobile.TouchEvent)
+}
+func (i *interface_44cdd18725f3636e) TouchMoved(arg0 *fyne_io_fyne_v2_driver_mobile.TouchEvent) {
+	if i.fn_TouchMoved == nil {
+		return
+	}
+	i.fn_TouchMoved(arg0)
+}
+func conv_fyne_io_fyne_v2_driver_mobile_Movable_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver_mobile.Movable, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_driver_mobile.Movable); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "TouchMoved" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_44cdd18725f3636e{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("TouchMoved")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_TouchMoved = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method TouchMoved(*fyne_io_fyne_v2_driver_mobile.TouchEvent)")
+	}
+	return i, nil
+}
+
 func conv_fyne_io_fyne_v2_driver_mobile_TouchEvent_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver_mobile.TouchEvent, error) {
-	if ul, err := conv_struct_380b395ae7edc9e0_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_c8cba2a6cc3ee2bd_fromRye(ps, ctx, obj); err == nil {
 		return (fyne_io_fyne_v2_driver_mobile.TouchEvent)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -115116,7 +121525,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps *_env.ProgramState,
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "TouchCancel, TouchDown, TouchUp" + ", but got " + objectType(ps, obj))
 	}
@@ -115130,7 +121539,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps *_env.ProgramState,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, &c, m)
+			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115145,7 +121554,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps *_env.ProgramState,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, &c, m)
+			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115160,7 +121569,7 @@ func conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps *_env.ProgramState,
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, &c, m)
+			fn, err := conv_func_ff731e3eb42a4044_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115169,6 +121578,560 @@ func conv_fyne_io_fyne_v2_driver_mobile_Touchable_fromRye(ps *_env.ProgramState,
 	}
 	if !ok {
 		return nil, _errors.New("expected context with method TouchUp(*fyne_io_fyne_v2_driver_mobile.TouchEvent)")
+	}
+	return i, nil
+}
+
+// fyne_io_fyne_v2_driver_software.WindowlessCanvas
+type interface_c8a27c1b10115e14 struct {
+	ps *_env.ProgramState
+	ctx *_env.RyeCtx
+	fn_AddShortcut func(fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))
+	fn_Capture func() image.Image
+	fn_Content func() fyne_io_fyne_v2.CanvasObject
+	fn_Focus func(fyne_io_fyne_v2.Focusable)
+	fn_FocusNext func()
+	fn_FocusPrevious func()
+	fn_Focused func() fyne_io_fyne_v2.Focusable
+	fn_InteractiveArea func() (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)
+	fn_OnTypedKey func() func(*fyne_io_fyne_v2.KeyEvent)
+	fn_OnTypedRune func() func(rune)
+	fn_Overlays func() fyne_io_fyne_v2.OverlayStack
+	fn_Padded func() bool
+	fn_PixelCoordinateForPosition func(fyne_io_fyne_v2.Position) (int, int)
+	fn_Refresh func(fyne_io_fyne_v2.CanvasObject)
+	fn_RemoveShortcut func(fyne_io_fyne_v2.Shortcut)
+	fn_Resize func(fyne_io_fyne_v2.Size)
+	fn_Scale func() float32
+	fn_SetContent func(fyne_io_fyne_v2.CanvasObject)
+	fn_SetOnTypedKey func(func(*fyne_io_fyne_v2.KeyEvent))
+	fn_SetOnTypedRune func(func(rune))
+	fn_SetPadded func(bool)
+	fn_SetScale func(float32)
+	fn_Size func() fyne_io_fyne_v2.Size
+	fn_Unfocus func()
+}
+func (i *interface_c8a27c1b10115e14) AddShortcut(arg0 fyne_io_fyne_v2.Shortcut, arg1 func(shortcut fyne_io_fyne_v2.Shortcut)) {
+	if i.fn_AddShortcut == nil {
+		return
+	}
+	i.fn_AddShortcut(arg0, arg1)
+}
+func (i *interface_c8a27c1b10115e14) Capture() (_ image.Image) {
+	if i.fn_Capture == nil {
+		return
+	}
+	return i.fn_Capture()
+}
+func (i *interface_c8a27c1b10115e14) Content() (_ fyne_io_fyne_v2.CanvasObject) {
+	if i.fn_Content == nil {
+		return
+	}
+	return i.fn_Content()
+}
+func (i *interface_c8a27c1b10115e14) Focus(arg0 fyne_io_fyne_v2.Focusable) {
+	if i.fn_Focus == nil {
+		return
+	}
+	i.fn_Focus(arg0)
+}
+func (i *interface_c8a27c1b10115e14) FocusNext() {
+	if i.fn_FocusNext == nil {
+		return
+	}
+	i.fn_FocusNext()
+}
+func (i *interface_c8a27c1b10115e14) FocusPrevious() {
+	if i.fn_FocusPrevious == nil {
+		return
+	}
+	i.fn_FocusPrevious()
+}
+func (i *interface_c8a27c1b10115e14) Focused() (_ fyne_io_fyne_v2.Focusable) {
+	if i.fn_Focused == nil {
+		return
+	}
+	return i.fn_Focused()
+}
+func (i *interface_c8a27c1b10115e14) InteractiveArea() (_ fyne_io_fyne_v2.Position, _ fyne_io_fyne_v2.Size) {
+	if i.fn_InteractiveArea == nil {
+		return
+	}
+	return i.fn_InteractiveArea()
+}
+func (i *interface_c8a27c1b10115e14) OnTypedKey() (_ func(*fyne_io_fyne_v2.KeyEvent)) {
+	if i.fn_OnTypedKey == nil {
+		return
+	}
+	return i.fn_OnTypedKey()
+}
+func (i *interface_c8a27c1b10115e14) OnTypedRune() (_ func(rune)) {
+	if i.fn_OnTypedRune == nil {
+		return
+	}
+	return i.fn_OnTypedRune()
+}
+func (i *interface_c8a27c1b10115e14) Overlays() (_ fyne_io_fyne_v2.OverlayStack) {
+	if i.fn_Overlays == nil {
+		return
+	}
+	return i.fn_Overlays()
+}
+func (i *interface_c8a27c1b10115e14) Padded() (_ bool) {
+	if i.fn_Padded == nil {
+		return
+	}
+	return i.fn_Padded()
+}
+func (i *interface_c8a27c1b10115e14) PixelCoordinateForPosition(arg0 fyne_io_fyne_v2.Position) (_ int, _ int) {
+	if i.fn_PixelCoordinateForPosition == nil {
+		return
+	}
+	return i.fn_PixelCoordinateForPosition(arg0)
+}
+func (i *interface_c8a27c1b10115e14) Refresh(arg0 fyne_io_fyne_v2.CanvasObject) {
+	if i.fn_Refresh == nil {
+		return
+	}
+	i.fn_Refresh(arg0)
+}
+func (i *interface_c8a27c1b10115e14) RemoveShortcut(arg0 fyne_io_fyne_v2.Shortcut) {
+	if i.fn_RemoveShortcut == nil {
+		return
+	}
+	i.fn_RemoveShortcut(arg0)
+}
+func (i *interface_c8a27c1b10115e14) Resize(arg0 fyne_io_fyne_v2.Size) {
+	if i.fn_Resize == nil {
+		return
+	}
+	i.fn_Resize(arg0)
+}
+func (i *interface_c8a27c1b10115e14) Scale() (_ float32) {
+	if i.fn_Scale == nil {
+		return
+	}
+	return i.fn_Scale()
+}
+func (i *interface_c8a27c1b10115e14) SetContent(arg0 fyne_io_fyne_v2.CanvasObject) {
+	if i.fn_SetContent == nil {
+		return
+	}
+	i.fn_SetContent(arg0)
+}
+func (i *interface_c8a27c1b10115e14) SetOnTypedKey(arg0 func(*fyne_io_fyne_v2.KeyEvent)) {
+	if i.fn_SetOnTypedKey == nil {
+		return
+	}
+	i.fn_SetOnTypedKey(arg0)
+}
+func (i *interface_c8a27c1b10115e14) SetOnTypedRune(arg0 func(rune)) {
+	if i.fn_SetOnTypedRune == nil {
+		return
+	}
+	i.fn_SetOnTypedRune(arg0)
+}
+func (i *interface_c8a27c1b10115e14) SetPadded(arg0 bool) {
+	if i.fn_SetPadded == nil {
+		return
+	}
+	i.fn_SetPadded(arg0)
+}
+func (i *interface_c8a27c1b10115e14) SetScale(arg0 float32) {
+	if i.fn_SetScale == nil {
+		return
+	}
+	i.fn_SetScale(arg0)
+}
+func (i *interface_c8a27c1b10115e14) Size() (_ fyne_io_fyne_v2.Size) {
+	if i.fn_Size == nil {
+		return
+	}
+	return i.fn_Size()
+}
+func (i *interface_c8a27c1b10115e14) Unfocus() {
+	if i.fn_Unfocus == nil {
+		return
+	}
+	i.fn_Unfocus()
+}
+func conv_fyne_io_fyne_v2_driver_software_WindowlessCanvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_driver_software.WindowlessCanvas, error) {
+	if isNil(obj) {
+		return nil, nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_driver_software.WindowlessCanvas); ok {
+			return v, nil
+		}
+	}
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return nil, _errors.New("expected native interface or context with methods " + "AddShortcut, Capture, Content, Focus, FocusNext, FocusPrevious, Focused, InteractiveArea, OnTypedKey, OnTypedRune, Overlays, Padded, PixelCoordinateForPosition, Refresh, RemoveShortcut, Resize, Scale, SetContent, SetOnTypedKey, SetOnTypedRune, SetPadded, SetScale, Size, Unfocus" + ", but got " + objectType(ps, obj))
+	}
+	i := &interface_c8a27c1b10115e14{
+		ps: ps,
+		ctx: ctx,
+	}
+	var idx int
+	idx, ok = ps.Idx.GetIndex("AddShortcut")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_5fa20c920511900f_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_AddShortcut = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method AddShortcut(fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))")
+	}
+	idx, ok = ps.Idx.GetIndex("Capture")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_d14f46fcdc868582_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Capture = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Capture() (image.Image)")
+	}
+	idx, ok = ps.Idx.GetIndex("Content")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Content = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Content() (fyne_io_fyne_v2.CanvasObject)")
+	}
+	idx, ok = ps.Idx.GetIndex("Focus")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_05d897820b321755_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Focus = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Focus(fyne_io_fyne_v2.Focusable)")
+	}
+	idx, ok = ps.Idx.GetIndex("FocusNext")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_FocusNext = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method FocusNext()")
+	}
+	idx, ok = ps.Idx.GetIndex("FocusPrevious")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_FocusPrevious = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method FocusPrevious()")
+	}
+	idx, ok = ps.Idx.GetIndex("Focused")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_56a4a2977ff33d45_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Focused = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Focused() (fyne_io_fyne_v2.Focusable)")
+	}
+	idx, ok = ps.Idx.GetIndex("InteractiveArea")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_51691f193cbe29f9_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_InteractiveArea = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method InteractiveArea() (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)")
+	}
+	idx, ok = ps.Idx.GetIndex("OnTypedKey")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_9582f002b9626e55_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_OnTypedKey = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method OnTypedKey() (func(*fyne_io_fyne_v2.KeyEvent))")
+	}
+	idx, ok = ps.Idx.GetIndex("OnTypedRune")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_e9f9e8ed0a0608ed_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_OnTypedRune = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method OnTypedRune() (func(rune))")
+	}
+	idx, ok = ps.Idx.GetIndex("Overlays")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_7ee3d3a51b2e0e4b_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Overlays = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Overlays() (fyne_io_fyne_v2.OverlayStack)")
+	}
+	idx, ok = ps.Idx.GetIndex("Padded")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Padded = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Padded() (bool)")
+	}
+	idx, ok = ps.Idx.GetIndex("PixelCoordinateForPosition")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_4e59245145ac2fd5_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_PixelCoordinateForPosition = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method PixelCoordinateForPosition(fyne_io_fyne_v2.Position) (int, int)")
+	}
+	idx, ok = ps.Idx.GetIndex("Refresh")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Refresh = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Refresh(fyne_io_fyne_v2.CanvasObject)")
+	}
+	idx, ok = ps.Idx.GetIndex("RemoveShortcut")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_RemoveShortcut = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method RemoveShortcut(fyne_io_fyne_v2.Shortcut)")
+	}
+	idx, ok = ps.Idx.GetIndex("Resize")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_929d9589602479ba_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Resize = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Resize(fyne_io_fyne_v2.Size)")
+	}
+	idx, ok = ps.Idx.GetIndex("Scale")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Scale = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Scale() (float32)")
+	}
+	idx, ok = ps.Idx.GetIndex("SetContent")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetContent = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetContent(fyne_io_fyne_v2.CanvasObject)")
+	}
+	idx, ok = ps.Idx.GetIndex("SetOnTypedKey")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetOnTypedKey = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetOnTypedKey(func(*fyne_io_fyne_v2.KeyEvent))")
+	}
+	idx, ok = ps.Idx.GetIndex("SetOnTypedRune")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_cd9499c5da41f3ef_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetOnTypedRune = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetOnTypedRune(func(rune))")
+	}
+	idx, ok = ps.Idx.GetIndex("SetPadded")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_c805af5229d885c4_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetPadded = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetPadded(bool)")
+	}
+	idx, ok = ps.Idx.GetIndex("SetScale")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_b9d030a2abfdd0e3_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_SetScale = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method SetScale(float32)")
+	}
+	idx, ok = ps.Idx.GetIndex("Size")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Size = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Size() (fyne_io_fyne_v2.Size)")
+	}
+	idx, ok = ps.Idx.GetIndex("Unfocus")
+	if ok {
+		var m _env.Object
+		m, ok = c.Get(idx)
+		if ok {
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
+			if err != nil {
+				return nil, err
+			}
+			i.fn_Unfocus = fn
+		}
+	}
+	if !ok {
+		return nil, _errors.New("expected context with method Unfocus()")
 	}
 	return i, nil
 }
@@ -115234,7 +122197,7 @@ func conv_fyne_io_fyne_v2_layout_SpacerObject_fromRye(ps *_env.ProgramState, ctx
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ExpandHorizontal, ExpandVertical" + ", but got " + objectType(ps, obj))
 	}
@@ -115248,7 +122211,7 @@ func conv_fyne_io_fyne_v2_layout_SpacerObject_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115263,7 +122226,7 @@ func conv_fyne_io_fyne_v2_layout_SpacerObject_fromRye(ps *_env.ProgramState, ctx
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115315,7 +122278,7 @@ func conv_fyne_io_fyne_v2_storage_FileFilter_fromRye(ps *_env.ProgramState, ctx 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Matches" + ", but got " + objectType(ps, obj))
 	}
@@ -115329,7 +122292,7 @@ func conv_fyne_io_fyne_v2_storage_FileFilter_fromRye(ps *_env.ProgramState, ctx 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c105f3153b4d17f9_fromRye(ps, &c, m)
+			fn, err := conv_func_c105f3153b4d17f9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115430,7 +122393,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Appender, CanRead, CanWrite, Delete, Destroy, Exists, Reader, Writer" + ", but got " + objectType(ps, obj))
 	}
@@ -115444,7 +122407,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, &c, m)
+			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115459,7 +122422,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115474,7 +122437,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115489,7 +122452,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115504,7 +122467,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115519,7 +122482,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115534,7 +122497,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115549,7 +122512,7 @@ func conv_fyne_io_fyne_v2_storage_repository_AppendableRepository_fromRye(ps *_e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, &c, m)
+			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115611,7 +122574,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, Copy, Destroy, Exists, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -115625,7 +122588,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115640,7 +122603,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f33b2c82900e34c4_fromRye(ps, &c, m)
+			fn, err := conv_func_f33b2c82900e34c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115655,7 +122618,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115670,7 +122633,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115685,7 +122648,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CopyableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115747,7 +122710,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, Destroy, Exists, ParseURI, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -115761,7 +122724,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115776,7 +122739,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115791,7 +122754,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115806,7 +122769,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_477d2122e88cc94b_fromRye(ps, &c, m)
+			fn, err := conv_func_477d2122e88cc94b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115821,7 +122784,7 @@ func conv_fyne_io_fyne_v2_storage_repository_CustomURIRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115904,7 +122867,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, CanWrite, Delete, DeleteAll, Destroy, Exists, Reader, Writer" + ", but got " + objectType(ps, obj))
 	}
@@ -115918,7 +122881,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115933,7 +122896,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115948,7 +122911,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115963,7 +122926,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115978,7 +122941,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -115993,7 +122956,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116008,7 +122971,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116023,7 +122986,7 @@ func conv_fyne_io_fyne_v2_storage_repository_DeleteAllRepository_fromRye(ps *_en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, &c, m)
+			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116092,7 +123055,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, Child, Destroy, Exists, Parent, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -116106,7 +123069,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116121,7 +123084,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8b40996d42b2113a_fromRye(ps, &c, m)
+			fn, err := conv_func_8b40996d42b2113a_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116136,7 +123099,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116151,7 +123114,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116166,7 +123129,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_4f0d192292538d23_fromRye(ps, &c, m)
+			fn, err := conv_func_4f0d192292538d23_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116181,7 +123144,7 @@ func conv_fyne_io_fyne_v2_storage_repository_HierarchicalRepository_fromRye(ps *
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116257,7 +123220,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanList, CanRead, CreateListable, Destroy, Exists, List, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -116271,7 +123234,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116286,7 +123249,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116301,7 +123264,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116316,7 +123279,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116331,7 +123294,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116346,7 +123309,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_816a4ddedcf6a5f7_fromRye(ps, &c, m)
+			fn, err := conv_func_816a4ddedcf6a5f7_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116361,7 +123324,7 @@ func conv_fyne_io_fyne_v2_storage_repository_ListableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116423,7 +123386,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, Destroy, Exists, Move, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -116437,7 +123400,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116452,7 +123415,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116467,7 +123430,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116482,7 +123445,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_f33b2c82900e34c4_fromRye(ps, &c, m)
+			fn, err := conv_func_f33b2c82900e34c4_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116497,7 +123460,7 @@ func conv_fyne_io_fyne_v2_storage_repository_MovableRepository_fromRye(ps *_env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116552,7 +123515,7 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_fromRye(ps *_env.Program
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, Destroy, Exists, Reader" + ", but got " + objectType(ps, obj))
 	}
@@ -116566,7 +123529,7 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_fromRye(ps *_env.Program
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116581,7 +123544,7 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_fromRye(ps *_env.Program
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116596,7 +123559,7 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_fromRye(ps *_env.Program
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116611,7 +123574,7 @@ func conv_fyne_io_fyne_v2_storage_repository_Repository_fromRye(ps *_env.Program
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116687,7 +123650,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "CanRead, CanWrite, Delete, Destroy, Exists, Reader, Writer" + ", but got " + objectType(ps, obj))
 	}
@@ -116701,7 +123664,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116716,7 +123679,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116731,7 +123694,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cb57963ac075900d_fromRye(ps, &c, m)
+			fn, err := conv_func_cb57963ac075900d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116746,7 +123709,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, &c, m)
+			fn, err := conv_func_732954bcf8039a9b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116761,7 +123724,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, &c, m)
+			fn, err := conv_func_28d6e3334a21d646_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116776,7 +123739,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, &c, m)
+			fn, err := conv_func_8ad934c1eb5a5a2d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116791,7 +123754,7 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, &c, m)
+			fn, err := conv_func_53dfea59f8f69102_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -116800,608 +123763,6 @@ func conv_fyne_io_fyne_v2_storage_repository_WritableRepository_fromRye(ps *_env
 	}
 	if !ok {
 		return nil, _errors.New("expected context with method Writer(fyne_io_fyne_v2.URI) (fyne_io_fyne_v2.URIWriteCloser, error)")
-	}
-	return i, nil
-}
-
-// fyne_io_fyne_v2_test.SoftwarePainter
-type interface_41a158efe0d61efb struct {
-	ps *_env.ProgramState
-	ctx *_env.RyeCtx
-	fn_Paint func(fyne_io_fyne_v2.Canvas) image.Image
-}
-func (i *interface_41a158efe0d61efb) Paint(arg0 fyne_io_fyne_v2.Canvas) (_ image.Image) {
-	if i.fn_Paint == nil {
-		return
-	}
-	return i.fn_Paint(arg0)
-}
-func conv_fyne_io_fyne_v2_test_SoftwarePainter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_test.SoftwarePainter, error) {
-	if isNil(obj) {
-		return nil, nil
-	}
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(fyne_io_fyne_v2_test.SoftwarePainter); ok {
-			return v, nil
-		}
-	}
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return nil, _errors.New("expected native interface or context with methods " + "Paint" + ", but got " + objectType(ps, obj))
-	}
-	i := &interface_41a158efe0d61efb{
-		ps: ps,
-		ctx: ctx,
-	}
-	var idx int
-	idx, ok = ps.Idx.GetIndex("Paint")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_4118e960d98cbdbf_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Paint = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Paint(fyne_io_fyne_v2.Canvas) (image.Image)")
-	}
-	return i, nil
-}
-
-// fyne_io_fyne_v2_test.WindowlessCanvas
-type interface_f9214a1162a6ea3c struct {
-	ps *_env.ProgramState
-	ctx *_env.RyeCtx
-	fn_AddShortcut func(fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))
-	fn_Capture func() image.Image
-	fn_Content func() fyne_io_fyne_v2.CanvasObject
-	fn_Focus func(fyne_io_fyne_v2.Focusable)
-	fn_FocusNext func()
-	fn_FocusPrevious func()
-	fn_Focused func() fyne_io_fyne_v2.Focusable
-	fn_InteractiveArea func() (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)
-	fn_OnTypedKey func() func(*fyne_io_fyne_v2.KeyEvent)
-	fn_OnTypedRune func() func(rune)
-	fn_Overlays func() fyne_io_fyne_v2.OverlayStack
-	fn_Padded func() bool
-	fn_PixelCoordinateForPosition func(fyne_io_fyne_v2.Position) (int, int)
-	fn_Refresh func(fyne_io_fyne_v2.CanvasObject)
-	fn_RemoveShortcut func(fyne_io_fyne_v2.Shortcut)
-	fn_Resize func(fyne_io_fyne_v2.Size)
-	fn_Scale func() float32
-	fn_SetContent func(fyne_io_fyne_v2.CanvasObject)
-	fn_SetOnTypedKey func(func(*fyne_io_fyne_v2.KeyEvent))
-	fn_SetOnTypedRune func(func(rune))
-	fn_SetPadded func(bool)
-	fn_SetScale func(float32)
-	fn_Size func() fyne_io_fyne_v2.Size
-	fn_Unfocus func()
-}
-func (i *interface_f9214a1162a6ea3c) AddShortcut(arg0 fyne_io_fyne_v2.Shortcut, arg1 func(shortcut fyne_io_fyne_v2.Shortcut)) {
-	if i.fn_AddShortcut == nil {
-		return
-	}
-	i.fn_AddShortcut(arg0, arg1)
-}
-func (i *interface_f9214a1162a6ea3c) Capture() (_ image.Image) {
-	if i.fn_Capture == nil {
-		return
-	}
-	return i.fn_Capture()
-}
-func (i *interface_f9214a1162a6ea3c) Content() (_ fyne_io_fyne_v2.CanvasObject) {
-	if i.fn_Content == nil {
-		return
-	}
-	return i.fn_Content()
-}
-func (i *interface_f9214a1162a6ea3c) Focus(arg0 fyne_io_fyne_v2.Focusable) {
-	if i.fn_Focus == nil {
-		return
-	}
-	i.fn_Focus(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) FocusNext() {
-	if i.fn_FocusNext == nil {
-		return
-	}
-	i.fn_FocusNext()
-}
-func (i *interface_f9214a1162a6ea3c) FocusPrevious() {
-	if i.fn_FocusPrevious == nil {
-		return
-	}
-	i.fn_FocusPrevious()
-}
-func (i *interface_f9214a1162a6ea3c) Focused() (_ fyne_io_fyne_v2.Focusable) {
-	if i.fn_Focused == nil {
-		return
-	}
-	return i.fn_Focused()
-}
-func (i *interface_f9214a1162a6ea3c) InteractiveArea() (_ fyne_io_fyne_v2.Position, _ fyne_io_fyne_v2.Size) {
-	if i.fn_InteractiveArea == nil {
-		return
-	}
-	return i.fn_InteractiveArea()
-}
-func (i *interface_f9214a1162a6ea3c) OnTypedKey() (_ func(*fyne_io_fyne_v2.KeyEvent)) {
-	if i.fn_OnTypedKey == nil {
-		return
-	}
-	return i.fn_OnTypedKey()
-}
-func (i *interface_f9214a1162a6ea3c) OnTypedRune() (_ func(rune)) {
-	if i.fn_OnTypedRune == nil {
-		return
-	}
-	return i.fn_OnTypedRune()
-}
-func (i *interface_f9214a1162a6ea3c) Overlays() (_ fyne_io_fyne_v2.OverlayStack) {
-	if i.fn_Overlays == nil {
-		return
-	}
-	return i.fn_Overlays()
-}
-func (i *interface_f9214a1162a6ea3c) Padded() (_ bool) {
-	if i.fn_Padded == nil {
-		return
-	}
-	return i.fn_Padded()
-}
-func (i *interface_f9214a1162a6ea3c) PixelCoordinateForPosition(arg0 fyne_io_fyne_v2.Position) (_ int, _ int) {
-	if i.fn_PixelCoordinateForPosition == nil {
-		return
-	}
-	return i.fn_PixelCoordinateForPosition(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) Refresh(arg0 fyne_io_fyne_v2.CanvasObject) {
-	if i.fn_Refresh == nil {
-		return
-	}
-	i.fn_Refresh(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) RemoveShortcut(arg0 fyne_io_fyne_v2.Shortcut) {
-	if i.fn_RemoveShortcut == nil {
-		return
-	}
-	i.fn_RemoveShortcut(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) Resize(arg0 fyne_io_fyne_v2.Size) {
-	if i.fn_Resize == nil {
-		return
-	}
-	i.fn_Resize(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) Scale() (_ float32) {
-	if i.fn_Scale == nil {
-		return
-	}
-	return i.fn_Scale()
-}
-func (i *interface_f9214a1162a6ea3c) SetContent(arg0 fyne_io_fyne_v2.CanvasObject) {
-	if i.fn_SetContent == nil {
-		return
-	}
-	i.fn_SetContent(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) SetOnTypedKey(arg0 func(*fyne_io_fyne_v2.KeyEvent)) {
-	if i.fn_SetOnTypedKey == nil {
-		return
-	}
-	i.fn_SetOnTypedKey(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) SetOnTypedRune(arg0 func(rune)) {
-	if i.fn_SetOnTypedRune == nil {
-		return
-	}
-	i.fn_SetOnTypedRune(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) SetPadded(arg0 bool) {
-	if i.fn_SetPadded == nil {
-		return
-	}
-	i.fn_SetPadded(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) SetScale(arg0 float32) {
-	if i.fn_SetScale == nil {
-		return
-	}
-	i.fn_SetScale(arg0)
-}
-func (i *interface_f9214a1162a6ea3c) Size() (_ fyne_io_fyne_v2.Size) {
-	if i.fn_Size == nil {
-		return
-	}
-	return i.fn_Size()
-}
-func (i *interface_f9214a1162a6ea3c) Unfocus() {
-	if i.fn_Unfocus == nil {
-		return
-	}
-	i.fn_Unfocus()
-}
-func conv_fyne_io_fyne_v2_test_WindowlessCanvas_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_test.WindowlessCanvas, error) {
-	if isNil(obj) {
-		return nil, nil
-	}
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(fyne_io_fyne_v2_test.WindowlessCanvas); ok {
-			return v, nil
-		}
-	}
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return nil, _errors.New("expected native interface or context with methods " + "AddShortcut, Capture, Content, Focus, FocusNext, FocusPrevious, Focused, InteractiveArea, OnTypedKey, OnTypedRune, Overlays, Padded, PixelCoordinateForPosition, Refresh, RemoveShortcut, Resize, Scale, SetContent, SetOnTypedKey, SetOnTypedRune, SetPadded, SetScale, Size, Unfocus" + ", but got " + objectType(ps, obj))
-	}
-	i := &interface_f9214a1162a6ea3c{
-		ps: ps,
-		ctx: ctx,
-	}
-	var idx int
-	idx, ok = ps.Idx.GetIndex("AddShortcut")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_5fa20c920511900f_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_AddShortcut = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method AddShortcut(fyne_io_fyne_v2.Shortcut, func(shortcut fyne_io_fyne_v2.Shortcut))")
-	}
-	idx, ok = ps.Idx.GetIndex("Capture")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_d14f46fcdc868582_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Capture = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Capture() (image.Image)")
-	}
-	idx, ok = ps.Idx.GetIndex("Content")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Content = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Content() (fyne_io_fyne_v2.CanvasObject)")
-	}
-	idx, ok = ps.Idx.GetIndex("Focus")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_05d897820b321755_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Focus = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Focus(fyne_io_fyne_v2.Focusable)")
-	}
-	idx, ok = ps.Idx.GetIndex("FocusNext")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_FocusNext = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method FocusNext()")
-	}
-	idx, ok = ps.Idx.GetIndex("FocusPrevious")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_FocusPrevious = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method FocusPrevious()")
-	}
-	idx, ok = ps.Idx.GetIndex("Focused")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_56a4a2977ff33d45_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Focused = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Focused() (fyne_io_fyne_v2.Focusable)")
-	}
-	idx, ok = ps.Idx.GetIndex("InteractiveArea")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_51691f193cbe29f9_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_InteractiveArea = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method InteractiveArea() (fyne_io_fyne_v2.Position, fyne_io_fyne_v2.Size)")
-	}
-	idx, ok = ps.Idx.GetIndex("OnTypedKey")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_9582f002b9626e55_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_OnTypedKey = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method OnTypedKey() (func(*fyne_io_fyne_v2.KeyEvent))")
-	}
-	idx, ok = ps.Idx.GetIndex("OnTypedRune")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_e9f9e8ed0a0608ed_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_OnTypedRune = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method OnTypedRune() (func(rune))")
-	}
-	idx, ok = ps.Idx.GetIndex("Overlays")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_7ee3d3a51b2e0e4b_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Overlays = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Overlays() (fyne_io_fyne_v2.OverlayStack)")
-	}
-	idx, ok = ps.Idx.GetIndex("Padded")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Padded = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Padded() (bool)")
-	}
-	idx, ok = ps.Idx.GetIndex("PixelCoordinateForPosition")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_4e59245145ac2fd5_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_PixelCoordinateForPosition = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method PixelCoordinateForPosition(fyne_io_fyne_v2.Position) (int, int)")
-	}
-	idx, ok = ps.Idx.GetIndex("Refresh")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Refresh = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Refresh(fyne_io_fyne_v2.CanvasObject)")
-	}
-	idx, ok = ps.Idx.GetIndex("RemoveShortcut")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_8df69d2c6f0fd5bb_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_RemoveShortcut = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method RemoveShortcut(fyne_io_fyne_v2.Shortcut)")
-	}
-	idx, ok = ps.Idx.GetIndex("Resize")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_929d9589602479ba_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Resize = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Resize(fyne_io_fyne_v2.Size)")
-	}
-	idx, ok = ps.Idx.GetIndex("Scale")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_20bd5ad68eed2567_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Scale = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Scale() (float32)")
-	}
-	idx, ok = ps.Idx.GetIndex("SetContent")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_SetContent = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method SetContent(fyne_io_fyne_v2.CanvasObject)")
-	}
-	idx, ok = ps.Idx.GetIndex("SetOnTypedKey")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_fe4335e0b2467819_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_SetOnTypedKey = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method SetOnTypedKey(func(*fyne_io_fyne_v2.KeyEvent))")
-	}
-	idx, ok = ps.Idx.GetIndex("SetOnTypedRune")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_cd9499c5da41f3ef_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_SetOnTypedRune = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method SetOnTypedRune(func(rune))")
-	}
-	idx, ok = ps.Idx.GetIndex("SetPadded")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_c805af5229d885c4_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_SetPadded = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method SetPadded(bool)")
-	}
-	idx, ok = ps.Idx.GetIndex("SetScale")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_b9d030a2abfdd0e3_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_SetScale = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method SetScale(float32)")
-	}
-	idx, ok = ps.Idx.GetIndex("Size")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_60d99ece58cf0172_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Size = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Size() (fyne_io_fyne_v2.Size)")
-	}
-	idx, ok = ps.Idx.GetIndex("Unfocus")
-	if ok {
-		var m _env.Object
-		m, ok = c.Get(idx)
-		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
-			if err != nil {
-				return nil, err
-			}
-			i.fn_Unfocus = fn
-		}
-	}
-	if !ok {
-		return nil, _errors.New("expected context with method Unfocus()")
 	}
 	return i, nil
 }
@@ -117646,6 +124007,24 @@ func conv_fyne_io_fyne_v2_widget_Check_fromRye(ps *_env.ProgramState, ctx *_env.
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.Check" + " or underlying, but got " + objectType(ps, obj))
 }
 
+func conv_fyne_io_fyne_v2_widget_CheckBoxSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.CheckBoxSegment, error) {
+	if ul, err := conv_struct_5c46e3f222ea7f46_fromRye(ps, ctx, obj); err == nil {
+		return (fyne_io_fyne_v2_widget.CheckBoxSegment)(ul), nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.CheckBoxSegment); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_widget.CheckBoxSegment); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_widget.CheckBoxSegment
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.CheckBoxSegment" + " or underlying, but got " + objectType(ps, obj))
+}
+
 func conv_fyne_io_fyne_v2_widget_CheckGroup_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.CheckGroup, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.CheckGroup); ok {
@@ -117659,6 +124038,21 @@ func conv_fyne_io_fyne_v2_widget_CheckGroup_fromRye(ps *_env.ProgramState, ctx *
 	}
 	var zero fyne_io_fyne_v2_widget.CheckGroup
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.CheckGroup" + " or underlying, but got " + objectType(ps, obj))
+}
+
+func conv_fyne_io_fyne_v2_widget_CodeBlockSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.CodeBlockSegment, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.CodeBlockSegment); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_widget.CodeBlockSegment); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_widget.CodeBlockSegment
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.CodeBlockSegment" + " or underlying, but got " + objectType(ps, obj))
 }
 
 func conv_fyne_io_fyne_v2_widget_CustomTextGridStyle_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.CustomTextGridStyle, error) {
@@ -117800,9 +124194,6 @@ func conv_fyne_io_fyne_v2_widget_Hyperlink_fromRye(ps *_env.ProgramState, ctx *_
 }
 
 func conv_fyne_io_fyne_v2_widget_HyperlinkSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.HyperlinkSegment, error) {
-	if ul, err := conv_struct_ed755f6805d1ea46_fromRye(ps, ctx, obj); err == nil {
-		return (fyne_io_fyne_v2_widget.HyperlinkSegment)(ul), nil
-	}
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.HyperlinkSegment); ok {
 			return *v, nil
@@ -118075,7 +124466,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextBlock_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Segments" + ", but got " + objectType(ps, obj))
 	}
@@ -118089,7 +124480,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextBlock_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_b79a25d336d0ac90_fromRye(ps, &c, m)
+			fn, err := conv_func_b79a25d336d0ac90_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118165,7 +124556,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Inline, Select, SelectedText, Textual, Unselect, Update, Visual" + ", but got " + objectType(ps, obj))
 	}
@@ -118179,7 +124570,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118194,7 +124585,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_068dc2e77ef57320_fromRye(ps, &c, m)
+			fn, err := conv_func_068dc2e77ef57320_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118209,7 +124600,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118224,7 +124615,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118239,7 +124630,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118254,7 +124645,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, &c, m)
+			fn, err := conv_func_a36a0a566d5dda78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118269,7 +124660,7 @@ func conv_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps *_env.ProgramState, 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118405,6 +124796,24 @@ func conv_fyne_io_fyne_v2_widget_TableCellID_fromRye(ps *_env.ProgramState, ctx 
 	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.TableCellID" + " or underlying, but got " + objectType(ps, obj))
 }
 
+func conv_fyne_io_fyne_v2_widget_TableSegment_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.TableSegment, error) {
+	if ul, err := conv_struct_2e973b51a7fcd6d9_fromRye(ps, ctx, obj); err == nil {
+		return (fyne_io_fyne_v2_widget.TableSegment)(ul), nil
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.TableSegment); ok {
+			return *v, nil
+		}
+	}
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(fyne_io_fyne_v2_widget.TableSegment); ok {
+			return v, nil
+		}
+	}
+	var zero fyne_io_fyne_v2_widget.TableSegment
+	return zero, _errors.New("expected Native of type " + "fyne_io_fyne_v2_widget.TableSegment" + " or underlying, but got " + objectType(ps, obj))
+}
+
 func conv_fyne_io_fyne_v2_widget_TextGrid_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (fyne_io_fyne_v2_widget.TextGrid, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*fyne_io_fyne_v2_widget.TextGrid); ok {
@@ -118491,7 +124900,7 @@ func conv_fyne_io_fyne_v2_widget_TextGridStyle_fromRye(ps *_env.ProgramState, ct
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "BackgroundColor, Style, TextColor" + ", but got " + objectType(ps, obj))
 	}
@@ -118505,7 +124914,7 @@ func conv_fyne_io_fyne_v2_widget_TextGridStyle_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118520,7 +124929,7 @@ func conv_fyne_io_fyne_v2_widget_TextGridStyle_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_45d18e311659b0d9_fromRye(ps, &c, m)
+			fn, err := conv_func_45d18e311659b0d9_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118535,7 +124944,7 @@ func conv_fyne_io_fyne_v2_widget_TextGridStyle_fromRye(ps *_env.ProgramState, ct
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, &c, m)
+			fn, err := conv_func_7fa64df4c5df8bdc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118617,7 +125026,7 @@ func conv_fyne_io_fyne_v2_widget_ToolbarItem_fromRye(ps *_env.ProgramState, ctx 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ToolbarObject" + ", but got " + objectType(ps, obj))
 	}
@@ -118631,7 +125040,7 @@ func conv_fyne_io_fyne_v2_widget_ToolbarItem_fromRye(ps *_env.ProgramState, ctx 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, &c, m)
+			fn, err := conv_func_ea78ccf29ba286fc_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118838,7 +125247,7 @@ func conv_image_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "At, Bounds, ColorModel" + ", but got " + objectType(ps, obj))
 	}
@@ -118852,7 +125261,7 @@ func conv_image_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, &c, m)
+			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118867,7 +125276,7 @@ func conv_image_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, &c, m)
+			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -118882,7 +125291,7 @@ func conv_image_Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, &c, m)
+			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119009,7 +125418,7 @@ func conv_image_PalettedImage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "At, Bounds, ColorIndexAt, ColorModel" + ", but got " + objectType(ps, obj))
 	}
@@ -119023,7 +125432,7 @@ func conv_image_PalettedImage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, &c, m)
+			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119038,7 +125447,7 @@ func conv_image_PalettedImage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, &c, m)
+			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119053,7 +125462,7 @@ func conv_image_PalettedImage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_243f3170640623da_fromRye(ps, &c, m)
+			fn, err := conv_func_243f3170640623da_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119068,7 +125477,7 @@ func conv_image_PalettedImage_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, o
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, &c, m)
+			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119177,7 +125586,7 @@ func conv_image_RGBA64Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "At, Bounds, ColorModel, RGBA64At" + ", but got " + objectType(ps, obj))
 	}
@@ -119191,7 +125600,7 @@ func conv_image_RGBA64Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, &c, m)
+			fn, err := conv_func_9b2c08b3b7ae2eca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119206,7 +125615,7 @@ func conv_image_RGBA64Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, &c, m)
+			fn, err := conv_func_27381a12f3e20a36_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119221,7 +125630,7 @@ func conv_image_RGBA64Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, &c, m)
+			fn, err := conv_func_ee2d313e75fc95ee_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119236,7 +125645,7 @@ func conv_image_RGBA64Image_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_48a0ba2f51551c2b_fromRye(ps, &c, m)
+			fn, err := conv_func_48a0ba2f51551c2b_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119396,7 +125805,7 @@ func conv_image_color_Color_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "RGBA" + ", but got " + objectType(ps, obj))
 	}
@@ -119410,7 +125819,7 @@ func conv_image_color_Color_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_304f84f6e181ffa3_fromRye(ps, &c, m)
+			fn, err := conv_func_304f84f6e181ffa3_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119480,7 +125889,7 @@ func conv_image_color_Model_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Convert" + ", but got " + objectType(ps, obj))
 	}
@@ -119494,7 +125903,7 @@ func conv_image_color_Model_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5eb44d79351f4b86_fromRye(ps, &c, m)
+			fn, err := conv_func_5eb44d79351f4b86_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119690,7 +126099,7 @@ func conv_io_ByteReader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadByte" + ", but got " + objectType(ps, obj))
 	}
@@ -119704,7 +126113,7 @@ func conv_io_ByteReader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cc9251435ed04457_fromRye(ps, &c, m)
+			fn, err := conv_func_cc9251435ed04457_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119745,7 +126154,7 @@ func conv_io_ByteScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadByte, UnreadByte" + ", but got " + objectType(ps, obj))
 	}
@@ -119759,7 +126168,7 @@ func conv_io_ByteScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_cc9251435ed04457_fromRye(ps, &c, m)
+			fn, err := conv_func_cc9251435ed04457_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119774,7 +126183,7 @@ func conv_io_ByteScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119808,7 +126217,7 @@ func conv_io_ByteWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "WriteByte" + ", but got " + objectType(ps, obj))
 	}
@@ -119822,7 +126231,7 @@ func conv_io_ByteWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_266c682daa168aa8_fromRye(ps, &c, m)
+			fn, err := conv_func_266c682daa168aa8_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119856,7 +126265,7 @@ func conv_io_Closer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close" + ", but got " + objectType(ps, obj))
 	}
@@ -119870,7 +126279,7 @@ func conv_io_Closer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -119974,7 +126383,7 @@ func conv_io_ReadCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read" + ", but got " + objectType(ps, obj))
 	}
@@ -119988,7 +126397,7 @@ func conv_io_ReadCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120003,7 +126412,7 @@ func conv_io_ReadCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120051,7 +126460,7 @@ func conv_io_ReadSeekCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read, Seek" + ", but got " + objectType(ps, obj))
 	}
@@ -120065,7 +126474,7 @@ func conv_io_ReadSeekCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120080,7 +126489,7 @@ func conv_io_ReadSeekCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120095,7 +126504,7 @@ func conv_io_ReadSeekCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2394d87ac337faca_fromRye(ps, &c, m)
+			fn, err := conv_func_2394d87ac337faca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120136,7 +126545,7 @@ func conv_io_ReadSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Read, Seek" + ", but got " + objectType(ps, obj))
 	}
@@ -120150,7 +126559,7 @@ func conv_io_ReadSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120165,7 +126574,7 @@ func conv_io_ReadSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2394d87ac337faca_fromRye(ps, &c, m)
+			fn, err := conv_func_2394d87ac337faca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120213,7 +126622,7 @@ func conv_io_ReadWriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120227,7 +126636,7 @@ func conv_io_ReadWriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120242,7 +126651,7 @@ func conv_io_ReadWriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120257,7 +126666,7 @@ func conv_io_ReadWriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120305,7 +126714,7 @@ func conv_io_ReadWriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Read, Seek, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120319,7 +126728,7 @@ func conv_io_ReadWriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120334,7 +126743,7 @@ func conv_io_ReadWriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2394d87ac337faca_fromRye(ps, &c, m)
+			fn, err := conv_func_2394d87ac337faca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120349,7 +126758,7 @@ func conv_io_ReadWriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120390,7 +126799,7 @@ func conv_io_ReadWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Read, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120404,7 +126813,7 @@ func conv_io_ReadWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120419,7 +126828,7 @@ func conv_io_ReadWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120453,7 +126862,7 @@ func conv_io_Reader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Read" + ", but got " + objectType(ps, obj))
 	}
@@ -120467,7 +126876,7 @@ func conv_io_Reader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120501,7 +126910,7 @@ func conv_io_ReaderAt_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadAt" + ", but got " + objectType(ps, obj))
 	}
@@ -120515,7 +126924,7 @@ func conv_io_ReaderAt_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d309802fdad2fd47_fromRye(ps, &c, m)
+			fn, err := conv_func_d309802fdad2fd47_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120549,7 +126958,7 @@ func conv_io_ReaderFrom_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadFrom" + ", but got " + objectType(ps, obj))
 	}
@@ -120563,7 +126972,7 @@ func conv_io_ReaderFrom_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_e6a8d48cf8aa7e6d_fromRye(ps, &c, m)
+			fn, err := conv_func_e6a8d48cf8aa7e6d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120597,7 +127006,7 @@ func conv_io_RuneReader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadRune" + ", but got " + objectType(ps, obj))
 	}
@@ -120611,7 +127020,7 @@ func conv_io_RuneReader_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _en
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1dac827fef874f78_fromRye(ps, &c, m)
+			fn, err := conv_func_1dac827fef874f78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120652,7 +127061,7 @@ func conv_io_RuneScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "ReadRune, UnreadRune" + ", but got " + objectType(ps, obj))
 	}
@@ -120666,7 +127075,7 @@ func conv_io_RuneScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1dac827fef874f78_fromRye(ps, &c, m)
+			fn, err := conv_func_1dac827fef874f78_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120681,7 +127090,7 @@ func conv_io_RuneScanner_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120730,7 +127139,7 @@ func conv_io_Seeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Seek" + ", but got " + objectType(ps, obj))
 	}
@@ -120744,7 +127153,7 @@ func conv_io_Seeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2394d87ac337faca_fromRye(ps, &c, m)
+			fn, err := conv_func_2394d87ac337faca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120778,7 +127187,7 @@ func conv_io_StringWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "WriteString" + ", but got " + objectType(ps, obj))
 	}
@@ -120792,7 +127201,7 @@ func conv_io_StringWriter_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d3cada6af991d125_fromRye(ps, &c, m)
+			fn, err := conv_func_d3cada6af991d125_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120833,7 +127242,7 @@ func conv_io_WriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120847,7 +127256,7 @@ func conv_io_WriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120862,7 +127271,7 @@ func conv_io_WriteCloser_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120903,7 +127312,7 @@ func conv_io_WriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Seek, Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120917,7 +127326,7 @@ func conv_io_WriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_2394d87ac337faca_fromRye(ps, &c, m)
+			fn, err := conv_func_2394d87ac337faca_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120932,7 +127341,7 @@ func conv_io_WriteSeeker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -120966,7 +127375,7 @@ func conv_io_Writer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Write" + ", but got " + objectType(ps, obj))
 	}
@@ -120980,7 +127389,7 @@ func conv_io_Writer_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Ob
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121014,7 +127423,7 @@ func conv_io_WriterAt_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "WriteAt" + ", but got " + objectType(ps, obj))
 	}
@@ -121028,7 +127437,7 @@ func conv_io_WriterAt_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_d309802fdad2fd47_fromRye(ps, &c, m)
+			fn, err := conv_func_d309802fdad2fd47_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121062,7 +127471,7 @@ func conv_io_WriterTo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "WriteTo" + ", but got " + objectType(ps, obj))
 	}
@@ -121076,7 +127485,7 @@ func conv_io_WriterTo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_435573deb1e71199_fromRye(ps, &c, m)
+			fn, err := conv_func_435573deb1e71199_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121131,7 +127540,7 @@ func conv_io_fs_DirEntry_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Info, IsDir, Name, Type" + ", but got " + objectType(ps, obj))
 	}
@@ -121145,7 +127554,7 @@ func conv_io_fs_DirEntry_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, &c, m)
+			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121160,7 +127569,7 @@ func conv_io_fs_DirEntry_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121175,7 +127584,7 @@ func conv_io_fs_DirEntry_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121190,7 +127599,7 @@ func conv_io_fs_DirEntry_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_dcd5d89731d6a4ad_fromRye(ps, &c, m)
+			fn, err := conv_func_dcd5d89731d6a4ad_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121224,7 +127633,7 @@ func conv_io_fs_FS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Open" + ", but got " + objectType(ps, obj))
 	}
@@ -121238,7 +127647,7 @@ func conv_io_fs_FS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121286,7 +127695,7 @@ func conv_io_fs_File_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.O
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read, Stat" + ", but got " + objectType(ps, obj))
 	}
@@ -121300,7 +127709,7 @@ func conv_io_fs_File_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.O
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121315,7 +127724,7 @@ func conv_io_fs_File_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.O
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121330,7 +127739,7 @@ func conv_io_fs_File_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.O
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, &c, m)
+			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121399,7 +127808,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "IsDir, ModTime, Mode, Name, Size, Sys" + ", but got " + objectType(ps, obj))
 	}
@@ -121413,7 +127822,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, &c, m)
+			fn, err := conv_func_a5a6e669ed48ec6c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121428,7 +127837,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ad4a1395c5a84678_fromRye(ps, &c, m)
+			fn, err := conv_func_ad4a1395c5a84678_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121443,7 +127852,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_dcd5d89731d6a4ad_fromRye(ps, &c, m)
+			fn, err := conv_func_dcd5d89731d6a4ad_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121458,7 +127867,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, &c, m)
+			fn, err := conv_func_c4f955a1345caff5_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121473,7 +127882,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_fa16569b1298594f_fromRye(ps, &c, m)
+			fn, err := conv_func_fa16569b1298594f_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121488,7 +127897,7 @@ func conv_io_fs_FileInfo_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _e
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_608c176570cb0d1e_fromRye(ps, &c, m)
+			fn, err := conv_func_608c176570cb0d1e_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121547,7 +127956,7 @@ func conv_io_fs_GlobFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Glob, Open" + ", but got " + objectType(ps, obj))
 	}
@@ -121561,7 +127970,7 @@ func conv_io_fs_GlobFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_83b6686f8aa21c13_fromRye(ps, &c, m)
+			fn, err := conv_func_83b6686f8aa21c13_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121576,7 +127985,7 @@ func conv_io_fs_GlobFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121635,7 +128044,7 @@ func conv_io_fs_ReadDirFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Open, ReadDir" + ", but got " + objectType(ps, obj))
 	}
@@ -121649,7 +128058,7 @@ func conv_io_fs_ReadDirFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121664,7 +128073,7 @@ func conv_io_fs_ReadDirFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_51254b000b0012c7_fromRye(ps, &c, m)
+			fn, err := conv_func_51254b000b0012c7_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121719,7 +128128,7 @@ func conv_io_fs_ReadDirFile_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Close, Read, ReadDir, Stat" + ", but got " + objectType(ps, obj))
 	}
@@ -121733,7 +128142,7 @@ func conv_io_fs_ReadDirFile_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_ff3225443cebc182_fromRye(ps, &c, m)
+			fn, err := conv_func_ff3225443cebc182_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121748,7 +128157,7 @@ func conv_io_fs_ReadDirFile_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, &c, m)
+			fn, err := conv_func_bbd49c0986ef4ec2_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121763,7 +128172,7 @@ func conv_io_fs_ReadDirFile_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6161aba9fc93dabd_fromRye(ps, &c, m)
+			fn, err := conv_func_6161aba9fc93dabd_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121778,7 +128187,7 @@ func conv_io_fs_ReadDirFile_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, &c, m)
+			fn, err := conv_func_a1cef94a21f987bf_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121819,7 +128228,7 @@ func conv_io_fs_ReadFileFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Open, ReadFile" + ", but got " + objectType(ps, obj))
 	}
@@ -121833,7 +128242,7 @@ func conv_io_fs_ReadFileFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121848,7 +128257,7 @@ func conv_io_fs_ReadFileFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_763b35f5daae9e74_fromRye(ps, &c, m)
+			fn, err := conv_func_763b35f5daae9e74_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121896,7 +128305,7 @@ func conv_io_fs_ReadLinkFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Lstat, Open, ReadLink" + ", but got " + objectType(ps, obj))
 	}
@@ -121910,7 +128319,7 @@ func conv_io_fs_ReadLinkFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5efe63ccc7525f54_fromRye(ps, &c, m)
+			fn, err := conv_func_5efe63ccc7525f54_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121925,7 +128334,7 @@ func conv_io_fs_ReadLinkFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121940,7 +128349,7 @@ func conv_io_fs_ReadLinkFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj 
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_0f0d41888928d067_fromRye(ps, &c, m)
+			fn, err := conv_func_0f0d41888928d067_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -121981,7 +128390,7 @@ func conv_io_fs_StatFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Open, Stat" + ", but got " + objectType(ps, obj))
 	}
@@ -121995,7 +128404,7 @@ func conv_io_fs_StatFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -122010,7 +128419,7 @@ func conv_io_fs_StatFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5efe63ccc7525f54_fromRye(ps, &c, m)
+			fn, err := conv_func_5efe63ccc7525f54_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -122051,7 +128460,7 @@ func conv_io_fs_SubFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Open, Sub" + ", but got " + objectType(ps, obj))
 	}
@@ -122065,7 +128474,7 @@ func conv_io_fs_SubFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, &c, m)
+			fn, err := conv_func_6e164d001a4c1714_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -122080,7 +128489,7 @@ func conv_io_fs_SubFS_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_5ca4126b7e80d35d_fromRye(ps, &c, m)
+			fn, err := conv_func_5ca4126b7e80d35d_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -122166,7 +128575,7 @@ func conv_net_url_InvalidHostError_fromRye(ps *_env.ProgramState, ctx *_env.RyeC
 }
 
 func conv_net_url_URL_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (net_url.URL, error) {
-	if ul, err := conv_struct_1e64ccbb3469eda1_fromRye(ps, ctx, obj); err == nil {
+	if ul, err := conv_struct_113df3b9ee47d4ed_fromRye(ps, ctx, obj); err == nil {
 		return (net_url.URL)(ul), nil
 	}
 	if nat, ok := obj.(_env.Native); ok {
@@ -122245,7 +128654,7 @@ func conv_struct_01aeb5fe90bdd9c7_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_01aeb5fe90bdd9c7
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "Items" + ", but got " + objectType(ps, obj))
 	}
@@ -122269,7 +128678,7 @@ func conv_struct_0249dde01e9fd0f8_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_0249dde01e9fd0f8
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Line0, Col0, Line1, Col1, Stmts" + ", but got " + objectType(ps, obj))
 	}
@@ -122321,6 +128730,84 @@ func conv_struct_0249dde01e9fd0f8_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
+func conv_struct_024db3814965373c_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_024db3814965373c, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_024db3814965373c); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_024db3814965373c
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "Position1, Position2, Hidden, FillColor, StrokeColor, StrokeWidth, Shadow" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("Position1"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Position1, err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Position2"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Position2, err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Hidden"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Hidden, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("FillColor"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.FillColor, err = conv_image_color_Color_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("StrokeColor"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.StrokeColor, err = conv_image_color_Color_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("StrokeWidth"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.StrokeWidth, err = conv_float32_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Shadow"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Shadow, err = conv_fyne_io_fyne_v2_canvas_Shadow_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
 func conv_struct_03c0ae5f81927f2c_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_03c0ae5f81927f2c, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_03c0ae5f81927f2c); ok {
@@ -122329,7 +128816,7 @@ func conv_struct_03c0ae5f81927f2c_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_03c0ae5f81927f2c
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "X, Y" + ", but got " + objectType(ps, obj))
 	}
@@ -122362,7 +128849,7 @@ func conv_struct_06b5d8477d7cbd26_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_06b5d8477d7cbd26
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "ThemeName, Scale, PrimaryColor, CloudName, CloudConfig, DisableAnimations" + ", but got " + objectType(ps, obj))
 	}
@@ -122431,7 +128918,7 @@ func conv_struct_089635cb5b3ca1ae_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_089635cb5b3ca1ae
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Name, Physical" + ", but got " + objectType(ps, obj))
 	}
@@ -122464,7 +128951,7 @@ func conv_struct_09f9e1c9c27676d0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_09f9e1c9c27676d0
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "WindowHandle" + ", but got " + objectType(ps, obj))
 	}
@@ -122488,7 +128975,7 @@ func conv_struct_0bc1cff2acef5f0f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_0bc1cff2acef5f0f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "R, G, B, A" + ", but got " + objectType(ps, obj))
 	}
@@ -122539,7 +129026,7 @@ func conv_struct_0c78fea044f83f13_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_0c78fea044f83f13
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Row, Col" + ", but got " + objectType(ps, obj))
 	}
@@ -122564,17 +129051,17 @@ func conv_struct_0c78fea044f83f13_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
-func conv_struct_1e64ccbb3469eda1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_1e64ccbb3469eda1, error) {
+func conv_struct_113df3b9ee47d4ed_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_113df3b9ee47d4ed, error) {
 	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_1e64ccbb3469eda1); ok {
+		if v, ok := nat.Value.(*struct_113df3b9ee47d4ed); ok {
 			return *v, nil
 		}
 	}
-	var zero struct_1e64ccbb3469eda1
+	var zero struct_113df3b9ee47d4ed
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
-		return zero, _errors.New("expected context with fields " + "Scheme, Opaque, User, Host, Path, RawPath, OmitHost, ForceQuery, RawQuery, Fragment, RawFragment" + ", but got " + objectType(ps, obj))
+		return zero, _errors.New("expected context with fields " + "Scheme, Opaque, User, Host, Path, Fragment, RawQuery, RawPath, RawFragment, ForceQuery, OmitHost" + ", but got " + objectType(ps, obj))
 	}
 	if idx, ok := ps.Idx.GetIndex("Scheme"); ok {
 		if f, ok := c.Get(idx); ok {
@@ -122621,28 +129108,10 @@ func conv_struct_1e64ccbb3469eda1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 			}
 		}
 	}
-	if idx, ok := ps.Idx.GetIndex("RawPath"); ok {
+	if idx, ok := ps.Idx.GetIndex("Fragment"); ok {
 		if f, ok := c.Get(idx); ok {
 			var err error
-			res.RawPath, err = conv_string_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("OmitHost"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.OmitHost, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("ForceQuery"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.ForceQuery, err = conv_bool_fromRye(ps, ctx, f)
+			res.Fragment, err = conv_string_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -122657,10 +129126,10 @@ func conv_struct_1e64ccbb3469eda1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 			}
 		}
 	}
-	if idx, ok := ps.Idx.GetIndex("Fragment"); ok {
+	if idx, ok := ps.Idx.GetIndex("RawPath"); ok {
 		if f, ok := c.Get(idx); ok {
 			var err error
-			res.Fragment, err = conv_string_fromRye(ps, ctx, f)
+			res.RawPath, err = conv_string_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -122670,6 +129139,24 @@ func conv_struct_1e64ccbb3469eda1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		if f, ok := c.Get(idx); ok {
 			var err error
 			res.RawFragment, err = conv_string_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("ForceQuery"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.ForceQuery, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("OmitHost"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.OmitHost, err = conv_bool_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -122686,7 +129173,7 @@ func conv_struct_26905b7d9f7ff817_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_26905b7d9f7ff817
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "PointEvent, Dragged" + ", but got " + objectType(ps, obj))
 	}
@@ -122719,7 +129206,7 @@ func conv_struct_2837ae3a2a7dc6af_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_2837ae3a2a7dc6af
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "A" + ", but got " + objectType(ps, obj))
 	}
@@ -122743,7 +129230,7 @@ func conv_struct_2ce3942643f7df4f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_2ce3942643f7df4f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "Texts" + ", but got " + objectType(ps, obj))
 	}
@@ -122751,6 +129238,48 @@ func conv_struct_2ce3942643f7df4f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		if f, ok := c.Get(idx); ok {
 			var err error
 			res.Texts, err = conv_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
+func conv_struct_2e973b51a7fcd6d9_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_2e973b51a7fcd6d9, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_2e973b51a7fcd6d9); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_2e973b51a7fcd6d9
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "Headers, Rows, Alignments" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("Headers"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Headers, err = conv_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Rows"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Rows, err = conv_slice_slice_slice_fyne_io_fyne_v2_widget_RichTextSegment_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Alignments"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Alignments, err = conv_slice_fyne_io_fyne_v2_TextAlign_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -122767,7 +129296,7 @@ func conv_struct_3727c3898db0c6d8_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_3727c3898db0c6d8
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "X, Y" + ", but got " + objectType(ps, obj))
 	}
@@ -122800,7 +129329,7 @@ func conv_struct_37fa7b4335f08ced_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_37fa7b4335f08ced
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Pix, Stride, Rect" + ", but got " + objectType(ps, obj))
 	}
@@ -122834,30 +129363,6 @@ func conv_struct_37fa7b4335f08ced_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
-func conv_struct_380b395ae7edc9e0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_380b395ae7edc9e0, error) {
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_380b395ae7edc9e0); ok {
-			return *v, nil
-		}
-	}
-	var zero struct_380b395ae7edc9e0
-	res := zero
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return zero, _errors.New("expected context with field " + "PointEvent" + ", but got " + objectType(ps, obj))
-	}
-	if idx, ok := ps.Idx.GetIndex("PointEvent"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.PointEvent, err = conv_fyne_io_fyne_v2_PointEvent_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	return res, nil
-}
-
 func conv_struct_3e377c1c8ef737c7_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_3e377c1c8ef737c7, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_3e377c1c8ef737c7); ok {
@@ -122866,7 +129371,7 @@ func conv_struct_3e377c1c8ef737c7_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_3e377c1c8ef737c7
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "R, G, B, A" + ", but got " + objectType(ps, obj))
 	}
@@ -122917,7 +129422,7 @@ func conv_struct_4139548b9ceb10a1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_4139548b9ceb10a1
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Title, Detail, Open" + ", but got " + objectType(ps, obj))
 	}
@@ -122951,6 +129456,84 @@ func conv_struct_4139548b9ceb10a1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
+func conv_struct_47aedfd96bc83ac3_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_47aedfd96bc83ac3, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_47aedfd96bc83ac3); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_47aedfd96bc83ac3
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "Bold, Italic, Monospace, Symbol, TabWidth, Underline, Strikethrough" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("Bold"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Bold, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Italic"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Italic, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Monospace"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Monospace, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Symbol"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Symbol, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("TabWidth"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.TabWidth, err = conv_int_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Underline"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Underline, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Strikethrough"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Strikethrough, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
 func conv_struct_47b4880de49f951e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_47b4880de49f951e, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_47b4880de49f951e); ok {
@@ -122959,7 +129542,7 @@ func conv_struct_47b4880de49f951e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_47b4880de49f951e
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "TextStyle, FGColor, BGColor" + ", but got " + objectType(ps, obj))
 	}
@@ -123001,7 +129584,7 @@ func conv_struct_5215f8a73f85e7db_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_5215f8a73f85e7db
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "VM, Env, Ctx" + ", but got " + objectType(ps, obj))
 	}
@@ -123043,7 +129626,7 @@ func conv_struct_5262d3586be3509f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_5262d3586be3509f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "NSWindow" + ", but got " + objectType(ps, obj))
 	}
@@ -123067,7 +129650,7 @@ func conv_struct_53d860c49dfc08d0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_53d860c49dfc08d0
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "StaticName, StaticContent" + ", but got " + objectType(ps, obj))
 	}
@@ -123100,7 +129683,7 @@ func conv_struct_5a45d9eab691588e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_5a45d9eab691588e
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "Y" + ", but got " + objectType(ps, obj))
 	}
@@ -123124,7 +129707,7 @@ func conv_struct_5c244a7c55f59a75_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_5c244a7c55f59a75
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "BaseWidget, Title, Subtitle, Image, Content" + ", but got " + objectType(ps, obj))
 	}
@@ -123176,6 +129759,39 @@ func conv_struct_5c244a7c55f59a75_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
+func conv_struct_5c46e3f222ea7f46_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_5c46e3f222ea7f46, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_5c46e3f222ea7f46); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_5c46e3f222ea7f46
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "Checked, Text" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("Checked"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Checked, err = conv_bool_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Text"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Text, err = conv_string_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
 func conv_struct_5e26b3df752e1ee2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_5e26b3df752e1ee2, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_5e26b3df752e1ee2); ok {
@@ -123184,7 +129800,7 @@ func conv_struct_5e26b3df752e1ee2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_5e26b3df752e1ee2
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Title, Content" + ", but got " + objectType(ps, obj))
 	}
@@ -123217,7 +129833,7 @@ func conv_struct_6b78a7286fcf184d_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_6b78a7286fcf184d
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "C" + ", but got " + objectType(ps, obj))
 	}
@@ -123241,7 +129857,7 @@ func conv_struct_7295a638e8cd6bf0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_7295a638e8cd6bf0
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "AutoReverse, Curve, Duration, RepeatCount, Tick" + ", but got " + objectType(ps, obj))
 	}
@@ -123301,7 +129917,7 @@ func conv_struct_745be38726a0c3dc_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_745be38726a0c3dc
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Name, F, Output, Unordered" + ", but got " + objectType(ps, obj))
 	}
@@ -123344,6 +129960,66 @@ func conv_struct_745be38726a0c3dc_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
+func conv_struct_748144ccb4e2b04e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_748144ccb4e2b04e, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_748144ccb4e2b04e); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_748144ccb4e2b04e
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "Color, BlurRadius, Spread, Offset, Variant" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("Color"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Color, err = conv_image_color_Color_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("BlurRadius"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.BlurRadius, err = conv_float32_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Spread"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Spread, err = conv_float32_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Offset"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Offset, err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("Variant"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.Variant, err = conv_fyne_io_fyne_v2_canvas_ShadowVariant_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
 func conv_struct_79b22f0263aede9b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_79b22f0263aede9b, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_79b22f0263aede9b); ok {
@@ -123352,7 +130028,7 @@ func conv_struct_79b22f0263aede9b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_79b22f0263aede9b
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Op, Path, Err" + ", but got " + objectType(ps, obj))
 	}
@@ -123394,7 +130070,7 @@ func conv_struct_7a839f9f0db88ff6_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_7a839f9f0db88ff6
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Cells, Style" + ", but got " + objectType(ps, obj))
 	}
@@ -123427,7 +130103,7 @@ func conv_struct_7bdd5866e69a7b7b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_7bdd5866e69a7b7b
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "ScanCode" + ", but got " + objectType(ps, obj))
 	}
@@ -123435,75 +130111,6 @@ func conv_struct_7bdd5866e69a7b7b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		if f, ok := c.Get(idx); ok {
 			var err error
 			res.ScanCode, err = conv_int_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	return res, nil
-}
-
-func conv_struct_7e36ba97f6d13f96_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_7e36ba97f6d13f96, error) {
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_7e36ba97f6d13f96); ok {
-			return *v, nil
-		}
-	}
-	var zero struct_7e36ba97f6d13f96
-	res := zero
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return zero, _errors.New("expected context with fields " + "Position1, Position2, Hidden, FillColor, StrokeColor, StrokeWidth" + ", but got " + objectType(ps, obj))
-	}
-	if idx, ok := ps.Idx.GetIndex("Position1"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Position1, err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Position2"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Position2, err = conv_fyne_io_fyne_v2_Position_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Hidden"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Hidden, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("FillColor"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.FillColor, err = conv_image_color_Color_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("StrokeColor"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.StrokeColor, err = conv_image_color_Color_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("StrokeWidth"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.StrokeWidth, err = conv_float32_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -123520,7 +130127,7 @@ func conv_struct_7fe4c87e7ab9dbc7_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_7fe4c87e7ab9dbc7
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "Y" + ", but got " + objectType(ps, obj))
 	}
@@ -123528,30 +130135,6 @@ func conv_struct_7fe4c87e7ab9dbc7_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 		if f, ok := c.Get(idx); ok {
 			var err error
 			res.Y, err = conv_uint8_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	return res, nil
-}
-
-func conv_struct_8054143693d87be0_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_8054143693d87be0, error) {
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_8054143693d87be0); ok {
-			return *v, nil
-		}
-	}
-	var zero struct_8054143693d87be0
-	res := zero
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return zero, _errors.New("expected context with field " + "Clipboard" + ", but got " + objectType(ps, obj))
-	}
-	if idx, ok := ps.Idx.GetIndex("Clipboard"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Clipboard, err = conv_fyne_io_fyne_v2_Clipboard_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -123568,7 +130151,7 @@ func conv_struct_8173626fe14ed07b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_8173626fe14ed07b
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "R, N" + ", but got " + objectType(ps, obj))
 	}
@@ -123601,7 +130184,7 @@ func conv_struct_8624be8fc4223a54_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_8624be8fc4223a54
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "PointEvent, Button, Modifier" + ", but got " + objectType(ps, obj))
 	}
@@ -123643,7 +130226,7 @@ func conv_struct_87a52d59e409a977_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_87a52d59e409a977
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "HWND" + ", but got " + objectType(ps, obj))
 	}
@@ -123667,7 +130250,7 @@ func conv_struct_9866e2ddafea3bcb_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_9866e2ddafea3bcb
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "ChildMenu, IsQuit, IsSeparator, Label, Action, Disabled, Checked, Icon, Shortcut" + ", but got " + objectType(ps, obj))
 	}
@@ -123763,7 +130346,7 @@ func conv_struct_9985bfd612e15136_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_9985bfd612e15136
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "A" + ", but got " + objectType(ps, obj))
 	}
@@ -123787,7 +130370,7 @@ func conv_struct_9c2a6eaaf89ae21f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_9c2a6eaaf89ae21f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "Extensions" + ", but got " + objectType(ps, obj))
 	}
@@ -123811,7 +130394,7 @@ func conv_struct_9edfe83a23371de5_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_9edfe83a23371de5
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Source, Title, Alignment" + ", but got " + objectType(ps, obj))
 	}
@@ -123853,7 +130436,7 @@ func conv_struct_a872119aaf0c6f52_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_a872119aaf0c6f52
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "YCbCr, A, AStride" + ", but got " + objectType(ps, obj))
 	}
@@ -123895,7 +130478,7 @@ func conv_struct_aa8e007bb0f1737a_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_aa8e007bb0f1737a
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "MimeTypes" + ", but got " + objectType(ps, obj))
 	}
@@ -123919,7 +130502,7 @@ func conv_struct_ad8ca543fccce96a_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_ad8ca543fccce96a
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Width, Height" + ", but got " + objectType(ps, obj))
 	}
@@ -123952,7 +130535,7 @@ func conv_struct_ae12683e9f9bddeb_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_ae12683e9f9bddeb
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Min, Max" + ", but got " + objectType(ps, obj))
 	}
@@ -123985,7 +130568,7 @@ func conv_struct_af022a55633c29be_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_af022a55633c29be
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Name, F" + ", but got " + objectType(ps, obj))
 	}
@@ -124018,7 +130601,7 @@ func conv_struct_b1014a0ccf8fb1a2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_b1014a0ccf8fb1a2
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Label, Items" + ", but got " + objectType(ps, obj))
 	}
@@ -124051,7 +130634,7 @@ func conv_struct_b137aaa622be2e4f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_b137aaa622be2e4f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Rune, Style" + ", but got " + objectType(ps, obj))
 	}
@@ -124084,7 +130667,7 @@ func conv_struct_b48a8d58b046b4a6_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_b48a8d58b046b4a6
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Layout, Value, LayoutElem, ValueElem, Message" + ", but got " + objectType(ps, obj))
 	}
@@ -124153,7 +130736,7 @@ func conv_struct_bc86bd2a43ba23f5_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_bc86bd2a43ba23f5
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Op, URL, Err" + ", but got " + objectType(ps, obj))
 	}
@@ -124195,7 +130778,7 @@ func conv_struct_bf5f7010c23ee404_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_bf5f7010c23ee404
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "AbsolutePosition, Position" + ", but got " + objectType(ps, obj))
 	}
@@ -124228,7 +130811,7 @@ func conv_struct_c15f975f5e271e53_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_c15f975f5e271e53
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "AndroidContext, NativeWindow" + ", but got " + objectType(ps, obj))
 	}
@@ -124261,7 +130844,7 @@ func conv_struct_c25d54c700923a9e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_c25d54c700923a9e
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "TopPadding, BottomPadding, LeftPadding, RightPadding" + ", but got " + objectType(ps, obj))
 	}
@@ -124312,7 +130895,7 @@ func conv_struct_c79cfaf812824e24_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_c79cfaf812824e24
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "DX, DY" + ", but got " + objectType(ps, obj))
 	}
@@ -124337,6 +130920,39 @@ func conv_struct_c79cfaf812824e24_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
+func conv_struct_c8cba2a6cc3ee2bd_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_c8cba2a6cc3ee2bd, error) {
+	if nat, ok := obj.(_env.Native); ok {
+		if v, ok := nat.Value.(*struct_c8cba2a6cc3ee2bd); ok {
+			return *v, nil
+		}
+	}
+	var zero struct_c8cba2a6cc3ee2bd
+	res := zero
+	c, ok := obj.(*_env.RyeCtx)
+	if !ok {
+		return zero, _errors.New("expected context with fields " + "PointEvent, ID" + ", but got " + objectType(ps, obj))
+	}
+	if idx, ok := ps.Idx.GetIndex("PointEvent"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.PointEvent, err = conv_fyne_io_fyne_v2_PointEvent_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	if idx, ok := ps.Idx.GetIndex("ID"); ok {
+		if f, ok := c.Get(idx); ok {
+			var err error
+			res.ID, err = conv_int_fromRye(ps, ctx, f)
+			if err != nil {
+				return zero, err
+			}
+		}
+	}
+	return res, nil
+}
+
 func conv_struct_c9a7be0e0ab334d2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_c9a7be0e0ab334d2, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_c9a7be0e0ab334d2); ok {
@@ -124345,7 +130961,7 @@ func conv_struct_c9a7be0e0ab334d2_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_c9a7be0e0ab334d2
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Name, F" + ", but got " + objectType(ps, obj))
 	}
@@ -124378,7 +130994,7 @@ func conv_struct_ca7e2e2deb0bc6da_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_ca7e2e2deb0bc6da
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "KeyName, Modifier" + ", but got " + objectType(ps, obj))
 	}
@@ -124411,7 +131027,7 @@ func conv_struct_ce312a55a76367f9_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_ce312a55a76367f9
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "PointEvent, Scrolled" + ", but got " + objectType(ps, obj))
 	}
@@ -124436,75 +131052,6 @@ func conv_struct_ce312a55a76367f9_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
-func conv_struct_d3d12bcda55a8389_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_d3d12bcda55a8389, error) {
-	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_d3d12bcda55a8389); ok {
-			return *v, nil
-		}
-	}
-	var zero struct_d3d12bcda55a8389
-	res := zero
-	c, ok := obj.(_env.RyeCtx)
-	if !ok {
-		return zero, _errors.New("expected context with fields " + "Bold, Italic, Monospace, Symbol, TabWidth, Underline" + ", but got " + objectType(ps, obj))
-	}
-	if idx, ok := ps.Idx.GetIndex("Bold"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Bold, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Italic"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Italic, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Monospace"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Monospace, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Symbol"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Symbol, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("TabWidth"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.TabWidth, err = conv_int_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("Underline"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.Underline, err = conv_bool_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	return res, nil
-}
-
 func conv_struct_d4d58e2449e0db3b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_d4d58e2449e0db3b, error) {
 	if nat, ok := obj.(_env.Native); ok {
 		if v, ok := nat.Value.(*struct_d4d58e2449e0db3b); ok {
@@ -124513,7 +131060,7 @@ func conv_struct_d4d58e2449e0db3b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_d4d58e2449e0db3b
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "ColorModel, Width, Height" + ", but got " + objectType(ps, obj))
 	}
@@ -124555,7 +131102,7 @@ func conv_struct_d58a2a87242044a1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_d58a2a87242044a1
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Y, Cb, Cr, YStride, CStride, SubsampleRatio, Rect" + ", but got " + objectType(ps, obj))
 	}
@@ -124633,7 +131180,7 @@ func conv_struct_d7437e917f611b26_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_d7437e917f611b26
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "BaseWidget, Items" + ", but got " + objectType(ps, obj))
 	}
@@ -124666,7 +131213,7 @@ func conv_struct_d88f7373629b363e_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_d88f7373629b363e
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "YCbCr, A" + ", but got " + objectType(ps, obj))
 	}
@@ -124699,7 +131246,7 @@ func conv_struct_da99d3d9132ae031_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_da99d3d9132ae031
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Position1, Position2, Hidden, StrokeColor, StrokeWidth" + ", but got " + objectType(ps, obj))
 	}
@@ -124759,7 +131306,7 @@ func conv_struct_dde9a3ba21a262a1_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_dde9a3ba21a262a1
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "C, M, Y, K" + ", but got " + objectType(ps, obj))
 	}
@@ -124810,7 +131357,7 @@ func conv_struct_df092ee1291f0793_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_df092ee1291f0793
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "BaseWidget, Items, MultiOpen" + ", but got " + objectType(ps, obj))
 	}
@@ -124844,49 +131391,31 @@ func conv_struct_df092ee1291f0793_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	return res, nil
 }
 
-func conv_struct_ed755f6805d1ea46_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_ed755f6805d1ea46, error) {
+func conv_struct_f858b9ecfa82b65f_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.Object) (struct_f858b9ecfa82b65f, error) {
 	if nat, ok := obj.(_env.Native); ok {
-		if v, ok := nat.Value.(*struct_ed755f6805d1ea46); ok {
+		if v, ok := nat.Value.(*struct_f858b9ecfa82b65f); ok {
 			return *v, nil
 		}
 	}
-	var zero struct_ed755f6805d1ea46
+	var zero struct_f858b9ecfa82b65f
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
-		return zero, _errors.New("expected context with fields " + "Alignment, Text, URL, OnTapped" + ", but got " + objectType(ps, obj))
+		return zero, _errors.New("expected context with fields " + "Clipboard, Secondary" + ", but got " + objectType(ps, obj))
 	}
-	if idx, ok := ps.Idx.GetIndex("Alignment"); ok {
+	if idx, ok := ps.Idx.GetIndex("Clipboard"); ok {
 		if f, ok := c.Get(idx); ok {
 			var err error
-			res.Alignment, err = conv_fyne_io_fyne_v2_TextAlign_fromRye(ps, ctx, f)
+			res.Clipboard, err = conv_fyne_io_fyne_v2_Clipboard_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
 		}
 	}
-	if idx, ok := ps.Idx.GetIndex("Text"); ok {
+	if idx, ok := ps.Idx.GetIndex("Secondary"); ok {
 		if f, ok := c.Get(idx); ok {
 			var err error
-			res.Text, err = conv_string_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("URL"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.URL, err = conv_ptr_net_url_URL_fromRye(ps, ctx, f)
-			if err != nil {
-				return zero, err
-			}
-		}
-	}
-	if idx, ok := ps.Idx.GetIndex("OnTapped"); ok {
-		if f, ok := c.Get(idx); ok {
-			var err error
-			res.OnTapped, err = conv_func_1926bfa0a15a6c3c_fromRye(ps, ctx, f)
+			res.Secondary, err = conv_bool_fromRye(ps, ctx, f)
 			if err != nil {
 				return zero, err
 			}
@@ -124903,7 +131432,7 @@ func conv_struct_f8eab5a9769e0901_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_f8eab5a9769e0901
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with field " + "WaylandSurface" + ", but got " + objectType(ps, obj))
 	}
@@ -124927,7 +131456,7 @@ func conv_struct_f97a4dab60697d3c_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_f97a4dab60697d3c
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Name, Fn" + ", but got " + objectType(ps, obj))
 	}
@@ -124960,7 +131489,7 @@ func conv_struct_fbc6a1b2c72328a3_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_fbc6a1b2c72328a3
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Y, Cb, Cr" + ", but got " + objectType(ps, obj))
 	}
@@ -125002,7 +131531,7 @@ func conv_struct_fd05b6abdddda73b_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_fd05b6abdddda73b
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "Pix, Stride, Rect, Palette" + ", but got " + objectType(ps, obj))
 	}
@@ -125053,7 +131582,7 @@ func conv_struct_fd1d1380ca76c3f9_fromRye(ps *_env.ProgramState, ctx *_env.RyeCt
 	}
 	var zero struct_fd1d1380ca76c3f9
 	res := zero
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return zero, _errors.New("expected context with fields " + "BaseWidget, Content" + ", but got " + objectType(ps, obj))
 	}
@@ -125121,7 +131650,7 @@ func conv_sync_Locker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 			return v, nil
 		}
 	}
-	c, ok := obj.(_env.RyeCtx)
+	c, ok := obj.(*_env.RyeCtx)
 	if !ok {
 		return nil, _errors.New("expected native interface or context with methods " + "Lock, Unlock" + ", but got " + objectType(ps, obj))
 	}
@@ -125135,7 +131664,7 @@ func conv_sync_Locker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}
@@ -125150,7 +131679,7 @@ func conv_sync_Locker_fromRye(ps *_env.ProgramState, ctx *_env.RyeCtx, obj _env.
 		var m _env.Object
 		m, ok = c.Get(idx)
 		if ok {
-			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, &c, m)
+			fn, err := conv_func_1926bfa0a15a6c3c_fromRye(ps, c, m)
 			if err != nil {
 				return nil, err
 			}

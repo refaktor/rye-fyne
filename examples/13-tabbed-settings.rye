@@ -5,23 +5,23 @@ container: import\go "fyne/container"
 theme: import\go "fyne/theme"
 
 a: app/new
-w: a .window "Settings Panel"
+w: a .Window "Settings Panel"
 
 ; General settings tab content
 private {
 	volume-slider: widget/slider 0.0 100.0
-	volume-slider .set-value 75.0
+	volume-slider .Set-value 75.0
 	volume-label: widget/label "Volume: 75%"
 
-	volume-slider .on-changed! fn { v } {
+	volume-slider .On-changed! fn { v } {
 		print v
-		volume-label .set-text "Volume: " ++ v ++ "%"
+		volume-label .Set-text "Volume: " ++ v ++ "%"
 	}
 
 	notifications-check: widget/check "Enable notifications" fn { v } { 
 		print "Notifications:" v 
 	}
-	notifications-check .set-checked true
+	notifications-check .Set-checked true
 
 	auto-save-check: widget/check "Auto-save documents" fn { v } {
 		print "Auto-save:" v
@@ -52,6 +52,6 @@ tabs: container/app-tabs [
     container/tab-item "About" about-content
 ]
 
-w .set-content tabs
-w .resize fyne/size 400.0 350.0
-w .show-and-run
+w .Set-content tabs
+w .Resize fyne/size 400.0 350.0
+w .Show-and-run

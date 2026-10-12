@@ -3,12 +3,12 @@ app: import\go "fyne/app"
 widget: import\go "fyne/widget"
 container: import\go "fyne/container"
 
-w: app/new .window "Get my IP"
+w: app/new .Window "Get my IP"
 
-url: https://ifconfig.me
+url: https://ifconfig.Me
 lab: widget/label "retrieving ..."
 btn: widget/button "Copy" fn { } {
-    w .clipboard .set-content lab .text?
+    w .Clipboard .Set-content lab .Text?
 }
 
 get-ip: does {
@@ -23,11 +23,11 @@ get-ip: does {
 go does {
     forever {
         fyne/do does {
-            lab .set-text get-ip
+            lab .Set-text get-ip
         }
-        sleep 1 .minutes
+        sleep 1 .Minutes
     }
 }
 
-w .set-content container/hbox [ lab btn ]
-w .show-and-run
+w .Set-content container/hbox [ lab btn ]
+w .Show-and-run

@@ -15,14 +15,14 @@ tab: widget/table
 does { [ 3 2 ] }
 does { widget/label "........." }
 fn { i o } {
-	r: i .row?
-	c: i .col?
+	r: i .Row?
+	c: i .Col?
 
 	data -> r -> c :val
-	o .set-text to-string val
+	o .Set-text string val
 }
 
-w: app/new .window "Rye table - table"
-w .resize fyne/size 330.0 400.0
-w .set-content tab
-w .show-and-run
+w: app/new .Window "Rye table - table"
+w .Resize fyne/size 330.0 400.0
+w .Set-content tab
+w .Show-and-run

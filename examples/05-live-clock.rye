@@ -7,12 +7,12 @@ lab: widget/label "<date & time>"
 go does {
     forever {
         fyne/do does {
-            lab .set-text now .to-string
+            lab .Set-text now .string
         }
         sleep 500
     }
 }
 
-w: app/new .window "Date & Time"
-w .set-content lab
-w .show-and-run
+w: app/new .Window "Date & Time"
+w .Set-content lab
+w .Show-and-run

@@ -2,19 +2,24 @@ module github.com/refaktor/rye-fyne
 
 go 1.26.1
 
-replace github.com/refaktor/ryegen/v2 => ../ryegen/
+// replace github.com/refaktor/ryegen/v2 => ../ryegen/
 
 replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
 
 replace github.com/jaytaylor/go-find => github.com/refaktor/go-find v0.0.0-20260208134259-020cb144f5ba
 
-replace github.com/refaktor/rye => ../rye
+// replace github.com/refaktor/rye => ../rye
 
 tool github.com/refaktor/ryegen/v2
 
 require (
 	fyne.io/fyne/v2 v2.8.1
-	github.com/refaktor/rye v0.0.100-0.20260215091854-d86e5b1857fb
+//	github.com/refaktor/rye
+)
+
+require (
+	github.com/jwalton/go-supportscolor v1.2.0 // indirect
+	github.com/refaktor/rye v0.2.66-0.20261012144101-70fc8f3e6284 // indirect
 )
 
 require (
@@ -174,7 +179,7 @@ require (
 	github.com/prometheus/procfs v0.19.2 // indirect
 	github.com/refaktor/go-find v0.0.1 // indirect
 	github.com/refaktor/keyboard v0.0.0-20260517095250-755a59d30156 // indirect
-	github.com/refaktor/ryegen/v2 v2.0.0-20251012122240-87fb603cd71c // indirect
+	github.com/refaktor/ryegen/v2 v2.0.1 // 2.0.0-20251012122240-87fb603cd71c // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/richardlehane/mscfb v1.0.6 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect

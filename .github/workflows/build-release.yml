@@ -40,7 +40,15 @@ jobs:
             go gcc \
             libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev \
             linux-headers mesa-dev libxkbcommon-dev wayland-dev \
-            git wget curl file patchelf
+            git wget curl file patchelf coreutils
+
+          # quick-sharun and the packaging steps rely on GNU coreutils
+          # features (e.g. `ln -r`, `ln -T`) that BusyBox does not provide.
+          # Alpine installs GNU coreutils with a `g` prefix, so symlink the
+          # ones we need into /usr/local/bin to take precedence over BusyBox.
+          for t in ln cp mv rm mkdir sort head tail tr readlink dirname basename install; do
+            ln -sf /usr/bin/g$t /usr/local/bin/$t
+          done
 
       - uses: actions/checkout@v4
 

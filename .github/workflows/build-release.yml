@@ -40,7 +40,7 @@ jobs:
             go gcc \
             libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev \
             linux-headers mesa-dev libxkbcommon-dev wayland-dev \
-            git wget curl file
+            git wget curl file patchelf
 
       - uses: actions/checkout@v4
 

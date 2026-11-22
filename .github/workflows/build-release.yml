@@ -100,6 +100,11 @@ jobs:
 
           cp ./rye-fyne ./rye
 
+          # Alpine's mesa libgallium links against libLLVM, which quick-sharun
+          # refuses to bundle by default (~100 MiB). We build on musl so the
+          # debloated Arch mesa packages it recommends are not usable; accept
+          # the larger bundle instead.
+          I_WANT_FAT_APPIMAGE=1 \
           DESKTOP="./rye.desktop" ICON="./rye.png" \
           DEPLOY_LOCALE="0" \
           /tmp/quick-sharun ./rye

@@ -6,7 +6,7 @@ theme: import\go "fyne/theme"
 layout: import\go "fyne/layout"
 
 ; Simple data management
-tasks: ref [
+var 'tasks ref [
     [ false "Goat cheese" ]
     [ false "Eggs" ]
     [ false "Oats" ]
@@ -19,13 +19,19 @@ tasks: ref [
 ; on state management solution
 Data: context {
     add!: fn { task } {
-        print "* Adding" probe task 
+        print "* Adding" probe task
+        append! [ false task ] 'tasks
     }
-    remove!: fn { idx } { 
-        print "* Removing" probe idx 
+    remove!: fn { idx } {
+        print "* Removing" probe idx
+        before: head ( tasks .deref ) idx
+        after: tail ( tasks .deref ) ( -1 * ( idx + 1 ) )
+        ref ( before ++ after ) |modify! 'tasks
     }
-    check!: fn { idx val } { 
+    check!: fn { idx val } {
         print "* Checking" probe [ idx val ]
+        tasks .deref -> idx :current-task
+        update! tasks idx [ val ( 1 <- current-task ) ]
     }
 }
 
@@ -49,7 +55,7 @@ lst: widget/list
         lbl |Set-text 1 <- task
         
         ; Update callbacks with current index
-        chk |On-changed! fn { v } { Data/check! i v }
+        chk |On-changed! fn { v } { Data/check! i v , lst .Refresh }
         btn |On-tapped! fn { } { Data/remove! i , lst .Refresh }
     }
 

@@ -22,11 +22,11 @@ w .Set-main-menu fyne/main-menu [
                 }
             } w
         }
-            |icon! theme/file-icon
+            |Icon! theme/file-icon
     ]
     fyne/menu "Settings" [
         fyne/menu-item "Preferences" does { }
-            |icon! theme/settings-icon
+            |Icon! theme/settings-icon
     ]
 ]
 
@@ -34,10 +34,10 @@ clock: widget/label ""
 go does {
     forever {
         fyne/do does {
-            clock .Set-text now .string
+            clock |Set-text now .string
         }
 
-        sleep 1 .Seconds
+        sleep 1000
     }
 }
 
@@ -70,7 +70,7 @@ w .Set-content container/border
         widget/list
             does { 1000 }
             does { widget/label "Hi" }
-            fn { id lab } { lab .Set-text "Entry no. " ++ id .string }
+            fn { id lab } { lab .Set-text ( "Entry no. " ++ id .string ) }
     ]
 
 w .Show-and-run

@@ -5,19 +5,16 @@ container: import\go "fyne/container"
 
 w: app/new .Window "Get my IP"
 
-url: https://ifconfig.Me
+url: https://ifconfig.me/ip
 lab: widget/label "retrieving ..."
 btn: widget/button "Copy" fn { } {
-    w .Clipboard .Set-content lab .Text?
+    w .Clipboard |Set-content ( lab .Text? )
 }
 
 get-ip: does {
    Get url
    |^fix { embed url "couldn't load {{}}" }
-   |html->markdown
-   |^fix { "couldn't parse html" }
-   |Submatch?* regexp "IP Address \*\*([0-9.]+)\*\*"
-   |^fix { "couldn't find the IP pattern" }
+   |trim
 }
 
 go does {
@@ -25,7 +22,7 @@ go does {
         fyne/do does {
             lab .Set-text get-ip
         }
-        sleep 1 .Minutes
+        sleep 60000
     }
 }
 

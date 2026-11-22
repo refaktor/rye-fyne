@@ -11,11 +11,11 @@ Movies: context {
 	
     var 'movies table { "a" } { 1 } ; |on-change { update-entries }
     var 'index 0    ; |on-change { update-entries }
-    db: Open sqlite://movies.Db
+    db: Open sqlite://movies.db
 	
     current?: closure { } { movies -> index |fix { dict { name: "" score: 0 } } }
     current-id?: closure { } { current? -> 0 }
-	clamp-index!: closure { i } { .Clamp 0 movies .Max-idx? |modify! 'index }
+	clamp-index!: closure { i } { clamp i 0 ( max-idx? movies ) |modify! 'index }
 	next!: closure { } { clamp-index! inc index }
     prev!: closure { } { clamp-index! dec index }
 	new-index!: closure { } { movies .length? |modify! 'index }
@@ -44,12 +44,12 @@ name-entry: widget/entry
 score-entry: widget/entry
 
 update-entries: does {
-	name-entry .Set-text "name" <- Movies/current?
-	score-entry .Set-text string "score" <- Movies/current? }
+	name-entry |Set-text "name" <- Movies/current?
+	score-entry |Set-text string "score" <- Movies/current? }
 
 do\inside Movies { ; seems cleaner this way
-    'movies .On-change { update-entries } 
-    'index  .On-change { update-entries } }
+    on-change 'movies { update-entries }
+    on-change 'index { update-entries } }
 
 prev-btn: widget/button "Previous" does { Movies/prev! }
 next-btn: widget/button "Next" does { Movies/next! }
@@ -78,7 +78,7 @@ Movies/reload!
 
 w .Show-and-run
 
-; Prerequisites movies.Db
+; Prerequisites movies.db
 ;
 ;    create table if not exists movies (
 ;        id integer primary key autoincrement ,

@@ -2,14 +2,14 @@
 
 ![Rye-Fyne](https://github.com/refaktor/rye-fyne/blob/main/image.png?raw=true)
 
-Rye-Fyne brings the power of [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop applications with Rye's expressive syntax and Fyne's modern widgets.
+Rye-Fyne brings the power of the [Fyne](https://fyne.io) GUI toolkit to the [Rye programming language](https://ryelang.org/). Build cross-platform desktop and mobile applications with Rye's expressive syntax and Fyne's modern widgets.
 
-See 15 increasingly involved but compact **examples with screenshots** on [**Rye Cookbook**](https://ryelang.org/cookbook/rye-fyne/examples-2/).
+See the **examples with screenshots** on [**Rye Cookbook**](https://ryelang.org/cookbook/rye-fyne/examples-3/).
 
 ### Download
 
 Download pre-built binaries from [GitHub Releases](https://github.com/refaktor/rye-fyne/releases/latest):
-* **Linux**: `rye-fyne-linux-amd64.tar.gz`
+* **Linux**: portable `rye-fyne-*-portable-amd64.tgz` and `.dwfs.AppBundle`
 * **macOS**: `rye-fyne-macos-amd64.tar.gz`
 * **Windows**: `rye-fyne.exe`
 
@@ -22,7 +22,7 @@ You need [Go](https://go.dev/) installed on your system.
 git clone https://github.com/refaktor/rye-fyne.git
 cd rye-fyne
 
-# for mac and windows
+# Generate bindings for the current OS/architecture
 go tool ryegen
 
 # Build the project
@@ -45,49 +45,56 @@ container: import\go "fyne/container"
 theme: import\go "fyne/theme"
 
 a: app/new
-w: a .window "Hello, world!"
+w: a .Window "Hello, world!"
 
-; Menu system with file operations and settings
-w .set-main-menu fyne/main-menu [
+w .Set-main-menu fyne/main-menu [
     fyne/menu "File" [
         fyne/menu-item "Open" does {
             dialog/show-file-open fn { r err } {
-                either r .is-nil {
-                    if not err .is-nil { print err }
+                either r .Is-nil {
+                    if not err .Is-nil {
+                        print err
+                    }
                 } {
-                    print "Opened file: " ++ r .uri .string
-                    r .close
+                    print "Opened file: " ++ r .Uri .String
+                    r .Close
                 }
             } w
-        } |icon! theme/file-icon
+        }
+            |Icon! theme/file-icon
     ]
     fyne/menu "Settings" [
         fyne/menu-item "Preferences" does { }
-            |icon! theme/settings-icon
+            |Icon! theme/settings-icon
     ]
 ]
 
-; Live clock that updates every second
 clock: widget/label ""
 go does {
     forever {
-        fyne/do does { clock .set-text now .to-string }
-        sleep 1 .seconds
+        fyne/do does {
+            clock |Set-text now .string
+        }
+
+        sleep 1000
     }
 }
 
-; Main application layout with various widgets
-w .set-content container/border
+w .Set-content container/border
     container/vbox [
-        widget/label "Hello!"
+        do {
+            lab: widget/label "Hi"
+            lab .Set-text "Hello!"
+            lab
+        }
         do {
             se: widget/select-entry [ "A" "B" ]
-            se .set-text "A"
+            se .Set-text "A"
             se
         }
         do {
             p: widget/progress-bar-infinite
-            p .start
+            p .Start
             p
         }
         widget/button "Say hi" does {
@@ -95,14 +102,17 @@ w .set-content container/border
         }
         clock
     ]
-    nil nil nil
-    [ widget/list
-        does { 1000 }
-        does { widget/label "Hi" }
-        fn { id lab } { lab .set-text "Entry no. " ++ id .to-string }
+    nil
+    nil
+    nil
+    [
+        widget/list
+            does { 1000 }
+            does { widget/label "Hi" }
+            fn { id lab } { lab .Set-text ( "Entry no. " ++ id .string ) }
     ]
 
-w .show-and-run
+w .Show-and-run
 ```
 
 This example showcases:
@@ -151,9 +161,9 @@ rye> widget: import\go "fyne/widget"
 rye> container: import\go "fyne/container"
 
 rye> a: app/new
-rye> w: a .window "Quick Demo"
-rye> w .set-content widget/button "Click me!" does { print "Hello from Rye!" }
-rye> w .show-and-run
+rye> w: a .Window "Quick Demo"
+rye> w .Set-content widget/button "Click me!" does { print "Hello from Rye!" }
+rye> w .Show-and-run
 ```
 
 ## Cross generation
@@ -163,8 +173,8 @@ With ryegen bindings have to be generated per OS and Arch. If you don't have acc
 ### Android
 
 ```
-# generate bindings
-../ryegen/ryegen -goarch arm64 -goos android
+# generate bindings for the target
+go tool ryegen -goarch arm64 -goos android
 
 # build
 GOOS=android GOARCH=arm64 go build

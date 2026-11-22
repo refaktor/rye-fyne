@@ -384,6 +384,10 @@ github.com/refaktor/go-find v0.0.1 h1:VFeXjFuNeBwbtUC7/H6JrN7+QT/yLSXathrIUi8jCJ
 github.com/refaktor/go-find v0.0.1/go.mod h1:ZMmVCT4qBYUsBsUsf8HjCLCbegK3Q1PAw6hCrOcclvQ=
 github.com/refaktor/keyboard v0.0.0-20260517095250-755a59d30156 h1:65WdY1ncb72bv7BDabW9iiCnUtgCddiP2qCA++bhTMo=
 github.com/refaktor/keyboard v0.0.0-20260517095250-755a59d30156/go.mod h1:GwFCpZSiID9sqQ9Zm0tCmw8eeI9hThLQ7pv1wcTp0I0=
+github.com/refaktor/rye v0.2.83-0.20261120001517-69b5f78073f8 h1:Ao1t/wFasic9nwFiWUOGjSFrO73pek5opy1Q4NNWnHI=
+github.com/refaktor/rye v0.2.83-0.20261120001517-69b5f78073f8/go.mod h1:Cc5JR+k3p0y441e4Xrg3bsuFOGJoVUaqZz92b5inIPk=
+github.com/refaktor/ryegen/v2 v2.0.2-0.20261013000125-df4c50b67c85 h1:J9IqG1k/2qWnC11+gQ0BsOSV5+ep4UgwzF34OnUKTv4=
+github.com/refaktor/ryegen/v2 v2.0.2-0.20261013000125-df4c50b67c85/go.mod h1:ZsrIfnMCck7dyT51W5ShfRUYg69lm4mJGFcyu53CvgU=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec h1:W09IVJc94icq4NjY3clb7Lk8O1qJ8BdBEF8z0ibU0rE=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec/go.mod h1:qqbHyh8v60DhA7CoWK5oRCqLrMHRGoxYCSS9EjAz6Eo=
 github.com/richardlehane/mscfb v1.0.6 h1:eN3bvvZCp00bs7Zf52bxNwAx5lJDBK1tCuH19qq5aC8=

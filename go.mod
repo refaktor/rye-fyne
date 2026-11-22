@@ -2,13 +2,13 @@ module github.com/refaktor/rye-fyne
 
 go 1.26.1
 
-replace github.com/refaktor/ryegen/v2 => ../ryegen/
+// replace github.com/refaktor/ryegen/v2 => ../ryegen/
 
 replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
 
 replace github.com/jaytaylor/go-find => github.com/refaktor/go-find v0.0.0-20260208134259-020cb144f5ba
 
-replace github.com/refaktor/rye => ../rye
+// replace github.com/refaktor/rye => ../rye
 
 tool github.com/refaktor/ryegen/v2
 
@@ -198,7 +198,7 @@ require (
 	github.com/prometheus/procfs v0.22.0 // indirect
 	github.com/refaktor/go-find v0.0.1 // indirect
 	github.com/refaktor/keyboard v0.0.0-20260517095250-755a59d30156 // indirect
-	github.com/refaktor/ryegen/v2 v2.0.1 // indirect; 2.0.0-20251012122240-87fb603cd71c // indirect
+	github.com/refaktor/ryegen/v2 v2.0.2-0.20261013000125-df4c50b67c85 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/richardlehane/mscfb v1.0.6 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect

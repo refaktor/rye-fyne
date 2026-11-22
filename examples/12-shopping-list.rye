@@ -45,12 +45,12 @@ lst: widget/list
         box .Objects? -> 1 :lbl
         box .Objects? -> 3 :btn
         
-        chk .Set-checked 0 <- task
-        lbl .Set-text 1 <- task
+        chk |Set-checked 0 <- task
+        lbl |Set-text 1 <- task
         
         ; Update callbacks with current index
-        chk .On-changed! fn { v } { Data/check! i v }
-        btn .On-tapped! fn { } { Data/remove! i , lst .Refresh }
+        chk |On-changed! fn { v } { Data/check! i v }
+        btn |On-tapped! fn { } { Data/remove! i , lst .Refresh }
     }
 
 input: widget/entry

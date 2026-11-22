@@ -5,9 +5,10 @@ widget: import\go "fyne/widget"
 lab: widget/label "<date & time>"
 
 go does {
-    forever {
+    for range 1 1000 {
+;		lab .Set-text now .string
         fyne/do does {
-            lab .Set-text now .string
+           lab |Set-text now .string
         }
         sleep 500
     }

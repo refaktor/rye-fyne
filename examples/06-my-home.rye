@@ -10,7 +10,7 @@ Sensors: context {
 }
 
 temp: widget/label "Reading ..."
-img: canvas/image-from-file "home.Png"
+img: canvas/image-from-file "home.png"
 img .Fill-mode! 2  ; original size
 
 go does {
@@ -18,7 +18,7 @@ go does {
     forever {
         temp-val:: Sensors/get-temperature .string ++ " °C"
         fyne/do does {
-            temp .Set-text "Outside temp: " ++ temp-val
+            temp |Set-text "Outside temp: " ++ temp-val
         }
         sleep 1000
     }

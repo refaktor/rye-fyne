@@ -2,24 +2,25 @@ module github.com/refaktor/rye-fyne
 
 go 1.26.1
 
-// replace github.com/refaktor/ryegen/v2 => ../ryegen/
+replace github.com/refaktor/ryegen/v2 => ../ryegen/
 
 replace github.com/pelletier/go-toml/v2 => github.com/xypwn/go-toml/v2 v2.0.0
 
 replace github.com/jaytaylor/go-find => github.com/refaktor/go-find v0.0.0-20260208134259-020cb144f5ba
 
-// replace github.com/refaktor/rye => ../rye
+replace github.com/refaktor/rye => ../rye
 
 tool github.com/refaktor/ryegen/v2
 
 require (
 	fyne.io/fyne/v2 v2.8.1
+	github.com/refaktor/rye v0.2.66-0.20261012144101-70fc8f3e6284
 //	github.com/refaktor/rye
 )
 
 require (
-	github.com/jwalton/go-supportscolor v1.2.0 // indirect
-	github.com/refaktor/rye v0.2.66-0.20261012144101-70fc8f3e6284 // indirect
+	github.com/elastic/go-libaudit v0.4.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 )
 
 require (
@@ -94,7 +95,6 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/ebitengine/purego v0.10.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
-	github.com/elastic/go-libaudit v0.4.0 // indirect
 	github.com/elastic/go-seccomp-bpf v1.6.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.10.1 // indirect
@@ -169,7 +169,6 @@ require (
 	github.com/ollama/ollama v0.30.0 // indirect
 	github.com/openai/openai-go v1.12.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.2.0-beta.2.0.20211217091447-1a4a3b719465 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
@@ -179,7 +178,7 @@ require (
 	github.com/prometheus/procfs v0.19.2 // indirect
 	github.com/refaktor/go-find v0.0.1 // indirect
 	github.com/refaktor/keyboard v0.0.0-20260517095250-755a59d30156 // indirect
-	github.com/refaktor/ryegen/v2 v2.0.1 // 2.0.0-20251012122240-87fb603cd71c // indirect
+	github.com/refaktor/ryegen/v2 v2.0.1 // indirect; 2.0.0-20251012122240-87fb603cd71c // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/richardlehane/mscfb v1.0.6 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect
